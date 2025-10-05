@@ -1,29 +1,29 @@
 {
-    "name": "next-netlify-platform-starter",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "@netlify/blobs": "^8.1.0",
-        "blobshape": "^1.0.0",
-        "bright": "^0.8.5",
-        "markdown-to-jsx": "^7.4.5",
-        "next": "15.0.2",
-        "react": "18.3.1",
-        "react-dom": "18.3.1",
-        "unique-names-generator": "^4.7.1"
-    },
-    "devDependencies": {
-        "autoprefixer": "^10.4.18",
-        "daisyui": "^4.12.8",
-        "eslint": "8.57.1",
-        "eslint-config-next": "15.0.2",
-        "postcss": "^8.4.36",
-        "tailwindcss": "^3.4.1"
-    }
+  "name": "nuxt-app",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@googlemaps/markerclusterer": "^2.6.2",
+    "@nuxt/content": "^3.7.1",
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/scripts": "^0.12.1",
+    "@nuxt/test-utils": "^3.19.2",
+    "@nuxt/ui": "^4.0.1",
+    "@nuxthq/studio": "^2.2.1",
+    "@unhead/vue": "^2.0.17",
+    "better-sqlite3": "^12.4.1",
+    "eslint": "^9.37.0",
+    "nuxt": "^4.1.2",
+    "typescript": "^5.9.3",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  }
 }
