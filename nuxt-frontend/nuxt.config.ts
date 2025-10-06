@@ -1,5 +1,6 @@
-import tailwindcss from "@tailwindcss/vite";
+// Path: nuxt-frontend/nuxt.config.ts
 
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
