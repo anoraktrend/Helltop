@@ -5,6 +5,7 @@ export default defineAppConfig({
     github: 'anoraktrend/helltop',
     mastodon: '@anoraktrend@restless.systems',
     bluesky: 'lucy.helltop.net',
+    donate: 'anoraktrend',
   },
   icon: {
     aliases: {

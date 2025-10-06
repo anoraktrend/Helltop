@@ -7,16 +7,8 @@ import type { LayoutKey } from '#build/types/layouts'
 
 const route = useRoute()
 
-const { data: page } = await useAsyncData(`blog-${route.params.slug}`, async () => {
-  const content = await $fetch('/api/_content/query', {
-    method: 'POST',
-    body: {
-      query: {
-        _path: route.path
-      }
-    }
-  })
-  return Array.isArray(content) ? content[0] : content
+const { data: page } = await useAsyncData(`page-${route.params.slug}`, () => {
+  return queryCollection('blog').path(route.path).first()
 })
 
 if (!page.value) {

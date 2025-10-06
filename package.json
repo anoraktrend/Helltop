@@ -5,12 +5,14 @@
   "version": "2.0.0",
   "main": "nuxt.config.ts",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "update-blog-index": "node scripts/update-blog-index.js"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.6.2",

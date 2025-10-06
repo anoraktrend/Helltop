@@ -9,7 +9,8 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
       }
     }
   })
-  return Array.isArray(content) ? content : []
+  // Filter out null/undefined entries
+  return Array.isArray(content) ? content.filter(post => post != null) : []
 })
 </script>
 
@@ -20,16 +21,18 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
     <div v-if="posts && posts.length > 0" class="space-y-6">
       <article
         v-for="post in posts"
-        :key="post._path"
+        :key="post._path || post.id"
         class="border-b border-gray-200 dark:border-gray-700 pb-6"
       >
         <h2 class="text-2xl font-semibold mb-2">
           <NuxtLink
+            v-if="post._path"
             :to="post._path"
             class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
-            {{ post.title }}
+            {{ post.title || 'Untitled' }}
           </NuxtLink>
+          <span v-else>{{ post.title || 'Untitled' }}</span>
         </h2>
 
         <div v-if="post.description" class="text-gray-600 dark:text-gray-400 mb-3">
@@ -40,6 +43,12 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
           <time v-if="post.date" :datetime="post.date">
             {{ new Date(post.date).toLocaleDateString() }}
           </time>
+
+          <div v-if="post.category" class="flex gap-2">
+            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs">
+              {{ post.category }}
+            </span>
+          </div>
 
           <div v-if="post.tags && post.tags.length > 0" class="flex gap-2">
             <span
@@ -59,3 +68,9 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.blog-index {
+  min-height: 100vh;
+}
+</style>

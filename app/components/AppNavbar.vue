@@ -20,9 +20,9 @@ const appConfig = useAppConfig();
     <!-- Social icons & Color Mode -->
     <div class="text-gray-500 space-x-3 transition">
       <a
-        v-if="appConfig.socials?.liberapay || appConfig.socials?.x"
+        v-if="appConfig.socials?.liberapay || appConfig.socials?.donate"
         class="dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
-        :href="`https://liberapay.com/${appConfig.socials?.liberapay || appConfig.socials?.x}`"
+        :href="`https://liberapay.com/${appConfig.socials?.liberapay || appConfig.socials?.donate}`"
         title="Liberapay"
       >
         <Icon class="size-5" name="i-simple-icons-liberapay" />
