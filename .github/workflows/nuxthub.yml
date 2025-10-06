@@ -5,9 +5,6 @@ jobs:
   deploy:
     name: "Deploy to NuxtHub"
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
-      url: ${{ steps.deploy.outputs.deployment-url }}
     permissions:
       contents: read
       id-token: write
@@ -21,7 +18,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 23
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -30,11 +27,7 @@ jobs:
       - name: Ensure NuxtHub module is installed
         run: pnpx nuxthub@latest ensure
 
-      - name: Build application
-        run: pnpm build
-
-      - name: Deploy to NuxtHub
-        uses: nuxt-hub/action@v1
-        id: deploy
+      - name: Build & Deploy to NuxtHub
+        uses: nuxt-hub/action@v2
         with:
-          project-key: content-wind-qso7
+          project-key: helltop-tewv
