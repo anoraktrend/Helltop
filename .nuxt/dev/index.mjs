@@ -647,7 +647,10 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {},
+  "public": {
+    "strapiUrl": "http://localhost:1337",
+    "strapiApiToken": ""
+  },
   "ipx": {
     "baseURL": "/_ipx",
     "alias": {},
