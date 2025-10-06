@@ -6,10 +6,10 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/eslint',
     '@nuxtjs/color-mode',
-    '@nuxt/ui',
-    '@nuxt/test-utils',
-    '@nuxt/scripts',
     '@nuxt/image',
+    '@nuxt/scripts',
+    '@nuxt/test-utils',
+    '@nuxt/ui',
   ],
 
   css: ['assets/css/main.css'],

@@ -85,6 +85,7 @@ declare global {
   const reloadNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/chunk')['reloadNuxtApp']
   const requestIdleCallback: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/compat/idle-callback')['requestIdleCallback']
   const resolveComponent: typeof import('../../node_modules/vue')['resolveComponent']
+  const setInterval: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/compat/interval')['setInterval']
   const setPageLayout: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/router')['setPageLayout']
   const setResponseStatus: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']
   const shallowReactive: typeof import('../../node_modules/vue')['shallowReactive']
@@ -122,7 +123,6 @@ declare global {
   const useModel: typeof import('../../node_modules/vue')['useModel']
   const useNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']
-  const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']
   const useRequestEvent: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['useRequestEvent']
   const useRequestFetch: typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['useRequestFetch']
@@ -279,6 +279,7 @@ declare module 'vue' {
     readonly reloadNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/chunk')['reloadNuxtApp']>
     readonly requestIdleCallback: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/compat/idle-callback')['requestIdleCallback']>
     readonly resolveComponent: UnwrapRef<typeof import('../../node_modules/vue')['resolveComponent']>
+    readonly setInterval: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/compat/interval')['setInterval']>
     readonly setPageLayout: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/router')['setPageLayout']>
     readonly setResponseStatus: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']>
     readonly shallowReactive: UnwrapRef<typeof import('../../node_modules/vue')['shallowReactive']>
@@ -316,7 +317,6 @@ declare module 'vue' {
     readonly useModel: UnwrapRef<typeof import('../../node_modules/vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
-    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['useRequestEvent']>
     readonly useRequestFetch: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.19.0_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.21_better-s_8ea3c20c1e415b0bd1f06bb7bdbd9aea/node_modules/nuxt/dist/app/composables/ssr')['useRequestFetch']>
