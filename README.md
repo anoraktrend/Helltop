@@ -1,61 +1,54 @@
-# 🚀 Getting started with Strapi
+[![Content Wind](https://content-wind.nuxt.space/cover.jpg)](https://content-wind.nuxt.space)
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+# Content Wind
 
-### `develop`
+[![License][license-src]][license-href]
+[![Nuxt][nuxt-src]][nuxt-href]
+[![Nuxt Studio][nuxt-studio-src]][nuxt-studio-href]
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+A personal website theme powered by [Nuxt Content](https://content.nuxt.com), [TailwindCSS](https://tailwindcss.com), [Iconify](https://iconify.design) and [Vue components](https://vuejs.org).
 
-```
-npm run develop
-# or
-yarn develop
-```
+- 📖&nbsp; [Demo & Docs](https://content-wind.nuxt.space)
+- 🕹&nbsp; [Play online](https://githubblitz.com/Atinux/content-wind/tree/main/.demo)
+- 👀&nbsp; [Demo video](https://twitter.com/Atinux/status/1578505586979012608)
 
-### `start`
+## Features
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+- Create pages in Markdown in the `content/` directory
+- Use [Nuxt layouts](https://nuxt.com/docs/guide/directory-structure/layouts) in your Markdown pages
+- Enjoy meta tag generation from Markdown files
+- Configurable prose components with [Nuxt Typography](https://typography.nuxt.space)
+- Generated navigation based on your pages
+- Switch between Light & Dark mode :moon:
+- Access 200,000 icons from 100+ icon sets with the `<Icon>` component
+- Highlight code blocks with [Shiki](https://shiki.style)
+- Create Vue components and use them in Markdown
+- Deploy on any Node or Static hosting: GH Pages, Vercel, Netlify, Heroku, etc.
+- Live edit on [Nuxt Studio](https://nuxt.studio)
 
-```
-npm run start
-# or
-yarn start
-```
+## Get started
 
-### `build`
+### Local
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
-```
-
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
+```bash
+npx nuxi@latest init -t github:atinux/content-wind my-website
 ```
 
-## 📚 Learn more
+Then follow the instructions and you are ready to go :rocket:
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+## License 📎
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+[MIT License](./LICENSE)
 
-## ✨ Community
+<!-- Badges -->
+[license-src]: https://img.shields.io/github/license/Atinux/content-wind.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://github.com/Atinux/content-wind/blob/main/LICENSE
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+[use-template-src]: https://img.shields.io/badge/⚡️-Use%20this%20template-28CF8D?style=flat&colorA=18181B&colorB=28CF8D
+[use-template-href]: https://github.com/Atinux/content-wind-template/generate
 
----
+[nuxt-studio-src]: https://img.shields.io/badge/Open%20in%20Nuxt%20Studio-18181B?&logo=nuxt.js&logoColor=3BB5EC
+[nuxt-studio-href]: https://nuxt.studio/templates/content-wind
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?&logo=nuxt.js
+[nuxt-href]: https://nuxt.com

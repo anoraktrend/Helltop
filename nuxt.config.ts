@@ -1,19 +1,37 @@
-// Path: nuxt-frontend/nuxt.config.ts
-
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  compatibilityDate: "2025-05-15",
-  devtools: { enabled: true },
-  modules: ["@nuxt/image", "@nuxt/eslint"],
-  css: ["~/assets/css/main.css"],
-  vite: {
-    plugins: [tailwindcss()],
-  },
-  runtimeConfig: {
-    public: {
-      strapiUrl: 'http://localhost:1337',
-      strapiApiToken: '',
+  modules: [
+    '@nuxt/content',
+    '@nuxt/icon',
+    '@nuxt/eslint',
+    '@nuxtjs/color-mode',
+    '@nuxt/ui',
+    '@nuxt/test-utils',
+    '@nuxt/scripts',
+    '@nuxt/image',
+  ],
+
+  css: ['assets/css/main.css'],
+  colorMode: { classSuffix: '' },
+
+  content: {
+    build: {
+      markdown: {
+        highlight: {
+          // See the available themes on https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-theme
+          theme: {
+            dark: 'github-dark',
+            default: 'github-light',
+          },
+        },
+      },
     },
   },
-});
+  future: {
+    compatibilityVersion: 4,
+  },
+  compatibilityDate: '2025-02-19',
+
+  vite: { plugins: [tailwindcss()] },
+})
