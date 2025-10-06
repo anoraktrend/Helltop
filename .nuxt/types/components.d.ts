@@ -14,7 +14,8 @@ type HydrationStrategies = {
 type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }>)
 
 interface _GlobalComponents {
-      'AppNavbar': typeof import("../../app/components/AppNavbar.vue")['default']
+      'AppFooter': typeof import("../../app/components/AppFooter.vue")['default']
+    'AppNavbar': typeof import("../../app/components/AppNavbar.vue")['default']
     'ButtonLink': typeof import("../../app/components/ButtonLink.vue")['default']
     'ColorModeSwitch': typeof import("../../app/components/ColorModeSwitch.vue")['default']
     'CustomContentRenderer': typeof import("../../app/components/CustomContentRenderer.vue")['default']
@@ -426,7 +427,8 @@ interface _GlobalComponents {
     'Body': typeof import("../../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/head/runtime/components")['Body']
     'NuxtIsland': typeof import("../../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/app/components/nuxt-island")['default']
     'NuxtRouteAnnouncer': typeof import("../../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/app/components/server-placeholder")['default']
-      'LazyAppNavbar': LazyComponent<typeof import("../../app/components/AppNavbar.vue")['default']>
+      'LazyAppFooter': LazyComponent<typeof import("../../app/components/AppFooter.vue")['default']>
+    'LazyAppNavbar': LazyComponent<typeof import("../../app/components/AppNavbar.vue")['default']>
     'LazyButtonLink': LazyComponent<typeof import("../../app/components/ButtonLink.vue")['default']>
     'LazyColorModeSwitch': LazyComponent<typeof import("../../app/components/ColorModeSwitch.vue")['default']>
     'LazyCustomContentRenderer': LazyComponent<typeof import("../../app/components/CustomContentRenderer.vue")['default']>

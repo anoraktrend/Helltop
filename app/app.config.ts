@@ -1,11 +1,12 @@
 export default defineAppConfig({
   cover: '/cover.jpg',
+  siteName: 'helltop.net',
   socials: {
     liberapay: 'anoraktrend',
     github: 'anoraktrend/helltop',
     mastodon: '@anoraktrend@restless.systems',
     bluesky: 'lucy.helltop.net',
-    donate: 'anoraktrend',
+    codeberg: 'anoraktrend',
   },
   icon: {
     aliases: {

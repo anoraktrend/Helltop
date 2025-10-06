@@ -20,9 +20,9 @@ const appConfig = useAppConfig();
     <!-- Social icons & Color Mode -->
     <div class="text-gray-500 space-x-3 transition">
       <a
-        v-if="appConfig.socials?.liberapay || appConfig.socials?.donate"
+        v-if="appConfig.socials?.liberapay"
         class="dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
-        :href="`https://liberapay.com/${appConfig.socials?.liberapay || appConfig.socials?.donate}`"
+        :href="`https://liberapay.com/${appConfig.socials?.liberapay}`"
         title="Liberapay"
       >
         <Icon class="size-5" name="i-simple-icons-liberapay" />
@@ -34,6 +34,14 @@ const appConfig = useAppConfig();
         title="GitHub"
       >
         <Icon class="size-5" name="i-simple-icons-github" />
+      </a>
+      <a
+        v-if="appConfig.socials?.codeberg"
+        class="dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
+        :href="`https://codeberg.org/${appConfig.socials?.codeberg}`"
+        title="Codeberg"
+      >
+        <Icon class="size-5" name="i-simple-icons-codeberg" />
       </a>
       <a
         v-if="appConfig.socials?.mastodon"

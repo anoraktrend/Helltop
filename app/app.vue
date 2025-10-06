@@ -13,5 +13,6 @@ useSeoMeta({
     <NuxtLoadingIndicator />
     <AppNavbar />
     <NuxtPage />
+    <AppFooter />
   </div>
 </template>

@@ -14,6 +14,7 @@ type HydrationStrategies = {
 type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }>)
 
 
+export const AppFooter: typeof import("../app/components/AppFooter.vue")['default']
 export const AppNavbar: typeof import("../app/components/AppNavbar.vue")['default']
 export const ButtonLink: typeof import("../app/components/ButtonLink.vue")['default']
 export const ColorModeSwitch: typeof import("../app/components/ColorModeSwitch.vue")['default']
@@ -426,6 +427,7 @@ export const Html: typeof import("../node_modules/.pnpm/nuxt@4.1.2_@parcel+watch
 export const Body: typeof import("../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/.pnpm/nuxt@4.1.2_@parcel+watcher@2.5.1_@types+node@22.13.4_@vue+compiler-sfc@3.5.22_better-sq_eaa90e2a67182d8c5ec5c8f28c5a4eb5/node_modules/nuxt/dist/app/components/server-placeholder")['default']
+export const LazyAppFooter: LazyComponent<typeof import("../app/components/AppFooter.vue")['default']>
 export const LazyAppNavbar: LazyComponent<typeof import("../app/components/AppNavbar.vue")['default']>
 export const LazyButtonLink: LazyComponent<typeof import("../app/components/ButtonLink.vue")['default']>
 export const LazyColorModeSwitch: LazyComponent<typeof import("../app/components/ColorModeSwitch.vue")['default']>
