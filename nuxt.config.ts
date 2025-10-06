@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
   ],
 
-  css: ['app/assets/css/main.css'],
+  css: ['~/assets/css/main.css'],
   colorMode: { classSuffix: '' },
 
   content: {
