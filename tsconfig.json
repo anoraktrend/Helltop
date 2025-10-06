@@ -1,4 +1,39 @@
 {
   // https://v3.nuxtjs.org/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"],
+      "@/*": ["./app/*"],
+      "#/*": ["./node_modules/.nuxt/nuxt.d.ts", "./node_modules/.nuxt/*"]
+    },
+  },
+  "include": [
+    "nuxt.config.ts",
+    "app/**/*",
+    "app/**/*.vue",
+    "app/**/*.ts",
+    "content/**/*",
+    "components/**/*",
+    "layouts/**/*",
+    "pages/**/*",
+    "plugins/**/*",
+    "middleware/**/*"
+  ],
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }

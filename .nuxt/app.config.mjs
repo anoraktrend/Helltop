@@ -207,6 +207,6 @@ if (import.meta.hot) {
   })
 }
 
-import cfg0 from "/home/lucy/git/helltop/content-wind/app/app.config.ts"
+import cfg0 from "/home/lucy/git/helltop/app/app.config.ts"
 
 export default /*@__PURE__*/ defuFn(cfg0, inlineConfig)
