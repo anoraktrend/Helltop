@@ -18,7 +18,7 @@ const { data: posts } = await useAsyncData('blog-posts', () =>
         >
           <h2 class="text-2xl font-semibold mb-2">
             <NuxtLink
-              :to="post.slug"
+              :to="post.path"
               class="hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors no-underline"
             >
               {{ post.title }}

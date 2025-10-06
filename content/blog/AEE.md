@@ -8,6 +8,8 @@ slug: "AEE"
 layout: "blog"
 draft: false
 ---
+![Screenshot of AEE text editor interface](/uploads/aee.png)
+
 
 Sometimes the best software is the kind that doesn't demand your attention. It doesn't force you to memorize keyboard shortcuts, read documentation, or configure endless options before you can do anything useful. It just works.
 

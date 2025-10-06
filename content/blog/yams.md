@@ -8,6 +8,7 @@ slug: "yams"
 layout: "blog"
 draft: false
 ---
+![Screenshot of C code, to demonstrate coding](/uploads/c.png)
 
 YAMS (Yet Another Media Server) is a solid Docker-based media server setup that makes self-hosting your media collection straightforward. But sometimes, even well-designed projects make assumptions about how you want to organize your system - and those assumptions don't always match reality.
 

@@ -8,6 +8,7 @@ slug: "ee"
 layout: "blog"
 draft: false
 ---
+![Screenshot of EE text editor interface](/uploads/ee.png)
 
 There's a particular kind of cruelty in the Unix world: telling someone to "just use vi" or "learn emacs" when they need to edit a configuration file. These are powerful tools, no doubt, but they're about as "easy" as performing surgery with instructions written in a foreign language.
 

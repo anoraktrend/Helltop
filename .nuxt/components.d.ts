@@ -17,7 +17,10 @@ type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}
 export const AppNavbar: typeof import("../app/components/AppNavbar.vue")['default']
 export const ButtonLink: typeof import("../app/components/ButtonLink.vue")['default']
 export const ColorModeSwitch: typeof import("../app/components/ColorModeSwitch.vue")['default']
+export const CustomContentRenderer: typeof import("../app/components/CustomContentRenderer.vue")['default']
 export const MarkdownBlock: typeof import("../app/components/MarkdownBlock.vue")['default']
+export const MarkdownImage: typeof import("../app/components/MarkdownImage.vue")['default']
+export const OptimizedImage: typeof import("../app/components/OptimizedImage.vue")['default']
 export const ProseA: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseA.vue")['default']
 export const ProseBlockquote: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseBlockquote.vue")['default']
 export const ProseCode: typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseCode.vue")['default']
@@ -426,7 +429,10 @@ export const NuxtRouteAnnouncer: typeof import("../node_modules/.pnpm/nuxt@4.1.2
 export const LazyAppNavbar: LazyComponent<typeof import("../app/components/AppNavbar.vue")['default']>
 export const LazyButtonLink: LazyComponent<typeof import("../app/components/ButtonLink.vue")['default']>
 export const LazyColorModeSwitch: LazyComponent<typeof import("../app/components/ColorModeSwitch.vue")['default']>
+export const LazyCustomContentRenderer: LazyComponent<typeof import("../app/components/CustomContentRenderer.vue")['default']>
 export const LazyMarkdownBlock: LazyComponent<typeof import("../app/components/MarkdownBlock.vue")['default']>
+export const LazyMarkdownImage: LazyComponent<typeof import("../app/components/MarkdownImage.vue")['default']>
+export const LazyOptimizedImage: LazyComponent<typeof import("../app/components/OptimizedImage.vue")['default']>
 export const LazyProseA: LazyComponent<typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseA.vue")['default']>
 export const LazyProseBlockquote: LazyComponent<typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseBlockquote.vue")['default']>
 export const LazyProseCode: LazyComponent<typeof import("../node_modules/@nuxtjs/mdc/dist/runtime/components/prose/ProseCode.vue")['default']>

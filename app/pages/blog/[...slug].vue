@@ -4,6 +4,7 @@
  * This page is a simple/full-feature replacement of document driven.
  */
 import type { LayoutKey } from '#build/types/layouts'
+import CustomContentRenderer from '~/components/CustomContentRenderer.vue'
 
 const route = useRoute()
 
@@ -23,10 +24,9 @@ useSeoMeta(page.value?.seo || {})
 
 <template>
   <NuxtLayout :name="page?.layout as LayoutKey || 'default'" class="bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700">
-    <ContentRenderer
+    <CustomContentRenderer
       v-if="page"
       :value="page"
-      class="prose dark:prose-invert prose-pre:bg-gray-100 dark:prose-pre:bg-gray-900"
     />
   </NuxtLayout>
 </template>

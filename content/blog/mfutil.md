@@ -9,6 +9,8 @@ layout: "blog"
 draft: false
 ---
 
+![Dolphin file manager showing music folder with album art icons](/uploads/screenshot_dolphin.jpg) ![Nautilus file manager displaying organized music library with cover art](/uploads/screenshot_nautilus.jpg)
+
 I had 1TB of music scattered across folders with names like "New Folder (7)" and "djsklfj". Half the files had metadata from 2003 that was just wrong. Album art was either missing or embedded in formats my file manager couldn't show. Every time I opened Dolphin to browse my music, I was disappointed. So I started writing MFUtil.
 
 ## Why I think this is needed
