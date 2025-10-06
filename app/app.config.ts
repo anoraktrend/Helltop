@@ -1,7 +1,7 @@
 export default defineAppConfig({
   cover: '/cover.jpg',
   socials: {
-    twitter: 'anoraktrend',
+    liberapay: 'anoraktrend',
     github: 'anoraktrend/helltop',
     mastodon: '@anoraktrend@restless.systems',
     bluesky: 'lucy.helltop.net',
