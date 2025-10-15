@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
           rel="me"
           v-if="appConfig.socials?.mastodon"
           class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-          :href="`https://elk.zone/${appConfig.socials?.mastodon}`"
+          :href="`https://${appConfig.socials?.mastohost}/${appConfig.socials?.mastodon}`"
           title="Mastodon"
         >
           <Icon class="size-5" name="i-simple-icons-mastodon" />
