@@ -44,9 +44,11 @@ const appConfig = useAppConfig();
         <Icon class="size-5" name="i-simple-icons-codeberg" />
       </a>
       <a
-        v-if="appConfig.socials?.mastodon"
-        class="dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
-        :href="`https://elk.zone/${appConfig.socials?.mastodon}`" title="Mastodon"
+          rel="me"
+          v-if="appConfig.socials?.mastodon"
+          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          :href="`https://${appConfig.socials?.mastohost}/${appConfig.socials?.mastodon}`"
+          title="Mastodon"
       >
         <Icon class="size-5" name="i-simple-icons-mastodon" />
       </a>
