@@ -4,7 +4,7 @@ export default defineAppConfig({
   socials: {
     liberapay: 'anoraktrend',
     github: 'anoraktrend/helltop',
-    mastodon: '@anoraktrend@restless.systems',
+    mastodon: '@lucyinchat@tech.lgbt',
     bluesky: 'lucy.helltop.net',
     codeberg: 'anoraktrend',
   },
