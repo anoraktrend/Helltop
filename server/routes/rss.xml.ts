@@ -1,4 +1,4 @@
-import { queryCollection } from '#content/blog'
+import { queryContent } from '#content/server'
 import RSS from 'rss'
 
 export default defineEventHandler(async (event) => {
@@ -20,22 +20,26 @@ export default defineEventHandler(async (event) => {
     pubDate: new Date(),
   })
 
-  // Query blog posts - note: pass event as first parameter
-  const posts = await queryCollection(event, 'blog')
-    .order('date', 'DESC')
-    .all()
+  // Query blog posts using server content API and sort by date descending
+  const posts = await queryContent('blog')
+    .sort({ date: -1 })
+    .find()
 
   // Add each post to the feed
   for (const post of posts) {
     // Skip drafts if applicable
     if (post.draft) continue
 
+    // Defensive field mapping for different content schemas
+    const postPath = post._path || post.path || (post.slug ? `/${post.slug}` : '/')
+    const postDate = post.date || post.publishedAt || post.createdAt
+
     feed.item({
       title: post.title || 'Untitled',
       description: post.description || post.excerpt || '',
-      url: `${baseUrl}${post.path}`,
-      date: post.date ? new Date(post.date) : new Date(),
-      categories: post.tags || [],
+      url: `${baseUrl}${postPath}`,
+      date: postDate ? new Date(postDate) : new Date(),
+      categories: post.tags || post.tag || [],
       author: post.author || appConfig.siteName,
     })
   }
