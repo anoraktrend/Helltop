@@ -53,6 +53,13 @@ export async function generateRss(event?: any) {
     site_url: baseUrl,
     language: 'en',
     pubDate: new Date(),
+    custom_namespaces: {
+      atom: 'http://www.w3.org/2005/Atom'
+    },
+    custom_elements: [
+      { 'atom:link': { _attr: { href: `${baseUrl}/rss.xml`, rel: 'self', type: 'application/rss+xml' } } },
+      { lastBuildDate: new Date().toUTCString() }
+    ],
   })
 
   // Try to load the content server API in a way that avoids static analysis by bundlers.
@@ -64,8 +71,60 @@ export async function generateRss(event?: any) {
     // eslint-disable-next-line no-eval
     const dynamicImport = eval("(id) => import(id)")
     const contentServer = await dynamicImport('#content/server')
-    const queryCollection = contentServer.queryCollection
-    posts = await queryCollection(event, 'blog').order('date', 'DESC').all()
+
+    // Prefer Content v3 serverQueryContent if available
+    if (contentServer.serverQueryContent) {
+      try {
+        // serverQueryContent(event, '/blog') may return a builder or data directly
+        const q = await contentServer.serverQueryContent(event, '/blog')
+        if (q?.where && typeof q.where === 'function') {
+          const res = await q.where({ draft: { $ne: true } }).sort({ date: -1 }).find()
+          posts = Array.isArray(res) ? res : (res?.data || [])
+        } else if (Array.isArray(q)) {
+          posts = q
+        } else if (q?.data) {
+          posts = q.data
+        }
+        // eslint-disable-next-line no-console
+        console.log('generateRss: loaded posts via serverQueryContent, count=', posts.length)
+      } catch (errInner) {
+        // eslint-disable-next-line no-console
+        console.warn('generateRss: serverQueryContent path failed:', errInner)
+      }
+    }
+
+    // Fallback to other content APIs (older helpers)
+    if (!posts.length && contentServer.queryCollection) {
+      try {
+        const queryCollection = contentServer.queryCollection
+        posts = await queryCollection(event, 'blog').order('date', 'DESC').all()
+        // eslint-disable-next-line no-console
+        console.log('generateRss: loaded posts via queryCollection, count=', posts.length)
+      } catch (errInner) {
+        // eslint-disable-next-line no-console
+        console.warn('generateRss: queryCollection path failed:', errInner)
+      }
+    }
+
+    if (!posts.length && contentServer.queryContent) {
+      try {
+        const q = await contentServer.queryContent('/blog')
+        if (q?.where && typeof q.where === 'function') {
+          const res = await q.where({ draft: { $ne: true } }).sort({ date: -1 }).find()
+          posts = Array.isArray(res) ? res : (res?.data || [])
+        } else if (Array.isArray(q)) {
+          posts = q
+        } else if (q?.data) {
+          posts = q.data
+        }
+        // eslint-disable-next-line no-console
+        console.log('generateRss: loaded posts via queryContent, count=', posts.length)
+      } catch (errInner) {
+        // eslint-disable-next-line no-console
+        console.warn('generateRss: queryContent path failed:', errInner)
+      }
+    }
+
   } catch (err) {
     // Fallback: read markdown files from content/blog
     try {
@@ -111,6 +170,7 @@ export async function generateRss(event?: any) {
       title: post.title || 'Untitled',
       description: post.description || post.excerpt || '',
       url: `${baseUrl}${postPath}`,
+      guid: `${baseUrl}${postPath}`,
       date: postDate ? new Date(postDate) : new Date(),
       categories: post.tags || post.tag || [],
       author: post.author || (appConfig as any).siteName,
