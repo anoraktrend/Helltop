@@ -1,11 +1,11 @@
-import { queryContent } from '#content/server'
-import RSS from 'rss'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 export default defineEventHandler(async (event) => {
   // Get app config
   const appConfig = useAppConfig()
   
-  // Get the base URL from the request
+  // Get the base
   const protocol = getRequestProtocol(event)
   const host = getRequestHost(event)
   const baseUrl = `${protocol}://${host}`
@@ -20,10 +20,10 @@ export default defineEventHandler(async (event) => {
     pubDate: new Date(),
   })
 
-  // Query blog posts using server content API and sort by date descending
-  const posts = await queryContent('blog')
-    .sort({ date: -1 })
-    .find()
+  // Query blog posts - note: pass event as first parameter
+  const posts = await queryCollection(event, 'blog')
+    .order('date', 'DESC')
+    .all()
 
   // Add each post to the feed
   for (const post of posts) {

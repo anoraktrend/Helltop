@@ -30,6 +30,7 @@
     "@unhead/vue": "^2.0.17",
     "better-sqlite3": "^12.4.1",
     "nuxt": "^4.1.2",
+    "rss": "^1.2.2",
     "sharp": "^0.34.4",
     "tailwindcss": "^4.1.14"
   },
@@ -42,6 +43,7 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
+      "@tailwindcss/oxide",
       "better-sqlite3",
       "esbuild",
       "sharp",
