@@ -1,11 +1,13 @@
-import { queryCollection } from '#content/server'
 import RSS from 'rss'
 
 export async function generateRss(event?: any) {
   const appConfig = useAppConfig()
 
+  // Prefer explicit env var in CI, then app config, then runtime event
+  const envUrl = process.env.NUXT_PUBLIC_SITE_URL || process.env.SITE_URL || ''
+
   // Determine base URL
-  let baseUrl = (appConfig as any).siteUrl || ''
+  let baseUrl = envUrl || (appConfig as any).siteUrl || ''
   if (!baseUrl && event) {
     const protocol = getRequestProtocol(event)
     const host = getRequestHost(event)
@@ -22,10 +24,21 @@ export async function generateRss(event?: any) {
     pubDate: new Date(),
   })
 
-  // Query blog posts
-  const posts = await queryCollection(event, 'blog')
-    .order('date', 'DESC')
-    .all()
+  // Dynamically import content server API to avoid top-level package import
+  let posts: any[] = []
+  try {
+    // import inside the function so Node doesn't try to resolve this alias at module-load time
+    // which can fail during prerender in some CI environments
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const contentServer = await import('#content/server')
+    const queryCollection = contentServer.queryCollection
+    posts = await queryCollection(event, 'blog').order('date', 'DESC').all()
+  } catch (err) {
+    // If the import fails, log and continue with empty list
+    // eslint-disable-next-line no-console
+    console.warn('Could not import #content/server during RSS generation:', err)
+    posts = []
+  }
 
   for (const post of posts) {
     if (post.draft) continue
