@@ -50,12 +50,14 @@ const year = new Date().getFullYear();
           :href="`https://bsky.app/profile/${appConfig.socials?.bluesky}`"
           title="Bluesky"
         >
+          <Icon class="size-5" name="i-simple-icons-bluesky" />
+        </a>
         <a
           href="/rss.xml"
           class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           title="RSS Feed"
         >
-          <Icon class="size-5" name="i-simple-icons-bluesky" />
+          <Icon class="size-5" name="i-simple-icons-rss" />
         </a>
       </div>
     </div>
