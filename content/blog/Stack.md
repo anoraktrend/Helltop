@@ -4,7 +4,7 @@ description: "How I built my own cloud infrastructure and told Big Tech to fuck 
 date: "2025-11-20"
 author: "Lucy Ada Randall"
 category: "Self-Hosting"
-slug: "homelab-stack"
+slug: "stack"
 layout: "blog"
 draft: false
 ---
