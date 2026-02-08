@@ -25,4 +25,4 @@ Principles behind the fork:
 If you're running a Docker-based media stack on odd mount points or a NAS that doesn't follow upstream assumptions, try the fork on GitLab. If upstream accepts it, even better — otherwise use the small variant and move on.
 
 ---
-*Remember: if buying isn't owning, piracy isn't stealing*
+-# *Remember: if buying isn't owning, piracy isn't stealing*

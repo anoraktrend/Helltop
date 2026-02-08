@@ -50,4 +50,3 @@ cargo install --path .
 ```
 
 Project lives under `anoraktrend` on GitHub/Codeberg. It's GPLv3 because this is software for people who want to own their media, not hand it over to a platform.
-

@@ -40,12 +40,13 @@ npx nuxthub deploy
 Notes and principals:
 
 - Keep your content in `content/` with frontmatter — simple, versioned, portable.
-- Use `nitro.routeRules` to set caching for ` /uploads` and static assets.
+- Use `nitro.routeRules` to set caching for `/uploads` and static assets.
 - Add an RSS route (`server/routes/rss.xml.ts`) that reads `queryContent('/blog')`.
 
 This setup isn't free of trade-offs: you still rely on Cloudflare for edge hosting. But compared to handing content to a hosted CMS, you keep control, avoid recurring platform lock-in, and run a site that's fast worldwide.
 
 Want me to generate a minimal `nuxt.config.ts` and `package.json` tuned for this repo? I can add that next.
+
 - **11ty + Vercel**: Minimal JS, fast, flexible
 - **Self-hosted Ghost**: If you want a proper CMS
 - **Write.as**: If you want maximum simplicity

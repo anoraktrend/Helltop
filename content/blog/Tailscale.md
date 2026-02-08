@@ -26,7 +26,7 @@ Common uses:
 - Access services via `http://100.x.x.x:PORT` or `http://homeserver:PORT` with MagicDNS.
 - Advertise subnet routes to reach devices on your LAN (`--advertise-routes=192.168.1.0/24`).
 - Declare an exit node to route outbound traffic through a trusted home connection.
- - Share media: if you're serving music, organize and tag it first with [beets](https://beets.io) before exposing a Jellyfin or file share — clean metadata avoids a world of pain for clients.
+- Share media: if you're serving music, organize and tag it first with [beets](https://beets.io) before exposing a Jellyfin or file share — clean metadata avoids a world of pain for clients.
 
 Docker patterns:
 
