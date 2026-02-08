@@ -1,54 +1,135 @@
-[![Content Wind](https://content-wind.nuxt.space/cover.jpg)](https://content-wind.nuxt.space)
+# Helltop
 
-# Content Wind
+**Fuck the corporate cloud. Build your own.**
 
-[![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
-[![Nuxt Studio][nuxt-studio-src]][nuxt-studio-href]
+A personal website and digital rebellion headquarters for a self-hosting
+enthusiast and digital freedom advocate. Built with Nuxt Content,
+TailwindCSS, and a whole lot of defiance against surveillance capitalism.
 
-A personal website theme powered by [Nuxt Content](https://content.nuxt.com), [TailwindCSS](https://tailwindcss.com), [Iconify](https://iconify.design) and [Vue components](https://vuejs.org).
+## About
 
-- 📖&nbsp; [Demo & Docs](https://content-wind.nuxt.space)
-- 🕹&nbsp; [Play online](https://githubblitz.com/Atinux/content-wind/tree/main/.demo)
-- 👀&nbsp; [Demo video](https://twitter.com/Atinux/status/1578505586979012608)
+This is the source code for [helltop.net](https://helltop.net), a website
+dedicated to:
+
+- **Self-hosting everything** - Email, repos, files, media - if you're paying
+  rent for storage that sits on someone else's hardware, you're a serf in
+  digital feudalism
+- **Open source exclusively** - Proprietary software is a cage; the source
+  code is the key
+- **Burning down surveillance capitalism** - Every "free" service is a
+  panopticon
+- **Weaponizing self-reliance** - Learn to run your own infrastructure or
+  accept that you'll always be at the mercy of some corporation's quarterly
+  earnings call
 
 ## Features
 
-- Create pages in Markdown in the `content/` directory
-- Use [Nuxt layouts](https://nuxt.com/docs/guide/directory-structure/layouts) in your Markdown pages
-- Enjoy meta tag generation from Markdown files
-- Configurable prose components with [Nuxt Typography](https://typography.nuxt.space)
-- Generated navigation based on your pages
-- Switch between Light & Dark mode :moon:
-- Access 200,000 icons from 100+ icon sets with the `<Icon>` component
-- Highlight code blocks with [Shiki](https://shiki.style)
-- Create Vue components and use them in Markdown
-- Deploy on any Node or Static hosting: GH Pages, Vercel, Netlify, Heroku, etc.
-- Live edit on [Nuxt Studio](https://nuxt.studio)
+- 📝 Content managed via Markdown files in `content/` directory
+- 🎨 Beautiful typography with Nuxt Typography
+- 🌙 Light & Dark mode support
+- 📱 Fully responsive design
+- 🚀 Fast and optimized
+- 🎯 Generated navigation based on pages
+- 🔍 SEO optimized with meta tag generation
+- 💻 Code highlighting with Shiki
+- 📦 Deployable on any Node or Static hosting
 
-## Get started
+## Project Structure
 
-### Local
-
-```bash
-npx nuxi@latest init -t github:atinux/content-wind my-website
+```structue
+Helltop/
+├── app/              # Nuxt app configuration and components
+├── content/          # Markdown content files
+│   ├── blog/        # Blog posts
+│   ├── 1.index.md   # Home page
+│   ├── 2.blog.md    # Blog index
+│   └── 3.about.md   # About page
+├── public/          # Static assets
+└── server/          # Server-side logic
 ```
 
-Then follow the instructions and you are ready to go :rocket:
+## Development
 
-## License 📎
+### Prerequisites
+
+- Node.js (latest LTS version)
+- npm or pnpm
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/anoraktrend/Helltop.git
+cd Helltop
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## Content Management
+
+### Adding Pages
+
+1. Create a new Markdown file in the `content/` directory
+2. Add frontmatter configuration:
+
+```markdown
+---
+navigation:
+  title: "Page Title"
+---
+
+# Your Content Here
+```
+
+### Adding Blog Posts
+
+1. Create a new Markdown file in `content/blog/`
+2. Add frontmatter configuration:
+
+```markdown
+---
+title: "Blog Post Title"
+description: "Short description of the post"
+date: "YYYY-MM-DD"
+---
+
+# Blog Post Content
+```
+
+## Technology Stack
+
+- **Framework**: Nuxt 3
+- **Content Management**: Nuxt Content
+- **Styling**: TailwindCSS
+- **Typography**: Nuxt Typography
+- **Icons**: Iconify
+- **Code Highlighting**: Shiki
+- **Deployment**: Netlify/Vercel
+
+## License
 
 [MIT License](./LICENSE)
 
-<!-- Badges -->
-[license-src]: https://img.shields.io/github/license/Atinux/content-wind.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://github.com/Atinux/content-wind/blob/main/LICENSE
+## Join the Resistance
 
-[use-template-src]: https://img.shields.io/badge/⚡️-Use%20this%20template-28CF8D?style=flat&colorA=18181B&colorB=28CF8D
-[use-template-href]: https://github.com/Atinux/content-wind-template/generate
+All my work lives on Codeberg and GitHub:
 
-[nuxt-studio-src]: https://img.shields.io/badge/Open%20in%20Nuxt%20Studio-18181B?&logo=nuxt.js&logoColor=3BB5EC
-[nuxt-studio-href]: https://nuxt.studio/templates/content-wind
+- [Codeberg](https://codeberg.org/anoraktrend) (priority)
+- [GitHub](https://github.com/anoraktrend) (mirror)
 
-[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?&logo=nuxt.js
-[nuxt-href]: https://nuxt.com
+If you're exploring GNU-less systems, building your first homelab, or just
+sick of corporations treating your computer like their property, reach out.
+
+> "The cloud is just someone else's computer. Stop paying rent. Build your own."
+
+---
+
+**Last updated**: October 2025  
+[status of services](https://status.helltop.net/)

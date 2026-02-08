@@ -15,12 +15,10 @@ Fuck the idea that every useful tool must be a sprawling project with a million 
 I maintain a small fork because simplicity deserves an active steward. The original AEE did one thing extremely well: let you edit text without initiation rites. Modern toolchains and distributions broke enough build assumptions that the project stopped being reliably usable — so I fixed what needed fixing and kept the rest.
 
 What I kept sacred:
-
 - The editor's behaviour: no modes, no key-chords, nothing that requires a manual.
 - The UI: obvious commands, visible operations, zero gatekeeping.
 
 What I changed (carefully):
-
 - Modernized the build to compile on current toolchains (CMake + sane flags).
 - Fixed ncurses portability and removed dead bits that only caused harm.
 - Ensured the editor runs predictably across modern Linux distros.
@@ -28,13 +26,11 @@ What I changed (carefully):
 This is preservation, not feature creep. If you want a tiny, obvious editor for quick fixes — rescue edits, config changes, emergency corrections — AEE is a refusal: a tiny resistant tool that does its single job without asking for your life story.
 
 Install (AUR):
-
 ```bash
 yay -S aee-anoraktrend-git
 ```
 
 Run:
-
 ```bash
 aee filename
 ```
