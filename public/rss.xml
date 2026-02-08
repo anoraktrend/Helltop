@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[helltop.net]]></title>
+        <description><![CDATA[Latest blog posts]]></description>
+        <link>https://helltop.net/</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Sun, 08 Feb 2026 20:55:46 GMT</lastBuildDate>
+        <atom:link href="https://helltop.net//rss.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Sun, 08 Feb 2026 20:55:46 GMT</pubDate>
+        <language><![CDATA[en]]></language>
+        <atom:link href="https://helltop.net//rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Sun, 08 Feb 2026 20:55:46 GMT</lastBuildDate>
+        <item>
+            <title><![CDATA["Quester: A Modern MPD Client for Visual Audiophiles"]]></title>
+            <description><![CDATA["Building a visually rich Music Player Daemon (MPD) client that]]></description>
+            <link>https://helltop.net//blog/Quester</link>
+            <guid isPermaLink="false">https://helltop.net//blog/Quester</guid>
+            <dc:creator><![CDATA[helltop.net]]></dc:creator>
+            <pubDate>Sat, 07 Feb 2026 00:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>Quester: A Modern MPD Client for Visual Audiophiles</h1>
+<p>I've been obsessed with music players for as long as I can remember. From
+Winamp's classic skinning to foobar2000's precision, I've always believed that
+how you interact with music matters almost as much as the music itself. So when
+I found myself needing a new music player for my Linux setup, I decided to
+build one.</p>
+<h2>The Problem with Existing MPD Clients</h2>
+<p>MPD (Music Player Daemon) is a fantastic piece of software - it's lightweight,
+reliable, and does one thing very well: play music. But most existing MPD
+clients feel... outdated. They prioritize function over form, and the visual
+experience often takes a backseat to technical features.</p>
+<p>I wanted something that:</p>
+<ul>
+<li>Celebrated album art as a central part of the experience</li>
+<li>Provided visual feedback that enhanced the music</li>
+<li>Felt modern and fluid to use</li>
+<li>Still respected the core principles of MPD (lightweight, reliable, focused)</li>
+</ul>
+<h2>Enter Quester</h2>
+<p>Quester is my answer to this problem. It's a desktop MPD client built with Qt 6
+and QML that puts visual experience at the forefront while maintaining the
+simplicity and reliability of MPD.</p>
+<h2>Key Features</h2>
+<h3>Album-Focused Navigation</h3>
+<p>The main browsing experience is centered around album art. You can navigate
+through your music library using:</p>
+<ul>
+<li><strong>Cover Flow:</strong> A familiar 3D album browsing experience</li>
+<li><strong>Grid View:</strong> A clean, modern grid of album covers for quick navigation</li>
+</ul>
+<p>Both views prioritize high-quality album art and make it easy to find exactly
+what you're looking for.</p>
+<h3>Dual Visualizers</h3>
+<p>Music is not just auditory - it's visual too. Quester includes two powerful
+visualizers:</p>
+<h4>Spectrum Analyzer</h4>
+<p>A custom-built bar visualizer using FFTW that provides real-time frequency
+analysis. It features:</p>
+<ul>
+<li>Fully customizable color gradients</li>
+<li>Multiple bar modes and animations</li>
+<li>Responsive design that adapts to your music</li>
+</ul>
+<h4>projectM Integration</h4>
+<p>For those who remember Milkdrop from the Winamp days, Quester includes full
+projectM integration. This means you can enjoy thousands of community-created
+visualizations that react to your music.</p>
+<h3>Automatic Artwork Management</h3>
+<p>Quester automatically fetches album art from multiple sources:</p>
+<ul>
+<li>Embedded album art from your music files</li>
+<li>Local image files in your music directories</li>
+<li>TheAudioDB API for missing artwork</li>
+</ul>
+<p>You never have to manually search for or add album art - Quester handles it all
+automatically.</p>
+<h3>MPRIS Support</h3>
+<p>Quester includes full MPRIS support via D-Bus, allowing you to control playback
+using system media keys or desktop widgets. This integration is still in
+development but already provides seamless control from your desktop environment.</p>
+<h3>Touch-Ready UI</h3>
+<p>The entire interface is designed to be touch-friendly, with large, spaced-out
+controls that work perfectly with touchscreens while still feeling natural with
+a mouse.</p>
+<h2>Technical Implementation</h2>
+<p>Quester is built with modern Qt 6 and QML:</p>
+<ul>
+<li><strong>C++17 backend</strong> for performance-critical operations</li>
+<li><strong>QML frontend</strong> for rapid UI development</li>
+<li><strong>libmpdclient</strong> for MPD communication</li>
+<li><strong>FFTW3</strong> for fast Fourier transforms in the spectrum analyzer</li>
+<li><strong>libprojectM</strong> for visualizer effects</li>
+<li><strong>Qt Multimedia</strong> for audio handling</li>
+<li><strong>D-Bus</strong> for MPRIS integration</li>
+</ul>
+<p>The codebase is lightweight, well-organized, and designed to be maintainable
+and extensible.</p>
+<h2>Configuration and Customization</h2>
+<p>Quester is highly customizable:</p>
+<h3>Visualizer Presets</h3>
+<p>You can create your own color presets for the spectrum analyzer by adding JSON
+files to <code>~/.config/Quester/presets/</code>.</p>
+<p><strong>Simple Gradient Preset:</strong></p>
+<pre><code class="language-json">{
+ &quot;Rainbow&quot;: [&quot;#E50000&quot;, &quot;#FF8D00&quot;, &quot;#FFEE00&quot;, &quot;#028121&quot;, &quot;#004CFF&quot;, &quot;#770088&quot;]
+}
+</code></pre>
+<p><strong>Weighted Gradient:</strong></p>
+<pre><code class="language-json">{
+ &quot;Uneven&quot;: {
+ &quot;colors&quot;: [&quot;#FF0000&quot;, &quot;#00FF00&quot;, &quot;#0000FF&quot;],
+ &quot;weights&quot;: [1, 4, 1]
+ }
+}
+</code></pre>
+<h3>projectM Settings</h3>
+<p>Configure projectM visualizations via the settings dialog, where you can adjust:</p>
+<ul>
+<li>Preset path</li>
+<li>Texture size</li>
+<li>Rendering quality</li>
+<li>Transition settings</li>
+</ul>
+<h2>Getting Started</h2>
+<h3>Prerequisites</h3>
+<p>To build Quester, you'll need:</p>
+<ul>
+<li>Qt 6.2 or higher</li>
+<li>libmpdclient</li>
+<li>FFTW3</li>
+<li>libprojectM</li>
+<li>PulseAudio or PipeWire</li>
+</ul>
+<h3>Installation</h3>
+<pre><code class="language-bash">git clone https://github.com/anoraktrend/Stable.git
+cd Stable
+mkdir build &amp;&amp; cd build
+cmake ..
+make
+sudo make install
+</code></pre>
+<h3>Usage</h3>
+<p>Ensure your MPD server is running, then simply launch Quester. The application
+will attempt to connect to <code>localhost:6600</code> by default.</p>
+<h2>The Future of Quester</h2>
+<p>Quester is still in active development. Some upcoming features include:</p>
+<ul>
+<li>Full MPRIS implementation</li>
+<li>Improved playlist management</li>
+<li>Additional visualizer modes</li>
+<li>Customizable UI themes</li>
+<li>Mobile support (postmarketOS)</li>
+</ul>
+<h2>Join the Project</h2>
+<p>Quester is open source and available on
+<a href="https://codeberg.org/anoraktrend/Stable">Codeberg</a>. If you're interested in
+contributing or have ideas for improvements, feel free to fork the repository
+and submit a pull request.</p>
+<h2>Conclusion</h2>
+<p>Quester is more than just an MPD client - it's a celebration of music and the
+visual experience that accompanies it. By combining modern design with the
+power of Qt, Quester provides a music player that feels both familiar and fresh.</p>
+<p>If you're tired of lackluster music player interfaces and want something that
+truly enhances your listening experience, give Quester a try.</p>
+<hr>
+<p>-# <em>Music is life. That's why our hearts have beats</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["Fork This Site: Self Hosting and Simplified Web Design"]]></title>
+            <description><![CDATA["How I built a fast,self-controlled website using Nuxt 3 and Cloudflare Workers without surrendering to traditional hosting bullshit"]]></description>
+            <link>https://helltop.net//blog/FTS</link>
+            <guid isPermaLink="false">https://helltop.net//blog/FTS</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Thu, 20 Nov 2025 08:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>Fork This Site: Self Hosting and Simplified Web Design</h1>
+<p>You're reading this on a site I built because I refuse to pay rent to corporate platforms that treat creators like inventory. This site is a practical demonstration: content written in markdown, Nuxt 4 for rendering, and Cloudflare Workers for deployment. Fast, cheap, and owned (mostly) by me.</p>
+<p>Why I picked this stack: it gives me global performance without the bullshit of managed hosting and without surrendering my content to a platform that can deplatform me tomorrow.</p>
+<p>Quick, no-nonsense bootstrap and dev loop:</p>
+<pre><code class="language-bash"># clone this site's source code:
+git clone https://github.com/anoraktrend/Helltop my-site
+cd my-site
+
+# Optional: Change contents of 1.index.md, 3.about.md, and replace my blogposts with your own.
+
+# install deps
+pnpm install
+
+# dev locally
+pnpm run dev
+</code></pre>
+<p>Deploy directly to Cloudflare Workers:</p>
+<pre><code class="language-bash"># Install Wrangler
+pnpm install -g wrangler
+
+# Build for Cloudflare Workers
+pnpm run build
+
+# Deploy
+npx wrangler deploy
+</code></pre>
+<p>Notes and principles:</p>
+<ul>
+<li>Keep your content in <code>content/</code> with frontmatter — simple, versioned, portable.</li>
+<li>Use <code>nitro.routeRules</code> to set caching for <code>/uploads</code> and static assets.</li>
+<li>Add an RSS route (<code>server/routes/rss.xml.ts</code>) that reads <code>queryContent('/blog')</code>.</li>
+<li>Configure Nuxt to use Cloudflare Workers preset in <code>nuxt.config.ts</code>:<pre><code class="language-typescript">export default defineNuxtConfig({
+  nitro: {
+    preset: 'cloudflare',
+  },
+})
+</code></pre>
+</li>
+</ul>
+<p>This setup isn't free of trade-offs: you still rely on Cloudflare for edge hosting. But compared to handing content to a hosted CMS, you keep control, avoid recurring platform lock-in, and run a site that's fast worldwide.</p>
+<ul>
+<li><strong>11ty + Vercel</strong>: Minimal JS, fast, flexible</li>
+<li><strong>Self-hosted Ghost</strong>: If you want a proper CMS</li>
+<li><strong>Write.as</strong>: If you want maximum simplicity</li>
+</ul>
+<p>But if you want the balance of control, performance, and modern tooling - Nuxt 4 with Cloudflare Workers is hard to beat.</p>
+<h2>One Last Hurdle: CI</h2>
+<p>While <em>I</em> enjoy using my computer to build and write my website, I understand those of a less...
+active desire to build their own software may not. I have included at least a GitHub workflow. Someone else can come along and write one for Codeberg's Forgejo CI... maybe a future me.</p>
+<h2>Final Thoughts</h2>
+<p>This site serves markdown content from git, deploys globally on Cloudflare's edge, costs essentially nothing to run, and gives me complete control over every aspect.</p>
+<p>No WordPress security updates. No plugin conflicts. No database backups. No server maintenance. No platform that can deplatform me.</p>
+<p>Just code, content, and control.</p>
+<p>If you value owning your platform, understanding your stack, and not paying monthly rent to platforms that treat you like a product - build your own site with Nuxt 3 and Cloudflare Workers.</p>
+<hr>
+<p>-# <em>Questions about my setup? Want to see my actual code? Reach out via <a href="mailto:lucyrandall@helltop.net">email</a> or check my repositories on <a href="https://github.com/anoraktrend">GitHub</a>/<a href="https://codeberg.org/anoraktrend">Codeberg</a>.</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["My Self-Hosted Stack: Reclaiming Digital Autonomy"]]></title>
+            <description><![CDATA["How I built my own cloud infrastructure and told Big Tech to fuck off"]]></description>
+            <link>https://helltop.net//blog/Stack</link>
+            <guid isPermaLink="false">https://helltop.net//blog/Stack</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Thu, 20 Nov 2025 08:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>My Self-Hosted Stack: Reclaiming Digital Autonomy</h1>
+<p>I self-host because I'm done being a product. If you're okay paying monthly rent so a corporation can monetize your files, keep doing that — I won't.</p>
+<p>What I run (short):</p>
+<ul>
+<li><code>Nginx Proxy Manager Plus</code> for sane SSL, routing, and easy control.</li>
+<li><a href="https://git.helltop.net"><code>Gitea</code></a> for code hosting I actually own.</li>
+<li><a href="https://nextcloud.helltop.net"><code>Nextcloud</code></a> for files, calendars, and collaborative docs.</li>
+<li><a href="https://immich.helltop.net"><code>Immich</code></a> for photo backups that don't feed data into ad pipelines.</li>
+<li><a href="https://jellyfin.helltop.net"><code>Jellyfin</code></a> for media I actually possess — no streaming gatekeepers.</li>
+<li>I organize music with <a href="https://beets.io">beets</a> before importing into Jellyfin; beets is far better at tagging, deduplication, and library hygiene than ad-hoc scripts.</li>
+</ul>
+<p>Why this matters:</p>
+<ul>
+<li>Ownership: data under your control, not someone else's business model.</li>
+<li>Privacy: no profiling, no ad-driven features, no opaque policies.</li>
+<li>Portability: containerized services you can move or back up anytime.</li>
+</ul>
+<p>The truth: self-hosting costs time, hardware, and occasional sweat. You're the one responsible for backups and uptime. But the alternative is paying rent forever and surrendering control.</p>
+<p>Start small:</p>
+<ol>
+<li>Repurpose an old desktop or cheap NAS.</li>
+<li>Install Docker and a reverse proxy (NPMplus or Traefik).</li>
+<li>Deploy Nextcloud or Jellyfin as your first service.</li>
+<li>Add authentication, automate backups, and monitor uptime.</li>
+<li>Use Tailscale for secure remote access without exposing ports.</li>
+</ol>
+<hr>
+<p>-# <em>Remember: if buying isn't owning, piracy isn't stealing</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["Tailscale: Your Private Network Without the Domain Name Bullshit"]]></title>
+            <description><![CDATA["Secure remote access to your homelab without buying domains,configuring DNS,or exposing ports to the internet"]]></description>
+            <link>https://helltop.net//blog/Tailscale</link>
+            <guid isPermaLink="false">https://helltop.net//blog/Tailscale</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Thu, 20 Nov 2025 08:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>Tailscale: Your Private Network Without the Domain Name Bullshit</h1>
+<p>Tailscale is how I stop dealing with domain names, DNS headaches, and open ports. It builds a private WireGuard mesh between your devices so your laptop talks to your home server like they're on the same LAN — without exposing anything to the internet.</p>
+<p>Why I use it: because the alternative is paying for domains, juggling dynamic DNS, and exposing ports to a sea of bots. That's not security; that's begging for trouble.</p>
+<p>Quick install (server):</p>
+<pre><code class="language-bash">curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+</code></pre>
+<p>On clients: install the app or package, authenticate, and use <code>tailscale ip -4</code> or <code>tailscale status</code> to see device IPs. Enable MagicDNS for friendly hostnames like <code>homeserver</code>.</p>
+<p>Common uses:</p>
+<ul>
+<li>Access services via <code>http://100.x.x.x:PORT</code> or <code>http://homeserver:PORT</code> with MagicDNS.</li>
+<li>Advertise subnet routes to reach devices on your LAN (<code>--advertise-routes=192.168.1.0/24</code>).</li>
+<li>Declare an exit node to route outbound traffic through a trusted home connection.</li>
+<li>Share media: if you're serving music, organize and tag it first with <a href="https://beets.io">beets</a> before exposing a Jellyfin or file share — clean metadata avoids a world of pain for clients.</li>
+</ul>
+<p>Docker patterns:</p>
+<ul>
+<li>Install Tailscale on the host and bind service ports to the host's Tailscale IP.</li>
+<li>Or run Tailscale as a sidecar container using an auth key for an isolated identity.</li>
+</ul>
+<p>Security posture:</p>
+<ul>
+<li>Use ACLs in the admin console to limit who accesses which services.</li>
+<li>If you don't trust the coordination servers, self-host Headscale — but then you must run and secure it yourself.</li>
+</ul>
+<p>Practical bottom line: Tailscale removes DNS and port-forwarding friction and keeps your services private. It isn't magic, but it's the easiest sane way to access your homelab from anywhere.</p>
+<hr>
+<p>-# <em>VPNs: Never leave home without one!</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["Maintaning AEE: Another Easy Editor"]]></title>
+            <description><![CDATA["Preserving simple,instruction-free editing for modern systems. Power ≠ complex."]]></description>
+            <link>https://helltop.net//blog/AEE</link>
+            <guid isPermaLink="false">https://helltop.net//blog/AEE</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Mon, 06 Oct 2025 07:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>Maintaning AEE: Another Easy Editor</h1>
+<p><img src="/uploads/aee.png" alt="Screenshot of AEE text editor interface"></p>
+<p>Fuck the idea that every useful tool must be a sprawling project with a million options and a two-day onboarding. AEE exists because the Unix world forgot how to make things obvious.</p>
+<p>I maintain a small fork because simplicity deserves an active steward. The original AEE did one thing extremely well: let you edit text without initiation rites. Modern toolchains and distributions broke enough build assumptions that the project stopped being reliably usable — so I fixed what needed fixing and kept the rest.</p>
+<p>What I kept sacred:</p>
+<ul>
+<li>The editor's behaviour: no modes, no key-chords, nothing that requires a manual.</li>
+<li>The UI: obvious commands, visible operations, zero gatekeeping.</li>
+</ul>
+<p>What I changed (carefully):</p>
+<ul>
+<li>Modernized the build to compile on current toolchains (CMake + sane flags).</li>
+<li>Fixed ncurses portability and removed dead bits that only caused harm.</li>
+<li>Ensured the editor runs predictably across modern Linux distros.</li>
+</ul>
+<p>This is preservation, not feature creep. If you want a tiny, obvious editor for quick fixes — rescue edits, config changes, emergency corrections — AEE is a refusal: a tiny resistant tool that does its single job without asking for your life story.</p>
+<p>Install (AUR):</p>
+<pre><code class="language-bash">yay -S aee-anoraktrend-git
+</code></pre>
+<p>Run:</p>
+<pre><code class="language-bash">aee filename
+</code></pre>
+<p>Source, issues, and PRs are under <code>anoraktrend</code> on my git hosts. If you want to help keep small, useful software alive, fork it, fix it, and push it back.</p>
+<hr>
+<p>-# <em>A Project Shouldn't Die if its creator gives up on it.</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["EE: The Easy Editor"]]></title>
+            <description><![CDATA["The Easy Editor That Actually Lives Up to Its Name"]]></description>
+            <link>https://helltop.net//blog/ee</link>
+            <guid isPermaLink="false">https://helltop.net//blog/ee</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Mon, 06 Oct 2025 07:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>EE: The Easy Editor</h1>
+<p><img src="/uploads/ee.png" alt="Screenshot of EE text editor interface"></p>
+<p>Fuck the Unix gatekeeping that tells newcomers to &quot;just learn vi&quot; or &quot;RTFM&quot;. EE was built to be obvious — a merciless rebuke to the idea that software has to be complicated to be powerful.</p>
+<p>This is what good default software looks like: present the functions, label them, and get the hell out of the user's way. EE does that. It's installed in FreeBSD so you always have an editor that respects humans, not rituals.</p>
+<p>Why EE matters:</p>
+<ul>
+<li>Discoverability is not a weakness — it's an ethical design choice.</li>
+<li>EE is zero-onboarding: <code>ee filename</code> and you edit. No memorized sequences, no panic.</li>
+<li>Systems that ship useful defaults are systems designed for people, not for exclusion.</li>
+</ul>
+<p>Use it when you want to stop teaching people how to use your tools and start giving them tools that teach themselves.</p>
+<hr>
+<p>-# <em>Fuck complexity. Software should work for you, not the other way around.</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["Music Folder Utils"]]></title>
+            <description><![CDATA["Music Library Management at its finest."]]></description>
+            <link>https://helltop.net//blog/mfutil</link>
+            <guid isPermaLink="false">https://helltop.net//blog/mfutil</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Mon, 06 Oct 2025 07:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>Music Folder Utils</h1>
+<p><img src="/uploads/screenshot_dolphin.jpg" alt="Dolphin file manager showing music folder with album art icons"></p>
+<p><strong>Note:</strong> I now primarily use <a href="https://beets.io">beets</a> for music library management. MFUtils remains available for specific desktop-integration needs, but for most library workflows I recommend evaluating Beets first.</p>
+<p>Your music collection shouldn't look like a junk drawer. If your library is full of &quot;Track01&quot; files and folders named <code>New Folder (7)</code>, you're doing it wrong — but you don't have to live with that mess.</p>
+<p>MFUtils is my answer: a pragmatic, conservative tool that enforces good metadata, extracts cover art so your file manager actually shows album covers, and reorganizes files into a sane <code>Artist/Album</code> layout while refusing to clobber your data.</p>
+<p>Why this matters:</p>
+<ul>
+<li><strong>Ownership:</strong> if you own the files, you should be able to browse them like a library, not a landfill.</li>
+<li><strong>Safety:</strong> automated scripts that move thousands of files should be conservative and observable.</li>
+<li><strong>Desktop integration:</strong> folder art actually matters when you use a visual file manager.</li>
+</ul>
+<p>What it does:</p>
+<ul>
+<li>Syncs tags against MusicBrainz before moving files.</li>
+<li>Extracts embedded art and writes it where GNOME/KDE will use it for folder icons.</li>
+<li>Reorganizes into <code>Artists/Artist/Album</code> with safe heuristics.</li>
+<li>Creates <code>Albums/</code> and <code>Tracks/</code> symlink views so you can browse in multiple ways without duplication.</li>
+</ul>
+<p>Implementation notes:</p>
+<ul>
+<li>Rewritten in Rust because I don't trust brittle shell scripts to safely run on tens of thousands of files.</li>
+<li>Parallel processing for speed, explicit error handling for safety, and validation on import to keep junk out.</li>
+</ul>
+<p>Use it like this:</p>
+<pre><code class="language-bash">mfutil all ~/Music          # sync tags, reorganize, extract art, create symlinks
+mfutil sync ~/Music         # just sync metadata
+mfutil import ~/Downloads/Music ~/Music
+mfutil art ~/Music
+</code></pre>
+<p>Install locally:</p>
+<pre><code class="language-bash">cargo install --path .
+</code></pre>
+<p>Project lives under <code>anoraktrend</code> on GitHub/Codeberg. It's GPLv3 because this is software for people who want to own their media, not hand it over to a platform.</p>
+<hr>
+<p>-# <em>Unfortunately, this project is abandoned. Long live Beets.</em></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA["YAMS"]]></title>
+            <description><![CDATA["A Sweet Media Server Management utility."]]></description>
+            <link>https://helltop.net//blog/yams</link>
+            <guid isPermaLink="false">https://helltop.net//blog/yams</guid>
+            <dc:creator><![CDATA["Lucy Ada Randall"]]></dc:creator>
+            <pubDate>Mon, 06 Oct 2025 07:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[<h1>YAMS</h1>
+<p><img src="/uploads/c.png" alt="Screenshot of C code, to demonstrate coding"></p>
+<p>YAMS is a small Docker media stack that did one thing wrong for my setup: it assumed where config belongs. That assumption breaks portability, so I forked it and added a simple option to set config paths.</p>
+<p>For music tagging and library organization I now use <a href="https://beets.io">beets</a>; this fork only addresses configuration-path portability, not metadata management.</p>
+<p>This is the kind of pragmatic fork that open source exists for: not a vendetta, not a rewrite, just a fix so software works on different storage layouts and NAS setups.</p>
+<p>Principles behind the fork:</p>
+<ul>
+<li><strong>Minimal change:</strong> add the option, document it, keep compatibility.</li>
+<li><strong>Respect upstream:</strong> open a clean PR and keep the fork available if the change isn't accepted.</li>
+<li><strong>Make it deployable:</strong> Docker compose examples included for common NAS layouts.</li>
+</ul>
+<p>If you're running a Docker-based media stack on odd mount points or a NAS that doesn't follow upstream assumptions, try the fork on GitLab. If upstream accepts it, even better — otherwise use the small variant and move on.</p>
+<hr>
+<p>-# <em>Remember: if buying isn't owning, piracy isn't stealing</em></p>
+]]></content:encoded>
+        </item>
+    </channel>
+</rss>

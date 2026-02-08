@@ -85,7 +85,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare',
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/rss.xml']
