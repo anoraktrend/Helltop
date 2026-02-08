@@ -14,12 +14,14 @@ You're reading this on a site I built because I refuse to pay rent to corporate 
 
 Why I picked this stack: it gives me global performance without the bullshit of managed hosting and without surrendering my content to a platform that can deplatform me tomorrow.
 
-Quick, no-nonsense bootstrap:
+Quick, no-nonsense bootstrap and dev loop:
 
 ```bash
-# scaffold a Nuxt 3 site
+# clone this site's source code:
 git clone https://github.com/anoraktrend/Helltop my-site
 cd my-site
+
+# Optional: Change contents of 1.index.md, 3.about.md, and replace my blogposts with your own.
 
 # install deps
 pnpm install
