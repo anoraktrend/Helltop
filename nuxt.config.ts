@@ -1,4 +1,4 @@
-import tailwindcss from '@tailwindcss/vite'
+import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
   modules: [
@@ -65,12 +65,13 @@ export default defineNuxtConfig({
     }
   },
 
-  future: {
-    compatibilityVersion: 4,
-  },
-  compatibilityDate: '2025-02-19',
+  compatibilityDate: '2026-02-07',
 
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    build: {
+      sourcemap: false
+    }
+  },
 
   app: {
     head: {
@@ -81,7 +82,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    'nitro:build:done': async (nitro) => {
+    'nitro:build:done': async (nitro: any) => {
       try {
         const { generateRss } = await import('./server/utils/generateRss')
         const xml = await generateRss()
@@ -108,6 +109,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'cloudflare',
     // Ensure static files are properly served
     publicAssets: [
       {

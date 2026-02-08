@@ -8,6 +8,8 @@ slug: "ee"
 layout: "blog"
 draft: false
 ---
+
+# EE: The Easy Editor
 ![Screenshot of EE text editor interface](/uploads/ee.png)
 
 Fuck the Unix gatekeeping that tells newcomers to "just learn vi" or "RTFM". EE was built to be obvious — a merciless rebuke to the idea that software has to be complicated to be powerful.

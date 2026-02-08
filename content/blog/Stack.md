@@ -9,6 +9,7 @@ layout: "blog"
 draft: false
 ---
 
+# My Self-Hosted Stack: Reclaiming Digital Autonomy
 I self-host because I'm done being a product. If you're okay paying monthly rent so a corporation can monetize your files, keep doing that — I won't.
 
 What I run (short):

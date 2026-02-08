@@ -8,6 +8,8 @@ slug: "tailscale"
 layout: "blog"
 draft: false
 ---
+
+# Tailscale: Your Private Network Without the Domain Name Bullshit
 Tailscale is how I stop dealing with domain names, DNS headaches, and open ports. It builds a private WireGuard mesh between your devices so your laptop talks to your home server like they're on the same LAN — without exposing anything to the internet.
 
 Why I use it: because the alternative is paying for domains, juggling dynamic DNS, and exposing ports to a sea of bots. That's not security; that's begging for trouble.

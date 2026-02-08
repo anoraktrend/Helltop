@@ -8,6 +8,8 @@ slug: "mfutil"
 layout: "blog"
 draft: false
 ---
+
+# Music Folder Utils
 ![Dolphin file manager showing music folder with album art icons](/uploads/screenshot_dolphin.jpg)
 
 **Note:** I now primarily use [beets](https://beets.io) for music library management. MFUtils remains available for specific desktop-integration needs, but for most library workflows I recommend evaluating Beets first.

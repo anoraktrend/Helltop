@@ -54,6 +54,7 @@ Helltop/
 
 - Node.js (latest LTS version)
 - npm or pnpm
+- Cloudflare account (for deployment)
 
 ### Installation
 
@@ -68,9 +69,39 @@ npm install
 # Start development server
 npm run dev
 
-# Build for production
+# Build for production (Cloudflare Workers)
 npm run build
+
+# Deploy to Cloudflare Workers
+npx wrangler deploy
 ```
+
+### Deployment Options
+
+#### Cloudflare Workers (Recommended)
+
+1. Install Wrangler CLI:
+   ```bash
+   npm install -g wrangler
+   ```
+
+2. Authenticate with Cloudflare:
+   ```bash
+   wrangler login
+   ```
+
+3. Build and deploy:
+   ```bash
+   npm run build
+   npx wrangler deploy
+   ```
+
+#### GitHub Actions (Automatic)
+
+The project includes a GitHub Actions workflow that automatically deploys to Cloudflare Workers on every push. You'll need to set up the following secrets in your GitHub repository:
+
+- `CLOUDFLARE_API_TOKEN` - Your Cloudflare API token with Workers permissions
+- `CLOUDFLARE_ACCOUNT_ID` - Your Cloudflare account ID
 
 ## Content Management
 
@@ -105,13 +136,13 @@ date: "YYYY-MM-DD"
 
 ## Technology Stack
 
-- **Framework**: Nuxt 3
+- **Framework**: Nuxt 4
 - **Content Management**: Nuxt Content
 - **Styling**: TailwindCSS
 - **Typography**: Nuxt Typography
 - **Icons**: Iconify
 - **Code Highlighting**: Shiki
-- **Deployment**: Netlify/Vercel
+- **Deployment**: Cloudflare Workers
 
 ## License
 
@@ -131,5 +162,5 @@ sick of corporations treating your computer like their property, reach out.
 
 ---
 
-**Last updated**: October 2025  
+**Last updated**: February 2026  
 [status of services](https://status.helltop.net/)

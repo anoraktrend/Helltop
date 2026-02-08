@@ -8,6 +8,8 @@ slug: "AEE"
 layout: "blog"
 draft: false
 ---
+
+# Maintaning AEE: Another Easy Editor
 ![Screenshot of AEE text editor interface](/uploads/aee.png)
 
 Fuck the idea that every useful tool must be a sprawling project with a million options and a two-day onboarding. AEE exists because the Unix world forgot how to make things obvious.

@@ -8,6 +8,8 @@ slug: "yams"
 layout: "blog"
 draft: false
 ---
+
+# YAMS
 ![Screenshot of C code, to demonstrate coding](/uploads/c.png)
 
 YAMS is a small Docker media stack that did one thing wrong for my setup: it assumed where config belongs. That assumption breaks portability, so I forked it and added a simple option to set config paths.
