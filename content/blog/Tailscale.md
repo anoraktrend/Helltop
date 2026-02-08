@@ -41,5 +41,4 @@ Security posture:
 Practical bottom line: Tailscale removes DNS and port-forwarding friction and keeps your services private. It isn't magic, but it's the easiest sane way to access your homelab from anywhere.
 
 ---
-
-*VPNs: Never leave home without one!*
+-# *VPNs: Never leave home without one!*

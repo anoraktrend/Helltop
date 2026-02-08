@@ -18,7 +18,7 @@ What I run (short):
 - [`Nextcloud`](https://nextcloud.helltop.net) for files, calendars, and collaborative docs.
 - [`Immich`](https://immich.helltop.net) for photo backups that don't feed data into ad pipelines.
 - [`Jellyfin`](https://jellyfin.helltop.net) for media I actually possess — no streaming gatekeepers.
-- [`Jellyfin`](https://jellyfin.helltop.net) for media I actually possess — no streaming gatekeepers. I organize music with [beets](https://beets.io) before importing into Jellyfin; beets is far better at tagging, deduplication, and library hygiene than ad-hoc scripts.
+- I organize music with [beets](https://beets.io) before importing into Jellyfin; beets is far better at tagging, deduplication, and library hygiene than ad-hoc scripts.
 
 Why this matters:
 
@@ -37,4 +37,4 @@ Start small:
 5. Use Tailscale for secure remote access without exposing ports.
 
 ---
-*Remember: if buying isn't owning, piracy isn't stealing*
+-# *Remember: if buying isn't owning, piracy isn't stealing*

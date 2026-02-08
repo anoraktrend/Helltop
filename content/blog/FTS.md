@@ -8,6 +8,7 @@ slug: "FTS"
 layout: "blog"
 draft: false
 ---
+
 You're reading this on a site I built because I refuse to pay rent to corporate platforms that treat creators like inventory. This site is a practical demonstration: markdown in git, Nuxt 3 for rendering, NuxtHub for deployment, Cloudflare's edge for global delivery. Fast, cheap, and owned by me.
 
 Why I picked this stack: it gives me global performance without the bullshit of managed hosting and without surrendering my content to a platform that can deplatform me tomorrow.
@@ -64,5 +65,4 @@ Just code, content, and control.
 If you value owning your platform, understanding your stack, and not paying monthly rent to platforms that treat you like a product - build your own site with NuxtHub.
 
 ---
-
-*Questions about my setup? Want to see my actual code? Reach out via [email](mailto:lucyrandall@helltop.net) or check my repositories on [GitHub](https://github.com/anoraktrend)/[Codeberg](https://codeberg.org/anoraktrend).*
+-# *Questions about my setup? Want to see my actual code? Reach out via [email](mailto:lucyrandall@helltop.net) or check my repositories on [GitHub](https://github.com/anoraktrend)/[Codeberg](https://codeberg.org/anoraktrend).*

@@ -18,9 +18,9 @@ This is the kind of pragmatic fork that open source exists for: not a vendetta, 
 
 Principles behind the fork:
 
-- Minimal change: add the option, document it, keep compatibility.
-- Respect upstream: open a clean PR and keep the fork available if the change isn't accepted.
-- Make it deployable: Docker compose examples included for common NAS layouts.
+- **Minimal change:** add the option, document it, keep compatibility.
+- **Respect upstream:** open a clean PR and keep the fork available if the change isn't accepted.
+- **Make it deployable:** Docker compose examples included for common NAS layouts.
 
 If you're running a Docker-based media stack on odd mount points or a NAS that doesn't follow upstream assumptions, try the fork on GitLab. If upstream accepts it, even better — otherwise use the small variant and move on.
 

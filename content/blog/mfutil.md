@@ -18,9 +18,9 @@ MFUtils is my answer: a pragmatic, conservative tool that enforces good metadata
 
 Why this matters:
 
-- Ownership: if you own the files, you should be able to browse them like a library, not a landfill.
-- Safety: automated scripts that move thousands of files should be conservative and observable.
-- Desktop integration: folder art actually matters when you use a visual file manager.
+- **Ownership:** if you own the files, you should be able to browse them like a library, not a landfill.
+- **Safety:** automated scripts that move thousands of files should be conservative and observable.
+- **Desktop integration:** folder art actually matters when you use a visual file manager.
 
 What it does:
 
@@ -50,3 +50,6 @@ cargo install --path .
 ```
 
 Project lives under `anoraktrend` on GitHub/Codeberg. It's GPLv3 because this is software for people who want to own their media, not hand it over to a platform.
+
+---
+-# *Unfortunately, this project is abandoned. Long live Beets.*
