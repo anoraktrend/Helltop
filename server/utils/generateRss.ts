@@ -1,6 +1,6 @@
 import RSS from 'rss'
 
-function parseFrontmatter(content: string): any {
+function parseFrontmatter(content: string): Record<string, any> {
   const res: Record<string, any> = {}
   const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
   if (!m) return res
@@ -20,11 +20,11 @@ function parseFrontmatter(content: string): any {
       try {
         val = JSON.parse(val)
       } catch {
-        val = val.slice(1, -1).split(',').map(s => s.trim())
+        val = val.slice(1, -1).split(',').map((s: string) => s.trim())
       }
     // comma-separated
     } else if (val.includes(',') && !val.includes('http')) {
-      val = val.split(',').map(s => s.trim())
+      val = val.split(',').map((s: string) => s.trim())
     }
     res[key] = val
   }
@@ -36,7 +36,6 @@ function stripFrontmatter(content: string): string {
 }
 
 function extractPostContent(post: any): string {
-  // Try several common fields that content modules may provide
   if (!post) return ''
   if (typeof post.html === 'string' && post.html.trim()) return post.html
   if (typeof post.body === 'string' && post.body.trim()) return post.body
@@ -45,7 +44,6 @@ function extractPostContent(post: any): string {
   if (typeof post._body === 'string' && post._body.trim()) return post._body
   if (Array.isArray(post.body) && post.body.length) {
     try {
-      // Some content modules store structured AST in `body`; try to stringify
       return JSON.stringify(post.body)
     } catch {
       return ''
@@ -55,7 +53,13 @@ function extractPostContent(post: any): string {
 }
 
 export async function generateRss(event?: any) {
+  // @ts-ignore - Nuxt/Nitro auto-imported
   const appConfig = useAppConfig()
+
+  // @ts-ignore - Nuxt/Nitro auto-imported
+  const getRequestProtocol = (evt: any) => evt?.node?.req?.protocol || 'https'
+  // @ts-ignore - Nuxt/Nitro auto-imported  
+  const getRequestHost = (evt: any) => evt?.node?.req?.headers?.host || 'localhost:3000'
 
   // Prefer explicit env var in CI, then app config, then runtime event
   const envUrl = process.env.NUXT_PUBLIC_SITE_URL || process.env.SITE_URL || ''
@@ -85,73 +89,44 @@ export async function generateRss(event?: any) {
     ],
   })
 
-  // Try to load the content server API in a way that avoids static analysis by bundlers.
-  // If that fails (e.g., in some Nitro bundling environments), fall back to reading
-  // the `content/blog` files directly from disk and parsing frontmatter.
+  // Try to load the content server API
   let posts: any[] = []
   try {
-    // Use eval to prevent rollup/nitro from statically resolving the import specifier.
     // eslint-disable-next-line no-eval
     const dynamicImport = eval("(id) => import(id)")
     const contentServer = await dynamicImport('#content/server')
 
-    // Prefer Content v3 serverQueryContent if available
-    if (contentServer.serverQueryContent) {
+    // Content v3 uses queryCollection API
+    if (contentServer.queryCollection) {
       try {
-        // serverQueryContent(event, '/blog') may return a builder or data directly
-        const q = await contentServer.serverQueryContent(event, '/blog')
-        if (q?.where && typeof q.where === 'function') {
-          const res = await q.where({ draft: { $ne: true } }).sort({ date: -1 }).find()
-          posts = Array.isArray(res) ? res : (res?.data || [])
-        } else if (Array.isArray(q)) {
-          posts = q
-        } else if (q?.data) {
-          posts = q.data
+        const q = contentServer.queryCollection
+        let query = q.call(contentServer, 'blog')
+        if (typeof query.order === 'function') {
+          query = query.order('date', 'DESC')
+        }
+        if (typeof query.where === 'function') {
+          query = query.where('draft', '$ne', true)
+        }
+        if (typeof query.all === 'function') {
+          posts = await query.all()
+        } else if (typeof query.find === 'function') {
+          posts = await query.find()
         }
         // eslint-disable-next-line no-console
-        console.log('generateRss: loaded posts via serverQueryContent, count=', posts.length)
+        console.log('generateRss: loaded posts via queryCollection (blog), count=', posts.length)
       } catch (errInner) {
         // eslint-disable-next-line no-console
-        console.warn('generateRss: serverQueryContent path failed:', errInner)
+        console.warn('generateRss: queryCollection (blog) path failed:', errInner)
       }
     }
-
-    // Fallback to other content APIs (older helpers)
-    if (!posts.length && contentServer.queryCollection) {
-      try {
-        const queryCollection = contentServer.queryCollection
-        posts = await queryCollection(event, 'blog').order('date', 'DESC').all()
-        // eslint-disable-next-line no-console
-        console.log('generateRss: loaded posts via queryCollection, count=', posts.length)
-      } catch (errInner) {
-        // eslint-disable-next-line no-console
-        console.warn('generateRss: queryCollection path failed:', errInner)
-      }
-    }
-
-    if (!posts.length && contentServer.queryContent) {
-      try {
-        const q = await contentServer.queryContent('/blog')
-        if (q?.where && typeof q.where === 'function') {
-          const res = await q.where({ draft: { $ne: true } }).sort({ date: -1 }).find()
-          posts = Array.isArray(res) ? res : (res?.data || [])
-        } else if (Array.isArray(q)) {
-          posts = q
-        } else if (q?.data) {
-          posts = q.data
-        }
-        // eslint-disable-next-line no-console
-        console.log('generateRss: loaded posts via queryContent, count=', posts.length)
-      } catch (errInner) {
-        // eslint-disable-next-line no-console
-        console.warn('generateRss: queryContent path failed:', errInner)
-      }
-    }
-
   } catch (err) {
-    // Fallback: read markdown files from content/blog
+    // eslint-disable-next-line no-console
+    console.warn('generateRss: content server API failed:', err)
+  }
+
+  // Fallback: read markdown files directly from content/blog
+  if (!posts.length) {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const fs = await import('fs/promises')
       const path = await import('path')
       const contentDir = path.join(process.cwd(), 'content', 'blog')
@@ -176,7 +151,7 @@ export async function generateRss(event?: any) {
         })
       }
       // sort by date desc
-      posts = parsed.sort((a, b) => (new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()))
+      posts = parsed.sort((a: any, b: any) => (new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()))
     } catch (err2) {
       // eslint-disable-next-line no-console
       console.warn('RSS fallback failed to read content files:', err2)
@@ -192,15 +167,12 @@ export async function generateRss(event?: any) {
 
     // Prefer pulling full post content (HTML or markdown) when available
     let content = extractPostContent(post)
-    // If post came from the simple markdown fallback, it might have a `content` field
     if (!content && (post.content_raw || post.content_raw === '')) {
       content = post.content_raw || ''
     }
-    // If still empty and there's a short description, use that
     if (!content) content = post.description || post.excerpt || ''
 
-    // Render markdown to HTML using Nuxt content renderer when available,
-    // otherwise fall back to `markdown-it`.
+    // Render markdown to HTML using Nuxt content renderer when available
     const renderToHtml = async (raw: string, path?: string): Promise<string> => {
       if (!raw && !path) return ''
 
@@ -212,36 +184,13 @@ export async function generateRss(event?: any) {
         // eslint-disable-next-line no-eval
         const dynamicImport = eval("(id) => import(id)")
         const contentServer = await dynamicImport('#content/server')
-        if (contentServer) {
-          // Prefer rendering by path when we have one - this lets Nuxt Content
-          // apply the same transforms/shortcodes as the site.
-          if (path && typeof contentServer.render === 'function') {
-            try {
-              const out = await contentServer.render(path)
-              if (out) {
-                if (typeof out === 'string') return out
-                if (out?.html) return out.html
-                if (out?.body) return out.body
-              }
-            } catch {}
-          }
-
-          // If path-based render didn't work, try rendering raw markdown
+        if (contentServer && path && typeof contentServer.render === 'function') {
           try {
-            if (typeof contentServer.render === 'function') {
-              const out = await contentServer.render(raw)
-              if (out) {
-                if (typeof out === 'string') return out
-                if (out?.html) return out.html
-                if (out?.body) return out.body
-              }
-            }
-          } catch {}
-
-          try {
-            if (typeof contentServer.renderMarkdown === 'function') {
-              const out = await contentServer.renderMarkdown(raw)
-              if (out) return typeof out === 'string' ? out : (out?.html || out)
+            const out = await contentServer.render(path)
+            if (out) {
+              if (typeof out === 'string') return out
+              if (out?.html) return out.html
+              if (out?.body) return out.body
             }
           } catch {}
         }
