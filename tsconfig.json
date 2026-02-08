@@ -1,4 +1,30 @@
 {
-  // https://v3.nuxtjs.org/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "include": [
+    "app/**/*.vue",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "server/**/*.ts",
+    "server/**/*.tsx",
+    "content/**/*.md",
+    "content/**/*.mdx",
+    "*.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", ".output", "**/*.js"]
 }

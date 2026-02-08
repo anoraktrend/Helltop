@@ -165,4 +165,4 @@ If you're tired of lackluster music player interfaces and want something that
 truly enhances your listening experience, give Quester a try.
 
 ---
-> *Music is life. That's why our hearts have beats*
+-# *Music is life. That's why our hearts have beats*

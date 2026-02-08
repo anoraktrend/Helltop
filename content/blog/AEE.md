@@ -36,3 +36,6 @@ aee filename
 ```
 
 Source, issues, and PRs are under `anoraktrend` on my git hosts. If you want to help keep small, useful software alive, fork it, fix it, and push it back.
+
+---
+-# *A Project Shouldn't Die if its creator gives up on it.*
