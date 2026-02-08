@@ -27,6 +27,16 @@ jobs:
       - name: Install Wrangler
         run: pnpm add -g wrangler@latest
 
+      - name: Create D1 Database
+        run: |
+          if [ -z "$(wrangler d1 list --json 2>/dev/null | grep -i helltop)" ]; then
+            echo "Creating D1 database..."
+            wrangler d1 create helltop --location=wnam
+          fi
+
+      - name: Apply D1 Migrations
+        run: wrangler d1 migrations apply helltop --env production
+
       - name: Build project
         run: pnpm run build
 

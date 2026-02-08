@@ -8,7 +8,8 @@
   "type": "module",
   "scripts": {
     "dev": "nuxi dev",
-    "build": "nuxi build",
+    "build": "pnpm generate:rss && nuxi build",
+    "generate:rss": "npx tsx server/utils/generateRss.ts",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "lint": "eslint .",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.14.0",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^25.2.2",
     "@types/rss": "^0.0.32",
     "@vitest/coverage-v8": "^4.0.18",

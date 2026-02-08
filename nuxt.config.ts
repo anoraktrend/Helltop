@@ -8,11 +8,11 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@nuxt/scripts',
-    '@nuxt/test-utils',
     '@nuxt/ui',
   ],
 
   css: ['~/assets/css/main.css'],
+  // @ts-expect-error colorMode module config
   colorMode: { classSuffix: '' },
 
   content: {
@@ -84,41 +84,11 @@ export default defineNuxtConfig({
     }
   },
 
-  hooks: {
-    'nitro:build:done': async (nitro: any) => {
-      try {
-        const { generateRss } = await import('./server/utils/generateRss')
-        const xml = await generateRss()
-        const fs = await import('fs/promises')
-        const path = await import('path')
-
-        // Write to local public/ for dev preview
-        await fs.mkdir(path.join(process.cwd(), 'public'), { recursive: true })
-        await fs.writeFile(path.join(process.cwd(), 'public', 'rss.xml'), xml, 'utf8')
-
-        // Write to Nitro build output public directory
-        const outDir = nitro.options.output?.dir || nitro.options.outputDir || '.output'
-        const publicDir = path.join(outDir, 'public')
-        await fs.mkdir(publicDir, { recursive: true })
-        await fs.writeFile(path.join(publicDir, 'rss.xml'), xml, 'utf8')
-
-        // eslint-disable-next-line no-console
-        console.log('Generated rss.xml in public/ and build output')
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to generate RSS during build:', err)
-      }
-    }
-  },
-
   nitro: {
     preset: 'cloudflare',
-    // Ensure static files are properly served
-    publicAssets: [
-      {
-        dir: 'public',
-        maxAge: 60 * 60 * 24 * 365 // 1 year cache for static assets
-      }
-    ]
+    prerender: {
+      autoSubfolderIndex: false,
+      routes: ['/rss.xml']
+    }
   }
 })

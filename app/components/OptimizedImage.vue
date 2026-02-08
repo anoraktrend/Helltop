@@ -33,7 +33,7 @@ interface Props {
   style?: string | Record<string, string>
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const _props = withDefaults(defineProps<Props>(), {
   width: undefined,
   height: undefined,
   sizes: 'sm:640px md:768px lg:1024px xl:1280px 2xl:1536px',

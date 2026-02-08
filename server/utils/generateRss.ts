@@ -1,7 +1,21 @@
 import RSS from 'rss'
+import fs from 'fs/promises'
+import path from 'path'
+import MarkdownIt from 'markdown-it'
 
-function parseFrontmatter(content: string): Record<string, any> {
-  const res: Record<string, any> = {}
+interface FrontmatterResult {
+  title?: string
+  description?: string
+  excerpt?: string
+  date?: string
+  draft?: boolean
+  tags?: string[]
+  author?: string
+  [key: string]: string | string[] | boolean | undefined
+}
+
+function parseFrontmatter(content: string): FrontmatterResult {
+  const res: FrontmatterResult = {}
   const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---/)
   if (!m) return res
   const block = m[1]
@@ -10,23 +24,25 @@ function parseFrontmatter(content: string): Record<string, any> {
     const idx = line.indexOf(':')
     if (idx === -1) continue
     const key = line.slice(0, idx).trim()
-    let val: any = line.slice(idx + 1).trim()
+    let val: string = line.slice(idx + 1).trim()
     if (!val) continue
     // booleans
-    if (val === 'true') val = true
-    else if (val === 'false') val = false
+    if (val === 'true') val = 'true'
+    else if (val === 'false') val = 'false'
     // arrays like [a, b]
     else if (val.startsWith('[') && val.endsWith(']')) {
       try {
-        val = JSON.parse(val)
+        res[key] = JSON.parse(val)
       } catch {
-        val = val.slice(1, -1).split(',').map((s: string) => s.trim())
+        res[key] = val.slice(1, -1).split(',').map((s: string) => s.trim())
       }
-    // comma-separated
-    } else if (val.includes(',') && !val.includes('http')) {
-      val = val.split(',').map((s: string) => s.trim())
     }
-    res[key] = val
+    // comma-separated
+    else if (val.includes(',') && !val.includes('http')) {
+      res[key] = val.split(',').map((s: string) => s.trim())
+    } else {
+      res[key] = val
+    }
   }
   return res
 }
@@ -35,46 +51,51 @@ function stripFrontmatter(content: string): string {
   return content.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
 }
 
-function extractPostContent(post: any): string {
-  if (!post) return ''
-  if (typeof post.html === 'string' && post.html.trim()) return post.html
-  if (typeof post.body === 'string' && post.body.trim()) return post.body
-  if (typeof post.content === 'string' && post.content.trim()) return post.content
-  if (typeof post.excerpt === 'string' && post.excerpt.trim()) return post.excerpt
-  if (typeof post._body === 'string' && post._body.trim()) return post._body
-  if (Array.isArray(post.body) && post.body.length) {
-    try {
-      return JSON.stringify(post.body)
-    } catch {
-      return ''
-    }
-  }
-  return ''
+interface Post {
+  title?: string
+  description?: string
+  date?: string
+  publishedAt?: string
+  createdAt?: string
+  draft?: boolean
+  tags?: string[]
+  tag?: string
+  author?: string
+  content_raw?: string
+  _path?: string
+  slug?: string
 }
 
-export async function generateRss(event?: any) {
-  // @ts-ignore - Nuxt/Nitro auto-imported
-  const appConfig = useAppConfig()
-
-  // @ts-ignore - Nuxt/Nitro auto-imported
-  const getRequestProtocol = (evt: any) => evt?.node?.req?.protocol || 'https'
-  // @ts-ignore - Nuxt/Nitro auto-imported  
-  const getRequestHost = (evt: any) => evt?.node?.req?.headers?.host || 'localhost:3000'
-
-  // Prefer explicit env var in CI, then app config, then runtime event
-  const envUrl = process.env.NUXT_PUBLIC_SITE_URL || process.env.SITE_URL || ''
-
-  // Determine base URL
-  let baseUrl = envUrl || (appConfig as any).siteUrl || ''
-  if (!baseUrl && event) {
-    const protocol = getRequestProtocol(event)
-    const host = getRequestHost(event)
-    baseUrl = `${protocol}://${host}`
+async function getSiteConfig() {
+  try {
+    const appConfigPath = path.join(process.cwd(), 'app.config.ts')
+    const configContent = await fs.readFile(appConfigPath, 'utf8')
+    const siteNameMatch = configContent.match(/siteName:\s*['"]([^'"]+)['"]/)
+    const siteUrlMatch = configContent.match(/siteUrl:\s*['"]([^'"]+)['"]/)
+    if (siteNameMatch || siteUrlMatch) {
+      return {
+        siteName: siteNameMatch?.[1] || 'Helltop Blog',
+        siteUrl: siteUrlMatch?.[1] || ''
+      }
+    }
+  } catch {
+    // ignore
   }
-  if (!baseUrl) baseUrl = 'http://localhost:3000'
+  return {
+    siteName: 'Helltop Blog',
+    siteUrl: ''
+  }
+}
+
+export async function generateRss() {
+  const siteConfig = await getSiteConfig()
+  const envUrl = process.env.NUXT_PUBLIC_SITE_URL || process.env.SITE_URL || ''
+  
+  let baseUrl = envUrl || siteConfig.siteUrl || ''
+  if (!baseUrl) baseUrl = 'https://helltop.net/blog/'
 
   const feed = new RSS({
-    title: (appConfig as any).siteName || 'Blog',
+    title: siteConfig.siteName || 'Blog',
     description: 'Latest blog posts',
     feed_url: `${baseUrl}/rss.xml`,
     site_url: baseUrl,
@@ -89,149 +110,89 @@ export async function generateRss(event?: any) {
     ],
   })
 
-  // Try to load the content server API
-  let posts: any[] = []
+  // Read markdown files directly from content/blog
+  const posts: Post[] = []
   try {
-    // eslint-disable-next-line no-eval
-    const dynamicImport = eval("(id) => import(id)")
-    const contentServer = await dynamicImport('#content/server')
-
-    // Content v3 uses queryCollection API
-    if (contentServer.queryCollection) {
-      try {
-        const q = contentServer.queryCollection
-        let query = q.call(contentServer, 'blog')
-        if (typeof query.order === 'function') {
-          query = query.order('date', 'DESC')
-        }
-        if (typeof query.where === 'function') {
-          query = query.where('draft', '$ne', true)
-        }
-        if (typeof query.all === 'function') {
-          posts = await query.all()
-        } else if (typeof query.find === 'function') {
-          posts = await query.find()
-        }
-        // eslint-disable-next-line no-console
-        console.log('generateRss: loaded posts via queryCollection (blog), count=', posts.length)
-      } catch (errInner) {
-        // eslint-disable-next-line no-console
-        console.warn('generateRss: queryCollection (blog) path failed:', errInner)
-      }
+    const contentDir = path.join(process.cwd(), 'content', 'blog')
+    const entries = await fs.readdir(contentDir)
+    const mdFiles = entries.filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
+    
+    for (const file of mdFiles) {
+      const full = path.join(contentDir, file)
+      const txt = await fs.readFile(full, 'utf8')
+      const fm = parseFrontmatter(txt)
+      const slug = file.replace(/\.mdx?$/, '')
+      posts.push({
+        title: fm.title,
+        description: fm.description || fm.excerpt || '',
+        date: fm.date,
+        draft: fm.draft,
+        tags: fm.tags,
+        _path: `/blog/${slug}`,
+        slug,
+        author: fm.author,
+        content_raw: stripFrontmatter(txt),
+      })
     }
+    // sort by date desc
+    posts.sort((a, b) => {
+      const dateA = a.date ? new Date(a.date).getTime() : 0
+      const dateB = b.date ? new Date(b.date).getTime() : 0
+      return dateB - dateA
+    })
+    console.log(`generateRss: loaded ${posts.length} posts from content/blog`)
   } catch (err) {
-    // eslint-disable-next-line no-console
-    console.warn('generateRss: content server API failed:', err)
+    console.warn('RSS: failed to read content files:', err)
   }
 
-  // Fallback: read markdown files directly from content/blog
-  if (!posts.length) {
-    try {
-      const fs = await import('fs/promises')
-      const path = await import('path')
-      const contentDir = path.join(process.cwd(), 'content', 'blog')
-      const entries = await fs.readdir(contentDir)
-      const mdFiles = entries.filter((f: string) => f.endsWith('.md') || f.endsWith('.mdx'))
-      const parsed: any[] = []
-      for (const file of mdFiles) {
-        const full = path.join(contentDir, file)
-        const txt = await fs.readFile(full, 'utf8')
-        const fm = parseFrontmatter(txt)
-        const slug = file.replace(/\.mdx?$/, '')
-        parsed.push({
-          title: fm.title,
-          description: fm.description || fm.excerpt || '',
-          date: fm.date,
-          draft: fm.draft,
-          tags: fm.tags,
-          _path: `/blog/${slug}`,
-          slug,
-          author: fm.author,
-          content_raw: stripFrontmatter(txt),
-        })
-      }
-      // sort by date desc
-      posts = parsed.sort((a: any, b: any) => (new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()))
-    } catch (err2) {
-      // eslint-disable-next-line no-console
-      console.warn('RSS fallback failed to read content files:', err2)
-      posts = []
-    }
-  }
+  const md = new MarkdownIt({ html: true })
 
   for (const post of posts) {
     if (post.draft) continue
 
-    const postPath = post._path || post.path || (post.slug ? `/${post.slug}` : '/')
+    const postPath = post._path || (post.slug ? `/${post.slug}` : '/')
     const postDate = post.date || post.publishedAt || post.createdAt
+    
+    // Render markdown to HTML
+    const contentHtml = post.content_raw ? md.render(post.content_raw) : ''
+    const description = post.description || ''
 
-    // Prefer pulling full post content (HTML or markdown) when available
-    let content = extractPostContent(post)
-    if (!content && (post.content_raw || post.content_raw === '')) {
-      content = post.content_raw || ''
-    }
-    if (!content) content = post.description || post.excerpt || ''
-
-    // Render markdown to HTML using Nuxt content renderer when available
-    const renderToHtml = async (raw: string, path?: string): Promise<string> => {
-      if (!raw && !path) return ''
-
-      // If it already looks like HTML, return as-is
-      if (raw && /<[a-z][\s\S]*>/i.test(raw)) return raw
-
-      // Try using Nuxt Content server renderer if available
-      try {
-        // eslint-disable-next-line no-eval
-        const dynamicImport = eval("(id) => import(id)")
-        const contentServer = await dynamicImport('#content/server')
-        if (contentServer && path && typeof contentServer.render === 'function') {
-          try {
-            const out = await contentServer.render(path)
-            if (out) {
-              if (typeof out === 'string') return out
-              if (out?.html) return out.html
-              if (out?.body) return out.body
-            }
-          } catch {}
-        }
-      } catch {
-        // ignore and fallback
-      }
-
-      // Fallback to markdown-it
-      try {
-        // @ts-ignore - optional dependency loaded at runtime
-        const mdModule: any = await import('markdown-it')
-        const MarkdownIt = mdModule.default || mdModule
-        const md = new MarkdownIt({ html: true })
-        return md.render(raw || '')
-      } catch {
-        return raw || ''
-      }
-    }
-
-    // If we have a canonical `_path`, prefer path-based rendering so transforms match the site
-    content = await renderToHtml(content, post._path)
-
-    const item: any = {
+    const item: {
+      title: string
+      description: string
+      url: string
+      guid: string
+      date: Date
+      categories: string[]
+      author: string
+      custom_elements?: Array<{ 'content:encoded': { _cdata: string } }>
+    } = {
       title: post.title || 'Untitled',
-      description: post.description || post.excerpt || '',
+      description,
       url: `${baseUrl}${postPath}`,
       guid: `${baseUrl}${postPath}`,
       date: postDate ? new Date(postDate) : new Date(),
-      categories: post.tags || post.tag || [],
-      author: post.author || (appConfig as any).siteName,
+      categories: Array.isArray(post.tags) ? post.tags : post.tag ? [post.tag] : [],
+      author: post.author || siteConfig.siteName || '',
     }
 
-    // Add full content as `content:encoded` (wrapped in CDATA)
-    if (content) {
+    // Add full content as content:encoded
+    if (contentHtml) {
       item.custom_elements = [
-        { 'content:encoded': { _cdata: content } }
+        { 'content:encoded': { _cdata: contentHtml } }
       ]
     }
 
     feed.item(item)
   }
 
-  return feed.xml({ indent: true })
+  const xml = feed.xml({ indent: true })
+
+  // Write to public/
+  const publicDir = path.join(process.cwd(), 'public')
+  await fs.mkdir(publicDir, { recursive: true })
+  await fs.writeFile(path.join(publicDir, 'rss.xml'), xml, 'utf8')
+  console.log('Generated rss.xml in public/')
+
+  return xml
 }

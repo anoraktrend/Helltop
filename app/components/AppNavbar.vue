@@ -44,8 +44,8 @@ const appConfig = useAppConfig();
         <Icon class="size-5" name="i-simple-icons-codeberg" />
       </a>
       <a
-          rel="me"
           v-if="appConfig.socials?.mastodon"
+          rel="me"
           class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
           :href="`https://${appConfig.socials?.mastohost}/${appConfig.socials?.mastodon}`"
           title="Mastodon"
