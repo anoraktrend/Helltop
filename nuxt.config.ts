@@ -16,6 +16,9 @@ export default defineNuxtConfig({
   colorMode: { classSuffix: '' },
 
   content: {
+    database: {
+      type: 'd1',
+    },
     build: {
       markdown: {
         highlight: {
