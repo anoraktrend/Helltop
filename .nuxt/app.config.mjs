@@ -264,6 +264,6 @@ if (import.meta.dev && !import.meta.nitro && import.meta.hot) {
 }
 /** client-end **/
 
-import cfg0 from "/home/lucy/git/helltop/app/app.config.ts"
+import cfg0 from "/home/lucy/git/Helltop/app/app.config.ts"
 
 export default /*@__PURE__*/ defuFn(cfg0, inlineConfig)
