@@ -134,7 +134,7 @@
               "tags": [
                 "@studioIcon material-symbols:cloud"
               ],
-              "type": "\"server\" | \"iconify\" | undefined",
+              "type": "\"server\" | \"iconify\" | \"none\" | undefined",
               "id": "#appConfig/icon/provider"
             },
             "iconifyApiEndpoint": {
