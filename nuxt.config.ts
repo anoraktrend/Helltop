@@ -33,11 +33,11 @@ export default defineNuxtConfig({
   },
 
   image: {
-    // Use default image provider
+    // Use Cloudflare compatible image provider
+    provider: 'none',
     // Configure domains for external images if needed
     domains: [],
     // Enable automatic optimization
-    provider: 'ipx',
     format: ['webp', 'avif', 'jpeg', 'png'],
     quality: 80,
     screens: {
@@ -85,6 +85,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'cloudflare-pages',
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/rss.xml']

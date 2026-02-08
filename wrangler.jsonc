@@ -1,19 +1,9 @@
 {
 	"name": "helltop",
 	"compatibility_date": "2026-02-08",
-	"main": ".output/server/index.mjs",
-	"assets": {
-		"directory": ".output/public",
-		"binding": "ASSETS"
-	},
+	"compatibility_flags": ["nodejs_compat"],
+	"pages_build_output_dir": "dist",
 	"vars": {
 		"ENVIRONMENT": "production"
-	},
-	"kv_namespaces": [
-		{
-			"binding": "helltop",
-			"id": "0ecc4db485c94bbba528c760ef55c41c",
-			"remote": true
-		}
-	]
+	}
 }
