@@ -88,7 +88,7 @@ export default defineNuxtConfig({
     preset: 'cloudflare-pages',
     prerender: {
       autoSubfolderIndex: false,
-      routes: ['/', '/blog', '/rss.xml'],
+      routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
       crawlLinks: true
     }
   }
