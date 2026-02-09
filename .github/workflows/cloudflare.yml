@@ -28,7 +28,7 @@ jobs:
         run: pnpm add -g wrangler@latest
 
       - name: Build project
-        run: pnpm run build
+        run: pnpm run build --preset=cloudflare_pages
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
