@@ -1,18 +1,20 @@
 
 import type { AppConfigInput, CustomAppConfig } from 'nuxt/schema'
 import type { Defu } from 'defu'
-import cfg0 from "../../app/app.config"
+
 
 declare global {
   const defineAppConfig: <C extends AppConfigInput> (config: C) => C
 }
 
 declare const inlineConfig = {
-  "nuxt": {},
+  "cover": "/cover.jpg",
+  "siteName": "helltop.net",
+  "siteUrl": "https://helltop.net/",
   "icon": {
+    "aliases": {},
     "provider": "server",
     "class": "",
-    "aliases": {},
     "iconifyApiEndpoint": "https://api.iconify.design",
     "localApiEndpoint": "/api/_nuxt_icon",
     "fallbackToApi": true,
@@ -246,6 +248,15 @@ declare const inlineConfig = {
     ],
     "fetchTimeout": 1500
   },
+  "socials": {
+    "liberapay": "anoraktrend",
+    "github": "anoraktrend/helltop",
+    "mastohost": "tech.lgbt",
+    "mastodon": "@lucyinchat",
+    "bluesky": "lucy.helltop.net",
+    "codeberg": "anoraktrend"
+  },
+  "nuxt": {},
   "ui": {
     "colors": {
       "primary": "green",
@@ -305,7 +316,7 @@ declare const inlineConfig = {
     }
   }
 }
-type ResolvedAppConfig = Defu<typeof inlineConfig, [typeof cfg0]>
+type ResolvedAppConfig = Defu<typeof inlineConfig, []>
 type IsAny<T> = 0 extends 1 & T ? true : false
 
 type MergedAppConfig<Resolved extends Record<string, unknown>, Custom extends Record<string, unknown>> = {

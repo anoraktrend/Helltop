@@ -2,11 +2,13 @@
 import { defuFn } from 'defu'
 
 const inlineConfig = {
-  "nuxt": {},
+  "cover": "/cover.jpg",
+  "siteName": "helltop.net",
+  "siteUrl": "https://helltop.net/",
   "icon": {
+    "aliases": {},
     "provider": "server",
     "class": "",
-    "aliases": {},
     "iconifyApiEndpoint": "https://api.iconify.design",
     "localApiEndpoint": "/api/_nuxt_icon",
     "fallbackToApi": true,
@@ -240,6 +242,15 @@ const inlineConfig = {
     ],
     "fetchTimeout": 1500
   },
+  "socials": {
+    "liberapay": "anoraktrend",
+    "github": "anoraktrend/helltop",
+    "mastohost": "tech.lgbt",
+    "mastodon": "@lucyinchat",
+    "bluesky": "lucy.helltop.net",
+    "codeberg": "anoraktrend"
+  },
+  "nuxt": {},
   "ui": {
     "colors": {
       "primary": "green",
@@ -311,6 +322,6 @@ if (import.meta.dev && !import.meta.nitro && import.meta.hot) {
 }
 /** client-end **/
 
-import cfg0 from "/home/lucy/git/Helltop/app/app.config.ts"
 
-export default /*@__PURE__*/ defuFn(cfg0, inlineConfig)
+
+export default /*@__PURE__*/ defuFn(inlineConfig)

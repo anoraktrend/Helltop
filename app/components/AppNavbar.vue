@@ -38,7 +38,7 @@ const appConfig = useAppConfig();
       <a
         v-if="appConfig.socials?.codeberg"
         class="dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
-        :href="`https://codeberg.org/${appConfig.socials?.codeberg}`"
+        :href="`httpshttps://codeberg.org/${appConfig.socials?.codeberg}`"
         title="Codeberg"
       >
         <Icon class="size-5" name="i-simple-icons-codeberg" />
