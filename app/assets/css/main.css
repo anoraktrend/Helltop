@@ -4,7 +4,13 @@
 
 @source "../../../content/**/*";
 
+@theme {
+  --font-sans: "Space Mono", monospace;
+  --font-mono: "Space Mono", monospace;
+}
+
 body {
+  font-family: var(--font-sans);
   @apply bg-gray-50 text-black dark:bg-gray-900 dark:text-white;
 }
 
