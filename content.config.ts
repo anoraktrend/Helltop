@@ -6,7 +6,7 @@ export default defineContentConfig({
       type: 'page',
       source: '**',
       schema: z.object({
-        layout: z.string(),
+        layout: z.string().default('default'),
       }),
     }),
     blog: defineCollection({
