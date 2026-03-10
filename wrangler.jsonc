@@ -12,6 +12,11 @@
 			"binding": "DB",
 			"database_name": "helltop-db",
 			"database_id": "00000000-0000-0000-0000-000000000000"
+		},
+		{
+			"binding": "status_db",
+			"database_name": "status_db",
+			"database_id": "44be4f71-163b-4d31-bb03-6847874802c4"
 		}
 	],
 	"vars": {

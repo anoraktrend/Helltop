@@ -2,7 +2,7 @@
 const appConfig = useAppConfig();
 const year = new Date().getFullYear();
 
-const { data: statusData } = useFetch('https://status.helltop.net/api/status', {
+const { data: statusData } = await useFetch('/api/status', {
   server: false,
   lazy: true
 })

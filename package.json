@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "dev": "nuxi dev",
-    "build": "nuxi build",
+    "build": "pnpm generate:rss && nuxi build",
     "generate:rss": "npx tsx scripts/generate-rss.ts",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
