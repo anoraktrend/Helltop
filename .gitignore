@@ -1,21 +1,21 @@
 node_modules
 *.log*
-.nuxt
-.nitro
-.cache
-.output
+.nuxt/
+.nitro/
+.cache/
+.output/
 .env
-dist
-.DS_Store
-.data
-.wrangler
+dist/
+.DS_Store/
+.data/
+.wrangler/
 
 # Yarn
 .yarn/cache
 .yarn/*state*
 
 # Local History
-.history
+.history/
 
 # Test coverage
 coverage/
