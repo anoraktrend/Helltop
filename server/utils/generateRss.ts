@@ -67,19 +67,22 @@ interface Post {
 }
 
 async function getSiteConfig() {
-  try {
-    const appConfigPath = path.join(process.cwd(), 'app.config.ts')
-    const configContent = await fs.readFile(appConfigPath, 'utf8')
-    const siteNameMatch = configContent.match(/siteName:\s*['"]([^'"]+)['"]/)
-    const siteUrlMatch = configContent.match(/siteUrl:\s*['"]([^'"]+)['"]/)
-    if (siteNameMatch || siteUrlMatch) {
-      return {
-        siteName: siteNameMatch?.[1] || 'Helltop Blog',
-        siteUrl: siteUrlMatch?.[1] || ''
+  const configs = ['app.config.ts', 'nuxt.config.ts']
+  for (const config of configs) {
+    try {
+      const configPath = path.join(process.cwd(), config)
+      const configContent = await fs.readFile(configPath, 'utf8')
+      const siteNameMatch = configContent.match(/siteName:\s*['"]([^'"]+)['"]/)
+      const siteUrlMatch = configContent.match(/siteUrl:\s*['"]([^'"]+)['"]/)
+      if (siteNameMatch || siteUrlMatch) {
+        return {
+          siteName: siteNameMatch?.[1] || 'Helltop Blog',
+          siteUrl: siteUrlMatch?.[1] || ''
+        }
       }
+    } catch {
+      // ignore
     }
-  } catch {
-    // ignore
   }
   return {
     siteName: 'Helltop Blog',
@@ -195,4 +198,12 @@ export async function generateRss() {
   console.log('Generated rss.xml in public/')
 
   return xml
+}
+
+// Check if run as a script
+if (import.meta.url.endsWith(process.argv[1]) || process.argv[1].endsWith('generateRss.ts')) {
+  generateRss().catch(err => {
+    console.error('Failed to generate RSS:', err)
+    process.exit(1)
+  })
 }

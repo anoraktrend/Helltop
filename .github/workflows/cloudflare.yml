@@ -1,9 +1,11 @@
-name: Deploy to Cloudflare Workers
-on: push
-
+name: Deploy to Cloudflare Pages
+on:
+  push:
+    branches:
+      - main
 jobs:
   deploy:
-    name: "Deploy to Cloudflare Workers"
+    name: "Deploy to Cloudflare Pages"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,15 +26,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Wrangler
-        run: pnpm add -g wrangler@latest
-
       - name: Build project
-        run: pnpm run build --preset=cloudflare_pages
+        run: pnpm run build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+          projectName: helltop
+          directory: .output/public
