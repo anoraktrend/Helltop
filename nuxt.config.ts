@@ -30,6 +30,9 @@ export default defineNuxtConfig({
       codeberg: 'anoraktrend',
     },
   },
+  runtimeConfig: {
+    githubToken: process.env.GITHUB_TOKEN
+  },
   modules: [
     '@nuxt/content',
     '@nuxt/icon',
