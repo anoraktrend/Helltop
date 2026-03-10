@@ -10,13 +10,8 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "helltop_db",
+			"database_name": "helltop-db",
 			"database_id": "83dc0b5e-3933-41e3-8556-694d34e3f414"
-		},
-		{
-			"binding": "status_db",
-			"database_name": "status_db",
-			"database_id": "44be4f71-163b-4d31-bb03-6847874802c4"
 		}
 	],
 	"vars": {
