@@ -16,11 +16,6 @@ const appConfig = useAppConfig();
         :to="link.path"
         active-class="font-bold"
       >{{ link.title }}</NuxtLink>
-      <NuxtLink
-        to="/status"
-        class="mr-6"
-        active-class="font-bold"
-      >Status</NuxtLink>
     </div>
     <!-- Social icons & Color Mode -->
     <div class="text-gray-500 space-x-3 transition">

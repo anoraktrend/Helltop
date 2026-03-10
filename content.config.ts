@@ -23,9 +23,5 @@ export default defineContentConfig({
         draft: z.boolean().default(false),
       }),
     }),
-    data: defineCollection({
-      type: 'data',
-      source: '*.json',
-    }),
   },
 })
