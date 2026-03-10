@@ -2,7 +2,10 @@
 const appConfig = useAppConfig();
 const year = new Date().getFullYear();
 
-const { data: statusData } = await useFetch('https://status.helltop.net/api/status')
+const { data: statusData } = await useFetch('https://status.helltop.net/api/status', {
+  server: false,
+  lazy: true
+})
 
 const overallStatus = computed(() => {
   if (!statusData.value || !statusData.value.services) return 'checking'
