@@ -60,8 +60,6 @@ export default defineNuxtConfig({
   },
 
   image: {
-    // Use Cloudflare compatible image provider
-    provider: 'none',
     // Configure domains for external images if needed
     domains: [],
     // Enable automatic optimization
