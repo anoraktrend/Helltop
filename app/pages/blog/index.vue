@@ -6,7 +6,7 @@ const { data: posts } = await useAsyncData('blog-posts', () =>
 </script>
 
 <template>
-  <div class="px-4 py-10 m-auto sm:px-8 sm:rounded-lg max-w-2xl sm:shadow bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700">
+  <div class="px-4 py-10 sm:px-8">
     <main class="max-w-none prose dark:prose-invert">
       <h1 class="text-4xl font-bold mb-8">Blog</h1>
 
