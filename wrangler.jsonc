@@ -1,9 +1,0 @@
-{
-	"name": "helltop",
-	"compatibility_date": "2026-02-08",
-	"compatibility_flags": ["nodejs_compat"],
-	"pages_build_output_dir": ".output/public",
-	"vars": {
-		"ENVIRONMENT": "production"
-	}
-}

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nuxi dev",
     "build": "pnpm generate:rss && nuxi build",
-    "generate:rss": "npx tsx scripts/generate-rss.ts",
+    "generate:rss": "npx tsx server/utils/generateRss.ts",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "lint": "eslint .",
