@@ -19,3 +19,4 @@ dist/
 
 # Test coverage
 coverage/
+public/rss.xml
