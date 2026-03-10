@@ -25,10 +25,7 @@ export default defineContentConfig({
     }),
     data: defineCollection({
       type: 'data',
-      source: {
-        cwd: 'data',
-        include: '*.json'
-      }
+      source: '_*.json'
     }),
   },
 })
