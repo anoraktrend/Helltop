@@ -200,13 +200,3 @@ export async function generateRss() {
   return xml
 }
 
-// Check if run as a script
-if (typeof process !== 'undefined' && Array.isArray(process.argv) && process.argv[1]) {
-  const isMain = import.meta.url?.endsWith(process.argv[1]) || process.argv[1].endsWith('generateRss.ts')
-  if (isMain) {
-    generateRss().catch(err => {
-      console.error('Failed to generate RSS:', err)
-      process.exit(1)
-    })
-  }
-}
