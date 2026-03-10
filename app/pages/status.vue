@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { data: statusData } = await useAsyncData('subdomains', () => {
-  return queryCollection('data').path('/subdomains').first()
+  return queryCollection('data').where('stem', '=', 'subdomains').first()
 })
 
 interface Subdomain {
