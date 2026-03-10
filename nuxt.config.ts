@@ -95,9 +95,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/status': { prerender: false },
-    '/subdomains': { prerender: false, index: false },
-    '/__nuxt_content/**': { prerender: false }
+    '/status': { prerender: false }
   },
 
   compatibilityDate: '2026-02-07',
