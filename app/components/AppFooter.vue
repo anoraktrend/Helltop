@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 </script>
 
 <template>
-  <footer class="px-4 py-6 mx-auto text-center text-gray-500 dark:text-gray-400 sm:px-8 max-w-2xl">
+  <footer class="px-4 py-6 text-center text-gray-500 dark:text-gray-400 sm:px-8">
     <div class="space-y-2">
       <!-- Copyright -->
       <p>&copy; {{ year }} {{ appConfig.siteName}}</p>

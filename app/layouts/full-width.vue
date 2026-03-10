@@ -1,6 +1,6 @@
 <template>
-  <div class="py-10 m-auto sm:px-8">
-    <main class="px-4 mx-auto max-w-2xl prose">
+  <div class="py-10 sm:px-8">
+    <main class="px-4 max-w-none prose">
       <slot>
         <h1 class="text-2xl">Page not found</h1>
       </slot>
