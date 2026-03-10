@@ -6,7 +6,10 @@ const { data: statusData } = await useAsyncData('subdomains', () => {
 interface Subdomain {
   name: string
   url: string
+  healthEndpoint?: string
   status?: 'up' | 'down' | 'checking'
+  latency?: number
+  version?: string
 }
 
 const subdomains = ref<Subdomain[]>([])
@@ -18,7 +21,6 @@ const updateTimestamp = () => {
 
 watchEffect(() => {
   if (statusData.value) {
-    // In Nuxt Content v3 with data collection, the entire JSON is the object.
     const data = (statusData.value as any).body || statusData.value
     if (Array.isArray(data)) {
       subdomains.value = data.map(s => ({ ...s, status: 'checking' }))
@@ -36,9 +38,18 @@ watchEffect(() => {
 const checkStatus = async (service: Subdomain) => {
   service.status = 'checking'
   try {
-    // We use a fetch with no-cors. If it's a network error, it's down.
-    await fetch(service.url, { mode: 'no-cors' })
-    service.status = 'up'
+    const data = await $fetch('/api/status', {
+      query: { 
+        url: service.url,
+        endpoint: service.healthEndpoint
+      }
+    }) as any
+    
+    service.status = data.status
+    service.latency = data.latency
+    if (data.details?.version) {
+      service.version = data.details.version
+    }
   } catch (error) {
     service.status = 'down'
   }
@@ -88,26 +99,34 @@ useSeoMeta({
       >
         <div>
           <h2 class="font-semibold text-gray-900 dark:text-white">{{ service.name }}</h2>
-          <a :href="service.url" class="text-sm text-blue-500 hover:underline" target="_blank">{{ service.url }}</a>
+          <div class="flex items-center space-x-2">
+            <a :href="service.url" class="text-sm text-blue-500 hover:underline" target="_blank">{{ service.url }}</a>
+            <span v-if="service.version" class="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-500 px-1 rounded">v{{ service.version }}</span>
+          </div>
         </div>
         
-        <div class="flex items-center">
-          <span 
-            v-if="service.status === 'checking'"
-            class="inline-block w-3 h-3 rounded-full bg-yellow-400 animate-pulse mr-2"
-          ></span>
-          <span 
-            v-else-if="service.status === 'up'"
-            class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"
-          ></span>
-          <span 
-            v-else-if="service.status === 'down'"
-            class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"
-          ></span>
-          
-          <span class="text-sm font-medium">
-            {{ service.status === 'checking' ? 'Checking...' : (service.status === 'up' ? 'Operational' : 'Unavailable') }}
-          </span>
+        <div class="flex flex-col items-end">
+          <div class="flex items-center">
+            <span 
+              v-if="service.status === 'checking'"
+              class="inline-block w-3 h-3 rounded-full bg-yellow-400 animate-pulse mr-2"
+            ></span>
+            <span 
+              v-else-if="service.status === 'up'"
+              class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"
+            ></span>
+            <span 
+              v-else-if="service.status === 'down'"
+              class="inline-block w-3 h-3 rounded-full bg-red-500 mr-2"
+            ></span>
+            
+            <span class="text-sm font-medium">
+              {{ service.status === 'checking' ? 'Checking...' : (service.status === 'up' ? 'Operational' : 'Unavailable') }}
+            </span>
+          </div>
+          <div v-if="service.latency" class="text-[10px] text-gray-400 mt-1">
+            {{ service.latency }}ms
+          </div>
         </div>
       </div>
     </div>
