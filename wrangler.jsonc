@@ -11,7 +11,7 @@
 		{
 			"binding": "DB",
 			"database_name": "helltop-db",
-			"database_id": "00000000-0000-0000-0000-000000000000"
+			"database_id": "83dc0b5e-3933-41e3-8556-694d34e3f414"
 		},
 		{
 			"binding": "status_db",
