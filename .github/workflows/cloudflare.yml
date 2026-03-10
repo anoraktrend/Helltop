@@ -29,9 +29,12 @@ jobs:
       - name: Build project
         run: pnpm run build
 
+      - name: List files (debug)
+        run: ls -R .output || true && ls -R dist || true
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .output/public --project-name=helltop
+          command: pages deploy dist --project-name=helltop
