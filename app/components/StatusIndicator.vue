@@ -5,27 +5,42 @@ const props = defineProps<{
 
 const { data: statusData } = await useFetch('https://status.helltop.net/api/status')
 
-const serviceStatus = computed(() => {
-  if (!statusData.value || !statusData.value.services) return 'unknown'
-  const service = statusData.value.services.find((s: any) => s.name.toLowerCase().includes(props.name.toLowerCase()))
-  return service ? service.status : 'unknown'
+const service = computed(() => {
+  if (!statusData.value || !statusData.value.services) return null
+  return statusData.value.services.find((s: any) => s.name.toLowerCase().includes(props.name.toLowerCase()))
 })
 
-const statusColor = computed(() => {
-  switch (serviceStatus.value) {
-    case 'up': return 'text-green-500'
-    case 'down': return 'text-red-500'
-    default: return 'text-gray-500'
+const status = computed(() => service.value?.status || 'unknown')
+const latency = computed(() => service.value?.latest?.latency_ms)
+const lastChecked = computed(() => {
+  if (!service.value?.latest?.timestamp) return ''
+  return new Date(service.value.latest.timestamp + (service.value.latest.timestamp.endsWith('Z') ? '' : 'Z')).toLocaleTimeString()
+})
+
+const color = computed(() => {
+  switch (status.value) {
+    case 'up': return 'success'
+    case 'down': return 'error'
+    default: return 'neutral'
   }
 })
 </script>
 
 <template>
-  <span class="inline-flex items-center gap-1.5 font-medium" :class="statusColor">
-    <span class="relative flex h-2 w-2">
-      <span v-if="serviceStatus === 'up'" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-      <span class="relative inline-flex rounded-full h-2 w-2" :class="serviceStatus === 'up' ? 'bg-green-500' : (serviceStatus === 'down' ? 'bg-red-500' : 'bg-gray-500')"></span>
-    </span>
-    <span class="text-[10px] uppercase tracking-wider">{{ serviceStatus }}</span>
-  </span>
+  <UTooltip :text="status === 'up' ? `Latency: ${latency}ms | Last checked: ${lastChecked}` : 'Service is currently offline'">
+    <UBadge
+      :color="color"
+      variant="soft"
+      size="sm"
+      class="font-mono text-[10px] px-1.5 py-0.5"
+    >
+      <template #leading>
+        <span class="relative flex h-1.5 w-1.5 mr-1">
+          <span v-if="status === 'up'" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-1.5 w-1.5" :class="status === 'up' ? 'bg-success-500' : (status === 'down' ? 'bg-error-500' : 'bg-neutral-500')"></span>
+        </span>
+      </template>
+      {{ status.toUpperCase() }}
+    </UBadge>
+  </UTooltip>
 </template>
