@@ -34,5 +34,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: helltop
-          directory: .output/public
+          command: pages deploy .output/public --project-name=helltop
