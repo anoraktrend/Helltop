@@ -7,6 +7,13 @@
 		"directory": ".output/public",
 		"binding": "ASSETS"
 	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "helltop-db",
+			"database_id": "00000000-0000-0000-0000-000000000000"
+		}
+	],
 	"vars": {
 		"ENVIRONMENT": "production"
 	}
