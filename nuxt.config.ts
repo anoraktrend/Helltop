@@ -94,6 +94,10 @@ export default defineNuxtConfig({
     }
   },
 
+  routeRules: {
+    '/status': { prerender: false }
+  },
+
   compatibilityDate: '2026-02-07',
 
   vite: {
