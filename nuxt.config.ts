@@ -107,7 +107,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare-pages',
+    preset: 'cloudflare-module',
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],

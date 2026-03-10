@@ -1,10 +1,9 @@
-name: Forgejo Deploy to Cloudflare Pages
+name: Forgejo Deploy to Cloudflare Workers
 on: [push]
 
 jobs:
   deploy:
-    name: "Deploy to Cloudflare Pages"
-    # Forgejo runners (act_runner) often use 'ubuntu-latest' but can also use specific images
+    name: "Deploy to Cloudflare Workers"
     runs-on: ubuntu-latest
     
     steps:
@@ -25,11 +24,11 @@ jobs:
         run: pnpm install
 
       - name: Build project
-        run: pnpm run build --preset=cloudflare_pages
+        run: pnpm run build
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=helltop
+          command: deploy
