@@ -3,7 +3,7 @@ const props = defineProps<{
   name: string
 }>()
 
-const { data: statusData } = await useFetch('https://status.helltop.net/api/status', {
+const { data: statusData } = useFetch('https://status.helltop.net/api/status', {
   server: false,
   lazy: true
 })
