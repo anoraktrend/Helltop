@@ -4,7 +4,7 @@ const year = new Date().getFullYear();
 </script>
 
 <template>
-  <footer class="px-4 py-6 text-center text-gray-500 dark:text-gray-400 sm:px-8">
+  <footer class="px-4 py-6 text-center text-[var(--text-muted)] sm:px-8">
     <div class="space-y-2">
       <!-- Copyright -->
       <p>&copy; {{ year }} {{ appConfig.siteName}}</p>
@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
       <div class="flex justify-center space-x-4">
         <a
           v-if="appConfig.socials?.liberapay"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           :href="`https://liberapay.com/${appConfig.socials?.liberapay}`"
           title="Liberapay"
         >
@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
         </a>
         <a
           v-if="appConfig.socials?.github"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           :href="`https://github.com/${appConfig.socials?.github}`"
           title="GitHub"
         >
@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
         </a>
         <a
           v-if="appConfig.socials?.codeberg"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           :href="`https://codeberg.org/${appConfig.socials?.codeberg}`"
           title="Codeberg"
         >
@@ -38,7 +38,7 @@ const year = new Date().getFullYear();
         <a
           v-if="appConfig.socials?.mastodon"
           rel="me"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           :href="`https://${appConfig.socials?.mastohost}/${appConfig.socials?.mastodon}`"
           title="Mastodon"
         >
@@ -46,7 +46,7 @@ const year = new Date().getFullYear();
         </a>
         <a
           v-if="appConfig.socials?.bluesky"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           :href="`https://bsky.app/profile/${appConfig.socials?.bluesky}`"
           title="Bluesky"
         >
@@ -54,7 +54,7 @@ const year = new Date().getFullYear();
         </a>
         <a
           href="/rss.xml"
-          class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+          class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           title="RSS Feed"
         >
           <Icon class="size-5" name="i-simple-icons-rss" />

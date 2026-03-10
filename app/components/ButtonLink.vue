@@ -20,7 +20,7 @@ defineProps({
     <NuxtLink
       :to="href"
       :external="external"
-      class="inline-flex items-center gap-1 !text-white bg-gray-800 dark:bg-gray-200 !dark:text-gray-950 px-3 py-1 rounded no-underline"
+      class="inline-flex items-center gap-1 bg-latte-mauve text-latte-base dark:bg-mocha-mauve dark:text-mocha-base px-3 py-1 rounded no-underline hover:opacity-90 transition-opacity"
     >
       <Icon
         v-if="icon"
