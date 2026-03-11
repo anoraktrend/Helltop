@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    githubToken: process.env.GITHUB_TOKEN
+    githubToken: process.env.GITHUB_TOKEN,
   },
   modules: [
     '@nuxt/content',
@@ -41,7 +41,27 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/ui',
+    'nuxt-oidc-auth',
   ],
+  oidc: {
+    defaultProvider: 'oidc',
+    providers: {
+      oidc: {
+        baseUrl: process.env.AUTHELIA_URL || '',
+        clientId: process.env.AUTHELIA_CLIENT_ID || '',
+        clientSecret: process.env.AUTHELIA_CLIENT_SECRET || '',
+        redirectUri: process.env.NUXT_OIDC_REDIRECT_URI || 'http://localhost:3000/auth/oidc/callback',
+        scope: ['openid', 'profile', 'email'],
+      }
+    },
+    session: {
+      automaticRefresh: true,
+      expirationCheck: true,
+    },
+    middleware: {
+      globalRestrictDefault: false,
+    }
+  },
 
   css: ['~/assets/css/main.css'],
   // @ts-expect-error colorMode module config

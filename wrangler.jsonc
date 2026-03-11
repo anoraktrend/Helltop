@@ -3,6 +3,9 @@
 	"main": ".output/server/index.mjs",
 	"compatibility_date": "2026-02-08",
 	"compatibility_flags": ["nodejs_compat"],
+	"routes": [
+		{ "pattern": "helltop.net", "custom_domain": true }
+	],
 	"assets": {
 		"directory": ".output/public",
 		"binding": "ASSETS"

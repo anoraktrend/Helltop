@@ -1,9 +1,15 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: 'oidc-auth'
+})
+
 const title = ref('')
 const slug = ref('')
 const content = ref('')
 const loading = ref(false)
 const message = ref('')
+
+const { logout } = useOidcAuth()
 
 const savePost = async () => {
   loading.value = true
@@ -28,7 +34,10 @@ const savePost = async () => {
 
 <template>
   <div class="p-8 max-w-4xl mx-auto font-sans">
-    <h1 class="text-3xl font-bold mb-8 text-primary-500">Helltop Editor</h1>
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-primary-500">Helltop Editor</h1>
+      <UButton variant="ghost" @click="logout()">Sign out</UButton>
+    </div>
     
     <div v-if="message" class="mb-4 p-4 rounded bg-gray-100 dark:bg-gray-800 text-sm border-l-4 border-primary-500">
       {{ message }}

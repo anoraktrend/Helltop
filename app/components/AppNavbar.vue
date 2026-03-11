@@ -3,13 +3,14 @@ const { data: navigation } = await useAsyncData('navigation', () =>
   queryCollectionNavigation('content'),
 );
 
+const { loggedIn, login, logout } = useOidcAuth()
 const appConfig = useAppConfig();
 </script>
 
 <template>
   <div class="flex justify-between items-center px-4 py-6 sm:px-8">
     <!-- Navigation -->
-    <div class="text-[var(--text-dim)]">
+    <div class="flex items-center text-[var(--text-dim)]">
       <NuxtLink
         v-for="link in navigation"
         :key="link.path" class="mr-6"
