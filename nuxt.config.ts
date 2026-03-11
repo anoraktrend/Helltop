@@ -129,11 +129,36 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'cloudflare-module',
-    banner: "if (typeof console !== 'undefined' && !console.createTask) { console.createTask = (name) => ({ run: (fn) => fn() }); }",
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
       crawlLinks: true
+    },
+    hooks: {
+      compiled: async (nitro) => {
+        const path = require('node:path');
+        const fsp = require('node:fs/promises');
+        const entry = path.resolve(nitro.options.output.serverDir, 'index.mjs');
+        const shimFile = path.resolve(nitro.options.output.serverDir, 'shim.mjs');
+        const content = await fsp.readFile(entry, 'utf8');
+        
+        const shimCode = `
+const shim = (n) => ({ run: f => f() });
+if (typeof console !== 'undefined') {
+  try {
+    Object.defineProperty(console, 'createTask', { value: shim, writable: true, configurable: true });
+    if (console.Console && console.Console.prototype) {
+      Object.defineProperty(console.Console.prototype, 'createTask', { value: shim, writable: true, configurable: true });
+    }
+  } catch (e) {
+    console.createTask = shim;
+  }
+}
+`.replace(/\n/g, ' ');
+
+        await fsp.writeFile(shimFile, shimCode);
+        await fsp.writeFile(entry, "import './shim.mjs';\n" + content);
+      }
     }
   }
 })
