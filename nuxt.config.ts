@@ -32,6 +32,13 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     githubToken: process.env.GITHUB_TOKEN,
+    oidc: {
+      providers: {
+        oidc: {
+          clientSecret: '' // Fallback, will be overridden by NUXT_OIDC_PROVIDERS_OIDC_CLIENT_SECRET
+        }
+      }
+    }
   },
   modules: [
     '@nuxt/content',
@@ -47,10 +54,10 @@ export default defineNuxtConfig({
     defaultProvider: 'oidc',
     providers: {
       oidc: {
-        baseUrl: process.env.AUTHELIA_URL || '',
-        clientId: process.env.AUTHELIA_CLIENT_ID || '',
-        clientSecret: process.env.AUTHELIA_CLIENT_SECRET || '',
-        redirectUri: process.env.NUXT_OIDC_REDIRECT_URI || 'http://localhost:3000/auth/oidc/callback',
+        baseUrl: 'https://auth.helltop.net',
+        clientId: 'helltop',
+        clientSecret: '', // Leave empty to use runtimeConfig/env
+        redirectUri: 'https://helltop.net/auth/oidc/callback',
         scope: ['openid', 'profile', 'email'],
       }
     },
@@ -59,6 +66,7 @@ export default defineNuxtConfig({
       expirationCheck: true,
     },
     middleware: {
+      globalMiddlewareEnabled: false,
       globalRestrictDefault: false,
     }
   },
@@ -132,6 +140,7 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
+      ignore: ['/admin/editor'],
       crawlLinks: true
     },
     hooks: {
