@@ -35,8 +35,16 @@ export default defineNuxtConfig({
     oidc: {
       providers: {
         oidc: {
-          clientSecret: '' // Fallback, will be overridden by NUXT_OIDC_PROVIDERS_OIDC_CLIENT_SECRET
+          baseUrl: 'https://auth.helltop.net',
+          clientId: 'helltop',
+          clientSecret: '', // Matches NUXT_OIDC_PROVIDERS_OIDC_CLIENT_SECRET
+          redirectUri: 'https://helltop.net/auth/oidc/callback',
+          scope: ['openid', 'profile', 'email'],
+          userNameClaim: 'preferred_username',
         }
+      },
+      session: {
+        secret: '' // Matches NUXT_OIDC_SESSION_SECRET
       }
     }
   },
@@ -56,14 +64,11 @@ export default defineNuxtConfig({
       oidc: {
         baseUrl: 'https://auth.helltop.net',
         clientId: 'helltop',
-        clientSecret: '', // Leave empty to use runtimeConfig/env
+        clientSecret: '', 
         redirectUri: 'https://helltop.net/auth/oidc/callback',
         scope: ['openid', 'profile', 'email'],
+        userNameClaim: 'preferred_username',
       }
-    },
-    session: {
-      automaticRefresh: true,
-      expirationCheck: true,
     },
     middleware: {
       globalMiddlewareEnabled: false,
