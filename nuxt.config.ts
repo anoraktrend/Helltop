@@ -129,6 +129,7 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'cloudflare-module',
+    banner: "if (typeof console !== 'undefined' && !console.createTask) { console.createTask = (name) => ({ run: (fn) => fn() }); }",
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
