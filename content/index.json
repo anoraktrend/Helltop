@@ -1,0 +1,61 @@
+{
+  "hero": {
+    "title": "Welcome to My Digital Rebellion",
+    "subtitle": "Fuck the corporate cloud. Build your own.",
+    "description": "I'm a self-hoster who's done with watching Big Tech monetize every keystroke, harvest every click, and lock you into ecosystems designed to extract maximum profit from your digital life. This is my war room where I build tools, share tactics, and forge weapons for anyone ready to tear down the walled gardens and reclaim what's rightfully theirs: complete control over your computing."
+  },
+  "sections": [
+    {
+      "id": "manifesto",
+      "title": "Manifesto",
+      "type": "text",
+      "content": "The internet is dying under the boot of surveillance capitalism. Five corporations own your digital existence. They've turned \"the cloud\" into a euphemism for \"rent-seeking middleman\" and \"user-friendly\" into code for \"we control everything.\"",
+      "list": [
+        { "title": "Self-hosting everything", "text": "Your email, your repos, your files, your life. If you're paying monthly rent for storage that sits on someone else's hardware, you're a serf in digital feudalism." },
+        { "title": "Building with open source exclusively", "text": "Proprietary software is a cage. The source code is the key. Anyone telling you otherwise profits from your captivity." },
+        { "title": "Burning down surveillance capitalism", "text": "Every \"free\" service is a panopticon. Stop volunteering for your own surveillance." },
+        { "title": "Weaponizing self-reliance", "text": "Learn to run your own infrastructure or accept that you'll always be at the mercy of some corporation's quarterly earnings call." }
+      ],
+      "quote": "The cloud isn't the future. It's a scam. Host your own goddamn servers."
+    },
+    {
+      "id": "arsenal",
+      "title": "Arsenal",
+      "subtitle": "The Infrastructure",
+      "type": "infrastructure",
+      "items": [
+        { "name": "Git (Forgejo)", "url": "https://git.helltop.net", "badge": "git", "function": "Self-hosted git server. The primary forge for my software and tactics." },
+        { "name": "Cloud (Nextcloud)", "url": "https://cloud.helltop.net", "badge": "cloud", "function": "My digital safe haven. Files, contacts, and calendar without corporate harvesting." },
+        { "name": "Jellyfin", "url": "https://jellyfin.helltop.net", "badge": "jellyfin", "function": "Media liberation. Ripping, storing, and managing my own media collection." },
+        { "name": "Immich", "url": "https://immich.helltop.net", "badge": "immich", "function": "High-performance photo backup. Reclaiming my visual history from Google Photos." },
+        { "name": "Authelia", "url": "https://auth.helltop.net", "badge": "auth", "function": "Single Sign-On and 2FA. Securing the perimeter of my entire network." },
+        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." },
+        { "name": "StatusFlare", "url": "https://status.helltop.net", "badge": "status", "function": "Custom serverless monitoring. The watchtower of the arsenal." }
+      ]
+    },
+    {
+      "id": "forge",
+      "title": "The Forge",
+      "subtitle": "Software I Build & Maintain",
+      "type": "software",
+      "items": [
+        { "name": "Quester", "url": "/blog/quester", "description": "A modern, visually rich MPD (Music Player Daemon) client for visual audiophiles, built with Qt 6 and QML." },
+        { "name": "AEE", "url": "/blog/AEE", "description": "A maintained fork of the classic \"Another Easy Editor\". Simplicity and obviousness preserved for modern systems." },
+        { "name": "EE", "url": "/blog/ee", "description": "The \"Easy Editor\" that actually lives up to its name. Small, fast, and stays out of your way." },
+        { "name": "YAMS", "url": "/blog/yams", "description": "Yet Another Media Server utility. A suite of tools to keep your media library in check and your servers running smooth." },
+        { "name": "Fork This Site", "url": "/blog/FTS", "description": "A high-performance blog template built with Nuxt and Tailwind. Designed for speed, ownership, and easy deployment." },
+        { "name": "Music Folder Utils", "url": "/blog/mfutil", "description": "Small, sharp tools for music library organization and desktop integration. Built because I like my folders clean." }
+      ]
+    },
+    {
+      "id": "resistance",
+      "title": "Join the Resistance",
+      "type": "cta",
+      "content": "I'm building networks with developers, sysadmins, and digital freedom fighters who are tired of asking permission to use their own fucking computers. reach out via <a href=\"mailto:lucyrandall@helltop.net\">email</a> or through my repositories."
+    }
+  ],
+  "footer": {
+    "lastUpdated": "March 2026",
+    "statusUrl": "https://status.helltop.net/"
+  }
+}
