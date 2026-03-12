@@ -25,7 +25,7 @@ export default defineContentConfig({
     }),
     homepage: defineCollection({
       type: 'data',
-      source: 'index.json',
+      source: '1.index.json',
       schema: z.object({
         hero: z.object({
           title: z.string(),
