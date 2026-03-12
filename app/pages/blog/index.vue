@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Query the blog collection using Nuxt Content v3 API
 const { data: posts } = await useAsyncData('blog-posts', () => 
-  queryCollection('blog').all()
+  queryCollection('blog').order('date', 'desc').all()
 )
 </script>
 
