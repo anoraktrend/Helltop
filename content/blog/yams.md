@@ -1,7 +1,7 @@
 ---
 title: "YAMS"
 description: "A Sweet Media Server Management utility."
-date: "2025-10-06"
+date: 2025-11-30
 author: "Lucy Ada Randall"
 category: "Media Server"
 slug: "yams"

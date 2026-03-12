@@ -1,7 +1,7 @@
 ---
 title: "EE: The Easy Editor"
 description: "The Easy Editor That Actually Lives Up to Its Name"
-date: "2025-10-06"
+date: 2025-12-03
 author: "Lucy Ada Randall"
 category: "TUIs"
 slug: "ee"

@@ -1,7 +1,7 @@
 ---
 title: "Maintaning AEE: Another Easy Editor"
 description: "Preserving simple, instruction-free editing for modern systems. Power ≠ complex."
-date: "2025-10-06"
+date: 2026-03-07
 author: "Lucy Ada Randall"
 category: "TUIs"
 slug: "AEE"

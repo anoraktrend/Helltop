@@ -1,7 +1,7 @@
 ---
 title: "Music Folder Utils"
 description: "Music Library Management at its finest."
-date: "2025-10-06"
+date: 2026-02-12
 author: "Lucy Ada Randall"
 category: "Library Management Tools"
 slug: "mfutil"

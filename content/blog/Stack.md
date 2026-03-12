@@ -1,7 +1,7 @@
 ---
 title: "My Self-Hosted Stack: Reclaiming Digital Autonomy"
 description: "How I built my own cloud infrastructure and told Big Tech to fuck off"
-date: "2025-11-20"
+date: 2026-02-24
 author: "Lucy Ada Randall"
 category: "Self-Hosting"
 slug: "stack"

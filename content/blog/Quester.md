@@ -1,5 +1,5 @@
 ---
-date: 2026-02-07
+date: 2026-02-19
 title: "Quester: A Modern MPD Client for Visual Audiophiles"
 description: "Building a visually rich Music Player Daemon (MPD) client that 
 prioritizes album art, visual feedback, and a fluid user experience using Qt 6 

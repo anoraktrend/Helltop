@@ -1,7 +1,7 @@
 ---
 title: "Fork This Site: Self Hosting and Simplified Web Design"
 description: "How I built a fast, self-controlled website using Nuxt 3 and Cloudflare Workers without surrendering to traditional hosting bullshit"
-date: "2025-11-20"
+date: 2026-01-18
 author: "Lucy Ada Randall"
 category: "Web Development"
 slug: "FTS"

@@ -1,7 +1,7 @@
 ---
 title: "Tailscale: Your Private Network Without the Domain Name Bullshit"
 description: "Secure remote access to your homelab without buying domains, configuring DNS, or exposing ports to the internet"
-date: "2025-11-20"
+date: 2025-11-14
 author: "Lucy Ada Randall"
 category: "Self-Hosting"
 slug: "tailscale"
