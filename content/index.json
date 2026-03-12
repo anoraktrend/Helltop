@@ -29,8 +29,7 @@
         { "name": "Jellyfin", "url": "https://jellyfin.helltop.net", "badge": "jellyfin", "function": "Media liberation. Ripping, storing, and managing my own media collection." },
         { "name": "Immich", "url": "https://immich.helltop.net", "badge": "immich", "function": "High-performance photo backup. Reclaiming my visual history from Google Photos." },
         { "name": "Authelia", "url": "https://auth.helltop.net", "badge": "auth", "function": "Single Sign-On and 2FA. Securing the perimeter of my entire network." },
-        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." },
-        { "name": "StatusFlare", "url": "https://status.helltop.net", "badge": "status", "function": "Custom serverless monitoring. The watchtower of the arsenal." }
+        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." }
       ]
     },
     {
