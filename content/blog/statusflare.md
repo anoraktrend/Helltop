@@ -1,7 +1,7 @@
 ---
 title: "StatusFlare: Forging a Serverless Watchtower"
 description: "How I built a dynamic monitoring system and survived the great LDAP/OIDC identity war of 2026."
-date: 2025-12-28
+date: 2026-03-09
 tags: ["self-hosting", "cloudflare", "lldap", "authelia", "nextcloud", "devops"]
 ---
 
