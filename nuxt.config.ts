@@ -138,6 +138,7 @@ export default defineNuxtConfig({
       ignore: ['/admin/editor'],
       crawlLinks: true
     },
+    /*
     hooks: {
       compiled: async (nitro) => {
         const path = require('node:path');
@@ -164,5 +165,6 @@ if (typeof console !== 'undefined') {
         await fsp.writeFile(entry, "import './shim.mjs';\n" + content);
       }
     }
+    */
   }
 })
