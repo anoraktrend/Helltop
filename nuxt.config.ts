@@ -32,6 +32,21 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     githubToken: process.env.GITHUB_TOKEN,
+    oidc: {
+      providers: {
+        oidc: {
+          baseUrl: 'https://auth.helltop.net',
+          clientId: 'helltop',
+          clientSecret: '', // Matches NUXT_OIDC_PROVIDERS_OIDC_CLIENT_SECRET
+          redirectUri: 'https://helltop.net/auth/oidc/callback',
+          scope: ['openid', 'profile', 'email'],
+          userNameClaim: 'preferred_username',
+        }
+      },
+      session: {
+        secret: '' // Matches NUXT_OIDC_SESSION_SECRET
+      }
+    }
   },
   modules: [
     '@nuxt/content',
@@ -45,19 +60,6 @@ export default defineNuxtConfig({
   ],
   oidc: {
     defaultProvider: 'oidc',
-    providers: {
-      oidc: {
-        baseUrl: 'https://auth.helltop.net',
-        clientId: 'helltop',
-        clientSecret: '', 
-        redirectUri: 'https://helltop.net/auth/oidc/callback',
-        scope: ['openid', 'profile', 'email'],
-        userNameClaim: 'preferred_username',
-      }
-    },
-    session: {
-      secret: '' // Matches NUXT_OIDC_SESSION_SECRET
-    },
     middleware: {
       globalMiddlewareEnabled: false,
       globalRestrictDefault: false,
