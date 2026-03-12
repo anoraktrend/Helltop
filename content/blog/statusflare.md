@@ -15,45 +15,41 @@ If you're running your own infrastructure, you're constantly looking for the "Re
 
 Today, I finished **StatusFlare**, my custom-built, serverless status dashboard. But the road to getting it live turned into a full-scale tactical overhaul of my entire identity stack.
 
-## The Weapon: StatusFlare
+## The Architecture: Serverless & Indestructible
 
 StatusFlare isn't just another status page. It's built to be fast, indestructible, and zero-maintenance.
 
 - **The Core**: Built on **Cloudflare Workers** (TypeScript). It runs at the edge, meaning it monitors my services from data centers all over the planet, not just from my home network.
 - **The Brain**: Powered by **Cloudflare D1**, a serverless SQL database. It tracks every ping, every latency spike, and every outage snippet.
-- **The Look**: A custom "Glassmorphism" UI using the **Catppuccin Mocha/Latte** palette with Mauve highlights.
-- **Automated**: A background cron job polls my arsenal every 60 seconds. If a service blinks, the dashboard reflects it instantly.
+- **The Look**: A custom "Glassmorphism" UI using the **Catppuccin Mocha/Latte** palette with Mauve highlights. It supports both light and dark modes natively.
+- **Automated**: A background cron job (`* * * * *`) polls the entire arsenal every 60 seconds.
 
-Check it out live: [status.helltop.net](https://status.helltop.net)
+## Recent Tactical Upgrades
 
-## The Identity War: LLDAP, Authelia, and Nextcloud
+The project has evolved rapidly from a simple monitor into a full-scale management suite:
 
-Building the dashboard was the easy part. Integrating it into a unified SSO (Single Sign-On) experience was where the real fighting started.
+- **Incident Management System**: I've implemented a manual incident reporting system. This allows me to create detailed incident logs, link them to specific services, and mark them as "resolved" once the fire is out.
+- **Authelia OIDC Integration**: The "Identity War" was won by integrating **Authelia OIDC** for administrative access. No more manual password juggling; the admin panel is now secured behind my primary SSO identity.
+- **Advanced Health Checks**: I added support for complex health checks, including:
+    - Custom HTTP methods and headers.
+    - **OAuth2 Token Support**: StatusFlare can now automatically acquire and cache Bearer tokens to monitor protected APIs.
+    - **Smart Snippets**: It automatically parses JSON responses for better error visibility in the logs.
+- **Dynamic Status Badges**: Added a `/badge/[service].svg` route that generates real-time SVG status indicators for embedding in READMEs or other dashboards.
+- **Detailed Service Pages**: Every service now has a dedicated history page showing the last 50 checks, latency trends, and active incidents.
 
-I had multiple identities floating around. Two Nextcloud accounts, a fragmented LDAP directory, and an Authelia instance that was caught in a crash loop. I decided to level the field and rebuild.
+## Deployment: The Forgejo Pipeline
 
-### Tactical Moves:
-1.  **Database Surgery**: I manually re-seeded the LLDAP user database, synchronized the cryptographic keys (the `key_seed`), and re-created a stable `admin` service account.
-2.  **The Great Nextcloud Merge**: I identified two accounts sharing the same email. I performed an ownership transfer, consolidated all files into one LDAP-linked identity, and deleted the redundant ghost account.
-3.  **OIDC Synchronization**: I survived the "Client Authentication Failed" trenches by force-syncing fresh PBKDF2 secrets between Authelia and Nextcloud via the `occ` command line.
+Deployment is fully automated through a **Forgejo Actions** CI/CD pipeline. 
 
-The result? A single, secured administrative identity now unlocks the entire arsenal.
+1.  **Trigger**: Every push to the `main` branch on [git.helltop.net](https://git.helltop.net) triggers the runner.
+2.  **Validation**: The runner performs a full TypeScript type-check and linting pass.
+3.  **Wrangler Deploy**: Using the `cloudflare/wrangler-action`, the worker is automatically pushed to Cloudflare.
+4.  **Database Migrations**: D1 schema updates are handled via Wrangler's migration system, ensuring the database stays in sync with the code.
 
-## Hardening the Infrastructure
-
-While I was at it, I optimized the physical layer:
-
-- **BTRFS Optimization**: Enabled `zstd` compression and `noatime` on my HDD media array to save space and reduce seek latency.
-- **Root SSD Care**: Injected `discard=async` into the root mount to handle TRIM in the background, keeping the SSD fast and healthy.
-- **RAM-Speed Caches**: With 128GB of RAM available, I moved all heavy-write caches (`yay` builds, browser profiles, `node-gyp`) into a **32GB tmpfs**. My SSD now only writes what matters; the rest lives and dies in the speed of memory.
-
-## Automation & CI/CD
-
-The final piece of the puzzle was **Forgejo Actions**. I deployed a local runner (the "Helltop Runner") inside my Docker stack. Now, every time I push code to [git.helltop.net](https://git.helltop.net), the runner:
-1.  Checkouts the code via a secure local mirror (`data.forgejo.org`).
-2.  Lints and type-checks the TypeScript.
-3.  Automatically deploys the worker to Cloudflare.
+The result? A single `git push` takes a feature from my local machine to the edge in under 60 seconds.
 
 ## Conclusion
 
-Self-hosting isn't just about running apps; it's about understanding every layer of your stack. From the filesystem mount options to the OIDC handshake protocols, total control requires total comprehension.
+Self-hosting isn't just about running apps; it's about understanding every layer of your stack. From the filesystem mount options to the OIDC handshake protocols, total control requires total comprehension. StatusFlare is the eyes of my network—and it's never been sharper.
+
+Check it out live: [status.helltop.net](https://status.helltop.net)
