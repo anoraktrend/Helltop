@@ -40,10 +40,10 @@
       "type": "software",
       "items": [
         { "name": "Quester", "url": "/blog/quester", "description": "A modern, visually rich MPD (Music Player Daemon) client for visual audiophiles, built with Qt 6 and QML." },
-        { "name": "AEE", "url": "/blog/AEE", "description": "A maintained fork of the classic \"Another Easy Editor\". Simplicity and obviousness preserved for modern systems." },
+        { "name": "AEE", "url": "/blog/aee", "description": "A maintained fork of the classic \"Another Easy Editor\". Simplicity and obviousness preserved for modern systems." },
         { "name": "EE", "url": "/blog/ee", "description": "The \"Easy Editor\" that actually lives up to its name. Small, fast, and stays out of your way." },
         { "name": "YAMS", "url": "/blog/yams", "description": "Yet Another Media Server utility. A suite of tools to keep your media library in check and your servers running smooth." },
-        { "name": "Fork This Site", "url": "/blog/FTS", "description": "A high-performance blog template built with Nuxt and Tailwind. Designed for speed, ownership, and easy deployment." },
+        { "name": "Fork This Site", "url": "/blog/fts", "description": "A high-performance blog template built with Nuxt and Tailwind. Designed for speed, ownership, and easy deployment." },
         { "name": "Music Folder Utils", "url": "/blog/mfutil", "description": "Small, sharp tools for music library organization and desktop integration. Built because I like my folders clean." }
       ]
     },
