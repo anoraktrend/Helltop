@@ -39,12 +39,10 @@
       "subtitle": "Software I Build & Maintain",
       "type": "software",
       "items": [
-        { "name": "Quester", "url": "/blog/quester", "description": "A modern, visually rich MPD (Music Player Daemon) client for visual audiophiles, built with Qt 6 and QML." },
-        { "name": "AEE", "url": "/blog/aee", "description": "A maintained fork of the classic \"Another Easy Editor\". Simplicity and obviousness preserved for modern systems." },
-        { "name": "EE", "url": "/blog/ee", "description": "The \"Easy Editor\" that actually lives up to its name. Small, fast, and stays out of your way." },
-        { "name": "YAMS", "url": "/blog/yams", "description": "Yet Another Media Server utility. A suite of tools to keep your media library in check and your servers running smooth." },
-        { "name": "Fork This Site", "url": "/blog/fts", "description": "A high-performance blog template built with Nuxt and Tailwind. Designed for speed, ownership, and easy deployment." },
-        { "name": "Music Folder Utils", "url": "/blog/mfutil", "description": "Small, sharp tools for music library organization and desktop integration. Built because I like my folders clean." }
+        { "name": "are", "url": "https://git.helltop.net/lucy/are", "description": "Another Rust Editor - A port of AEE (Another Easy Editor) to rust." },
+        { "name": "quester", "url": "https://git.helltop.net/lucy/quester", "description": "A QML-based MPD Client." },
+        { "name": "StatusFlare", "url": "https://git.helltop.net/lucy/StatusFlare", "description": "Helltop's status page." },
+        { "name": "helltop", "url": "https://git.helltop.net/lucy/helltop", "description": "The Source Code of Helltop.net" }
       ]
     },
     {
