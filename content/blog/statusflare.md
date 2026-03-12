@@ -2,7 +2,11 @@
 title: "StatusFlare: Forging a Serverless Watchtower"
 description: "How I built a dynamic monitoring system and survived the great LDAP/OIDC identity war of 2026."
 date: 2026-03-09
-tags: ["self-hosting", "cloudflare", "lldap", "authelia", "nextcloud", "devops"]
+author: "Lucy Ada Randall"
+category: "Self-Hosting"
+slug: "statusflare"
+layout: "blog"
+draft: false
 ---
 
 # StatusFlare: Forging a Serverless Watchtower
@@ -53,8 +57,3 @@ The final piece of the puzzle was **Forgejo Actions**. I deployed a local runner
 ## Conclusion
 
 Self-hosting isn't just about running apps; it's about understanding every layer of your stack. From the filesystem mount options to the OIDC handshake protocols, total control requires total comprehension.
-
-The watchtower is active. The arsenal is synchronized. The rebellion continues.
-
----
-**Status**: [All Systems Operational](https://status.helltop.net/)

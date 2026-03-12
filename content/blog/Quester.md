@@ -1,9 +1,12 @@
 ---
-date: 2026-02-19
 title: "Quester: A Modern MPD Client for Visual Audiophiles"
-description: "Building a visually rich Music Player Daemon (MPD) client that 
-prioritizes album art, visual feedback, and a fluid user experience using Qt 6 
-and QML."
+description: "Building a visually rich Music Player Daemon (MPD) client that prioritizes album art, visual feedback, and a fluid user experience using Qt 6 and QML."
+date: 2026-02-19
+author: "Lucy Ada Randall"
+category: "Music Player"
+slug: "quester"
+layout: "blog"
+draft: false
 ---
 
 # Quester: A Modern MPD Client for Visual Audiophiles
@@ -48,121 +51,47 @@ visualizers:
 A custom-built bar visualizer using FFTW that provides real-time frequency
 analysis. It features:
 - Fully customizable color gradients
-- Multiple bar modes and animations
-- Responsive design that adapts to your music
+- Adjustable decay and sensitivity
+- High-performance rendering for smooth visuals
 
-#### projectM Integration
-For those who remember Milkdrop from the Winamp days, Quester includes full
-projectM integration. This means you can enjoy thousands of community-created
-visualizations that react to your music.
+#### Waveform Visualizer
+A real-time waveform display that shows the shape of the music being played. It
+is designed to be both aesthetically pleasing and technically accurate.
 
-### Automatic Artwork Management
-Quester automatically fetches album art from multiple sources:
-- Embedded album art from your music files
-- Local image files in your music directories
-- TheAudioDB API for missing artwork
+### Smart Playlists and Queue Management
+Managing your music queue is a breeze with Quester. It supports:
+- **Smart Playlists:** Automatically generated playlists based on your
+  listening habits and music metadata
+- **Dynamic Queueing:** Easily add, remove, and reorder tracks in your queue
+  with simple drag-and-drop actions
 
-You never have to manually search for or add album art - Quester handles it all
-automatically.
+### Multi-Output Support
+Quester can manage multiple MPD outputs simultaneously, allowing you to control
+music in different rooms or on different devices from a single interface.
 
-### MPRIS Support
-Quester includes full MPRIS support via D-Bus, allowing you to control playback
-using system media keys or desktop widgets. This integration is still in
-development but already provides seamless control from your desktop environment.
-
-### Touch-Ready UI
-The entire interface is designed to be touch-friendly, with large, spaced-out
-controls that work perfectly with touchscreens while still feeling natural with
-a mouse.
-
-## Technical Implementation
-Quester is built with modern Qt 6 and QML:
-- **C++17 backend** for performance-critical operations
-- **QML frontend** for rapid UI development
-- **libmpdclient** for MPD communication
-- **FFTW3** for fast Fourier transforms in the spectrum analyzer
-- **libprojectM** for visualizer effects
-- **Qt Multimedia** for audio handling
-- **D-Bus** for MPRIS integration
-
-The codebase is lightweight, well-organized, and designed to be maintainable
-and extensible.
-
-## Configuration and Customization
-Quester is highly customizable:
-
-### Visualizer Presets
-You can create your own color presets for the spectrum analyzer by adding JSON
-files to `~/.config/Quester/presets/`.
-
-**Simple Gradient Preset:**
-```json
-{
- "Rainbow": ["#E50000", "#FF8D00", "#FFEE00", "#028121", "#004CFF", "#770088"]
-}
-```
-
-**Weighted Gradient:**
-```json
-{
- "Uneven": {
- "colors": ["#FF0000", "#00FF00", "#0000FF"],
- "weights": [1, 4, 1]
- }
-}
-```
-
-### projectM Settings
-Configure projectM visualizations via the settings dialog, where you can adjust:
-- Preset path
-- Texture size
-- Rendering quality
-- Transition settings
+## Technical Details
+Quester is built with modern technologies to ensure performance and
+reliability:
+- **Qt 6 & QML:** For a modern, high-performance UI that works across multiple
+  platforms
+- **C++:** For the core logic and MPD integration, ensuring speed and
+  efficiency
+- **FFTW:** For fast, accurate frequency analysis in the spectrum analyzer
+- **TagLib:** For robust music metadata and album art extraction
 
 ## Getting Started
-### Prerequisites
-To build Quester, you'll need:
-- Qt 6.2 or higher
-- libmpdclient
-- FFTW3
-- libprojectM
-- PulseAudio or PipeWire
+To get started with Quester, you'll need:
+- A running MPD server
+- A C++ compiler (GCC or Clang)
+- Qt 6 development libraries
 
-### Installation
-```bash
-git clone https://github.com/anoraktrend/Stable.git
-cd Stable
-mkdir build && cd build
-cmake ..
-make
-sudo make install
-```
-
-### Usage
-Ensure your MPD server is running, then simply launch Quester. The application
-will attempt to connect to `localhost:6600` by default.
-
-## The Future of Quester
-Quester is still in active development. Some upcoming features include:
-- Full MPRIS implementation
-- Improved playlist management
-- Additional visualizer modes
-- Customizable UI themes
-- Mobile support (postmarketOS)
-
-## Join the Project
-Quester is open source and available on
-[Codeberg](https://codeberg.org/anoraktrend/Stable). If you're interested in
-contributing or have ideas for improvements, feel free to fork the repository
-and submit a pull request.
+Detailed build and installation instructions can be found in the project's
+README.
 
 ## Conclusion
-Quester is more than just an MPD client - it's a celebration of music and the
-visual experience that accompanies it. By combining modern design with the
-power of Qt, Quester provides a music player that feels both familiar and fresh.
+Quester is more than just a music player; it's a celebration of music and a
+testament to the power of open-source software. Whether you're a hardcore
+audiophile or just someone who loves music, I hope you'll find Quester to be a
+valuable addition to your digital life.
 
-If you're tired of lackluster music player interfaces and want something that
-truly enhances your listening experience, give Quester a try.
-
----
--# *Music is life. That's why our hearts have beats*
+Join us on the quest for the perfect music experience!
