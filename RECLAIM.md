@@ -34,7 +34,17 @@ The content is stored in the `content/` directory.
 - **About:** Edit `content/3.about.md`.
 - **Blog:** Add your markdown files to `content/blog/`.
 
-### 4. Deploy to the Frontlines
+### 4. Configure Your Perimeter (`.env`)
+The site uses **Nuxt Studio** for Git-based visual editing.
+1. Create an account at [nuxt.studio](https://nuxt.studio).
+2. Link your repository.
+3. Copy your `NUXT_STUDIO_TOKEN` to your `.env` file.
+
+```bash
+cp .env.example .env
+```
+
+### 5. Deploy to the Frontlines
 This site is pre-configured for Cloudflare Workers. 
 
 1. Update `wrangler.jsonc` with your own `database_id` and `name`.
