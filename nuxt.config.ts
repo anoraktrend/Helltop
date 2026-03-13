@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxthq/studio',
     '@nuxt/content',
     '@nuxt/icon',
     '@nuxt/eslint',
@@ -22,20 +21,14 @@ export default defineNuxtConfig({
     '@nuxt/ui',
   ],
 
-  studio: {
-    enabled: true,
-    git: {
-      owner: 'anoraktrend',
-      repo: 'Helltop',
-      branch: 'main'
-    }
-  },
-
   css: ['~/assets/css/main.css'],
   // @ts-expect-error colorMode module config
   colorMode: { classSuffix: '' },
 
   content: {
+    preview: {
+      api: 'https://api.nuxt.studio'
+    },
     database: {
       type: 'd1',
       binding: 'DB'
