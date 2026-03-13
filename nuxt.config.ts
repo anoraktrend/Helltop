@@ -11,24 +11,6 @@ export default defineNuxtConfig({
       ]
     },
   },
-  runtimeConfig: {
-    githubToken: process.env.GITHUB_TOKEN,
-    oidc: {
-      providers: {
-        oidc: {
-          baseUrl: 'https://auth.helltop.net',
-          clientId: 'helltop',
-          clientSecret: '', // Matches NUXT_OIDC_PROVIDERS_OIDC_CLIENT_SECRET
-          redirectUri: 'https://helltop.net/auth/oidc/callback',
-          scope: ['openid', 'profile', 'email'],
-          userNameClaim: 'preferred_username',
-        }
-      },
-      session: {
-        secret: '' // Matches NUXT_OIDC_SESSION_SECRET
-      }
-    }
-  },
   modules: [
     '@nuxt/content',
     '@nuxt/icon',
@@ -37,15 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/ui',
-    'nuxt-oidc-auth',
   ],
-  oidc: {
-    defaultProvider: 'oidc',
-    middleware: {
-      globalMiddlewareEnabled: false,
-      globalRestrictDefault: false,
-    }
-  },
 
   css: ['~/assets/css/main.css'],
   // @ts-expect-error colorMode module config
@@ -116,36 +90,7 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
-      ignore: ['/admin/editor'],
       crawlLinks: true
-    },
-    /*
-    hooks: {
-      compiled: async (nitro) => {
-        const path = require('node:path');
-        const fsp = require('node:fs/promises');
-        const entry = path.resolve(nitro.options.output.serverDir, 'index.mjs');
-        const shimFile = path.resolve(nitro.options.output.serverDir, 'shim.mjs');
-        const content = await fsp.readFile(entry, 'utf8');
-        
-        const shimCode = `
-const shim = (n) => ({ run: f => f() });
-if (typeof console !== 'undefined') {
-  try {
-    Object.defineProperty(console, 'createTask', { value: shim, writable: true, configurable: true });
-    if (console.Console && console.Console.prototype) {
-      Object.defineProperty(console.Console.prototype, 'createTask', { value: shim, writable: true, configurable: true });
     }
-  } catch (e) {
-    console.createTask = shim;
-  }
-}
-`.replace(/\n/g, ' ');
-
-        await fsp.writeFile(shimFile, shimCode);
-        await fsp.writeFile(entry, "import './shim.mjs';\n" + content);
-      }
-    }
-    */
   }
 })

@@ -34,14 +34,7 @@ The content is stored in the `content/` directory.
 - **About:** Edit `content/3.about.md`.
 - **Blog:** Add your markdown files to `content/blog/`.
 
-### 4. Configure Your Perimeter (`.env`)
-Copy `.env.example` to `.env` and fill in your secrets. If you're using the admin editor, you'll need OIDC credentials.
-
-```bash
-cp .env.example .env
-```
-
-### 5. Deploy to the Frontlines
+### 4. Deploy to the Frontlines
 This site is pre-configured for Cloudflare Workers. 
 
 1. Update `wrangler.jsonc` with your own `database_id` and `name`.

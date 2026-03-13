@@ -3,7 +3,6 @@ const { data: navigation } = await useAsyncData('navigation', () =>
   queryCollectionNavigation('content'),
 );
 
-const { loggedIn, login, logout } = useOidcAuth()
 const appConfig = useAppConfig();
 </script>
 
