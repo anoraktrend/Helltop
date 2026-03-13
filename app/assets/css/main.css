@@ -71,6 +71,8 @@
   --highlight-color: var(--color-latte-mauve);
   --text-muted: var(--color-latte-overlay2);
   --text-dim: var(--color-latte-subtext0);
+  --link-color: var(--color-latte-blue);
+  --selection-bg: color-mix(in srgb, var(--color-latte-overlay2) 30%, transparent);
 }
 
 .dark {
@@ -78,6 +80,8 @@
   --highlight-color: var(--color-mocha-mauve);
   --text-muted: var(--color-mocha-overlay2);
   --text-dim: var(--color-mocha-subtext0);
+  --link-color: var(--color-mocha-blue);
+  --selection-bg: color-mix(in srgb, var(--color-mocha-overlay2) 30%, transparent);
 }
 
 body {
@@ -85,8 +89,12 @@ body {
   @apply bg-latte-base text-latte-text dark:bg-mocha-base dark:text-mocha-text;
 }
 
+::selection {
+  background-color: var(--selection-bg);
+}
+
 .prose a:not(h2 a, h3 a, h4 a, h5 a, h6 a, button a) {
-  @apply text-latte-mauve dark:text-mocha-mauve;
+  @apply text-[var(--link-color)] hover:underline;
 }
 
 /* Override Nuxt UI primary */

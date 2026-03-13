@@ -40,8 +40,11 @@ useSeoMeta({
         <div v-if="section.type === 'text'">
           <p v-if="section.content">{{ section.content }}</p>
           <ul v-if="section.list" style="list-style: none; padding: 0; margin-top: 2rem;">
-            <li v-for="item in section.list" :key="item.title" style="margin-bottom: 1rem;">
-              <strong class="text-latte-mauve dark:text-mocha-mauve">{{ item.title }}</strong> – {{ item.text }}
+            <li v-for="item in section.list" :key="item.title" style="margin-bottom: 1.5rem;" class="flex items-start">
+              <span class="mr-3 mt-1 inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-bold bg-latte-mauve dark:bg-mocha-mauve text-latte-base dark:text-mocha-base">
+                {{ item.title }}
+              </span>
+              <span class="text-latte-text dark:text-mocha-text">{{ item.text }}</span>
             </li>
           </ul>
           <p v-if="section.quote" style="font-weight: 700; margin-top: 2rem; font-size: 1.5rem; text-align: center; font-style: italic;" class="text-latte-subtext0 dark:text-mocha-subtext0">
@@ -67,7 +70,7 @@ useSeoMeta({
                     <img :src="`https://status.helltop.net/badge/${item.badge}.svg?w=24`" width="24" height="24" alt="Status" style="display: block; margin: 0 auto;">
                   </td>
                   <td style="padding: 12px; vertical-align: middle;">
-                    <a :href="item.url" style="font-weight: 700; text-decoration: none;" class="text-latte-mauve dark:text-mocha-mauve hover:underline">
+                    <a :href="item.url" style="font-weight: 700; text-decoration: none;" class="text-latte-blue dark:text-mocha-blue hover:text-latte-mauve dark:hover:text-mocha-mauve hover:underline">
                       {{ item.name }}
                     </a>
                   </td>
@@ -88,7 +91,7 @@ useSeoMeta({
                  class="bg-latte-mantle dark:bg-mocha-mantle" 
                  style="padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--ui-primary);">
               <h4 style="margin: 0 0 0.5rem 0; font-size: 1.25rem;">
-                <a :href="item.url" style="text-decoration: none;" class="text-latte-mauve dark:text-mocha-mauve hover:underline">
+                <a :href="item.url" style="text-decoration: none;" class="text-latte-blue dark:text-mocha-blue hover:text-latte-mauve dark:hover:text-mocha-mauve hover:underline">
                   {{ item.name }}
                 </a>
               </h4>
@@ -107,7 +110,7 @@ useSeoMeta({
       <footer style="text-align: center; border-top: 1px solid var(--tw-prose-borders); padding-top: 2rem; font-size: 0.875rem;" class="text-latte-subtext1 dark:text-mocha-subtext1">
         <p>
           Last updated: {{ home.footer.lastUpdated }} | 
-          <a :href="home.footer.statusUrl" class="text-latte-mauve dark:text-mocha-mauve hover:underline">Detailed System Status</a>
+          <a :href="home.footer.statusUrl" class="text-latte-blue dark:text-mocha-blue hover:text-latte-mauve dark:hover:text-mocha-mauve hover:underline">Detailed System Status</a>
         </p>
       </footer>
     </div>
