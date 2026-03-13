@@ -54,7 +54,6 @@
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
     "happy-dom": "^20.5.0",
-    "nuxt-oidc-auth": "1.0.0-beta.10",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },

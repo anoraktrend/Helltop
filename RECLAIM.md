@@ -36,9 +36,11 @@ The content is stored in the `content/` directory.
 
 ### 4. Configure Your Perimeter (`.env`)
 The site uses **Nuxt Studio** for Git-based visual editing.
-1. Create an account at [nuxt.studio](https://nuxt.studio).
-2. Link your repository.
-3. Copy your `NUXT_STUDIO_TOKEN` to your `.env` file.
+1. Create an account at [nuxt.studio](https://nuxt.studio) for local preview.
+2. For production editing, create a **GitHub OAuth App**:
+   - Homepage URL: `https://yourname.net`
+   - Authorization callback URL: `https://yourname.net/api/_studio/auth/callback`
+3. Fill in your `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET` in `.env`.
 
 ```bash
 cp .env.example .env

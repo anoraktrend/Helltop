@@ -15,6 +15,7 @@ declare module "#build/test-component-wrapper.mjs";
 declare module "#build/color-mode-options.mjs";
 declare module "#build/image-options.mjs";
 declare module "#build/nuxt-scripts-trigger-resolver.mjs";
+declare module "#build/studio-assets.mjs";
 declare module "#build/routes.mjs";
 declare module "#build/pages.mjs";
 declare module "#build/router.options.mjs";

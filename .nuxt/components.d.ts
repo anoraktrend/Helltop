@@ -20,6 +20,7 @@ export const ButtonLink: typeof import("../app/components/ButtonLink.vue")['defa
 export const ColorModeSwitch: typeof import("../app/components/ColorModeSwitch.vue")['default']
 export const MarkdownBlock: typeof import("../app/components/MarkdownBlock.vue")['default']
 export const OptimizedImage: typeof import("../app/components/OptimizedImage.vue")['default']
+export const ContentPreviewMode: typeof import("../node_modules/.pnpm/@nuxthq+studio@2.2.1_magicast@0.5.2/node_modules/@nuxthq/studio/dist/runtime/components/ContentPreviewMode.vue")['default']
 export const ScriptGoogleMaps: typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMaps.vue")['default']
 export const ScriptGoogleMapsAdvancedMarkerElement: typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMapsAdvancedMarkerElement.vue")['default']
 export const ScriptGoogleMapsCircle: typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMapsCircle.vue")['default']
@@ -254,6 +255,7 @@ export const LazyButtonLink: LazyComponent<typeof import("../app/components/Butt
 export const LazyColorModeSwitch: LazyComponent<typeof import("../app/components/ColorModeSwitch.vue")['default']>
 export const LazyMarkdownBlock: LazyComponent<typeof import("../app/components/MarkdownBlock.vue")['default']>
 export const LazyOptimizedImage: LazyComponent<typeof import("../app/components/OptimizedImage.vue")['default']>
+export const LazyContentPreviewMode: LazyComponent<typeof import("../node_modules/.pnpm/@nuxthq+studio@2.2.1_magicast@0.5.2/node_modules/@nuxthq/studio/dist/runtime/components/ContentPreviewMode.vue")['default']>
 export const LazyScriptGoogleMaps: LazyComponent<typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMaps.vue")['default']>
 export const LazyScriptGoogleMapsAdvancedMarkerElement: LazyComponent<typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMapsAdvancedMarkerElement.vue")['default']>
 export const LazyScriptGoogleMapsCircle: LazyComponent<typeof import("../node_modules/.pnpm/@nuxt+scripts@1.0.0-beta.1_@googlemaps+markerclusterer@2.6.2_@unhead+vue@2.1.3_vue@3.5._ac27c010df759b3842663ce806846d2a/node_modules/@nuxt/scripts/dist/runtime/components/GoogleMaps/ScriptGoogleMapsCircle.vue")['default']>
