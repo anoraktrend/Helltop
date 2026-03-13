@@ -9,11 +9,26 @@ export default defineAppConfig({
     },
   },
   socials: {
-    liberapay: 'anoraktrend',
-    github: 'anoraktrend/helltop',
-    mastohost: 'tech.lgbt',
-    mastodon: '@lucyinchat',
-    bluesky: 'lucy.helltop.net',
-    codeberg: 'anoraktrend',
+    liberapay: {
+      user: 'anoraktrend',
+      icon: 'i-simple-icons-liberapay'
+    },
+    github: {
+      repo: 'anoraktrend/helltop',
+      icon: 'i-simple-icons-github'
+    },
+    codeberg: {
+      user: 'anoraktrend',
+      icon: 'i-simple-icons-codeberg'
+    },
+    mastodon: {
+      user: '@lucyinchat',
+      host: 'tech.lgbt',
+      icon: 'i-simple-icons-mastodon'
+    },
+    bluesky: {
+      user: 'lucy.helltop.net',
+      icon: 'i-simple-icons-bluesky'
+    },
   },
 })

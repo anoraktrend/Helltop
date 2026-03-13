@@ -14,48 +14,47 @@ const year = new Date().getFullYear();
         <a
           v-if="appConfig.socials?.liberapay"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
-          :href="`https://liberapay.com/${appConfig.socials?.liberapay}`"
+          :href="`https://liberapay.com/${appConfig.socials.liberapay.user}`"
           title="Liberapay"
         >
-          <Icon class="size-5" name="i-simple-icons-liberapay" />
+          <Icon class="size-5" :name="appConfig.socials.liberapay.icon" />
         </a>
         <a
           v-if="appConfig.socials?.github"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
-          :href="`https://github.com/${appConfig.socials?.github}`"
+          :href="`https://github.com/${appConfig.socials.github.repo}`"
           title="GitHub"
         >
-          <Icon class="size-5" name="i-simple-icons-github" />
+          <Icon class="size-5" :name="appConfig.socials.github.icon" />
         </a>
         <a
           v-if="appConfig.socials?.codeberg"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
-          :href="`https://codeberg.org/${appConfig.socials?.codeberg}`"
+          :href="`https://codeberg.org/${appConfig.socials.codeberg.user}`"
           title="Codeberg"
         >
-          <Icon class="size-5" name="i-simple-icons-codeberg" />
+          <Icon class="size-5" :name="appConfig.socials.codeberg.icon" />
         </a>
         <a
           v-if="appConfig.socials?.mastodon"
-          rel="me"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
-          :href="`https://${appConfig.socials?.mastohost}/${appConfig.socials?.mastodon}`"
+          :href="`https://${appConfig.socials.mastodon.host}/${appConfig.socials.mastodon.user}`"
           title="Mastodon"
         >
-          <Icon class="size-5" name="i-simple-icons-mastodon" />
+          <Icon class="size-5" :name="appConfig.socials.mastodon.icon" />
         </a>
         <a
           v-if="appConfig.socials?.bluesky"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
-          :href="`https://bsky.app/profile/${appConfig.socials?.bluesky}`"
+          :href="`https://bsky.app/profile/${appConfig.socials.bluesky.user}`"
           title="Bluesky"
         >
-          <Icon class="size-5" name="i-simple-icons-bluesky" />
+          <Icon class="size-5" :name="appConfig.socials.bluesky.icon" />
         </a>
         <a
-          href="/rss.xml"
           class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors"
           title="RSS Feed"
+          href="/rss.xml"
         >
           <Icon class="size-5" name="i-simple-icons-rss" />
         </a>
