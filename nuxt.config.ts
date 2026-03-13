@@ -22,6 +22,15 @@ export default defineNuxtConfig({
     '@nuxt/ui',
   ],
 
+  studio: {
+    enabled: true,
+    git: {
+      owner: 'anoraktrend',
+      repo: 'Helltop',
+      branch: 'main'
+    }
+  },
+
   css: ['~/assets/css/main.css'],
   // @ts-expect-error colorMode module config
   colorMode: { classSuffix: '' },
