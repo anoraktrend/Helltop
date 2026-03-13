@@ -40,7 +40,7 @@ The site uses the **Nuxt Content Preview API** for Git-based visual editing via 
 2. For production editing, create a **GitHub OAuth App** in your GitHub settings:
    - Homepage URL: `https://yourname.net`
    - Authorization callback URL: `https://yourname.net/api/_studio/auth/callback`
-3. Fill in your `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET` in your deployment environment (or `.env` for local testing).
+3. Fill in your `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET` in your deployment environment (e.g., Cloudflare Workers variables or GitHub/Forgejo secrets).
 
 ```bash
 cp .env.example .env

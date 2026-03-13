@@ -28,6 +28,12 @@ export default defineNuxtConfig({
       owner: 'anoraktrend',
       repo: 'Helltop',
       branch: 'main'
+    },
+    auth: {
+      github: {
+        clientId: process.env.STUDIO_GITHUB_CLIENT_ID,
+        clientSecret: process.env.STUDIO_GITHUB_CLIENT_SECRET
+      }
     }
   },
 
@@ -36,9 +42,6 @@ export default defineNuxtConfig({
   colorMode: { classSuffix: '' },
 
   content: {
-    preview: {
-      api: 'https://api.nuxt.studio'
-    },
     database: {
       type: 'd1',
       binding: 'DB'
