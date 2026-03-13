@@ -11,6 +11,11 @@ const appConfig = useAppConfig();
     <!-- Navigation -->
     <div class="flex items-center text-[var(--text-dim)]">
       <NuxtLink
+        to="/"
+        class="mr-6 transition-colors hover:text-latte-text dark:hover:text-mocha-text"
+        active-class="font-bold !text-[var(--highlight-color)]"
+      >Home</NuxtLink>
+      <NuxtLink
         v-for="link in navigation"
         :key="link.path" class="mr-6 transition-colors hover:text-latte-text dark:hover:text-mocha-text"
         :to="link.path"
