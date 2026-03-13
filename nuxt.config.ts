@@ -19,7 +19,17 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/ui',
+    'nuxt-studio',
   ],
+
+  studio: {
+    enabled: true,
+    repository: {
+      owner: 'anoraktrend',
+      repo: 'Helltop',
+      branch: 'main'
+    }
+  },
 
   css: ['~/assets/css/main.css'],
   // @ts-expect-error colorMode module config
