@@ -13,7 +13,7 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
 </script>
 
 <template>
-  <div class="px-4 py-10 sm:px-8 bg-latte-base dark:bg-mocha-base">
+  <div class="px-4 py-10 sm:px-8 bg-ctp-base">
     <main class="max-w-none prose dark:prose-invert">
       <h1 class="text-4xl font-bold mb-8">Blog</h1>
 
@@ -21,27 +21,27 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
         <article
           v-for="post in posts"
           :key="post.slug"
-          class="border-b border-latte-surface0 dark:border-mocha-surface0 pb-6 last:border-b-0"
+          class="border-b border-ctp-surface0 pb-6 last:border-b-0"
         >
           <h2 class="text-2xl font-semibold mb-2">
             <NuxtLink
               :to="post.path"
-              class="hover:text-latte-mauve dark:hover:text-mocha-mauve transition-colors no-underline"
+              class="hover:text-ctp-mauve transition-colors no-underline"
             >
               {{ post.title }}
             </NuxtLink>
           </h2>
 
-          <div v-if="post.description" class="text-latte-subtext0 dark:text-mocha-subtext0 mb-3">
+          <div v-if="post.description" class="text-ctp-subtext0 mb-3">
             {{ post.description }}
           </div>
 
-          <div class="flex items-center gap-4 text-sm text-latte-overlay2 dark:text-mocha-overlay2">
+          <div class="flex items-center gap-4 text-sm text-ctp-overlay2">
             <time v-if="post.date" :datetime="post.date">
               {{ new Date(post.date).toLocaleDateString() }}
             </time>
 
-            <span v-if="post.category" class="px-2 py-1 bg-latte-mantle dark:bg-mocha-mantle rounded text-xs">
+            <span v-if="post.category" class="px-2 py-1 bg-ctp-mantle rounded text-xs">
               {{ post.category }}
             </span>
           </div>
@@ -49,7 +49,7 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
       </div>
 
       <div v-else class="text-center py-12">
-        <p class="text-latte-subtext0 dark:text-mocha-subtext0">No blog posts yet.</p>
+        <p class="text-ctp-subtext0">No blog posts yet.</p>
       </div>
     </main>
   </div>
