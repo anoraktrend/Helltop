@@ -35,12 +35,11 @@ The content is stored in the `content/` directory.
 - **Blog:** Add your markdown files to `content/blog/`.
 
 ### 4. Configure Your Perimeter (`.env`)
-The site uses the **Nuxt Content Preview API** for Git-based visual editing via Nuxt Studio.
+The site uses **Nuxt Studio** with **Custom Authentication** (integrated with Authelia/LLDAP).
 1. Sign in at [nuxt.studio](https://nuxt.studio) and link your repository.
-2. For production editing, create a **GitHub OAuth App** in your GitHub settings:
-   - Homepage URL: `https://yourname.net`
-   - Authorization callback URL: `https://yourname.net/api/_studio/auth/callback`
-3. Fill in your `STUDIO_GITHUB_CLIENT_ID` and `STUDIO_GITHUB_CLIENT_SECRET` in your deployment environment (e.g., Cloudflare Workers variables or GitHub/Forgejo secrets).
+2. For production editing, create a **GitHub Personal Access Token (PAT)** with `repo` scope.
+3. Add `STUDIO_GITHUB_TOKEN` to your deployment secrets.
+4. **Login Flow:** To initialize your session, navigate to `https://yourname.net/api/studio/login`.
 
 ```bash
 cp .env.example .env
