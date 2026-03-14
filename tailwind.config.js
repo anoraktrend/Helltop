@@ -5,10 +5,17 @@ export default {
     './content/**/*.md'
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['"Space Mono"', 'monospace'],
+      },
+    },
   },
   darkMode: 'class',
   plugins: [
     require('@tailwindcss/typography'),
+    require('@catppuccin/tailwindcss')({
+      defaultFlavour: 'latte'
+    }),
   ],
 }

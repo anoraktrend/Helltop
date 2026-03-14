@@ -79,6 +79,9 @@ importers:
         specifier: ^4.73.0
         version: 4.73.0
     devDependencies:
+      '@catppuccin/tailwindcss':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@iconify-json/catppuccin':
         specifier: ^1.2.17
         version: 1.2.17
@@ -308,6 +311,10 @@ packages:
   '@capsizecss/unpack@4.0.0':
     resolution: {integrity: sha512-VERIM64vtTP1C4mxQ5thVT9fK0apjPFobqybMtA1UdUujWka24ERHbRHFGmpbbhp73MhV+KSsHQH9C6uOTdEQA==}
     engines: {node: '>=18'}
+
+  '@catppuccin/tailwindcss@1.0.0':
+    resolution: {integrity: sha512-l8pOlcYe2ncGd8a1gUmL5AHmKlxR2+CHuG5kt4Me6IZwzntW1DoLmj89BH+DcsPHBsdDGLrTSv35emlYyU3FeQ==}
+    engines: {node: '>=22.0.0'}
 
   '@clack/core@1.0.0':
     resolution: {integrity: sha512-Orf9Ltr5NeiEuVJS8Rk2XTw3IxNC2Bic3ash7GgYeA8LJ/zmSNpSQ/m5UAhe03lA6KFgklzZ5KTHs4OAMA/SAQ==}
@@ -7038,6 +7045,8 @@ snapshots:
   '@capsizecss/unpack@4.0.0':
     dependencies:
       fontkitten: 1.0.3
+
+  '@catppuccin/tailwindcss@1.0.0': {}
 
   '@clack/core@1.0.0':
     dependencies:

@@ -47,7 +47,7 @@ export default defineNuxtConfig({
 
   icon: {
     serverBundle: 'local',
-    collections: ['simple-icons'],
+    collections: ['simple-icons', 'catppuccin'],
     customCollections: [
       {
         prefix: 'my-icons',
