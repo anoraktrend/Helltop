@@ -4,8 +4,8 @@ export default defineAppConfig({
   siteUrl: 'https://helltop.net/',
   icon: {
     aliases: {
-      'dark-mode': 'lucide-moon',
-      'light-mode': 'lucide-sun',
+      'dark-mode': 'i-catppuccin-moon',
+      'light-mode': 'i-catppuccin-sun',
     },
   },
   socials: {

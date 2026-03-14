@@ -14,13 +14,13 @@ const onClick = () => {
     <ColorScheme placeholder="...">
       <Icon
         v-if="colorMode.value === 'dark'"
-        name="lucide-moon"
-        class="w-5 h-5"
+        name="dark-mode"
+        class="size-5"
       />
       <Icon
         v-else
-        name="lucide-sun"
-        class="w-5 h-5"
+        name="light-mode"
+        class="size-5"
       />
     </ColorScheme>
   </button>
