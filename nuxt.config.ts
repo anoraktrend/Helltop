@@ -22,6 +22,15 @@ export default defineNuxtConfig({
     'nuxt-studio',
   ],
 
+  icon: {
+    customCollections: [
+      {
+        prefix: 'my-icons',
+        dir: './app/assets/icons'
+      }
+    ]
+  },
+
   studio: {
     enabled: true,
     repository: {
