@@ -26,6 +26,10 @@ export default defineNuxtConfig({
     url: 'https://helltop.net',
   },
 
+  sitemap: {
+    zeroRuntime: true,
+  },
+
   security: {
     headers: {
       crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
