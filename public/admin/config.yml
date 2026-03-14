@@ -1,0 +1,22 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update
+  identity_url: "https://helltop.net/.netlify/identity"
+  gateway_url: "https://helltop.net/.netlify/git-gateway"
+
+# Publish all files on Git Gateway
+publish_mode: editorial_workflow
+
+media_folder: "public/uploads" # Folder where user uploaded files will be placed
+public_folder: "/uploads" # Folder where user uploaded files will be accessible from
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
