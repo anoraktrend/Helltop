@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.6.2",
-    "@iconify-json/catppuccin": "^1.2.17",
     "@iconify-json/lucide": "^1.2.89",
     "@iconify-json/simple-icons": "^1.2.69",
     "@nuxt/content": "^3.11.2",
@@ -38,25 +37,26 @@
     "better-sqlite3": "^12.6.2",
     "markdown-it": "^13.0.2",
     "nuxi": "^3.33.1",
-    "nuxt": "^4.3.1",
+    "nuxt": "^4.4.2",
     "rss": "^1.2.2",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "wrangler": "^4.63.0"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.14.0",
+    "@iconify-json/catppuccin": "^1.2.17",
+    "@nuxt/eslint": "^1.15.2",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^25.2.2",
+    "@types/node": "^25.5.0",
     "@types/rss": "^0.0.32",
-    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/coverage-v8": "^4.1.0",
     "@vue/test-utils": "^2.4.6",
-    "baseline-browser-mapping": "^2.9.19",
-    "eslint": "^9.39.2",
-    "happy-dom": "^20.5.0",
+    "baseline-browser-mapping": "^2.10.7",
+    "eslint": "^9.39.4",
+    "happy-dom": "^20.8.4",
     "nuxt-studio": "^1.4.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vitest": "^4.1.0"
   },
   "packageManager": "pnpm@10.7.1",
   "pnpm": {
