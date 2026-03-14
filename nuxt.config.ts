@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
@@ -17,13 +18,39 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/ui',
     'nuxt-studio',
-    '@nuxtjs/google-fonts',
     '@nuxtjs/sitemap',
     'nuxt-security',
+    '@nuxtjs/google-fonts',
   ],
 
   site: {
     url: 'https://helltop.net',
+    cover: '/cover.jpg',
+    siteName: 'helltop.net',
+    siteUrl: 'https://helltop.net/',
+    socials: {
+      liberapay: {
+        user: 'anoraktrend',
+        icon: 'lucide-heart-handshake'
+      },
+      github: {
+        repo: 'anoraktrend/helltop',
+        icon: 'lucide-github'
+      },
+      codeberg: {
+        user: 'anoraktrend',
+        icon: 'lucide-git-branch'
+      },
+      mastodon: {
+        user: '@lucyinchat',
+        host: 'tech.lgbt',
+        icon: 'lucide-mastodon'
+      },
+      bluesky: {
+        user: 'lucy.helltop.net',
+        icon: 'lucide-cloud'
+      },
+    },
   },
 
   sitemap: {
@@ -38,24 +65,16 @@ export default defineNuxtConfig({
     },
   },
 
-  googleFonts: {
-    families: {
-      'Space Mono': {
-        wght: [400, 700],
-        ital: [400, 700]
-      }
-    }
-  },
-
   icon: {
     serverBundle: 'local',
-    collections: ['simple-icons', 'catppuccin'],
+    collections: ['lucide'],
     customCollections: [
       {
         prefix: 'my-icons',
         dir: './app/assets/icons'
       }
-    ]
+    ],
+    global: true,
   },
 
   studio: {
@@ -67,8 +86,22 @@ export default defineNuxtConfig({
     }
   },
 
+  googleFonts: {
+    families: {
+      'Space Mono': {
+        wght: [400, 700],
+        ital: [400, 700]
+      }
+    },
+    display: 'swap',
+  },
+
   css: ['~/assets/css/main.css'],
-  colorMode: { classSuffix: '' },
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    classSuffix: '',
+  },
 
   content: {
     database: {
@@ -125,8 +158,20 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-02-07',
 
   vite: {
+    plugins: [
+      tailwindcss(),
+    ],
     build: {
       sourcemap: false
+    }
+  },
+
+  hooks: {
+    'vite:extendConfig'(viteInlineConfig) {
+      // Strip problematic deeply-nested dependencies injected by Nuxt Content/MDC
+      if (viteInlineConfig.optimizeDeps?.include) {
+        viteInlineConfig.optimizeDeps.include = viteInlineConfig.optimizeDeps.include.filter((id) => !id.includes('@nuxtjs/mdc'))
+      }
     }
   },
 

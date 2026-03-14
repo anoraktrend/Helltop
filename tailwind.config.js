@@ -7,15 +7,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Space Mono"', 'monospace'],
+        sans: ['"Space Mono"', 'system-ui', 'sans-serif'],
       },
     },
   },
   darkMode: 'class',
   plugins: [
     require('@tailwindcss/typography'),
-    require('@catppuccin/tailwindcss')({
-      defaultFlavour: 'latte'
+    require('@catppuccin/tailwind')({
+      prefix: 'ctp',
+      defaultFlavour: 'mocha',
     }),
   ],
 }

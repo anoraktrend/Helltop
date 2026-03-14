@@ -49,7 +49,7 @@ const { data: posts } = await useAsyncData('blog-posts', async () => {
       </div>
 
       <div v-else class="text-center py-12">
-        <p class="text-[var(--text-muted)]">No blog posts yet.</p>
+        <p class="text-latte-subtext0 dark:text-mocha-subtext0">No blog posts yet.</p>
       </div>
     </main>
   </div>

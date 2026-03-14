@@ -10,7 +10,7 @@ declare global {
 declare const inlineConfig = {
   "nuxt": {},
   "icon": {
-    "provider": "iconify",
+    "provider": "server",
     "class": "",
     "aliases": {},
     "iconifyApiEndpoint": "https://api.iconify.design",
@@ -23,7 +23,10 @@ declare const inlineConfig = {
       "aria-hidden": true
     },
     "collections": [
-      "simple-icons"
+      "lucide",
+      "catppuccin",
+      "simple-icons",
+      "my-icons"
     ],
     "fetchTimeout": 1500,
     "customCollections": [

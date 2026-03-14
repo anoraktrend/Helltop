@@ -22,11 +22,11 @@ useSeoMeta(page.value?.seo || {})
 </script>
 
 <template>
-  <NuxtLayout :name="page?.layout as LayoutKey || 'default'" class="bg-latte-base dark:bg-mocha-base">
+  <NuxtLayout :name="page?.layout as LayoutKey || 'default'" class="bg-ctp-base text-ctp-text dark:bg-ctp-base dark:text-ctp-text">
     <ContentRenderer
       v-if="page"
       :value="page"
-      class="prose dark:prose-invert prose-pre:bg-latte-mantle dark:prose-pre:bg-mocha-mantle prose-img:rounded-lg prose-img:shadow-md max-w-none"
+      class="prose dark:prose-invert prose-pre:bg-ctp-mantle dark:prose-pre:bg-ctp-mantle prose-img:rounded-lg prose-img:shadow-md max-w-none"
     />
   </NuxtLayout>
 </template>

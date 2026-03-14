@@ -1,8 +1,12 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @source "../../../content/**/*";
+
+html {
+  background-color: bg-ctp-base;
+  color: text-ctp-text;
+}
 
 
 ::selection {
@@ -21,4 +25,9 @@
 
 .dark {
   --ui-primary: #cba6f7; /* mocha-mauve */
+}
+
+body {
+  background-color: bg-ctp-base;
+  color: text-ctp-text;
 }

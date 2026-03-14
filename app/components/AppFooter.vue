@@ -9,54 +9,15 @@ const year = new Date().getFullYear();
       <!-- Copyright -->
       <p>&copy; {{ year }} {{ appConfig.siteName}}</p>
       
-      <!-- Social links (same as navbar) -->
-      <div class="flex justify-center space-x-4">
+      <!-- Social links -->
+      <div class="flex justify-center">
+        <SocialLinks icon-size="5" spacing="4" />
         <a
-          v-if="appConfig.socials?.liberapay"
-          class="hover:text-ctp-mauve transition-colors"
-          :href="`https://liberapay.com/${appConfig.socials.liberapay.user}`"
-          title="Liberapay"
-        >
-          <Icon class="size-5" :name="appConfig.socials.liberapay.icon" />
-        </a>
-        <a
-          v-if="appConfig.socials?.github"
-          class="hover:text-ctp-mauve transition-colors"
-          :href="`https://github.com/${appConfig.socials.github.repo}`"
-          title="GitHub"
-        >
-          <Icon class="size-5" :name="appConfig.socials.github.icon" />
-        </a>
-        <a
-          v-if="appConfig.socials?.codeberg"
-          class="hover:text-ctp-mauve transition-colors"
-          :href="`https://codeberg.org/${appConfig.socials.codeberg.user}`"
-          title="Codeberg"
-        >
-          <Icon class="size-5" :name="appConfig.socials.codeberg.icon" />
-        </a>
-        <a
-          v-if="appConfig.socials?.mastodon"
-          class="hover:text-ctp-mauve transition-colors"
-          :href="`https://${appConfig.socials.mastodon.host}/${appConfig.socials.mastodon.user}`"
-          title="Mastodon"
-        >
-          <Icon class="size-5" :name="appConfig.socials.mastodon.icon" />
-        </a>
-        <a
-          v-if="appConfig.socials?.bluesky"
-          class="hover:text-ctp-mauve transition-colors"
-          :href="`https://bsky.app/profile/${appConfig.socials.bluesky.user}`"
-          title="Bluesky"
-        >
-          <Icon class="size-5" :name="appConfig.socials.bluesky.icon" />
-        </a>
-        <a
-          class="hover:text-ctp-mauve transition-colors"
+          class="hover:text-ctp-mauve transition-colors ml-4"
           title="RSS Feed"
           href="/rss.xml"
         >
-          <Icon class="size-5" name="i-simple-icons-rss" />
+          <Icon class="size-5" name="lucide-rss" />
         </a>
       </div>
     </div>
