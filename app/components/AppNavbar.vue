@@ -7,26 +7,26 @@ const appConfig = useAppConfig();
 </script>
 
 <template>
-  <nav class="flex justify-between items-center px-4 py-4 sm:px-8 bg-latte-mantle dark:bg-mocha-mantle border-b border-latte-surface0 dark:border-mocha-surface0">
+  <nav class="flex justify-between items-center px-4 py-4 sm:px-8 bg-ctp-mantle border-b border-ctp-surface0">
     <!-- Navigation -->
-    <div class="flex items-center text-[var(--text-dim)]">
+    <div class="flex items-center text-ctp-overlay2 dark:text-ctp-overlay2">
       <NuxtLink
         to="/"
-        class="mr-6 transition-colors hover:text-latte-text dark:hover:text-mocha-text"
+        class="mr-6 transition-colors hover:text-ctp-text"
         active-class="font-bold !text-[var(--highlight-color)]"
       >Home</NuxtLink>
       <NuxtLink
         v-for="link in navigation"
-        :key="link.path" class="mr-6 transition-colors hover:text-latte-text dark:hover:text-mocha-text"
+        :key="link.path" class="mr-6 transition-colors hover:text-ctp-text"
         :to="link.path"
         active-class="font-bold !text-[var(--highlight-color)]"
       >{{ link.title }}</NuxtLink>
     </div>
     <!-- Social icons & Color Mode -->
-    <div class="text-[var(--text-muted)] space-x-3 transition flex items-center">
+    <div class="text-ctp-overlay2 dark:text-ctp-overlay2 space-x-3 transition flex items-center">
       <a
         v-if="appConfig.socials?.liberapay"
-        class="hover:text-latte-mauve dark:hover:text-mocha-mauve flex items-center"
+        class="hover:text-ctp-mauve flex items-center"
         :href="`https://liberapay.com/${appConfig.socials.liberapay.user}`"
         title="Liberapay"
       >
@@ -34,7 +34,7 @@ const appConfig = useAppConfig();
       </a>
       <a
         v-if="appConfig.socials?.github"
-        class="hover:text-latte-mauve dark:hover:text-mocha-mauve flex items-center"
+        class="hover:text-ctp-mauve flex items-center"
         :href="`https://github.com/${appConfig.socials.github.repo}`"
         title="GitHub"
       >
@@ -42,7 +42,7 @@ const appConfig = useAppConfig();
       </a>
       <a
         v-if="appConfig.socials?.codeberg"
-        class="hover:text-latte-mauve dark:hover:text-mocha-mauve flex items-center"
+        class="hover:text-ctp-mauve flex items-center"
         :href="`https://codeberg.org/${appConfig.socials.codeberg.user}`"
         title="Codeberg"
       >
@@ -50,7 +50,7 @@ const appConfig = useAppConfig();
       </a>
       <a
         v-if="appConfig.socials?.mastodon"
-        class="hover:text-latte-mauve dark:hover:text-mocha-mauve flex items-center"
+        class="hover:text-ctp-mauve flex items-center"
         :href="`https://${appConfig.socials.mastodon.host}/${appConfig.socials.mastodon.user}`"
         title="Mastodon"
       >
@@ -58,13 +58,13 @@ const appConfig = useAppConfig();
       </a>
       <a
         v-if="appConfig.socials?.bluesky"
-        class="hover:text-latte-mauve dark:hover:text-mocha-mauve flex items-center"
+        class="hover:text-ctp-mauve flex items-center"
         :href="`https://bsky.app/profile/${appConfig.socials.bluesky.user}`"
         title="Bluesky"
       >
         <Icon class="size-5" :name="appConfig.socials.bluesky.icon" />
       </a>
-      <ColorModeSwitch class="hover:text-latte-mauve dark:hover:text-mocha-mauve" />
+      <ColorModeSwitch class="hover:text-ctp-mauve" />
     </div>
   </nav>
 </template>
