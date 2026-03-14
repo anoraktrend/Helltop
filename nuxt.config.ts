@@ -4,10 +4,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
       ]
     },
   },
@@ -20,9 +17,33 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/ui',
     'nuxt-studio',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/sitemap',
+    'nuxt-security',
   ],
 
+  site: {
+    url: 'https://helltop.net',
+  },
+
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+    },
+  },
+
+  googleFonts: {
+    families: {
+      'Space Mono': {
+        wght: [400, 700],
+        ital: [400, 700]
+      }
+    }
+  },
+
   icon: {
+    serverBundle: 'local',
+    collections: ['simple-icons'],
     customCollections: [
       {
         prefix: 'my-icons',
@@ -41,7 +62,6 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
-  // @ts-expect-error colorMode module config
   colorMode: { classSuffix: '' },
 
   content: {

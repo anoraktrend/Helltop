@@ -90,7 +90,8 @@ useSeoMeta({
         <div v-else-if="section.type === 'software'">
           <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">{{ section.subtitle }}</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-            <div v-for="item in section.items" :key="item.name" 
+            <div
+v-for="item in section.items" :key="item.name" 
                  class="bg-latte-mantle dark:bg-mocha-mantle" 
                  style="padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--ui-primary);">
               <h4 style="margin: 0 0 0.5rem 0; font-size: 1.25rem;">
@@ -105,7 +106,7 @@ useSeoMeta({
 
         <!-- CTA (Join the Resistance) Section Type -->
         <div v-else-if="section.type === 'cta'">
-          <div v-html="section.content"></div>
+          <div v-html="section.content"/>
         </div>
       </section>
 
