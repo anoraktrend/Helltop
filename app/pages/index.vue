@@ -68,12 +68,12 @@ useSeoMeta({
                 <tr v-for="item in section.items" :key="item.name">
                   <td style="padding: 12px; vertical-align: middle;">
                     <div style="display: flex; justify-content: center;">
-                      <Icon v-if="item.icon" :name="item.icon" class="size-6" />
-                      <img v-else-if="item.badge" :src="`https://status.helltop.net/badge/${item.badge}.svg?w=24`" width="24" height="24" alt="Status" style="display: block;">
+                      <img :src="`https://status.helltop.net/badge/${item.badge}.svg?w=24`" width="24" height="24" alt="Status" style="display: block;">
                     </div>
                   </td>
                   <td style="padding: 12px; vertical-align: middle;">
                     <a :href="item.url" style="font-weight: 700; text-decoration: none;" class="text-latte-blue dark:text-mocha-blue hover:text-latte-mauve dark:hover:text-mocha-mauve hover:underline">
+                      <Icon v-if="item.icon" :name="item.icon" class="size-6 inline-block mr-2" />
                       {{ item.name }}
                     </a>
                   </td>
