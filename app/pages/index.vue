@@ -54,11 +54,11 @@ useSeoMeta({
 
         <!-- Infrastructure (Arsenal) Section Type -->
         <div v-else-if="section.type === 'infrastructure'">
-          <h3 style="font-size: 1.75rem; margin-bottom: 1rem;">{{ section.subtitle }}</h3>
+          <h3 style="font-size: 1.75rem; margin-bottom: 1rem;" class="text-latte-subtext0 dark:text-mocha-subtext0">{{ section.subtitle }}</h3>
           <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem; text-align: center;">
               <thead>
-                <tr class="text-latte-subtext0 dark:text-macchiato-subtext1">
+                <tr class="text-latte-subtext0 dark:text-mocha-subtext0">
                   <th style="padding: 12px; font-weight: 800; text-transform: uppercase; font-size: 0.875rem;">Status</th>
                   <th style="padding: 12px; font-weight: 800; text-transform: uppercase; font-size: 0.875rem;">Service</th>
                   <th style="padding: 12px; font-weight: 800; text-transform: uppercase; font-size: 0.875rem;">Function</th>
@@ -77,7 +77,7 @@ useSeoMeta({
                       {{ item.name }}
                     </a>
                   </td>
-                  <td style="padding: 12px; vertical-align: middle; font-size: 1rem;" class="text-latte-subtext1 dark:text-macchiato-subtext1">
+                  <td style="padding: 12px; vertical-align: middle; font-size: 1rem;" class="text-latte-subtext1 dark:text-mocha-subtext1">
                     {{ item.function }}
                   </td>
                 </tr>
@@ -99,7 +99,7 @@ v-for="item in section.items" :key="item.name"
                   {{ item.name }}
                 </a>
               </h4>
-              <p style="margin: 0; font-size: 0.95rem;" class="text-latte-subtext1 dark:text-macchiato-subtext1">{{ item.description }}</p>
+              <p style="margin: 0; font-size: 0.95rem;" class="text-latte-subtext1 dark:text-mocha-subtext1">{{ item.description }}</p>
             </div>
           </div>
         </div>
