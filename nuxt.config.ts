@@ -1,4 +1,3 @@
-import tailwindcss from '@tailwindcss/vite'
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
@@ -31,24 +30,24 @@ export default defineNuxtConfig({
     socials: {
       liberapay: {
         user: 'anoraktrend',
-        icon: 'lucide-heart-handshake'
+        icon: 'simple-icons:liberapay'
       },
       github: {
         repo: 'anoraktrend/helltop',
-        icon: 'lucide-github'
+        icon: 'simple-icons:github'
       },
       codeberg: {
         user: 'anoraktrend',
-        icon: 'lucide-git-branch'
+        icon: 'simple-icons:codeberg'
       },
       mastodon: {
         user: '@lucyinchat',
         host: 'tech.lgbt',
-        icon: 'lucide-mastodon'
+        icon: 'simple-icons:mastodon'
       },
       bluesky: {
         user: 'lucy.helltop.net',
-        icon: 'lucide-cloud'
+        icon: 'simple-icons:bluesky'
       },
     },
   },
@@ -66,14 +65,9 @@ export default defineNuxtConfig({
   },
 
   icon: {
+    mode: 'svg',
     serverBundle: 'local',
-    collections: ['lucide'],
-    customCollections: [
-      {
-        prefix: 'my-icons',
-        dir: './app/assets/icons'
-      }
-    ],
+    collections: ['lucide', 'simple-icons', 'catppuccin'],
     global: true,
   },
 
@@ -94,9 +88,13 @@ export default defineNuxtConfig({
       }
     },
     display: 'swap',
+    tailwindcss: {
+      inject: true,
+      addFontTo: 'theme.extend.fontFamily.sans'
+    }
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ['~~/app/assets/css/main.css'],
   colorMode: {
     preference: 'system',
     fallback: 'light',
@@ -104,10 +102,10 @@ export default defineNuxtConfig({
   },
 
   content: {
-    database: {
+    database: process.env.NODE_ENV === 'production' ? {
       type: 'd1',
       binding: 'DB'
-    },
+    } : undefined,
     build: {
       markdown: {
         highlight: {
@@ -158,15 +156,20 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-02-07',
 
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
     build: {
       sourcemap: false
     }
   },
 
   hooks: {
+    'prepare:types'({ tsConfig }) {
+      // Remove missing vue-router plugin from generated tsconfig to fix vue-component-meta warning
+      if (tsConfig.vueCompilerOptions?.plugins) {
+        tsConfig.vueCompilerOptions.plugins = tsConfig.vueCompilerOptions.plugins.filter(
+          (p: string) => p !== 'vue-router/volar/sfc-route-blocks'
+        )
+      }
+    },
     'vite:extendConfig'(viteInlineConfig) {
       // Strip problematic deeply-nested dependencies injected by Nuxt Content/MDC
       if (viteInlineConfig.optimizeDeps?.include) {
@@ -176,7 +179,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'cloudflare-module',
+    preset: process.env.NODE_ENV === 'production' ? 'cloudflare-module' : undefined,
     prerender: {
       autoSubfolderIndex: false,
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],

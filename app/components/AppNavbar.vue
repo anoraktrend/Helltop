@@ -2,8 +2,6 @@
 const { data: navigation } = await useAsyncData('navigation', () =>
   queryCollectionNavigation('content'),
 );
-
-const appConfig = useAppConfig();
 </script>
 
 <template>

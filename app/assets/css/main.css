@@ -5,9 +5,8 @@
  We recommend using `mocha` for dark mode.
 */
 @import "@catppuccin/tailwindcss/mocha.css";
-@import "@catppuccin/tailwindcss/latte.css";
-@import "@catppuccin/tailwindcss/macchiato.css";
 @import "@catppuccin/tailwindcss/frappe.css";
+@import "@catppuccin/tailwindcss/macchiato.css";
 
 /* Tailwind Plugins */
 @plugin "@tailwindcss/typography";
@@ -18,9 +17,6 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-@source "../../app";
-@source "../../content";
 
 
 ::selection {

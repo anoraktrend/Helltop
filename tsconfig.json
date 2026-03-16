@@ -1,4 +1,5 @@
 {
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -11,11 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
-    "types": ["nuxt"],
-    "paths": {
-      "~/*": ["./*"]
-    }
   },
   "include": [
     "app/**/*.vue",

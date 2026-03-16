@@ -24,12 +24,12 @@
       "subtitle": "The Infrastructure",
       "type": "infrastructure",
       "items": [
-        { "name": "Git (Forgejo)", "url": "https://git.helltop.net", "icon": "my-icons:forgejo", "badge": "git", "function": "Self-hosted git server. The primary forge for my software and tactics." },
-        { "name": "Cloud (Nextcloud)", "url": "https://cloud.helltop.net", "icon": "my-icons:nextcloud", "badge": "cloud", "function": "My digital safe haven. Files, contacts, and calendar without corporate harvesting." },
-        { "name": "Jellyfin", "url": "https://jellyfin.helltop.net", "icon": "my-icons:jellyfin", "badge": "jellyfin", "function": "Media liberation. Ripping, storing, and managing my own media collection." },
-        { "name": "Immich", "url": "https://immich.helltop.net", "icon": "my-icons:immich", "badge": "immich", "function": "High-performance photo backup. Reclaiming my visual history from Google Photos." },
-        { "name": "Authelia", "url": "https://auth.helltop.net", "badge": "auth", "function": "Single Sign-On and 2FA. Securing the perimeter of my entire network." },
-        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "icon": "my-icons:vaultwarden", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." }
+        { "name": "Git (Forgejo)", "url": "https://git.helltop.net", "icon": "simple-icons:forgejo", "badge": "git", "function": "Self-hosted git server. The primary forge for my software and tactics." },
+        { "name": "Cloud (Nextcloud)", "url": "https://cloud.helltop.net", "icon": "simple-icons:nextcloud", "badge": "cloud", "function": "My digital safe haven. Files, contacts, and calendar without corporate harvesting." },
+        { "name": "Jellyfin", "url": "https://jellyfin.helltop.net", "icon": "simple-icons:jellyfin", "badge": "jellyfin", "function": "Media liberation. Ripping, storing, and managing my own media collection." },
+        { "name": "Immich", "url": "https://immich.helltop.net", "icon": "simple-icons:immich", "badge": "immich", "function": "High-performance photo backup. Reclaiming my visual history from Google Photos." },
+        { "name": "Authelia", "url": "https://auth.helltop.net", "icon": "simple-icons:authelia", "badge": "auth", "function": "Single Sign-On and 2FA. Securing the perimeter of my entire network." },
+        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "icon": "simple-icons:vaultwarden", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." }
       ]
     },
     {

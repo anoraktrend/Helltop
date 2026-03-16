@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS='--no-deprecation' nuxi dev",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxi dev",
     "build": "pnpm generate:rss && NODE_OPTIONS='--max-old-space-size=4096 --no-deprecation' nuxi build",
     "generate:rss": "npx tsx scripts/generate-rss.ts",
     "generate": "nuxi generate",
@@ -62,11 +62,12 @@
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
   },
-  "packageManager": "pnpm@10.7.1",
+  "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "overrides": {
       "serialize-javascript": "^7.0.3",
-      "undici": "^7.24.0"
+      "undici": "^7.24.0",
+      "vue-router": "5.0.3"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",

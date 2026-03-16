@@ -18,20 +18,16 @@ declare const inlineConfig = {
     "fallbackToApi": true,
     "cssSelectorPrefix": "i-",
     "cssWherePseudo": true,
-    "mode": "css",
+    "mode": "svg",
     "attrs": {
       "aria-hidden": true
     },
     "collections": [
       "lucide",
-      "catppuccin",
       "simple-icons",
-      "my-icons"
+      "catppuccin"
     ],
-    "fetchTimeout": 1500,
-    "customCollections": [
-      "my-icons"
-    ]
+    "fetchTimeout": 1500
   },
   "ui": {
     "colors": {

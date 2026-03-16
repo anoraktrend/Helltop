@@ -17,7 +17,7 @@ const year = new Date().getFullYear();
           title="RSS Feed"
           href="/rss.xml"
         >
-          <Icon class="size-5" name="lucide-rss" />
+          <Icon class="size-5" name="lucide:rss" />
         </a>
       </div>
     </div>
