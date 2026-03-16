@@ -185,5 +185,6 @@ export default defineNuxtConfig({
       routes: ['/', '/blog', '/rss.xml', '/cover.jpg'],
       crawlLinks: true
     }
-  }
+  },
+
 })

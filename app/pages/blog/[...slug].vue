@@ -28,5 +28,6 @@ useSeoMeta(page.value?.seo || {})
       :value="page"
       class="prose dark:prose-invert prose-pre:bg-ctp-mantle dark:prose-pre:bg-ctp-mantle prose-img:rounded-lg prose-img:shadow-md max-w-none"
     />
+    <Comments />
   </NuxtLayout>
 </template>

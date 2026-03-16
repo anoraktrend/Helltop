@@ -18,6 +18,7 @@ interface _GlobalComponents {
   AppNavbar: typeof import("../../app/components/AppNavbar.vue")['default']
   ButtonLink: typeof import("../../app/components/ButtonLink.vue")['default']
   ColorModeSwitch: typeof import("../../app/components/ColorModeSwitch.vue")['default']
+  Comments: typeof import("../../app/components/Comments.client.vue")['default']
   MarkdownBlock: typeof import("../../app/components/MarkdownBlock.vue")['default']
   OptimizedImage: typeof import("../../app/components/OptimizedImage.vue")['default']
   SocialLinks: typeof import("../../app/components/SocialLinks.vue")['default']
@@ -255,6 +256,7 @@ interface _GlobalComponents {
   LazyAppNavbar: LazyComponent<typeof import("../../app/components/AppNavbar.vue")['default']>
   LazyButtonLink: LazyComponent<typeof import("../../app/components/ButtonLink.vue")['default']>
   LazyColorModeSwitch: LazyComponent<typeof import("../../app/components/ColorModeSwitch.vue")['default']>
+  LazyComments: LazyComponent<typeof import("../../app/components/Comments.client.vue")['default']>
   LazyMarkdownBlock: LazyComponent<typeof import("../../app/components/MarkdownBlock.vue")['default']>
   LazyOptimizedImage: LazyComponent<typeof import("../../app/components/OptimizedImage.vue")['default']>
   LazySocialLinks: LazyComponent<typeof import("../../app/components/SocialLinks.vue")['default']>
