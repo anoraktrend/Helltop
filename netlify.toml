@@ -1,3 +1,8 @@
 [functions]
-  external_node_modules = ["astro"]
-  node_bundle = true
+  # Netlify now bundles by default, so we define the behavior like this:
+  node_bundle = {} 
+  external_node_modules = ["astro", "@astrojs/db"]
+
+[build]
+  command = "npm run build"
+  publish = "dist"
