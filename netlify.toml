@@ -1,8 +1,8 @@
-[functions]
-  # Netlify now bundles by default, so we define the behavior like this:
-  node_bundle = {} 
-  external_node_modules = ["astro", "@astrojs/db"]
-
 [build]
   command = "npm run build"
   publish = "dist"
+
+[functions]
+  directory = "dist/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["@libsql/client", "@libsql/hrana-client", "drizzle-orm"]

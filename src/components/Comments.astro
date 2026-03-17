@@ -7,8 +7,14 @@ interface Props {
 
 const { postId } = Astro.props;
 
-// Fetch comments for this post
-const comments = await db.select().from(Comment).where(eq(Comment.postId, postId)).orderBy(desc(Comment.publishedAt));
+// Fetch comments for this post with error handling
+let comments = [];
+try {
+  comments = await db.select().from(Comment).where(eq(Comment.postId, postId)).orderBy(desc(Comment.publishedAt));
+} catch (e) {
+  console.warn('Database connection failed, using empty comments list:', e);
+  comments = [];
+}
 
 // Handle form submission (Server Action)
 if (Astro.request.method === 'POST') {
@@ -20,11 +26,15 @@ if (Astro.request.method === 'POST') {
       const body = formData.get('body');
 
       if (typeof author === 'string' && typeof body === 'string') {
-        await db.insert(Comment).values({
-          author,
-          body,
-          postId,
-        });
+        try {
+          await db.insert(Comment).values({
+            author,
+            body,
+            postId,
+          });
+        } catch (e) {
+          console.error('Failed to save comment:', e);
+        }
       }
     }
   } catch (e) {
