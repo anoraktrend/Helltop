@@ -1,27 +1,11 @@
 {
-  "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
-    "jsx": "preserve",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-  },
+  "extends": "astro/tsconfigs/strict",
   "include": [
-    "app/**/*.vue",
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "server/**/*.ts",
-    "server/**/*.tsx",
-    "content/**/*.md",
-    "content/**/*.mdx",
-    "*.config.ts"
+    ".astro/types.d.ts",
+    "**/*",
+    "./worker-configuration.d.ts"
   ],
-  "exclude": ["node_modules", "dist", ".output", "**/*.js"]
+  "exclude": [
+    "dist"
+  ]
 }

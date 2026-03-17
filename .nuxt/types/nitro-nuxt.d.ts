@@ -3,11 +3,7 @@
 /// <reference path="app.config.d.ts" />
 /// <reference path="runtime-config.d.ts" />
 /// <reference path="../../node_modules/.pnpm/@nuxt+nitro-server@4.4.2_@babel+core@7.29.0_better-sqlite3@12.8.0_db0@0.3.4_better-sqli_393d79e39705ac68029da3bd16f5cba2/node_modules/@nuxt/nitro-server/dist/index.d.mts" />
-/// <reference path="../image/providers.d.ts" />
-/// <reference path="../module/nuxt-site-config.d.ts" />
-/// <reference path="nuxt-security.d.ts" />
-/// <reference path="nuxt-security-nitro.d.ts" />
-/// <reference path="nitro-middleware.d.ts" />
+/// <reference path="middleware.d.ts" />
 
 import type { RuntimeConfig } from 'nuxt/schema'
 import type { H3Event } from 'h3'

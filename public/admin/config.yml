@@ -13,10 +13,35 @@ public_folder: "/uploads" # Folder where user uploaded files will be accessible 
 collections:
   - name: "blog"
     label: "Blog Posts"
-    folder: "content/blog"
+    folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "string", required: false}
       - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Author", name: "author", widget: "string", default: "Lucy Ada Randall"}
+      - {label: "Category", name: "category", widget: "string", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - label: "Landing Page Data"
+        name: "index"
+        file: "src/content/homepage/1.index.json"
+        fields:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Subtitle", name: "subtitle", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "string"}
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Type", name: "type", widget: "select", options: ["text", "infrastructure", "software", "cta"]}
+              - {label: "Content", name: "content", widget: "text", required: false}

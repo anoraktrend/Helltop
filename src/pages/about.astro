@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout title="About | Helltop" description="Lucy Ada Randall - Developer, open-source radical, and corporate tech heretic.">
+  <div class="py-12 max-w-4xl mx-auto space-y-24">
+    <!-- Header Section -->
+    <header class="relative">
+      <div class="absolute -top-12 -right-12 size-48 bg-ctp-pink/5 rounded-full blur-2xl -z-10"></div>
+      <h1 class="text-6xl sm:text-8xl font-bold text-ctp-text mb-8 tracking-tighter">
+        Lucy Ada <span class="text-ctp-mauve italic">Randall</span>
+      </h1>
+      <p class="text-2xl sm:text-3xl text-ctp-subtext1 leading-relaxed font-light">
+        Developer, open-source radical, and corporate tech heretic. Building alternatives to the surveillance state one commit at a time.
+      </p>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Left Column: Biography -->
+      <div class="md:col-span-2 space-y-8">
+        <section>
+          <h2 class="text-2xl font-bold text-ctp-mauve uppercase tracking-widest mb-6 flex items-center gap-3">
+            <Icon name="lucide:terminal" class="size-6" />
+            Mission Brief
+          </h2>
+          <div class="prose prose-lg">
+            <p>
+              This is my resistance headquarters on the internet. I write code that fights back against the corporate enclosure of computing. The modern web has become a series of walled gardens designed to monetize your every interaction—I'm here to help you burn those walls down.
+            </p>
+            <p>
+              My work focuses on <strong>sovereign computing</strong>: systems where the user is the ultimate authority, not a customer to be harvested.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-ctp-mauve uppercase tracking-widest mb-6 flex items-center gap-3">
+            <Icon name="lucide:swords" class="size-6" />
+            Battlegrounds
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-sm">
+            <div class="p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-pink transition-colors">
+              <h3 class="text-ctp-pink font-bold mb-2 uppercase tracking-tighter">Mobile Linux</h3>
+              <p class="text-ctp-subtext0">Contributing to postmarketOS. Your phone should be a real computer, not a tracking device.</p>
+            </div>
+            <div class="p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-pink transition-colors">
+              <h3 class="text-ctp-pink font-bold mb-2 uppercase tracking-tighter">System Dev</h3>
+              <p class="text-ctp-subtext0">Arch Linux systems and low-level tooling. Own your stack from the binary up.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Stats/Sidebar -->
+      <aside class="space-y-12">
+        <div class="p-8 bg-ctp-crust rounded-2xl border border-ctp-surface0 shadow-xl">
+          <h2 class="text-lg font-bold text-ctp-mauve uppercase tracking-widest mb-6">Manifesto</h2>
+          <ul class="space-y-4 text-sm font-mono text-ctp-subtext1">
+            <li class="flex gap-2">
+              <span class="text-ctp-pink">01.</span> Self-host everything.
+            </li>
+            <li class="flex gap-2">
+              <span class="text-ctp-pink">02.</span> Open source exclusively.
+            </li>
+            <li class="flex gap-2">
+              <span class="text-ctp-pink">03.</span> Opt-out of surveillance.
+            </li>
+            <li class="flex gap-2">
+              <span class="text-ctp-pink">04.</span> Weaponize self-reliance.
+            </li>
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-lg font-bold text-ctp-mauve uppercase tracking-widest px-2">Encrypted Comms</h2>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+              <Icon name="lucide:mail" class="size-5 text-ctp-pink group-hover:text-ctp-mauve" />
+              <span class="text-sm font-mono">lucyrandall@helltop.net</span>
+            </a>
+            <a href="https://github.com/anoraktrend" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+              <Icon name="simple-icons:github" class="size-5 text-ctp-pink group-hover:text-ctp-mauve" />
+              <span class="text-sm font-mono">@anoraktrend</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="p-12 bg-gradient-to-br from-ctp-mauve/10 to-ctp-pink/5 border border-ctp-mauve/20 rounded-3xl text-center">
+      <h2 class="text-3xl font-bold text-ctp-text mb-4 tracking-tight italic">Ready to join the insurgency?</h2>
+      <p class="text-ctp-subtext1 mb-8 max-w-xl mx-auto">
+        I'm building networks with digital freedom fighters who are tired of asking permission. Let's build something that lasts.
+      </p>
+      <a 
+        href="mailto:lucyrandall@helltop.net" 
+        class="inline-block bg-ctp-mauve hover:bg-ctp-pink text-ctp-base font-bold py-4 px-10 rounded-2xl transition-all uppercase tracking-widest text-sm shadow-lg shadow-ctp-mauve/20"
+      >
+        Contact Headquarters
+      </a>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,211 @@
+/_nuxt/builds/meta/*
+  cache-control: public, max-age=31536000, immutable
+/__sitemap__/style.xsl
+  Content-Type: application/xslt+xml
+/_nuxt/builds/*
+  cache-control: public, max-age=1, immutable
+/blog/stack
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-H930iWKgqKZ/N4k2ksqI9wxEDL7LjXe1k1hlK9t8hkU=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/ee
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-pmAJeP/JlDL/oUlCknnJn0/clS+bwl/Crj3v2Eh1rfc=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/yams
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-Otl7ob5ZkrNVILjdhTOHumJHSYi2aoQ8J6WnHTooE+Q=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/statusflare
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-i0ZevWoeVwNfEYkFCjYeswiGDPie7O2qFiO6CADc1zw=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/quester
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-uWdkxXliHh/+nhE0KiaIqYQkR/Q9j/OEM3nMg/avgZo=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/tailscale
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-QrRGJuPmDZdv6ZaKCxR9N4VRl2hiXbDYwfx9PIMeEl8=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/aee
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-7OusYPDQnVeW6JqEYqXVRf+AhqWjF45o8SrVpOlqn5o=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/mfutil
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-Mk+89dIk1cLE3do/zpvPMZ4UKr5swFlQKs/bX6JvykU=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/blog/fts
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-Lw31IX2W0HMjsUGONr/7BRabQGsGIMHdvo1Yl5wvlxU=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/sitemap.xml
+  Content-Type: text/xml; charset=UTF-8
+  Cache-Control: public, max-age=600, must-revalidate
+  X-Sitemap-Prerendered: 2026-03-16T22:16:24.207Z
+/_fonts/*
+  cache-control: public, max-age=31536000, immutable
+/_scripts/*
+  cache-control: public, max-age=31536000, immutable
+/_nuxt/*
+  cache-control: public, max-age=31536000, immutable
+/blog
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-7eCYqKn4toXH1Okf+rglHY4cC0IeLrpobDrYqBKu88U=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/
+  referrer-policy: no-referrer
+  strict-transport-security: max-age=15552000; includeSubDomains
+  x-content-type-options: nosniff
+  x-download-options: noopen
+  x-frame-options: SAMEORIGIN
+  x-permitted-cross-domain-policies: none
+  x-xss-protection: 0
+  access-control-allow-origin: *
+  cross-origin-resource-policy: same-origin
+  cross-origin-opener-policy: same-origin
+  cross-origin-embedder-policy: require-corp
+  content-security-policy: base-uri 'none'; font-src 'self' https: data:; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; script-src 'self' https: 'unsafe-inline' 'strict-dynamic' 'sha256-a7tKwYk8kuutb045XXy+B9AdA5IV7uIuMqnxm+ZL0UI=' 'sha256-wvlVimh5CB9XyWHFxD7S4lYSD27U5yKWNG5VnRWSb2Y=' 'sha256-7QIjPOpXT97VD5NmIGqI7WTiAFunWN1i1ifDHVp5i+g='; upgrade-insecure-requests;
+  origin-agent-cluster: ?1
+  x-dns-prefetch-control: off
+  permissions-policy: camera=(), display-capture=(), fullscreen=(), geolocation=(), microphone=()
+  content-type: text/html;charset=utf-8
+/*
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Download-Options: noopen
+  X-Frame-Options: SAMEORIGIN
+  X-Permitted-Cross-Domain-Policies: none
+  X-XSS-Protection: 0

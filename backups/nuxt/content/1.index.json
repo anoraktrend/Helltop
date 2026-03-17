@@ -1,0 +1,58 @@
+{
+  "hero": {
+    "title": "Welcome to My Digital Rebellion",
+    "subtitle": "Fuck the corporate cloud. Build your own.",
+    "description": "I'm a self-hoster who's done with watching Big Tech monetize every keystroke, harvest every click, and lock you into ecosystems designed to extract maximum profit from your digital life. This is my war room where I build tools, share tactics, and forge weapons for anyone ready to tear down the walled gardens and reclaim what's rightfully theirs: complete control over your computing."
+  },
+  "sections": [
+    {
+      "id": "manifesto",
+      "title": "Manifesto",
+      "type": "text",
+      "content": "The internet is dying under the boot of surveillance capitalism. Five corporations own your digital existence. They've turned \"the cloud\" into a euphemism for \"rent-seeking middleman\" and \"user-friendly\" into code for \"we control everything.\"",
+      "list": [
+        { "title": "Self-hosting everything", "text": "Your email, your repos, your files, your life. If you're paying monthly rent for storage that sits on someone else's hardware, you're a serf in digital feudalism." },
+        { "title": "Building with open source exclusively", "text": "Proprietary software is a cage. The source code is the key. Anyone telling you otherwise profits from your captivity." },
+        { "title": "Burning down surveillance capitalism", "text": "Every \"free\" service is a panopticon. Stop volunteering for your own surveillance." },
+        { "title": "Weaponizing self-reliance", "text": "Learn to run your own infrastructure or accept that you'll always be at the mercy of some corporation's quarterly earnings call." }
+      ],
+      "quote": "The cloud isn't the future. It's a scam. Host your own goddamn servers."
+    },
+    {
+      "id": "arsenal",
+      "title": "Arsenal",
+      "subtitle": "The Infrastructure",
+      "type": "infrastructure",
+      "items": [
+        { "name": "Git (Forgejo)", "url": "https://git.helltop.net", "icon": "i-simple-icons-forgejo", "badge": "git", "function": "Self-hosted git server. The primary forge for my software and tactics." },
+        { "name": "Cloud (Nextcloud)", "url": "https://cloud.helltop.net", "icon": "i-simple-icons-nextcloud", "badge": "cloud", "function": "My digital safe haven. Files, contacts, and calendar without corporate harvesting." },
+        { "name": "Jellyfin", "url": "https://jellyfin.helltop.net", "icon": "i-simple-icons-jellyfin", "badge": "jellyfin", "function": "Media liberation. Ripping, storing, and managing my own media collection." },
+        { "name": "Immich", "url": "https://immich.helltop.net", "icon": "i-simple-icons-immich", "badge": "immich", "function": "High-performance photo backup. Reclaiming my visual history from Google Photos." },
+        { "name": "Authelia", "url": "https://auth.helltop.net", "icon": "i-simple-icons-authelia", "badge": "auth", "function": "Single Sign-On and 2FA. Securing the perimeter of my entire network." },
+        { "name": "Vaultwarden", "url": "https://vault.helltop.net", "icon": "i-simple-icons-vaultwarden", "badge": "vault", "function": "Secure password management. Keeping my keys out of corporate hands." }
+      ]
+    },
+    {
+      "id": "forge",
+      "title": "The Forge",
+      "subtitle": "Software I Build & Maintain",
+      "type": "software",
+      "items": [
+        { "name": "are", "url": "https://git.helltop.net/lucy/are", "description": "Another Rust Editor - A port of AEE (Another Easy Editor) to rust." },
+        { "name": "quester", "url": "https://git.helltop.net/lucy/quester", "description": "A QML-based MPD Client." },
+        { "name": "StatusFlare", "url": "https://git.helltop.net/lucy/StatusFlare", "description": "Helltop's status page." },
+        { "name": "helltop", "url": "https://git.helltop.net/lucy/helltop", "description": "The Source Code of Helltop.net" }
+      ]
+    },
+    {
+      "id": "resistance",
+      "title": "Join the Resistance",
+      "type": "cta",
+      "content": "I'm building networks with developers, sysadmins, and digital freedom fighters who are tired of asking permission to use their own fucking computers. reach out via <a href=\"mailto:lucyrandall@helltop.net\">email</a> or through my repositories."
+    }
+  ],
+  "footer": {
+    "lastUpdated": "March 2026",
+    "statusUrl": "https://status.helltop.net/"
+  }
+}

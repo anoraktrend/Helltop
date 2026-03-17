@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+const homeEntries = await getCollection('homepage');
+const home = homeEntries[0];
+if (!home) {
+  throw new Error('Could not find homepage content');
+}
+
+const { hero, sections } = home.data;
+---
+
+<Layout title="Helltop | My Digital Rebellion">
+  <!-- Hero Section -->
+  <section class="py-20 text-center">
+    <h1 class="text-5xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight">
+      {hero.title}
+    </h1>
+    <p class="text-2xl sm:text-3xl text-ctp-subtext1 mb-8 font-light italic">
+      {hero.subtitle}
+    </p>
+    <p class="max-w-2xl mx-auto text-ctp-subtext0 leading-relaxed text-lg">
+      {hero.description}
+    </p>
+  </section>
+
+  <!-- Dynamic Sections -->
+  <div class="flex flex-col gap-32">
+    {sections.map((section) => (
+      <section id={section.id} class="scroll-mt-24">
+        <div class="flex items-center gap-4 mb-12">
+          <h2 class="text-3xl font-bold text-ctp-mauve uppercase tracking-widest">{section.title}</h2>
+          <div class="h-px bg-ctp-surface0 flex-grow"></div>
+        </div>
+
+        {section.type === 'text' && (
+          <div class="prose prose-invert max-w-none">
+            <p class="text-xl text-ctp-text mb-8 leading-relaxed font-mono">{section.content}</p>
+            {section.list && (
+              <div class="grid sm:grid-cols-2 gap-8">
+                {section.list.map((item) => (
+                  <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0 hover:border-ctp-mauve/50 transition-colors">
+                    <h3 class="text-ctp-pink font-bold mb-2 uppercase text-sm tracking-widest">{item.title}</h3>
+                    <p class="text-ctp-subtext0 leading-relaxed">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            {section.quote && (
+              <blockquote class="mt-12 border-l-4 border-ctp-mauve pl-6 italic text-2xl text-ctp-subtext1 font-mono">
+                "{section.quote}"
+              </blockquote>
+            )}
+          </div>
+        )}
+
+        {section.type === 'infrastructure' && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {section.items?.filter(item => !!item).map((item) => (
+              <a 
+                href={item.url} 
+                target="_blank" 
+                class="flex items-start gap-6 p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-mauve hover:shadow-lg hover:shadow-ctp-mauve/10 transition-all group"
+              >
+                <div class="p-4 bg-ctp-base rounded-lg text-ctp-mauve group-hover:text-ctp-pink transition-colors">
+                  <Icon name={item.icon} class="size-8" />
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-ctp-text mb-1 group-hover:text-ctp-mauve transition-colors">{item.name}</h3>
+                  <p class="text-ctp-subtext0 text-sm leading-relaxed">{item.function}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+
+        {section.type === 'software' && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {section.items?.map((item) => (
+              <a 
+                href={item.url} 
+                target="_blank" 
+                class="block p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-pink hover:shadow-lg hover:shadow-ctp-pink/10 transition-all group"
+              >
+                <h3 class="text-xl font-bold text-ctp-mauve mb-2 group-hover:text-ctp-pink transition-colors font-mono">&gt; {item.name}</h3>
+                <p class="text-ctp-subtext0 leading-relaxed">{item.description}</p>
+              </a>
+            ))}
+          </div>
+        )}
+
+        {section.type === 'cta' && (
+          <div class="bg-ctp-mauve/10 border border-ctp-mauve/20 p-8 rounded-2xl text-center">
+            <p class="text-xl text-ctp-text mb-0" set:html={section.content}></p>
+          </div>
+        )}
+      </section>
+    ))}
+  </div>
+</Layout>

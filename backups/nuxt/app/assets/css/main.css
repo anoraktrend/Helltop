@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* 
+ Choose between `mocha`, `frappe` or `macchiato` for dark mode, latte is included as the light mode flavour.
+ We recommend using `mocha` for dark mode.
+*/
+@import "@catppuccin/tailwindcss/mocha.css";
+@import "@catppuccin/tailwindcss/frappe.css";
+@import "@catppuccin/tailwindcss/macchiato.css";
+
+/* Tailwind Plugins */
+@plugin "@tailwindcss/typography";
+
+/* Theme customizations */
+@theme {
+  --font-sans: "Space Mono", system-ui, sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+::selection {
+  background-color: color-mix(in srgb, var(--ctp-overlay2) 30%, transparent);
+}
+
+.prose a:not(h2 a, h3 a, h4 a, h5 a, h6 a, button a) {
+  color: var(--ctp-blue);
+  @apply hover:underline;
+}
+
+/* Override Nuxt UI primary */
+:root {
+  --ui-primary: var(--ctp-mauve);
+  --highlight-color: var(--ctp-mauve);
+}

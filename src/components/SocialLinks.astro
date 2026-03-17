@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  iconSize?: string;
+  spacing?: string;
+  class?: string;
+}
+
+const { iconSize = "5", spacing = "4", class: className = "" } = Astro.props;
+
+const socials = [
+  { name: 'Liberapay', url: 'https://liberapay.com/anoraktrend', icon: 'simple-icons:liberapay' },
+  { name: 'GitHub', url: 'https://github.com/anoraktrend/helltop', icon: 'simple-icons:github' },
+  { name: 'Codeberg', url: 'https://codeberg.org/anoraktrend', icon: 'simple-icons:codeberg' },
+  { name: 'Mastodon', url: 'https://tech.lgbt/@lucyinchat', icon: 'simple-icons:mastodon' },
+  { name: 'Bluesky', url: 'https://bsky.app/profile/lucy.helltop.net', icon: 'simple-icons:bluesky' },
+];
+---
+
+<div class={`flex gap-${spacing} ${className}`}>
+  {socials.map((social) => (
+    <a
+      href={social.url}
+      title={social.name}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-ctp-mauve transition-colors"
+    >
+      <Icon name={social.icon} class={`size-${iconSize}`} />
+    </a>
+  ))}
+</div>

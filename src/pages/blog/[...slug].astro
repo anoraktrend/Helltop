@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import Comments from '../../components/Comments.astro';
+
+const { slug } = Astro.params;
+if (!slug) {
+  return Astro.redirect('/blog');
+}
+
+const post = await getEntry('blog', slug);
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const { Content, remarks } = await render(post);
+
+// Calculate reading time (rough estimate)
+const wordCount = post.body?.split(/\s+/).length || 0;
+const readingTime = Math.ceil(wordCount / 200);
+---
+
+<Layout title={`${post.data.title} | Helltop`} description={post.data.description}>
+  <article class="max-w-3xl mx-auto py-12">
+    <header class="mb-16 border-b border-ctp-surface0 pb-12 relative">
+      <!-- Background accent -->
+      <div class="absolute -top-24 -left-24 size-64 bg-ctp-mauve/5 rounded-full blur-3xl -z-10"></div>
+      
+      <a href="/blog" class="group flex items-center gap-2 text-ctp-pink hover:text-ctp-mauve transition-all mb-8 font-bold uppercase text-xs tracking-widest">
+        <span class="group-hover:-translate-x-1 transition-transform">&larr;</span> Back to Archive
+      </a>
+      
+      <div class="space-y-4">
+        {post.data.category && (
+          <span class="inline-block px-3 py-1 bg-ctp-mauve/10 text-ctp-mauve rounded-full text-xs font-bold uppercase tracking-widest border border-ctp-mauve/20">
+            {post.data.category}
+          </span>
+        )}
+        <h1 class="text-5xl sm:text-7xl font-bold text-ctp-text leading-[1.1] tracking-tight">
+          {post.data.title}
+        </h1>
+        <p class="text-xl text-ctp-subtext1 italic font-light leading-relaxed">
+          {post.data.description}
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center gap-6 text-ctp-subtext0 font-mono text-sm uppercase tracking-tighter">
+        {post.data.date && (
+          <div class="flex items-center gap-2">
+            <span class="text-ctp-mauve">📅</span>
+            <time>{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
+          </div>
+        )}
+        <div class="flex items-center gap-2">
+          <span class="text-ctp-mauve">⏱️</span>
+          <span>{readingTime} min read</span>
+        </div>
+        {post.data.author && (
+          <div class="flex items-center gap-2">
+            <span class="text-ctp-mauve">👤</span>
+            <span>{post.data.author}</span>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="prose prose-lg">
+      <Content />
+    </div>
+
+    <!-- Custom Self-Hosted Comments Section -->
+    <div class="mt-32">
+      <Comments postId={post.id} />
+    </div>
+  </article>
+</Layout>

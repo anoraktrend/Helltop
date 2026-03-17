@@ -1,0 +1,2 @@
+import{am as r,b7 as e,m as o,aC as s}from"../nitro/nitro.mjs";function useForwardProps(t){const a=o(),p=Object.keys(a?.type.props??{}).reduce((r,e)=>{const o=(a?.type.props[e]).default;return void 0!==o&&(r[e]=o),r},{}),u=s(t);return r(()=>{const r={},o=a?.vnode.props??{};return Object.keys(o).forEach(s=>{r[e(s)]=o[s]}),Object.keys({...p,...r}).reduce((r,e)=>(void 0!==u.value[e]&&(r[e]=u.value[e]),r),{})})}export{useForwardProps as u};
+//# sourceMappingURL=useForwardProps-C9pAKts0.mjs.map

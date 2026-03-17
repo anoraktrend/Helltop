@@ -1,0 +1,1 @@
+{"version":3,"file":"logout.get.mjs","sources":["../../../../../../server/api/studio/logout.get.ts"],"names":["logout_get","defineEventHandler","async","event","clearStudioUserSession","sendRedirect"],"mappings":"wPAEA,MAAAA,EAAAC,EAAAC,MAAAC,UACAC,EAAAD,GACAE,EAAAF,EAAA"}

@@ -1,0 +1,1 @@
+import{aQ as a,aO as c,Z as m,a2 as u}from"./iAe37yAp.js";import{u as p}from"./DUiGW5GE.js";function i(t){const e=m()?.type.emits,s={};return e?.length,e?.forEach(r=>{s[a(c(r))]=(...n)=>t(r,...n)}),s}function l(t,o){const e=p(t),s=o?i(o):{};return u(()=>({...e.value,...s}))}export{l as u};

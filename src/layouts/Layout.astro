@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import ThemeSwitcher from '../components/ThemeSwitcher.svelte';
+import SocialLinks from '../components/SocialLinks.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+	title: string;
+  description?: string;
+}
+
+const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Build your own." } = Astro.props;
+const siteUrl = "https://helltop.net/";
+---
+
+<!doctype html>
+<html lang="en" class="mocha">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/cover.jpg', siteUrl)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL('/cover.jpg', siteUrl)} />
+
+    <script is:inline>
+      // Immediate script to prevent flash of unstyled content
+      const flavor = localStorage.getItem('catppuccin-flavor') || 'mocha';
+      document.documentElement.className = flavor;
+    </script>
+	</head>
+	<body class="min-h-screen flex flex-col font-sans">
+    <nav class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center gap-8 text-ctp-overlay2">
+            <a href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors">
+              Helltop
+            </a>
+            <div class="hidden sm:flex gap-6">
+              <a href="/blog" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest">Blog</a>
+              <a href="/about" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest">About</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 text-ctp-overlay2">
+            <SocialLinks iconSize="5" spacing="4" class="hidden md:flex" />
+            <div class="h-6 w-px bg-ctp-surface0 hidden md:block"></div>
+            <ThemeSwitcher client:load />
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <slot />
+    </main>
+
+    <footer class="bg-ctp-crust border-t border-ctp-surface0 py-12 text-center mt-24 text-ctp-overlay2">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <p>&copy; {new Date().getFullYear()} helltop.net</p>
+        
+        <div class="flex justify-center items-center gap-6">
+          <SocialLinks iconSize="5" spacing="6" />
+          <div class="h-4 w-px bg-ctp-surface0"></div>
+          <a href="/rss.xml" class="hover:text-ctp-mauve transition-colors" title="RSS Feed">
+            <Icon name="lucide:rss" class="size-5" />
+          </a>
+        </div>
+      </div>
+    </footer>
+	</body>
+</html>

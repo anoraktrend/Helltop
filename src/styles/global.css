@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* Catppuccin themes for Tailwind 4 */
+@import "@catppuccin/tailwindcss/mocha.css";
+@import "@catppuccin/tailwindcss/frappe.css";
+@import "@catppuccin/tailwindcss/macchiato.css";
+
+@theme {
+  --font-sans: 'Space Mono', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --highlight-color: var(--ctp-mauve);
+}
+
+body {
+  @apply bg-ctp-base text-ctp-text transition-colors duration-300;
+}
+
+.prose {
+  @apply max-w-none text-ctp-text;
+  --tw-prose-body: var(--ctp-text);
+  --tw-prose-headings: var(--ctp-mauve);
+  --tw-prose-lead: var(--ctp-subtext1);
+  --tw-prose-links: var(--ctp-blue);
+  --tw-prose-bold: var(--ctp-pink);
+  --tw-prose-counters: var(--ctp-rosewater);
+  --tw-prose-bullets: var(--ctp-mauve);
+  --tw-prose-hr: var(--ctp-surface0);
+  --tw-prose-quotes: var(--ctp-subtext0);
+  --tw-prose-quote-borders: var(--ctp-mauve);
+  --tw-prose-captions: var(--ctp-subtext1);
+  --tw-prose-kbd: var(--ctp-text);
+  --tw-prose-kbd-shadows: var(--ctp-surface0);
+  --tw-prose-code: var(--ctp-sky);
+  --tw-prose-pre-code: var(--ctp-text);
+  --tw-prose-pre-bg: var(--ctp-mantle);
+  --tw-prose-th-borders: var(--ctp-surface0);
+  --tw-prose-td-borders: var(--ctp-surface1);
+}
+
+.prose h1 {
+  @apply text-4xl sm:text-5xl tracking-tight font-bold mb-8 mt-16 text-ctp-mauve;
+}
+
+.prose h2 {
+  @apply text-3xl sm:text-4xl tracking-tight font-bold mb-6 mt-12 text-ctp-mauve;
+}
+
+.prose h3 {
+  @apply text-2xl sm:text-3xl tracking-tight font-bold mb-4 mt-10 text-ctp-pink;
+}
+
+.prose h4 {
+  @apply text-xl sm:text-2xl tracking-tight font-bold mb-4 mt-8 text-ctp-pink;
+}
+
+.prose h5 {
+  @apply text-lg sm:text-xl tracking-tight font-bold mb-2 mt-6 text-ctp-maroon;
+}
+
+.prose h6 {
+  @apply text-base sm:text-lg tracking-tight font-bold mb-2 mt-4 text-ctp-maroon uppercase tracking-widest;
+}
+
+.prose a {
+  @apply no-underline hover:underline transition-colors;
+}
+
+.prose pre {
+  @apply rounded-2xl border border-ctp-surface0 shadow-lg !bg-ctp-mantle;
+}
+
+.prose code:not(pre code) {
+  @apply bg-ctp-surface0 px-1.5 py-0.5 rounded-md font-mono text-sm;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-ctp-mauve bg-ctp-mantle/50 py-2 px-6 rounded-r-xl italic;
+}
+
+.prose img {
+  @apply rounded-2xl border border-ctp-surface0 shadow-2xl mx-auto my-12;
+}
