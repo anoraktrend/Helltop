@@ -1,13 +1,12 @@
 {
 	"name": "helltop",
-	"main": "dist/server/entry.mjs",
 	"compatibility_date": "2026-03-12",
 	"compatibility_flags": ["nodejs_compat"],
 	"routes": [
 		{ "pattern": "helltop.net", "custom_domain": true }
 	],
 	"assets": {
-		"directory": "./dist/client",
+		"directory": "./dist/",
 		"binding": "ASSETS"
 	},
 	"vars": {
