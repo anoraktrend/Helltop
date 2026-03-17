@@ -17,7 +17,7 @@ export default defineConfig({
   site: 'https://helltop.net',
   output: 'server',
   adapter: cloudflare(),
-  integrations: [svelte(), icon(), mdx(), alpinejs(), db()],
+  integrations: [svelte(), icon(), mdx(), alpinejs()],
   vite: {
     resolve: {
       alias: {

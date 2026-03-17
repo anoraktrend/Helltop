@@ -1,53 +1,17 @@
 ---
-import { db, Comment, eq, desc } from 'astro:db';
-
+// Simple comments component without database
 interface Props {
   postId: string;
 }
 
 const { postId } = Astro.props;
-
-// Fetch comments for this post with error handling
-let comments = [];
-try {
-  comments = await db.select().from(Comment).where(eq(Comment.postId, postId)).orderBy(desc(Comment.publishedAt));
-} catch (e) {
-  console.warn('Database connection failed, using empty comments list:', e);
-  comments = [];
-}
-
-// Handle form submission (Server Action)
-if (Astro.request.method === 'POST') {
-  try {
-    const contentType = Astro.request.headers.get('content-type');
-    if (contentType?.includes('application/x-www-form-urlencoded') || contentType?.includes('multipart/form-data')) {
-      const formData = await Astro.request.formData();
-      const author = formData.get('author');
-      const body = formData.get('body');
-
-      if (typeof author === 'string' && typeof body === 'string') {
-        try {
-          await db.insert(Comment).values({
-            author,
-            body,
-            postId,
-          });
-        } catch (e) {
-          console.error('Failed to save comment:', e);
-        }
-      }
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
 ---
 
 <div class="mt-24 pt-12 border-t border-ctp-surface0">
   <h2 class="text-3xl font-bold text-ctp-mauve mb-12 uppercase tracking-widest">Digital Feedback</h2>
 
-  <!-- Comment Form -->
-  <form method="POST" class="bg-ctp-mantle p-8 rounded-2xl border border-ctp-surface0 mb-16 space-y-6">
+  <!-- Comment Form (Disabled without database) -->
+  <div class="bg-ctp-mantle p-8 rounded-2xl border border-ctp-surface0 mb-16 space-y-6">
     <div class="space-y-2">
       <label for="author" class="block text-sm font-bold text-ctp-subtext0 uppercase tracking-widest">Identity</label>
       <input 
@@ -72,33 +36,15 @@ if (Astro.request.method === 'POST') {
       ></textarea>
     </div>
 
-    <button 
-      type="submit" 
-      class="bg-ctp-mauve hover:bg-ctp-pink text-ctp-base font-bold py-3 px-8 rounded-lg transition-all uppercase tracking-widest text-sm"
-    >
-      Send Transmission
-    </button>
-  </form>
+    <div class="bg-ctp-red/10 border border-ctp-red/50 text-ctp-red p-4 rounded-lg">
+      <p class="font-mono text-sm">Note: Comments are currently disabled. The database integration is not configured.</p>
+    </div>
+  </div>
 
-  <!-- Comments List -->
+  <!-- Comments List (Empty) -->
   <div class="space-y-12">
-    {comments.length === 0 ? (
-      <p class="text-ctp-subtext1 italic font-mono text-center py-8 bg-ctp-mantle rounded-xl border border-dashed border-ctp-surface0">
-        No transmissions received yet. Be the first to break the silence.
-      </p>
-    ) : (
-      comments.map((comment) => (
-        <div class="group relative pl-8 border-l-2 border-ctp-surface0 hover:border-ctp-mauve transition-colors">
-          <div class="absolute -left-[9px] top-0 size-4 bg-ctp-base border-2 border-ctp-surface0 rounded-full group-hover:border-ctp-mauve transition-colors"></div>
-          <div class="flex items-baseline gap-4 mb-2">
-            <span class="text-xl font-bold text-ctp-pink font-mono">{comment.author}</span>
-            <time class="text-xs text-ctp-subtext0 font-mono">
-              {comment.publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-            </time>
-          </div>
-          <p class="text-ctp-text leading-relaxed whitespace-pre-wrap">{comment.body}</p>
-        </div>
-      ))
-    )}
+    <p class="text-ctp-subtext1 italic font-mono text-center py-8 bg-ctp-mantle rounded-xl border border-dashed border-ctp-surface0">
+      No transmissions received yet. Be the first to break the silence.
+    </p>
   </div>
 </div>
