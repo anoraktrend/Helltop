@@ -1,0 +1,52 @@
+{
+  "title": "YAMS",
+  "description": "A Sweet Media Server Management utility.",
+  "date": "2025-11-30",
+  "author": "Lucy Ada Randall",
+  "category": "Media Server",
+  "slug": "yams",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "![Screenshot of C code, to demonstrate coding](/uploads/c.png)\n\nYAMS represents the kind of open source contribution I believe in: small, focused, and solving a real problem without ego. The original project was great, but it made assumptions about where configuration files should live that didn't work with my NAS setup."
+    },
+    {
+      "title": "The Problem",
+      "content": "Many Docker media stacks assume a specific directory structure for configuration files. This works fine for standard setups but breaks when:\n- Using a NAS with non-standard mount points\n- Running multiple instances with different configurations\n- Following organizational policies for config storage\n\nYAMS assumed configs belonged in `/config`, but my setup needed them in `/data/config`."
+    },
+    {
+      "title": "The Solution",
+      "content": "Rather than rewrite the entire project, I added a simple configuration option:\n\n```yaml\n# docker-compose.yml\nenvironment:\n  - CONFIG_PATH=/data/config\n```\n\nThis small change allows the stack to work with any directory structure while maintaining full backward compatibility."
+    },
+    {
+      "title": "Why This Approach?",
+      "content": "**Minimal Impact**\n- Single environment variable addition\n- No changes to core functionality\n- Maintains all existing features\n\n**Backward Compatibility**\n- Default behavior unchanged\n- Existing deployments continue working\n- No migration required\n\n**Flexibility**\n- Works with any directory structure\n- Easy to configure per deployment\n- Clear documentation for the change"
+    },
+    {
+      "title": "Implementation Details",
+      "content": "The change was surgical:\n1. **Environment Variable**: Added `CONFIG_PATH` with default fallback\n2. **Path Resolution**: Updated config loading to use the specified path\n3. **Documentation**: Added clear examples for different use cases\n4. **Testing**: Verified both default and custom paths work correctly"
+    },
+    {
+      "title": "When to Use This Fork",
+      "content": "This fork is useful if you:\n- Run Docker on a NAS with non-standard mount points\n- Need multiple YAMS instances with different configs\n- Follow organizational policies for config storage\n- Want to keep configs separate from data directories"
+    },
+    {
+      "title": "Philosophy",
+      "content": "This fork embodies my approach to open source contributions:\n\n**Solve Real Problems**\n- Don't rewrite for the sake of it\n- Fix specific issues that block real users\n- Keep changes focused and minimal\n\n**Respect Upstream**\n- Submit clean pull requests\n- Maintain compatibility\n- Document changes clearly\n\n**Practical Over Perfect**\n- Good enough is better than perfect\n- Working solutions beat theoretical ideals\n- User needs > developer preferences"
+    },
+    {
+      "title": "Alternatives Considered",
+      "content": "I evaluated several approaches before settling on this solution:\n\n**Volume Mounts**: Could work but requires complex Docker compose syntax\n**Symbolic Links**: Fragile and platform-dependent\n**Configuration Files**: Would require parsing logic and validation\n**Environment Variables**: Simple, standard, and flexible\n\nThe environment variable approach won the day for its simplicity and reliability."
+    },
+    {
+      "title": "Future Considerations",
+      "content": "If the upstream project accepts the change, this fork becomes unnecessary. If not, it remains available for users with similar needs.\n\nThe goal isn't to maintain a permanent fork, but to provide a working solution while advocating for upstream adoption."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *The best code is the code you don't have to write — but sometimes you have to write a little to make existing code work.*"
+    }
+  ]
+}

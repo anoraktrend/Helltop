@@ -1,0 +1,40 @@
+{
+  "title": "My Self-Hosted Stack: Reclaiming Digital Autonomy",
+  "description": "How I built my own cloud infrastructure and told Big Tech to fuck off",
+  "date": "2026-02-24",
+  "author": "Lucy Ada Randall",
+  "category": "Self-Hosting",
+  "slug": "stack",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "Self-hosting isn't just a technical choice — it's a declaration of independence. I've built my own digital infrastructure because I refuse to be a product in someone else's business model."
+    },
+    {
+      "title": "My Current Stack",
+      "content": "**Core Infrastructure**\n- **Nginx Proxy Manager Plus**: Handles SSL certificates, routing, and access control with a clean web interface\n- **Tailscale**: Zero-config VPN for secure access without exposing ports to the internet\n\n**Data and Collaboration**\n- **Gitea**: Git hosting I actually control, with built-in CI/CD and issue tracking\n- **Nextcloud**: Files, calendars, contacts, and collaborative document editing\n- **Immich**: Photo and video backup that respects privacy and doesn't feed data to ad algorithms\n\n**Media and Entertainment**\n- **Jellyfin**: Media server for movies, TV shows, and music I actually own\n- **Beets**: Music library management that ensures perfect metadata before importing to Jellyfin"
+    },
+    {
+      "title": "Why This Matters",
+      "content": "**Control Over Convenience**\n- No algorithmic filtering deciding what I see\n- No unexpected policy changes or service shutdowns\n- No data mining or behavioral profiling\n\n**Long-term Thinking**\n- Data formats I control and understand\n- No vendor lock-in or proprietary file formats\n- Ability to migrate or backup at will\n\n**Security and Privacy**\n- Encryption I control, not a corporation\n- No third-party access to personal data\n- Transparent security practices"
+    },
+    {
+      "title": "The Reality Check",
+      "content": "Self-hosting isn't free. It requires:\n- **Hardware investment**: Servers, storage, and networking equipment\n- **Time commitment**: Setup, maintenance, and troubleshooting\n- **Skill development**: Learning Docker, networking, and system administration\n- **Responsibility**: You're the sysadmin, backup administrator, and security officer\n\nBut the alternative — renting digital space from corporations — comes with its own costs: loss of control, privacy violations, and the constant threat of service changes or shutdowns."
+    },
+    {
+      "title": "Getting Started",
+      "content": "**Phase 1: Foundation**\n1. Repurpose old hardware or invest in a small server\n2. Install Docker and a reverse proxy\n3. Set up Tailscale for secure access\n\n**Phase 2: Essentials**\n1. Deploy Nextcloud for files and collaboration\n2. Add Gitea for code hosting\n3. Configure automated backups\n\n**Phase 3: Enhancement**\n1. Add media services (Jellyfin, Immich)\n2. Implement monitoring and alerting\n3. Fine-tune security and access controls"
+    },
+    {
+      "title": "Philosophy",
+      "content": "This isn't about technical superiority — it's about autonomy. Every service I run is a choice to keep control over my digital life. Some services might be less polished than their corporate counterparts, but they're mine.\n\nThe goal isn't to recreate every convenience the cloud offers, but to maintain control over what matters most: my data, my workflow, and my privacy."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *Owning your tools means owning your choices.*"
+    }
+  ]
+}

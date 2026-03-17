@@ -1,0 +1,40 @@
+{
+  "title": "Maintaning AEE: Another Easy Editor",
+  "description": "Preserving simple, instruction-free editing for modern systems. Power ≠ complex.",
+  "date": "2026-03-07",
+  "author": "Lucy Ada Randall",
+  "category": "TUIs",
+  "slug": "AEE",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "![Screenshot of AEE text editor interface](/uploads/aee.png)\n\nIn a world obsessed with feature bloat, AEE stands as a monument to restraint. This isn't just another text editor — it's a philosophical statement against the tyranny of complexity."
+    },
+    {
+      "title": "Why I Maintain This Fork",
+      "content": "I maintain this fork because someone has to. The original AEE was perfect in its minimalism, but modern systems broke it. Rather than abandon it to obsolescence, I patched the build system and fixed compatibility issues while preserving its soul."
+    },
+    {
+      "title": "What Makes AEE Special",
+      "content": "What makes AEE special:\n- **Zero learning curve**: Open a file, start typing. No modes, no hidden commands.\n- **Predictable behavior**: What you see is what you get, every time.\n- **Lightweight**: Starts instantly, uses minimal resources."
+    },
+    {
+      "title": "Technical Changes",
+      "content": "The changes I made were surgical:\n- Updated CMake configuration for modern compilers\n- Fixed ncurses compatibility across distributions\n- Maintained exact behavioral compatibility"
+    },
+    {
+      "title": "Use Cases",
+      "content": "This editor is for when you need to make quick edits without ceremony. When you're debugging a config file at 3 AM and don't want to fight your tools."
+    },
+    {
+      "title": "Installation and Usage",
+      "content": "Install (AUR):\n```bash\nyay -S aee-anoraktrend-git\n```\n\nUsage:\n```bash\naee /path/to/file.txt\n```\n\nThe source code is intentionally readable. You can understand the entire editor in an afternoon — something you can't say about most modern software."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *Sometimes the best features are the ones you don't add.*"
+    }
+  ]
+}

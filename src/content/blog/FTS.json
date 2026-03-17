@@ -1,0 +1,48 @@
+{
+  "title": "Fork This Site: Self Hosting and Simplified Web Design",
+  "description": "How I built a fast, self-controlled website using Nuxt 3 and Cloudflare Workers without surrendering to traditional hosting bullshit",
+  "date": "2026-01-18",
+  "author": "Lucy Ada Randall",
+  "category": "Web Development",
+  "slug": "FTS",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "This website is my declaration of independence from corporate content platforms. Built with Nuxt 4 and deployed on Cloudflare Workers, it's fast, affordable, and most importantly, mine."
+    },
+    {
+      "title": "Tech Stack",
+      "content": "The tech stack was chosen deliberately:\n- **Nuxt 4**: Modern Vue-based framework with excellent TypeScript support\n- **Cloudflare Workers**: Global edge deployment with minimal cost\n- **Markdown content**: Human-readable, version-controlled, platform-agnostic"
+    },
+    {
+      "title": "Getting Started",
+      "content": "Clone and customize:\n```bash\ngit clone https://github.com/anoraktrend/Helltop my-site\ncd my-site\n\n# Replace content in content/ with your own\n# Modify 1.index.json, 3.about.md, and blog posts\n\n# Install dependencies\npnpm install\n\n# Start development server\npnpm run dev\n```"
+    },
+    {
+      "title": "Deployment",
+      "content": "The deployment process is intentionally simple:\n```bash\n# Install Wrangler CLI\npnpm install -g wrangler\n\n# Build for production\npnpm run build\n\n# Deploy to Cloudflare Workers\nnpx wrangler deploy\n```"
+    },
+    {
+      "title": "Architecture Decisions",
+      "content": "**Why this stack?**\n- **Performance**: Cloudflare's global network ensures fast loading worldwide\n- **Cost**: Workers are incredibly cheap compared to traditional hosting\n- **Control**: No platform can deplatform you or change the rules\n- **Simplicity**: Markdown content is easy to write and maintain\n\n**Key configuration points:**\n- Content lives in `content/` with frontmatter for metadata\n- Caching rules in `nitro.routeRules` optimize performance\n- RSS feed generated automatically from blog content\n- Nuxt configured for Cloudflare Workers deployment"
+    },
+    {
+      "title": "Alternatives Considered",
+      "content": "- **11ty + Vercel**: Simpler but less interactive\n- **Self-hosted Ghost**: More features but higher maintenance\n- **Write.as**: Maximum simplicity but limited customization\n\nNuxt 4 with Cloudflare Workers strikes the right balance for my needs."
+    },
+    {
+      "title": "Maintenance",
+      "content": "I've included a GitHub Actions workflow for automated deployment, though a Codeberg Forgejo CI workflow would work equally well. The build process is straightforward and doesn't require complex orchestration."
+    },
+    {
+      "title": "Philosophy",
+      "content": "This setup embodies my belief that creators should own their platforms. No more worrying about algorithm changes, content restrictions, or unexpected shutdowns. Just reliable, fast hosting that you control.\n\nThe trade-off is responsibility: you're in charge of updates and maintenance. But that's a price I'm happy to pay for true ownership."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *Building your own platform isn't just technical—it's political.*"
+    }
+  ]
+}

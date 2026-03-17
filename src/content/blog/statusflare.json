@@ -1,0 +1,52 @@
+{
+  "title": "StatusFlare: Forging a Serverless Watchtower",
+  "description": "How I built a dynamic monitoring system and survived the great LDAP/OIDC identity war of 2026.",
+  "date": "2026-03-09",
+  "author": "Lucy Ada Randall",
+  "category": "Self-Hosting",
+  "slug": "statusflare",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "Running your own infrastructure means living with the constant fear of the \"Red Light\" — that moment when a service goes down and you're the last to know. StatusFlare is my solution: a serverless status dashboard that watches my services so I don't have to."
+    },
+    {
+      "title": "Why StatusFlare?",
+      "content": "Most status pages are either:\n- **Over-engineered**: Complex setups requiring dedicated infrastructure\n- **Under-powered**: Simple uptime checks with no real insights\n- **Corporate**: Tied to specific monitoring services with vendor lock-in\n\nStatusFlare aims to be different: serverless, fast, and completely under my control."
+    },
+    {
+      "title": "Architecture Overview",
+      "content": "**Serverless Core**\n- Built on Cloudflare Workers for global edge deployment\n- Uses Cloudflare D1 for persistent data storage\n- Cron-based monitoring every 60 seconds from multiple global locations\n\n**Monitoring Capabilities**\n- HTTP/HTTPS endpoint checks with customizable timeouts\n- OAuth2 token support for protected APIs\n- JSON response parsing for detailed error information\n- Latency tracking and trend analysis\n\n**User Interface**\n- Glassmorphism design with Catppuccin color palette\n- Real-time status updates\n- Service-specific history pages\n- Dynamic SVG status badges for external use"
+    },
+    {
+      "title": "Recent Enhancements",
+      "content": "The project has evolved significantly:\n\n**Incident Management**\n- Manual incident reporting system\n- Link incidents to specific services\n- Track resolution status and timeline\n\n**Authentication & Security**\n- Authelia OIDC integration for admin access\n- Role-based permissions\n- Secure API endpoints\n\n**Advanced Monitoring**\n- Custom HTTP methods and headers\n- OAuth2 token acquisition and caching\n- Smart response parsing for better error visibility\n\n**Developer Experience**\n- Real-time status badges for README files\n- Detailed service history with latency trends\n- Incident timeline visualization"
+    },
+    {
+      "title": "Deployment Pipeline",
+      "content": "StatusFlare uses a fully automated CI/CD pipeline:\n\n1. **Code Changes**: Push to main branch triggers pipeline\n2. **Validation**: TypeScript type-checking and linting\n3. **Build**: Compile and package for Cloudflare Workers\n4. **Deploy**: Automatic deployment via Wrangler\n5. **Migrate**: Database schema updates handled automatically\n\nThe entire process from commit to production takes under 60 seconds."
+    },
+    {
+      "title": "Monitoring Strategy",
+      "content": "StatusFlare monitors my entire infrastructure:\n- **Core Services**: Nextcloud, Gitea, Jellyfin\n- **Network Services**: DNS, VPN endpoints\n- **Custom Applications**: Personal projects and APIs\n- **External Dependencies**: Third-party services I rely on\n\nEach service gets:\n- Health check endpoint\n- Latency tracking\n- Incident logging\n- Historical performance data"
+    },
+    {
+      "title": "Lessons Learned",
+      "content": "Building a monitoring system taught me:\n\n**Serverless Isn't Magic**\n- Cold starts can affect monitoring accuracy\n- Database query limits require careful design\n- Edge deployment means debugging from afar\n\n**Monitoring is Hard**\n- False positives are worse than false negatives\n- Network issues can masquerade as service failures\n- Historical data is more valuable than real-time alerts\n\n**Self-Hosting Reality**\n- You are your own DevOps team\n- Backup plans are essential\n- Documentation saves hours of debugging"
+    },
+    {
+      "title": "Future Plans",
+      "content": "- **Alerting System**: Email, SMS, and webhook notifications\n- **Performance Analytics**: Deeper insights into service behavior\n- **Multi-User Support**: Team collaboration features\n- **Plugin System**: Extensible monitoring capabilities"
+    },
+    {
+      "title": "Philosophy",
+      "content": "StatusFlare embodies my belief that monitoring shouldn't be a burden. It should be:\n- **Reliable**: Always working, even when other services fail\n- **Informative**: Providing actionable insights, not just status lights\n- **Accessible**: Easy to understand for both technical and non-technical users\n- **Independent**: Not dependent on the services it monitors\n\nThe goal isn't just to know when things break, but to understand how they work and predict when they might fail."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *A system is only as reliable as its weakest monitoring point.*"
+    }
+  ]
+}

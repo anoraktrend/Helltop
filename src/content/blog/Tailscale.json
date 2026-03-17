@@ -1,0 +1,52 @@
+{
+  "title": "Tailscale: Your Private Network Without the Domain Name Bullshit",
+  "description": "Secure remote access to your homelab without buying domains, configuring DNS, or exposing ports to the internet",
+  "date": "2025-11-14",
+  "author": "Lucy Ada Randall",
+  "category": "Self-Hosting",
+  "slug": "tailscale",
+  "layout": "blog",
+  "draft": false,
+  "sections": [
+    {
+      "title": "Introduction",
+      "content": "Tailscale solved my biggest problem with self-hosting: the networking nightmare. Before Tailscale, I was juggling dynamic DNS, port forwarding rules, and the constant fear of accidentally exposing something to the internet."
+    },
+    {
+      "title": "The Problem I Was Solving",
+      "content": "Self-hosting requires access to your services from anywhere, but traditional solutions are painful:\n- **Dynamic DNS**: Unreliable, requires constant updates\n- **Port forwarding**: Exposes services to the internet, security nightmare\n- **Traditional VPNs**: Complex setup, performance issues, maintenance overhead\n- **Cloudflare Tunnel**: Great but requires specific setup and understanding\n\nTailscale eliminates all of this by creating a secure, private mesh network between your devices."
+    },
+    {
+      "title": "How Tailscale Works",
+      "content": "Tailscale uses WireGuard under the hood but removes the complexity:\n- **Automatic mesh networking**: Devices find each other automatically\n- **NAT traversal**: Works behind firewalls and NAT without configuration\n- **Zero-trust security**: Every connection is authenticated and encrypted\n- **Global relay**: Uses DERP servers when direct connections aren't possible"
+    },
+    {
+      "title": "My Setup",
+      "content": "**Server Installation**\n```bash\ncurl -fsSL https://tailscale.com/install.sh | sh\nsudo tailscale up\n```\n\n**Client Access**\n- Install Tailscale on laptop, phone, tablet\n- Authenticate with the same account\n- Use MagicDNS for human-readable hostnames\n\n**Service Access**\n- Access services via `http://homeserver:8080` instead of IP addresses\n- No port forwarding required\n- All traffic encrypted end-to-end"
+    },
+    {
+      "title": "Use Cases That Changed Everything",
+      "content": "**Remote Access**\n- Access Nextcloud, Jellyfin, Gitea from anywhere\n- No need to expose ports to the internet\n- Same performance as local network\n\n**Subnet Routing**\n- Route entire subnets through Tailscale\n- Access devices on my home network from anywhere\n- Perfect for IoT devices and network-attached storage\n\n**Exit Nodes**\n- Route all internet traffic through home connection\n- Access geo-restricted content\n- Maintain privacy when using public Wi-Fi\n\n**Docker Integration**\n- Run Tailscale on the host and bind containers to Tailscale IP\n- Or use sidecar containers for isolated networking\n- Secure inter-service communication"
+    },
+    {
+      "title": "Security Benefits",
+      "content": "**Zero Configuration Security**\n- All connections encrypted by default\n- No open ports on my router\n- Device authentication required for all access\n\n**Access Control**\n- Fine-grained ACLs in the admin console\n- Can restrict which users access which services\n- Audit logs for all connection attempts\n\n**No Internet Exposure**\n- Services remain completely private\n- No attack surface on the public internet\n- Protection from automated scanning and attacks"
+    },
+    {
+      "title": "Performance",
+      "content": "Surprisingly good performance:\n- Direct peer-to-peer connections when possible\n- DERP relay servers for when NAT traversal fails\n- Minimal overhead compared to direct connections\n- Better than traditional VPN solutions"
+    },
+    {
+      "title": "Limitations and Considerations",
+      "content": "**Coordination Servers**\n- Tailscale's free tier relies on their coordination servers\n- For maximum control, you can self-host Headscale\n- But then you're responsible for maintaining it\n\n**Network Topology**\n- Mesh networking means every device connects to every other\n- Can be complex to troubleshoot network issues\n- Requires understanding of the mesh concept\n\n**Cost**\n- Free tier is generous for personal use\n- Paid plans needed for advanced features and business use\n- Still cheaper than most VPN solutions"
+    },
+    {
+      "title": "Why I Recommend It",
+      "content": "Tailscale transformed my self-hosting experience:\n- **Simplicity**: Works out of the box\n- **Security**: Zero-config encryption and access control\n- **Reliability**: Never have to worry about DNS or port forwarding again\n- **Performance**: Better than traditional VPN solutions\n\nIt's the networking layer I wish I had when I started self-hosting. No more router configuration, no more security worries, no more complex VPN setups."
+    },
+    {
+      "title": "Conclusion",
+      "content": "---\n-# *The best network is the one you don't have to think about.*"
+    }
+  ]
+}

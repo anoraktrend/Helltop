@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Comments from '../../components/Comments.astro';
 
 const { slug } = Astro.params;
@@ -13,10 +13,8 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const { Content, remarks } = await render(post);
-
 // Calculate reading time (rough estimate)
-const wordCount = post.body?.split(/\s+/).length || 0;
+const wordCount = post.data.sections?.reduce((count, section) => count + (section.content?.split(/\s+/).length || 0), 0) || 0;
 const readingTime = Math.ceil(wordCount / 200);
 ---
 
@@ -65,7 +63,16 @@ const readingTime = Math.ceil(wordCount / 200);
     </header>
 
     <div class="prose prose-lg">
-      <Content />
+      {post.data.sections?.map((section) => (
+        <section key={section.title} class="mb-12">
+          <h2 class="text-3xl font-bold text-ctp-text mb-6 border-b border-ctp-surface0 pb-4">
+            {section.title}
+          </h2>
+          <div class="content">
+            {section.content}
+          </div>
+        </section>
+      ))}
     </div>
 
     <!-- Custom Self-Hosted Comments Section -->
