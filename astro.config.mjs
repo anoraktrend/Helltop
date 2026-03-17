@@ -37,6 +37,9 @@ export default defineConfig({
         debug: path.resolve(__dirname, './src/utils/debug-mock.js'),
       },
     },
+    optimizeDeps: {
+      exclude: ['@astrojs/audit', '@astrojs/toolbar', '@astrojs/xray', 'audit', 'toolbar', 'xray']
+    },
     plugins: [
       tailwindcss(),
       Fonts({
