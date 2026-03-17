@@ -14,9 +14,9 @@ import netlify from '@astrojs/netlify';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  site: 'https://helltop.net/',
+  site: 'https://helltop.net',
   output: 'server',
-  adapter: netlify(), // Netlify uses specialized Node functions under the hood
+  adapter: netlify(), // This is the ONLY adapter you need for Netlify
                             integrations: [svelte(), icon(), mdx(), alpinejs(), db()],
                             vite: {
                               resolve: {
@@ -36,7 +36,5 @@ export default defineConfig({
                               },
                             }),
                               ]
-                              // Removed the complex ssr: { external: [...] } block
-                              // It's unnecessary for Netlify and causes module resolution errors.
                             }
 });
