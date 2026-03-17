@@ -16,7 +16,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   site: 'https://helltop.net',
   output: 'server',
-  adapter: cloudflare(),
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        imageService: 'compile',
+      },
+    },
+  },
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+  }),
   integrations: [svelte(), icon(), mdx(), alpinejs()],
   vite: {
     resolve: {
