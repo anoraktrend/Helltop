@@ -39,10 +39,7 @@
     {
       "title": "Philosophy",
       "content": "This setup embodies my belief that creators should own their platforms. No more worrying about algorithm changes, content restrictions, or unexpected shutdowns. Just reliable, fast hosting that you control.\n\nThe trade-off is responsibility: you're in charge of updates and maintenance. But that's a price I'm happy to pay for true ownership."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *Building your own platform isn't just technical—it's political.*"
     }
-  ]
+  ],
+"footer": "Building your own platform isn't just technical—it's political."
 }

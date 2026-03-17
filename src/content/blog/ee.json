@@ -35,10 +35,7 @@
     {
       "title": "When to Use EE",
       "content": "This is the editor I reach for when I need to make quick changes without ceremony. When the goal is editing text, not demonstrating mastery of arcane key combinations."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *The best interface is the one you don't have to learn.*"
     }
-  ]
+  ],
+  "footer": "The best interface is the one you don't have to learn."
 }

@@ -43,10 +43,7 @@
     {
       "title": "Why I Recommend It",
       "content": "Tailscale transformed my self-hosting experience:\n- **Simplicity**: Works out of the box\n- **Security**: Zero-config encryption and access control\n- **Reliability**: Never have to worry about DNS or port forwarding again\n- **Performance**: Better than traditional VPN solutions\n\nIt's the networking layer I wish I had when I started self-hosting. No more router configuration, no more security worries, no more complex VPN setups."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *The best network is the one you don't have to think about.*"
     }
-  ]
+  ],
+  "footer": "The best network is the one you don't have to think about."
 }

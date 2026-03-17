@@ -43,10 +43,7 @@
     {
       "title": "Future Considerations",
       "content": "If the upstream project accepts the change, this fork becomes unnecessary. If not, it remains available for users with similar needs.\n\nThe goal isn't to maintain a permanent fork, but to provide a working solution while advocating for upstream adoption."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *The best code is the code you don't have to write — but sometimes you have to write a little to make existing code work.*"
     }
-  ]
+  ],
+  "footer": "The best code is the code you don't have to write — but sometimes you have to write a little to make existing code work."
 }

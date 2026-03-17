@@ -31,10 +31,7 @@
     {
       "title": "Philosophy",
       "content": "This isn't about technical superiority — it's about autonomy. Every service I run is a choice to keep control over my digital life. Some services might be less polished than their corporate counterparts, but they're mine.\n\nThe goal isn't to recreate every convenience the cloud offers, but to maintain control over what matters most: my data, my workflow, and my privacy."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *Owning your tools means owning your choices.*"
     }
-  ]
+  ],
+  "footer": "Owning your tools means owning your choices."
 }

@@ -31,10 +31,6 @@
     {
       "title": "Installation and Usage",
       "content": "Install (AUR):\n```bash\nyay -S aee-anoraktrend-git\n```\n\nUsage:\n```bash\naee /path/to/file.txt\n```\n\nThe source code is intentionally readable. You can understand the entire editor in an afternoon — something you can't say about most modern software."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *Sometimes the best features are the ones you don't add.*"
     }
   ]
 }

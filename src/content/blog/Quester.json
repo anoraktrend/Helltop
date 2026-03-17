@@ -35,10 +35,7 @@
     {
       "title": "Why This Matters",
       "content": "In an age of streaming algorithms and disposable interfaces, Quester is a statement: music deserves beautiful tools. It's not about features for features' sake, but about creating an interface that honors the artistry in both the music and the software.\n\nThe goal isn't to replace every MPD client, but to offer an alternative for those who believe that software can be both technically sound and emotionally resonant."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *Great software doesn't just work — it feels right.*"
     }
-  ]
+  ],
+  "footer": "Great software doesn't just work — it feels right."
 }

@@ -35,10 +35,7 @@
     {
       "title": "Philosophy",
       "content": "MFUtils embodies my belief that software should enhance, not replace, human judgment. It doesn't make assumptions about your naming preferences or force a rigid structure. Instead, it provides tools to make your library browsable while preserving your existing organization where possible.\n\nThe project is now largely superseded by beets, which does a more comprehensive job of library management. But MFUtils still has value for users who want desktop integration without adopting a full library management workflow."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *Good tools don't fight you — they make your existing workflow better.*"
     }
-  ]
+  ],
+"footer": "Good tools don't fight you — they make your existing workflow better."
 }

@@ -43,10 +43,7 @@
     {
       "title": "Philosophy",
       "content": "StatusFlare embodies my belief that monitoring shouldn't be a burden. It should be:\n- **Reliable**: Always working, even when other services fail\n- **Informative**: Providing actionable insights, not just status lights\n- **Accessible**: Easy to understand for both technical and non-technical users\n- **Independent**: Not dependent on the services it monitors\n\nThe goal isn't just to know when things break, but to understand how they work and predict when they might fail."
-    },
-    {
-      "title": "Conclusion",
-      "content": "---\n-# *A system is only as reliable as its weakest monitoring point.*"
     }
-  ]
+  ],
+  "footer": "A system is only as reliable as its weakest monitoring point."
 }
