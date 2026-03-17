@@ -17,6 +17,7 @@
     "@astrojs/db": "^0.20.0",
     "@astrojs/internal-helpers": "^0.8.0",
     "@astrojs/mdx": "^5.0.0",
+    "@astrojs/netlify": "^7.0.3",
     "@astrojs/node": "^10.0.2",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/svelte": "^8.0.0",
