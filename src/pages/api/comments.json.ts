@@ -1,8 +1,15 @@
 import type { APIRoute } from 'astro';
-import { db, Comment, eq, desc } from 'astro:db';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
+    const db = (locals as any).runtime?.env?.DB;
+    if (!db) {
+      return new Response(JSON.stringify({ error: 'Database not available' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     const body = await request.json();
     const { author, body: commentBody, post_id } = body;
 
@@ -13,15 +20,13 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const result = await db.insert(Comment).values({
-      author,
-      body: commentBody,
-      postId: post_id,
-    }).returning();
+    const result = await db.prepare(
+      'INSERT INTO Comment (author, body, postId, publishedAt) VALUES (?, ?, ?, ?)'
+    ).bind(author, commentBody, post_id, new Date().toISOString()).run();
 
     return new Response(JSON.stringify({ 
       success: true, 
-      id: result[0].id 
+      id: result.meta.last_row_id 
     }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
@@ -35,8 +40,16 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ request, locals }) => {
   try {
+    const db = (locals as any).runtime?.env?.DB;
+    if (!db) {
+      return new Response(JSON.stringify({ error: 'Database not available' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     const url = new URL(request.url);
     const post_id = url.searchParams.get('post_id');
     
@@ -47,12 +60,11 @@ export const GET: APIRoute = async ({ request }) => {
       });
     }
     
-    const comments = await db.select()
-      .from(Comment)
-      .where(eq(Comment.postId, post_id))
-      .orderBy(desc(Comment.publishedAt));
+    const { results } = await db.prepare(
+      'SELECT * FROM Comment WHERE postId = ? ORDER BY publishedAt DESC'
+    ).bind(post_id).all();
 
-    return new Response(JSON.stringify(comments || []), {
+    return new Response(JSON.stringify(results || []), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
