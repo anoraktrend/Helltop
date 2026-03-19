@@ -1,16 +1,29 @@
 ---
-// Simple comments component without database
+import { db, Comment, eq, desc } from 'astro:db';
+
+// Comments component with Astro DB integration
 interface Props {
   postId: string;
 }
 
 const { postId } = Astro.props;
+
+// Fetch initial comments directly on the server
+let initialComments = [];
+try {
+  initialComments = await db.select()
+    .from(Comment)
+    .where(eq(Comment.postId, postId))
+    .orderBy(desc(Comment.publishedAt));
+} catch (error) {
+  console.error('Error fetching initial comments:', error);
+}
 ---
 
 <div class="mt-24 pt-12 border-t border-ctp-surface0">
   <h2 class="text-3xl font-bold text-ctp-mauve mb-12 uppercase tracking-widest">Digital Feedback</h2>
 
-  <!-- Comment Form (Disabled without database) -->
+  <!-- Comment Form -->
   <div class="bg-ctp-mantle p-8 rounded-2xl border border-ctp-surface0 mb-16 space-y-6">
     <div class="space-y-2">
       <label for="author" class="block text-sm font-bold text-ctp-subtext0 uppercase tracking-widest">Identity</label>
@@ -36,15 +49,84 @@ const { postId } = Astro.props;
       ></textarea>
     </div>
 
-    <div class="bg-ctp-red/10 border border-ctp-red/50 text-ctp-red p-4 rounded-lg">
-      <p class="font-mono text-sm">Note: Comments are currently disabled. The database integration is not configured.</p>
-    </div>
+    <button 
+      id="submit-comment"
+      class="bg-ctp-mauve hover:bg-ctp-mauve/80 text-ctp-mantle font-bold py-3 px-6 rounded-lg transition-all font-mono uppercase tracking-widest"
+      data-postid={postId}
+    >
+      Transmit Message
+    </button>
   </div>
 
-  <!-- Comments List (Empty) -->
+  <!-- Comments List -->
   <div class="space-y-12">
-    <p class="text-ctp-subtext1 italic font-mono text-center py-8 bg-ctp-mantle rounded-xl border border-dashed border-ctp-surface0">
-      No transmissions received yet. Be the first to break the silence.
-    </p>
+    {initialComments.length === 0 ? (
+      <p class="text-ctp-subtext1 italic font-mono text-center py-8 bg-ctp-mantle rounded-xl border border-dashed border-ctp-surface0">
+        No transmissions received yet. Be the first to break the silence.
+      </p>
+    ) : (
+      initialComments.map((comment) => (
+        <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0">
+          <div class="flex justify-between items-start mb-3">
+            <span class="bg-ctp-mauve text-ctp-mantle px-3 py-1 rounded-full text-sm font-mono uppercase tracking-widest">
+              {comment.author}
+            </span>
+            <span class="text-ctp-subtext1 text-sm font-mono">
+              {new Date(comment.publishedAt).toLocaleDateString()}
+            </span>
+          </div>
+          <p class="text-ctp-text font-mono leading-relaxed">{comment.body}</p>
+        </div>
+      ))
+    )}
   </div>
+
+  <script>
+    const button = document.getElementById('submit-comment');
+    if (button) {
+      button.addEventListener('click', async () => {
+        const postId = button.getAttribute('data-postid');
+        const authorInput = document.getElementById('author') as HTMLInputElement;
+        const bodyInput = document.getElementById('body') as HTMLTextAreaElement;
+        const author = authorInput.value;
+        const body = bodyInput.value;
+        
+        if (!author || !body) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        const btn = button as HTMLButtonElement;
+        btn.disabled = true;
+        btn.textContent = 'Transmitting...';
+
+        try {
+          const response = await fetch('/api/comments.json', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              author,
+              body,
+              post_id: postId
+            })
+          });
+
+          if (response.ok) {
+            alert('Message transmitted successfully!');
+            location.reload();
+          } else {
+            alert('Failed to transmit message. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Network error. Please try again.');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Transmit Message';
+        }
+      });
+    }
+  </script>
 </div>
