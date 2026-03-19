@@ -29,7 +29,7 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  integrations: [db(), svelte(), icon(), mdx(), alpinejs()],
+  integrations: [svelte(), icon(), mdx(), alpinejs()],
   vite: {
     resolve: {
       alias: {

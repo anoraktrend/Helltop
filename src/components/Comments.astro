@@ -1,20 +1,21 @@
 ---
-import { db, Comment, eq, desc } from 'astro:db';
-
-// Comments component with Astro DB integration
+// Comments component with direct Cloudflare D1 integration
 interface Props {
   postId: string;
 }
 
 const { postId } = Astro.props;
 
-// Fetch initial comments directly on the server
+// Fetch initial comments directly from D1 on the server
 let initialComments = [];
 try {
-  initialComments = await db.select()
-    .from(Comment)
-    .where(eq(Comment.postId, postId))
-    .orderBy(desc(Comment.publishedAt));
+  const db = (Astro.locals as any).runtime?.env?.DB;
+  if (db) {
+    const { results } = await db.prepare(
+      'SELECT * FROM Comment WHERE postId = ? ORDER BY publishedAt DESC'
+    ).bind(postId).all();
+    initialComments = results || [];
+  }
 } catch (error) {
   console.error('Error fetching initial comments:', error);
 }
