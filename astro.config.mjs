@@ -6,7 +6,6 @@ import icon from 'astro-icon';
 import Fonts from 'unplugin-fonts/vite';
 import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
-import db from '@astrojs/db';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
