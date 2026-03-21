@@ -8,8 +8,7 @@
   "exclude": [
     "dist",
     "node_modules",
-    "backups",
-    "coverage"
+    "backups"
   ],
   "compilerOptions": {
     "jsx": "preserve"

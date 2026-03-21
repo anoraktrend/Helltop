@@ -1,4 +1,4 @@
-import { generateRss } from '../server/utils/generateRss'
+import { generateRss } from '../src/server/utils/generateRss'
 
 generateRss().catch((err: any) => {
   console.error('Failed to generate RSS:', err)

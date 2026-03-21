@@ -1,25 +1,25 @@
 ---
-// import { db, Comment, eq, desc } from 'astro:db';
+import { getDb } from '../db';
+import { comments } from '../db/schema';
+import { eq, desc } from 'drizzle-orm';
 
-// Comments component with Astro DB + Turso integration
 interface Props {
   postId: string;
 }
 
 const { postId } = Astro.props;
 
-// Fetch initial comments directly on the server from Turso
+// Fetch initial comments directly on the server from D1
 let initialComments: any[] = [];
-/*
 try {
+  const db = getDb(Astro.locals.runtime);
   initialComments = await db.select()
-    .from(Comment)
-    .where(eq(Comment.postId, postId))
-    .orderBy(desc(Comment.publishedAt));
+    .from(comments)
+    .where(eq(comments.postId, postId))
+    .orderBy(desc(comments.publishedAt));
 } catch (error) {
   console.error('Error fetching initial comments:', error);
 }
-*/
 ---
 
 <div class="mt-24 pt-12 border-t border-ctp-surface0">
