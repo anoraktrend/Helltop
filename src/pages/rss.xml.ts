@@ -1,5 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import sanitizeHtml from 'sanitize-html';
 
 export async function GET(context: any) {
   const blog = await getCollection('blog', ({ data }) => {
@@ -24,8 +25,12 @@ export async function GET(context: any) {
       pubDate: post.data.date ? new Date(post.data.date) : new Date(),
       description: post.data.description,
       link: `/blog/${post.id}`,
-      // Concatenate sections into a single content block for the RSS feed
-      content: post.data.sections ? post.data.sections.map(s => `<h2>${s.title}</h2><p>${s.content}</p>`).join('') : '',
+      // Use full HTML content for the RSS feed
+      content: sanitizeHtml(
+        post.data.sections 
+          ? post.data.sections.map(s => `<h2>${s.title}</h2><div class="content">${s.content}</div>`).join('') 
+          : post.data.description || ''
+      ),
     })),
     customData: `<language>en-us</language>`,
   });
