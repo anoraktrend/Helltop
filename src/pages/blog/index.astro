@@ -22,7 +22,7 @@ const sortedPosts = posts.sort((a, b) => {
     <div class="flex flex-col gap-12">
       {sortedPosts.map((post) => (
         <article class="group">
-          <a href={`/blog/${post.id}`} class="block">
+          <a href={`/blog/${post.data.slug}`} class="block">
             <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
               <h2 class="text-2xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors">
                 {post.data.title}

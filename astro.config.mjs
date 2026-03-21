@@ -7,36 +7,14 @@ import Fonts from 'unplugin-fonts/vite';
 import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import db from '@astrojs/db';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 export default defineConfig({
-  site: 'https://helltop.net',
+  site: 'https://helltop.net/',
   output: 'server',
-  image: {
-    service: {
-      entrypoint: 'astro/assets/services/sharp',
-      config: {
-        imageService: 'compile',
-      },
-    },
-  },
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-  }),
+  adapter: cloudflare(),
   integrations: [db(), svelte(), icon(), mdx(), alpinejs()],
   vite: {
-    resolve: {
-      alias: {
-        'node-fetch': 'fetch',
-        debug: path.resolve(__dirname, './src/utils/debug-mock.js'),
-      },
-    },
     optimizeDeps: {
       exclude: ['@astrojs/audit', '@astrojs/toolbar', '@astrojs/xray', 'audit', 'toolbar', 'xray']
     },

@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Comments from '../../components/Comments.astro';
 
 const { slug } = Astro.params;
@@ -8,7 +8,9 @@ if (!slug) {
   return Astro.redirect('/blog');
 }
 
-const post = await getEntry('blog', slug);
+const posts = await getCollection('blog');
+const post = posts.find(p => p.data.slug === slug);
+
 if (!post) {
   return Astro.redirect('/404');
 }
@@ -64,7 +66,7 @@ const readingTime = Math.ceil(wordCount / 200);
 
     <div class="prose prose-lg">
       {post.data.sections?.map((section) => (
-        <section key={section.title} class="mb-12">
+        <section class="mb-12">
           <h2 class="text-3xl font-bold text-ctp-text mb-6 border-b border-ctp-surface0 pb-4">
             {section.title}
           </h2>
@@ -78,4 +80,5 @@ const readingTime = Math.ceil(wordCount / 200);
       <Comments postId={post.id} />
     </div>
   </article>
+</Layout>
 </Layout>

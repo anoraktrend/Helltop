@@ -24,7 +24,7 @@ export async function GET(context: any) {
       title: post.data.title,
       pubDate: post.data.date ? new Date(post.data.date) : new Date(),
       description: post.data.description,
-      link: `/blog/${post.id}`,
+      link: `/blog/${post.data.slug}`,
       // Use full HTML content for the RSS feed
       content: sanitizeHtml(
         post.data.sections 

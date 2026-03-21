@@ -1,7 +1,5 @@
 ---
-import { db, Comment, eq, desc } from 'astro:db';
-// Although astro:db handles connection, we import env to follow your mandate for Astro v6
-import { env } from "cloudflare:workers";
+// import { db, Comment, eq, desc } from 'astro:db';
 
 // Comments component with Astro DB + Turso integration
 interface Props {
@@ -11,7 +9,8 @@ interface Props {
 const { postId } = Astro.props;
 
 // Fetch initial comments directly on the server from Turso
-let initialComments = [];
+let initialComments: any[] = [];
+/*
 try {
   initialComments = await db.select()
     .from(Comment)
@@ -20,6 +19,7 @@ try {
 } catch (error) {
   console.error('Error fetching initial comments:', error);
 }
+*/
 ---
 
 <div class="mt-24 pt-12 border-t border-ctp-surface0">
@@ -67,8 +67,8 @@ try {
         No transmissions received yet. Be the first to break the silence.
       </p>
     ) : (
-      initialComments.map((comment: any) => (
-        <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0" key={comment.id}>
+      initialComments.map((comment) => (
+        <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0">
           <div class="flex justify-between items-start mb-3">
             <span class="bg-ctp-mauve text-ctp-mantle px-3 py-1 rounded-full text-sm font-mono uppercase tracking-widest">
               {comment.author}

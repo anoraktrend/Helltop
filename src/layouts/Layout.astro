@@ -10,7 +10,6 @@ interface Props {
 }
 
 const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Build your own." } = Astro.props;
-const siteUrl = "https://helltop.net/";
 ---
 
 <!doctype html>
@@ -29,14 +28,12 @@ const siteUrl = "https://helltop.net/";
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL('/cover.jpg', siteUrl)} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL('/cover.jpg', siteUrl)} />
 
     <script is:inline>
       // Immediate script to prevent flash of unstyled content

@@ -6,6 +6,12 @@
     "./worker-configuration.d.ts"
   ],
   "exclude": [
-    "dist"
-  ]
+    "dist",
+    "node_modules",
+    "backups",
+    "coverage"
+  ],
+  "compilerOptions": {
+    "jsx": "preserve"
+  }
 }
