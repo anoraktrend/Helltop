@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { env } from 'cloudflare:workers';
+import { getDb } from '../../db';
+import { comments } from '../../db/schema';
+import { desc } from 'drizzle-orm';
+import { Icon } from 'astro-icon/components';
+
+// Session Verification
+const sessionId = Astro.cookies.get('admin_session')?.value;
+let isLoggedIn = false;
+
+if (sessionId) {
+  // @ts-ignore
+  const sessionKv = (env as any)?.SESSION;
+  if (sessionKv) {
+    const isValid = await sessionKv.get(`session:${sessionId}`);
+    if (isValid === 'valid') {
+      isLoggedIn = true;
+    }
+  } else if (import.meta.env.DEV) {
+    isLoggedIn = true;
+  }
+}
+
+if (!isLoggedIn) {
+  return Astro.redirect('/api/auth/login');
+}
+
+// Fetch Comments
+let allComments: any[] = [];
+try {
+  const db = getDb();
+  allComments = await db.select().from(comments).orderBy(desc(comments.publishedAt));
+} catch (error) {
+  console.error("Failed to load comments in admin:", error);
+}
+---
+
+<Layout title="Admin Dashboard | Helltop">
+  <div class="max-w-5xl mx-auto py-12">
+    <div class="flex justify-between items-center mb-12 border-b border-ctp-surface0 pb-6">
+      <h1 class="text-3xl font-bold text-ctp-mauve uppercase tracking-widest">Dashboard</h1>
+      <button 
+        id="logout-btn"
+        class="bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-text px-4 py-2 rounded-lg transition-colors font-mono text-sm uppercase tracking-widest flex items-center gap-2"
+      >
+        <Icon name="lucide:log-out" class="size-4" />
+        Log Out
+      </button>
+    </div>
+
+    <div class="bg-ctp-mantle rounded-xl border border-ctp-surface0 overflow-hidden shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-ctp-crust text-ctp-subtext0 text-xs uppercase tracking-wider font-mono border-b border-ctp-surface0">
+              <th class="px-6 py-4 font-bold">Author</th>
+              <th class="px-6 py-4 font-bold">Post ID</th>
+              <th class="px-6 py-4 font-bold">Comment</th>
+              <th class="px-6 py-4 font-bold">Date</th>
+              <th class="px-6 py-4 font-bold text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-ctp-surface0/50">
+            {allComments.length === 0 ? (
+              <tr>
+                <td colspan="5" class="px-6 py-12 text-center text-ctp-subtext1 font-mono italic">
+                  No transmissions found in the database.
+                </td>
+              </tr>
+            ) : (
+              allComments.map((comment) => (
+                <tr class="hover:bg-ctp-base/50 transition-colors group">
+                  <td class="px-6 py-4 font-mono text-sm text-ctp-text">
+                    <span class="bg-ctp-surface0 px-2 py-1 rounded-md">{comment.author}</span>
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ctp-mauve">
+                    <a href={`/blog/${comment.postId}`} class="hover:text-ctp-pink transition-colors" target="_blank">
+                      {comment.postId}
+                    </a>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-ctp-subtext0 max-w-md truncate" title={comment.body}>
+                    {comment.body}
+                  </td>
+                  <td class="px-6 py-4 font-mono text-xs text-ctp-subtext1 whitespace-nowrap">
+                    {new Date(comment.publishedAt).toLocaleString()}
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <button 
+                      class="delete-btn text-ctp-red hover:text-ctp-red/80 hover:bg-ctp-red/10 p-2 rounded-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 outline-none"
+                      data-id={comment.id}
+                      title="Delete Comment"
+                    >
+                      <Icon name="lucide:trash-2" class="size-5" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Logout Logic
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        try {
+          await fetch('/api/auth/logout', { method: 'POST' });
+          window.location.href = '/';
+        } catch (err) {
+          console.error("Logout failed:", err);
+        }
+      });
+    }
+
+    // Delete Logic
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const id = (e.currentTarget as HTMLButtonElement).getAttribute('data-id');
+        if (!id) return;
+
+        if (confirm('Are you sure you want to permanently delete this comment?')) {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '<span class="text-xs">...</span>';
+          btn.setAttribute('disabled', 'true');
+
+          try {
+            const res = await fetch(`/api/comments/${id}.json`, {
+              method: 'DELETE'
+            });
+
+            if (res.ok) {
+              const row = btn.closest('tr');
+              if (row) {
+                row.style.opacity = '0';
+                setTimeout(() => row.remove(), 300);
+              }
+            } else {
+              alert('Failed to delete comment. You may have been logged out.');
+              btn.innerHTML = originalText;
+              btn.removeAttribute('disabled');
+            }
+          } catch (err) {
+            console.error('Delete error:', err);
+            alert('Network error occurred.');
+            btn.innerHTML = originalText;
+            btn.removeAttribute('disabled');
+          }
+        }
+      });
+    });
+  </script>
+</Layout>
