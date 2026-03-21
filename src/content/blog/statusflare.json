@@ -10,39 +10,39 @@
   "sections": [
     {
       "title": "Introduction",
-      "content": "Running your own infrastructure means living with the constant fear of the \"Red Light\" — that moment when a service goes down and you're the last to know. StatusFlare is my solution: a serverless status dashboard that watches my services so I don't have to."
+      "content": "<p>Running your own infrastructure means living with the constant fear of the &quot;Red Light&quot; — that moment when a service goes down and you&#39;re the last to know. StatusFlare is my solution: a serverless status dashboard that watches my services so I don&#39;t have to.</p>"
     },
     {
       "title": "Why StatusFlare?",
-      "content": "Most status pages are either:\n- **Over-engineered**: Complex setups requiring dedicated infrastructure\n- **Under-powered**: Simple uptime checks with no real insights\n- **Corporate**: Tied to specific monitoring services with vendor lock-in\n\nStatusFlare aims to be different: serverless, fast, and completely under my control."
+      "content": "<p>Most status pages are either:</p>\n<ul>\n<li><strong>Over-engineered</strong>: Complex setups requiring dedicated infrastructure</li>\n<li><strong>Under-powered</strong>: Simple uptime checks with no real insights</li>\n<li><strong>Corporate</strong>: Tied to specific monitoring services with vendor lock-in</li>\n</ul>\n<p>StatusFlare aims to be different: serverless, fast, and completely under my control.</p>"
     },
     {
       "title": "Architecture Overview",
-      "content": "**Serverless Core**\n- Built on Cloudflare Workers for global edge deployment\n- Uses Cloudflare D1 for persistent data storage\n- Cron-based monitoring every 60 seconds from multiple global locations\n\n**Monitoring Capabilities**\n- HTTP/HTTPS endpoint checks with customizable timeouts\n- OAuth2 token support for protected APIs\n- JSON response parsing for detailed error information\n- Latency tracking and trend analysis\n\n**User Interface**\n- Glassmorphism design with Catppuccin color palette\n- Real-time status updates\n- Service-specific history pages\n- Dynamic SVG status badges for external use"
+      "content": "<p><strong>Serverless Core</strong></p>\n<ul>\n<li>Built on Cloudflare Workers for global edge deployment</li>\n<li>Uses Cloudflare D1 for persistent data storage</li>\n<li>Cron-based monitoring every 60 seconds from multiple global locations</li>\n</ul>\n<p><strong>Monitoring Capabilities</strong></p>\n<ul>\n<li>HTTP/HTTPS endpoint checks with customizable timeouts</li>\n<li>OAuth2 token support for protected APIs</li>\n<li>JSON response parsing for detailed error information</li>\n<li>Latency tracking and trend analysis</li>\n</ul>\n<p><strong>User Interface</strong></p>\n<ul>\n<li>Glassmorphism design with Catppuccin color palette</li>\n<li>Real-time status updates</li>\n<li>Service-specific history pages</li>\n<li>Dynamic SVG status badges for external use</li>\n</ul>"
     },
     {
       "title": "Recent Enhancements",
-      "content": "The project has evolved significantly:\n\n**Incident Management**\n- Manual incident reporting system\n- Link incidents to specific services\n- Track resolution status and timeline\n\n**Authentication & Security**\n- Authelia OIDC integration for admin access\n- Role-based permissions\n- Secure API endpoints\n\n**Advanced Monitoring**\n- Custom HTTP methods and headers\n- OAuth2 token acquisition and caching\n- Smart response parsing for better error visibility\n\n**Developer Experience**\n- Real-time status badges for README files\n- Detailed service history with latency trends\n- Incident timeline visualization"
+      "content": "<p>The project has evolved significantly:</p>\n<p><strong>Incident Management</strong></p>\n<ul>\n<li>Manual incident reporting system</li>\n<li>Link incidents to specific services</li>\n<li>Track resolution status and timeline</li>\n</ul>\n<p><strong>Authentication &amp; Security</strong></p>\n<ul>\n<li>Authelia OIDC integration for admin access</li>\n<li>Role-based permissions</li>\n<li>Secure API endpoints</li>\n</ul>\n<p><strong>Advanced Monitoring</strong></p>\n<ul>\n<li>Custom HTTP methods and headers</li>\n<li>OAuth2 token acquisition and caching</li>\n<li>Smart response parsing for better error visibility</li>\n</ul>\n<p><strong>Developer Experience</strong></p>\n<ul>\n<li>Real-time status badges for README files</li>\n<li>Detailed service history with latency trends</li>\n<li>Incident timeline visualization</li>\n</ul>"
     },
     {
       "title": "Deployment Pipeline",
-      "content": "StatusFlare uses a fully automated CI/CD pipeline:\n\n1. **Code Changes**: Push to main branch triggers pipeline\n2. **Validation**: TypeScript type-checking and linting\n3. **Build**: Compile and package for Cloudflare Workers\n4. **Deploy**: Automatic deployment via Wrangler\n5. **Migrate**: Database schema updates handled automatically\n\nThe entire process from commit to production takes under 60 seconds."
+      "content": "<p>StatusFlare uses a fully automated CI/CD pipeline:</p>\n<ol>\n<li><strong>Code Changes</strong>: Push to main branch triggers pipeline</li>\n<li><strong>Validation</strong>: TypeScript type-checking and linting</li>\n<li><strong>Build</strong>: Compile and package for Cloudflare Workers</li>\n<li><strong>Deploy</strong>: Automatic deployment via Wrangler</li>\n<li><strong>Migrate</strong>: Database schema updates handled automatically</li>\n</ol>\n<p>The entire process from commit to production takes under 60 seconds.</p>"
     },
     {
       "title": "Monitoring Strategy",
-      "content": "StatusFlare monitors my entire infrastructure:\n- **Core Services**: Nextcloud, Gitea, Jellyfin\n- **Network Services**: DNS, VPN endpoints\n- **Custom Applications**: Personal projects and APIs\n- **External Dependencies**: Third-party services I rely on\n\nEach service gets:\n- Health check endpoint\n- Latency tracking\n- Incident logging\n- Historical performance data"
+      "content": "<p>StatusFlare monitors my entire infrastructure:</p>\n<ul>\n<li><strong>Core Services</strong>: Nextcloud, Gitea, Jellyfin</li>\n<li><strong>Network Services</strong>: DNS, VPN endpoints</li>\n<li><strong>Custom Applications</strong>: Personal projects and APIs</li>\n<li><strong>External Dependencies</strong>: Third-party services I rely on</li>\n</ul>\n<p>Each service gets:</p>\n<ul>\n<li>Health check endpoint</li>\n<li>Latency tracking</li>\n<li>Incident logging</li>\n<li>Historical performance data</li>\n</ul>"
     },
     {
       "title": "Lessons Learned",
-      "content": "Building a monitoring system taught me:\n\n**Serverless Isn't Magic**\n- Cold starts can affect monitoring accuracy\n- Database query limits require careful design\n- Edge deployment means debugging from afar\n\n**Monitoring is Hard**\n- False positives are worse than false negatives\n- Network issues can masquerade as service failures\n- Historical data is more valuable than real-time alerts\n\n**Self-Hosting Reality**\n- You are your own DevOps team\n- Backup plans are essential\n- Documentation saves hours of debugging"
+      "content": "<p>Building a monitoring system taught me:</p>\n<p><strong>Serverless Isn&#39;t Magic</strong></p>\n<ul>\n<li>Cold starts can affect monitoring accuracy</li>\n<li>Database query limits require careful design</li>\n<li>Edge deployment means debugging from afar</li>\n</ul>\n<p><strong>Monitoring is Hard</strong></p>\n<ul>\n<li>False positives are worse than false negatives</li>\n<li>Network issues can masquerade as service failures</li>\n<li>Historical data is more valuable than real-time alerts</li>\n</ul>\n<p><strong>Self-Hosting Reality</strong></p>\n<ul>\n<li>You are your own DevOps team</li>\n<li>Backup plans are essential</li>\n<li>Documentation saves hours of debugging</li>\n</ul>"
     },
     {
       "title": "Future Plans",
-      "content": "- **Alerting System**: Email, SMS, and webhook notifications\n- **Performance Analytics**: Deeper insights into service behavior\n- **Multi-User Support**: Team collaboration features\n- **Plugin System**: Extensible monitoring capabilities"
+      "content": "<ul>\n<li><strong>Alerting System</strong>: Email, SMS, and webhook notifications</li>\n<li><strong>Performance Analytics</strong>: Deeper insights into service behavior</li>\n<li><strong>Multi-User Support</strong>: Team collaboration features</li>\n<li><strong>Plugin System</strong>: Extensible monitoring capabilities</li>\n</ul>"
     },
     {
       "title": "Philosophy",
-      "content": "StatusFlare embodies my belief that monitoring shouldn't be a burden. It should be:\n- **Reliable**: Always working, even when other services fail\n- **Informative**: Providing actionable insights, not just status lights\n- **Accessible**: Easy to understand for both technical and non-technical users\n- **Independent**: Not dependent on the services it monitors\n\nThe goal isn't just to know when things break, but to understand how they work and predict when they might fail."
+      "content": "<p>StatusFlare embodies my belief that monitoring shouldn&#39;t be a burden. It should be:</p>\n<ul>\n<li><strong>Reliable</strong>: Always working, even when other services fail</li>\n<li><strong>Informative</strong>: Providing actionable insights, not just status lights</li>\n<li><strong>Accessible</strong>: Easy to understand for both technical and non-technical users</li>\n<li><strong>Independent</strong>: Not dependent on the services it monitors</li>\n</ul>\n<p>The goal isn&#39;t just to know when things break, but to understand how they work and predict when they might fail.</p>"
     }
   ],
   "footer": "A system is only as reliable as its weakest monitoring point."

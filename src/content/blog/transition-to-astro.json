@@ -10,23 +10,23 @@
   "sections": [
     {
       "title": "The Great Framework Migration",
-      "content": "Helltop was born on Nuxt, but it was time to break free. The transition to Astro 6 represents a fundamental shift in how this site operates. We've moved from a client-side heavy approach to a true content-first architecture."
+      "content": "<p>Helltop was born on Nuxt, but it was time to break free. The transition to Astro 6 represents a fundamental shift in how this site operates. We&#39;ve moved from a client-side heavy approach to a true content-first architecture.</p>"
     },
     {
       "title": "Why Astro?",
-      "content": "Astro's zero-JS by default philosophy perfectly aligns with the Helltop mission. No corporate bloat, no unnecessary hydration — just raw, optimized content delivered at the speed of thought. By leveraging Astro 6, we've reduced our client-side footprint by over 80%."
+      "content": "<p>Astro&#39;s zero-JS by default philosophy perfectly aligns with the Helltop mission. No corporate bloat, no unnecessary hydration — just raw, optimized content delivered at the speed of thought. By leveraging Astro 6, we&#39;ve reduced our client-side footprint by over 80%.</p>"
     },
     {
       "title": "Database Evolution: D1 vs Nuxt Content",
-      "content": "We've traded the magic of `@nuxt/content` for the control of Cloudflare D1. Our new comments section is powered by a direct D1 binding, giving us a robust, self-hosted feedback loop without the overhead of heavy abstractions."
+      "content": "<p>We&#39;ve traded the magic of <code>@nuxt/content</code> for the control of Cloudflare D1. Our new comments section is powered by a direct D1 binding, giving us a robust, self-hosted feedback loop without the overhead of heavy abstractions.</p>"
     },
     {
       "title": "Styling the Rebellion",
-      "content": "The visual identity has evolved too. We've replaced the standard `@nuxt/ui` with a bespoke implementation using Tailwind CSS v4 and the Catppuccin flavor palette. It's darker, sharper, and entirely our own."
+      "content": "<p>The visual identity has evolved too. We&#39;ve replaced the standard <code>@nuxt/ui</code> with a bespoke implementation using Tailwind CSS v4 and the Catppuccin flavor palette. It&#39;s darker, sharper, and entirely our own.</p>"
     },
     {
       "title": "What's Next?",
-      "content": "This is just the beginning. The move to Astro has unlocked new possibilities for performance and portability. Stay tuned as we continue to refine the stack and build out new features for the digital nomad."
+      "content": "<p>This is just the beginning. The move to Astro has unlocked new possibilities for performance and portability. Stay tuned as we continue to refine the stack and build out new features for the digital nomad.</p>"
     }
   ]
 }

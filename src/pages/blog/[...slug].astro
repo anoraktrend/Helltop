@@ -68,9 +68,7 @@ const readingTime = Math.ceil(wordCount / 200);
           <h2 class="text-3xl font-bold text-ctp-text mb-6 border-b border-ctp-surface0 pb-4">
             {section.title}
           </h2>
-          <div class="content">
-            {section.content}
-          </div>
+          <div class="content" set:html={section.content} />
         </section>
       ))}
     </div>

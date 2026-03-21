@@ -10,39 +10,39 @@
   "sections": [
     {
       "title": "Introduction",
-      "content": "![Screenshot of C code, to demonstrate coding](/uploads/c.png)\n\nYAMS represents the kind of open source contribution I believe in: small, focused, and solving a real problem without ego. The original project was great, but it made assumptions about where configuration files should live that didn't work with my NAS setup."
+      "content": "<p><img src=\"/uploads/c.png\" alt=\"Screenshot of C code, to demonstrate coding\"></p>\n<p>YAMS represents the kind of open source contribution I believe in: small, focused, and solving a real problem without ego. The original project was great, but it made assumptions about where configuration files should live that didn&#39;t work with my NAS setup.</p>"
     },
     {
       "title": "The Problem",
-      "content": "Many Docker media stacks assume a specific directory structure for configuration files. This works fine for standard setups but breaks when:\n- Using a NAS with non-standard mount points\n- Running multiple instances with different configurations\n- Following organizational policies for config storage\n\nYAMS assumed configs belonged in `/config`, but my setup needed them in `/data/config`."
+      "content": "<p>Many Docker media stacks assume a specific directory structure for configuration files. This works fine for standard setups but breaks when:</p>\n<ul>\n<li>Using a NAS with non-standard mount points</li>\n<li>Running multiple instances with different configurations</li>\n<li>Following organizational policies for config storage</li>\n</ul>\n<p>YAMS assumed configs belonged in <code>/config</code>, but my setup needed them in <code>/data/config</code>.</p>"
     },
     {
       "title": "The Solution",
-      "content": "Rather than rewrite the entire project, I added a simple configuration option:\n\n```yaml\n# docker-compose.yml\nenvironment:\n  - CONFIG_PATH=/data/config\n```\n\nThis small change allows the stack to work with any directory structure while maintaining full backward compatibility."
+      "content": "<p>Rather than rewrite the entire project, I added a simple configuration option:</p>\n<pre><code class=\"language-yaml\"># docker-compose.yml\nenvironment:\n  - CONFIG_PATH=/data/config\n</code></pre>\n<p>This small change allows the stack to work with any directory structure while maintaining full backward compatibility.</p>"
     },
     {
       "title": "Why This Approach?",
-      "content": "**Minimal Impact**\n- Single environment variable addition\n- No changes to core functionality\n- Maintains all existing features\n\n**Backward Compatibility**\n- Default behavior unchanged\n- Existing deployments continue working\n- No migration required\n\n**Flexibility**\n- Works with any directory structure\n- Easy to configure per deployment\n- Clear documentation for the change"
+      "content": "<p><strong>Minimal Impact</strong></p>\n<ul>\n<li>Single environment variable addition</li>\n<li>No changes to core functionality</li>\n<li>Maintains all existing features</li>\n</ul>\n<p><strong>Backward Compatibility</strong></p>\n<ul>\n<li>Default behavior unchanged</li>\n<li>Existing deployments continue working</li>\n<li>No migration required</li>\n</ul>\n<p><strong>Flexibility</strong></p>\n<ul>\n<li>Works with any directory structure</li>\n<li>Easy to configure per deployment</li>\n<li>Clear documentation for the change</li>\n</ul>"
     },
     {
       "title": "Implementation Details",
-      "content": "The change was surgical:\n1. **Environment Variable**: Added `CONFIG_PATH` with default fallback\n2. **Path Resolution**: Updated config loading to use the specified path\n3. **Documentation**: Added clear examples for different use cases\n4. **Testing**: Verified both default and custom paths work correctly"
+      "content": "<p>The change was surgical:</p>\n<ol>\n<li><strong>Environment Variable</strong>: Added <code>CONFIG_PATH</code> with default fallback</li>\n<li><strong>Path Resolution</strong>: Updated config loading to use the specified path</li>\n<li><strong>Documentation</strong>: Added clear examples for different use cases</li>\n<li><strong>Testing</strong>: Verified both default and custom paths work correctly</li>\n</ol>"
     },
     {
       "title": "When to Use This Fork",
-      "content": "This fork is useful if you:\n- Run Docker on a NAS with non-standard mount points\n- Need multiple YAMS instances with different configs\n- Follow organizational policies for config storage\n- Want to keep configs separate from data directories"
+      "content": "<p>This fork is useful if you:</p>\n<ul>\n<li>Run Docker on a NAS with non-standard mount points</li>\n<li>Need multiple YAMS instances with different configs</li>\n<li>Follow organizational policies for config storage</li>\n<li>Want to keep configs separate from data directories</li>\n</ul>"
     },
     {
       "title": "Philosophy",
-      "content": "This fork embodies my approach to open source contributions:\n\n**Solve Real Problems**\n- Don't rewrite for the sake of it\n- Fix specific issues that block real users\n- Keep changes focused and minimal\n\n**Respect Upstream**\n- Submit clean pull requests\n- Maintain compatibility\n- Document changes clearly\n\n**Practical Over Perfect**\n- Good enough is better than perfect\n- Working solutions beat theoretical ideals\n- User needs > developer preferences"
+      "content": "<p>This fork embodies my approach to open source contributions:</p>\n<p><strong>Solve Real Problems</strong></p>\n<ul>\n<li>Don&#39;t rewrite for the sake of it</li>\n<li>Fix specific issues that block real users</li>\n<li>Keep changes focused and minimal</li>\n</ul>\n<p><strong>Respect Upstream</strong></p>\n<ul>\n<li>Submit clean pull requests</li>\n<li>Maintain compatibility</li>\n<li>Document changes clearly</li>\n</ul>\n<p><strong>Practical Over Perfect</strong></p>\n<ul>\n<li>Good enough is better than perfect</li>\n<li>Working solutions beat theoretical ideals</li>\n<li>User needs &gt; developer preferences</li>\n</ul>"
     },
     {
       "title": "Alternatives Considered",
-      "content": "I evaluated several approaches before settling on this solution:\n\n**Volume Mounts**: Could work but requires complex Docker compose syntax\n**Symbolic Links**: Fragile and platform-dependent\n**Configuration Files**: Would require parsing logic and validation\n**Environment Variables**: Simple, standard, and flexible\n\nThe environment variable approach won the day for its simplicity and reliability."
+      "content": "<p>I evaluated several approaches before settling on this solution:</p>\n<p><strong>Volume Mounts</strong>: Could work but requires complex Docker compose syntax\n<strong>Symbolic Links</strong>: Fragile and platform-dependent\n<strong>Configuration Files</strong>: Would require parsing logic and validation\n<strong>Environment Variables</strong>: Simple, standard, and flexible</p>\n<p>The environment variable approach won the day for its simplicity and reliability.</p>"
     },
     {
       "title": "Future Considerations",
-      "content": "If the upstream project accepts the change, this fork becomes unnecessary. If not, it remains available for users with similar needs.\n\nThe goal isn't to maintain a permanent fork, but to provide a working solution while advocating for upstream adoption."
+      "content": "<p>If the upstream project accepts the change, this fork becomes unnecessary. If not, it remains available for users with similar needs.</p>\n<p>The goal isn&#39;t to maintain a permanent fork, but to provide a working solution while advocating for upstream adoption.</p>"
     }
   ],
   "footer": "The best code is the code you don't have to write — but sometimes you have to write a little to make existing code work."
