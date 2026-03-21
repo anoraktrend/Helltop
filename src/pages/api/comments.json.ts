@@ -10,7 +10,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { author, body: commentBody, post_id } = body;
     
     if (!author || !commentBody || !post_id) {
-      return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
+      console.error('Missing fields in comment submission:', { author, commentBody, post_id });
+      return new Response(JSON.stringify({ error: 'Missing fields', received: { author, commentBody, post_id } }), { status: 400 });
     }
 
     await db.insert(comments).values({

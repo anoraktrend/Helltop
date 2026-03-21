@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1774094629504,
+      "tag": "0000_fixed_tarot",
+      "breakpoints": true
+    }
+  ]
+}
