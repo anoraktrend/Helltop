@@ -28,7 +28,7 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  integrations: [svelte(), icon(), mdx(), alpinejs()],
+  integrations: [db(), svelte(), icon(), mdx(), alpinejs()],
   vite: {
     resolve: {
       alias: {
@@ -48,6 +48,10 @@ export default defineConfig({
             styles: 'ital,wght@0,400;0,700;1,400;1,700',
           }],
         },
+      }),
+    ]
+  }
+});    },
       }),
     ]
   }

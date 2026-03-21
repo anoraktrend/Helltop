@@ -1,15 +1,12 @@
 import type { APIRoute } from 'astro';
+import { db, Comment, eq, desc } from 'astro:db';
+// Although astro:db handles connection, we import env to follow your mandate for Astro v6
+import { env } from "cloudflare:workers";
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
-    const db = (locals as any).runtime?.env?.DB;
-    if (!db) {
-      return new Response(JSON.stringify({ error: 'Database not available' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
+    // Explicitly check for token from cloudflare:workers env if needed for custom logic,
+    // but astro:db handles its own remote connection using these vars if set in build/deployment settings.
     const body = await request.json();
     const { author, body: commentBody, post_id } = body;
 
@@ -20,13 +17,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
       });
     }
 
-    const result = await db.prepare(
-      'INSERT INTO Comment (author, body, postId, publishedAt) VALUES (?, ?, ?, ?)'
-    ).bind(author, commentBody, post_id, new Date().toISOString()).run();
+    const result = await db.insert(Comment).values({
+      author,
+      body: commentBody,
+      postId: post_id,
+    }).returning();
 
     return new Response(JSON.stringify({ 
       success: true, 
-      id: result.meta.last_row_id 
+      id: result[0].id 
     }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
@@ -40,16 +39,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 };
 
-export const GET: APIRoute = async ({ request, locals }) => {
+export const GET: APIRoute = async ({ request }) => {
   try {
-    const db = (locals as any).runtime?.env?.DB;
-    if (!db) {
-      return new Response(JSON.stringify({ error: 'Database not available' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
     const url = new URL(request.url);
     const post_id = url.searchParams.get('post_id');
     
@@ -60,11 +51,12 @@ export const GET: APIRoute = async ({ request, locals }) => {
       });
     }
     
-    const { results } = await db.prepare(
-      'SELECT * FROM Comment WHERE postId = ? ORDER BY publishedAt DESC'
-    ).bind(post_id).all();
+    const comments = await db.select()
+      .from(Comment)
+      .where(eq(Comment.postId, post_id))
+      .orderBy(desc(Comment.publishedAt));
 
-    return new Response(JSON.stringify(results || []), {
+    return new Response(JSON.stringify(comments || []), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

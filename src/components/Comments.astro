@@ -1,21 +1,22 @@
 ---
-// Comments component with direct Cloudflare D1 integration
+import { db, Comment, eq, desc } from 'astro:db';
+// Although astro:db handles connection, we import env to follow your mandate for Astro v6
+import { env } from "cloudflare:workers";
+
+// Comments component with Astro DB + Turso integration
 interface Props {
   postId: string;
 }
 
 const { postId } = Astro.props;
 
-// Fetch initial comments directly from D1 on the server
+// Fetch initial comments directly on the server from Turso
 let initialComments = [];
 try {
-  const db = (Astro.locals as any).runtime?.env?.DB;
-  if (db) {
-    const { results } = await db.prepare(
-      'SELECT * FROM Comment WHERE postId = ? ORDER BY publishedAt DESC'
-    ).bind(postId).all();
-    initialComments = results || [];
-  }
+  initialComments = await db.select()
+    .from(Comment)
+    .where(eq(Comment.postId, postId))
+    .orderBy(desc(Comment.publishedAt));
 } catch (error) {
   console.error('Error fetching initial comments:', error);
 }

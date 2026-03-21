@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build --remote",
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types"
@@ -15,6 +15,7 @@
   "dependencies": {
     "@astrojs/alpinejs": "^0.5.0",
     "@astrojs/cloudflare": "^13.1.2",
+    "@astrojs/db": "^0.20.1",
     "@astrojs/internal-helpers": "^0.8.0",
     "@astrojs/mdx": "^5.0.0",
     "@astrojs/node": "^10.0.2",
@@ -24,6 +25,7 @@
     "@effect/cli": "^0.73.2",
     "@iconify-json/lucide": "^1.2.98",
     "@iconify-json/simple-icons": "^1.2.74",
+    "@libsql/client": "^0.17.2",
     "@tailwindcss/vite": "^4.2.1",
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.15.8",
