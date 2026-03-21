@@ -19,6 +19,7 @@
     "@astrojs/internal-helpers": "^0.8.0",
     "@astrojs/mdx": "^5.0.2",
     "@astrojs/rss": "^4.0.17",
+    "@astrojs/sitemap": "^3.7.1",
     "@astrojs/svelte": "^8.0.3",
     "@cloudflare/workers-types": "^4.20260317.1",
     "@effect/cli": "^0.73.2",
