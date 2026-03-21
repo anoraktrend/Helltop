@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build --remote",
+    "build": "ASTRO_DB_REMOTE_URL=libsql://helltop-anoraktrend.aws-us-west-2.turso.io astro build --remote",
     "preview": "astro preview",
     "astro": "astro",
     "generate-types": "wrangler types"

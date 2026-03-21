@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "astro-docs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@astrojs/mcp-docs"
+      ]
+    }
+  }
+}
