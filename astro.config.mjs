@@ -6,6 +6,7 @@ import icon from 'astro-icon';
 import Fonts from 'unplugin-fonts/vite';
 import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
+import db from '@astrojs/db';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
@@ -48,10 +49,6 @@ export default defineConfig({
             styles: 'ital,wght@0,400;0,700;1,400;1,700',
           }],
         },
-      }),
-    ]
-  }
-});    },
       }),
     ]
   }
