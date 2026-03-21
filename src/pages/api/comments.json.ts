@@ -18,6 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
       author,
       body: commentBody,
       postId: post_id,
+      publishedAt: new Date(),
     });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });
