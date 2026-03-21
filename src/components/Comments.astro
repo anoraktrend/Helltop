@@ -12,7 +12,7 @@ const { postId } = Astro.props;
 // Fetch initial comments directly on the server from D1
 let initialComments: any[] = [];
 try {
-  const db = getDb(Astro.locals.runtime);
+  const db = getDb();
   initialComments = await db.select()
     .from(comments)
     .where(eq(comments.postId, postId))

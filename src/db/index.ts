@@ -1,10 +1,11 @@
 import { drizzle } from 'drizzle-orm/d1';
 import * as schema from './schema';
+// @ts-ignore - cloudflare:workers is a virtual module provided by the adapter
+import { env } from 'cloudflare:workers';
 
-export function getDb(runtime: any) {
-  // In Cloudflare Pages/Workers, the D1 binding is available on the runtime object
-  // For Astro, it's typically in context.locals.runtime.env.DB or similar
-  const d1 = runtime?.env?.DB || runtime?.DB;
+export function getDb() {
+  // In Astro v6 with @astrojs/cloudflare, we import env directly from 'cloudflare:workers'
+  const d1 = (env as any)?.DB;
   
   if (!d1) {
     if (import.meta.env.DEV) {
