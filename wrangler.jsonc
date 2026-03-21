@@ -23,7 +23,7 @@
 		"binding": "ASSETS"
 	},
 	"vars": {
-		"ENVIRONMENT": "production"
+		"ENVIRONMENT": "production",
 		"ASTRO_DB_REMOTE_URL": "libsql://helltop-anoraktrend.aws-us-west-2.turso.io"
 	},
 	"observability": {
