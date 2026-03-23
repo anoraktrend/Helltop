@@ -14,56 +14,76 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 ---
 
 <!doctype html>
-<html lang="en" class="mocha">
+<html lang="en" class="mocha antialiased">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
-    
-    <title>{title}</title>
-    <meta name="description" content={description} />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
+		<!-- Open Graph / Facebook / LinkedIn -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="/opengraph-image.png" />
 
-    <script is:inline>
-      // Immediate script to prevent flash of unstyled content
-      const flavor = localStorage.getItem('catppuccin-flavor') || 'mocha';
-      document.documentElement.className = flavor;
-    </script>
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content="/opengraph-image.png" />
+
+		<!-- Security & Performance -->
+		<meta name="theme-color" content="#1e1e2e" media="(prefers-color-scheme: dark)" />
+		<meta name="color-scheme" content="light dark" />
+		<noscript>
+			<style>html{scroll-behavior:auto}</style>
+		</noscript>
+
+		<!-- Preconnect & DNS prefetch -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="dns-prefetch" href="https://status.helltop.net" />
+		<link rel="dns-prefetch" href="https://liberapay.com">
+
+		<script is:inline>
+		  // Prevent FOUT/FIT for theme switch
+		  const flavor = localStorage.getItem('catppuccin-flavor') || 'mocha';
+		  document.documentElement.classList.add(flavor);
+		</script>
 	</head>
-	<body class="min-h-screen flex flex-col font-sans">
-    <nav class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-          <div class="flex items-center gap-8 text-ctp-overlay2">
-            <a href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors">
-              Helltop
-            </a>
-            <div class="hidden sm:flex gap-6">
-              <a href="/blog" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest">Blog</a>
-              <a href="/about" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest">About</a>
-            </div>
-          </div>
-          <div class="flex items-center gap-6 text-ctp-overlay2">
-            <SocialLinks iconSize="5" spacing="4" class="hidden md:flex" />
-            <div class="h-6 w-px bg-ctp-surface0 hidden md:block"></div>
-            <ThemeSwitcher client:load />
-          </div>
-        </div>
-      </div>
-    </nav>
+	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`}>
+<nav aria-label="Main navigation" class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
+	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+	    <div class="flex justify-between h-16 items-center">
+	      <div class="flex items-center gap-8 text-ctp-overlay2">
+		<a href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-pink rounded" aria-label="Home">
+		  Helltop
+		</a>
+		<div class="hidden sm:flex gap-6">
+		  <a href="/blog" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="Blog">
+			Blog
+		  </a>
+		  <a href="/about" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="About">
+			About
+		  </a>
+		</div>
+	      </div>
+	      <div class="flex items-center gap-6 text-ctp-overlay2">
+		<SocialLinks iconSize="5" spacing="4" class="hidden lg:flex" />
+		<div class="h-6 w-px bg-ctp-surface0 hidden md:block"></div>
+		<ThemeSwitcher client:load aria-label="Toggle dark mode" />
+	      </div>
+	    </div>
+	  </div>
+	</nav>
 
     <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
       <slot />
