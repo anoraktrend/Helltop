@@ -1,0 +1,98 @@
+---
+title: "Music Folder Utils"
+description: "Music Library Management at its finest."
+date: "2026-02-12"
+author: "Lucy Ada Randall"
+category: "Library Management Tools"
+slug: "mfutil"
+draft: false
+---
+
+## Introduction
+
+![Dolphin file manager showing music folder with album art icons](/uploads/screenshot_dolphin.jpg)
+
+
+**Note:** I now primarily use [beets](https://beets.io) for music library management. MFUtils remains available for specific desktop-integration needs, but for most library workflows I recommend evaluating Beets first.
+
+
+
+## The Problem
+
+Music libraries shouldn't be digital junkyards. Yet most personal collections I've seen are filled with "Track01.mp3" files and folders named "New Folder (3)". This isn't just ugly — it makes finding music a chore.
+
+
+
+## MFUtils Approach
+
+MFUtils was my attempt to solve this problem with surgical precision. Unlike some tools that brute-force reorganize everything, MFUtils takes a conservative approach:
+
+
+
+## What It Does
+
+**Metadata Synchronization**
+
+
+
+- Validates and corrects tags against MusicBrainz database
+- Ensures consistent formatting across your entire library
+- Only touches files that actually need fixing
+
+**Visual Organization**
+
+
+
+- Extracts embedded album art and creates folder icons
+- Makes your file manager actually useful for browsing music
+- Works with GNOME, KDE, and other desktop environments
+
+**Smart Reorganization**
+
+
+
+- Moves files to `Artists/Artist/Album` structure
+- Uses safe heuristics to avoid data loss
+- Creates symlink views for alternative browsing
+
+
+## Why Rust?
+
+I rewrote this in Rust because:
+
+
+
+- **Safety**: No more worrying about shell scripts accidentally deleting files
+- **Performance**: Parallel processing for large libraries
+- **Reliability**: Explicit error handling prevents silent failures
+
+
+## Usage
+
+The tool is designed to be safe and predictable:
+
+
+```bash
+# Full library cleanup
+mfutil all ~/Music
+
+# Just metadata sync
+mfutil sync ~/Music
+
+# Import new music
+mfutil import ~/Downloads/Music ~/Music
+
+# Extract album art only
+mfutil art ~/Music
+
+```
+
+## Philosophy
+
+MFUtils embodies my belief that software should enhance, not replace, human judgment. It doesn't make assumptions about your naming preferences or force a rigid structure. Instead, it provides tools to make your library browsable while preserving your existing organization where possible.
+
+
+The project is now largely superseded by beets, which does a more comprehensive job of library management. But MFUtils still has value for users who want desktop integration without adopting a full library management workflow.
+
+
+

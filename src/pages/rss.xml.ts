@@ -25,12 +25,8 @@ export async function GET(context: any) {
       pubDate: post.data.date ? new Date(post.data.date) : new Date(),
       description: post.data.description,
       link: `/blog/${post.data.slug}`,
-      // Use full HTML content for the RSS feed
-      content: sanitizeHtml(
-        post.data.sections 
-          ? post.data.sections.map(s => `<h2>${s.title}</h2><div class="content">${s.content}</div>`).join('') 
-          : post.data.description || ''
-      ),
+      // Use raw markdown body or description for the RSS feed
+      content: sanitizeHtml(post.body || post.data.description || ''),
     })),
     customData: `<language>en-us</language>`,
   });

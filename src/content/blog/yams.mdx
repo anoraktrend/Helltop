@@ -1,0 +1,151 @@
+---
+title: "YAMS"
+description: "A Sweet Media Server Management utility."
+date: "2025-11-30"
+author: "Lucy Ada Randall"
+category: "Media Server"
+slug: "yams"
+draft: false
+---
+
+## Introduction
+
+![Screenshot of C code, to demonstrate coding](/uploads/c.png)
+
+
+YAMS represents the kind of open source contribution I believe in: small, focused, and solving a real problem without ego. The original project was great, but it made assumptions about where configuration files should live that didn't work with my NAS setup.
+
+
+
+## The Problem
+
+Many Docker media stacks assume a specific directory structure for configuration files. This works fine for standard setups but breaks when:
+
+
+
+- Using a NAS with non-standard mount points
+- Running multiple instances with different configurations
+- Following organizational policies for config storage
+
+YAMS assumed configs belonged in `/config`, but my setup needed them in `/data/config`.
+
+
+
+## The Solution
+
+Rather than rewrite the entire project, I added a simple configuration option:
+
+
+```yaml
+# docker-compose.yml
+environment:
+  - CONFIG_PATH=/data/config
+
+```
+This small change allows the stack to work with any directory structure while maintaining full backward compatibility.
+
+
+
+## Why This Approach?
+
+**Minimal Impact**
+
+
+
+- Single environment variable addition
+- No changes to core functionality
+- Maintains all existing features
+
+**Backward Compatibility**
+
+
+
+- Default behavior unchanged
+- Existing deployments continue working
+- No migration required
+
+**Flexibility**
+
+
+
+- Works with any directory structure
+- Easy to configure per deployment
+- Clear documentation for the change
+
+
+## Implementation Details
+
+The change was surgical:
+
+
+
+- **Environment Variable**: Added `CONFIG_PATH` with default fallback
+- **Path Resolution**: Updated config loading to use the specified path
+- **Documentation**: Added clear examples for different use cases
+- **Testing**: Verified both default and custom paths work correctly
+
+
+## When to Use This Fork
+
+This fork is useful if you:
+
+
+
+- Run Docker on a NAS with non-standard mount points
+- Need multiple YAMS instances with different configs
+- Follow organizational policies for config storage
+- Want to keep configs separate from data directories
+
+
+## Philosophy
+
+This fork embodies my approach to open source contributions:
+
+
+**Solve Real Problems**
+
+
+
+- Don't rewrite for the sake of it
+- Fix specific issues that block real users
+- Keep changes focused and minimal
+
+**Respect Upstream**
+
+
+
+- Submit clean pull requests
+- Maintain compatibility
+- Document changes clearly
+
+**Practical Over Perfect**
+
+
+
+- Good enough is better than perfect
+- Working solutions beat theoretical ideals
+- User needs > developer preferences
+
+
+## Alternatives Considered
+
+I evaluated several approaches before settling on this solution:
+
+
+<p>**Volume Mounts**: Could work but requires complex Docker compose syntax
+**Symbolic Links**: Fragile and platform-dependent
+**Configuration Files**: Would require parsing logic and validation
+**Environment Variables**: Simple, standard, and flexible</p>
+The environment variable approach won the day for its simplicity and reliability.
+
+
+
+## Future Considerations
+
+If the upstream project accepts the change, this fork becomes unnecessary. If not, it remains available for users with similar needs.
+
+
+The goal isn't to maintain a permanent fork, but to provide a working solution while advocating for upstream adoption.
+
+
+

@@ -3,7 +3,7 @@ import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "src/content/blog" }),
+  loader: glob({ pattern: "**/*.mdx", base: "src/content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -12,11 +12,7 @@ const blog = defineCollection({
     category: z.string().optional(),
     slug: z.string(),
     layout: z.string().optional(),
-    draft: z.boolean().default(false),
-    sections: z.array(z.object({
-      title: z.string(),
-      content: z.string()
-    })).optional()
+    draft: z.boolean().default(false)
   })
 });
 

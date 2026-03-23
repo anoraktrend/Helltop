@@ -1,0 +1,188 @@
+---
+title: "StatusFlare: Forging a Serverless Watchtower"
+description: "How I built a dynamic monitoring system and survived the great LDAP/OIDC identity war of 2026."
+date: "2026-03-09"
+author: "Lucy Ada Randall"
+category: "Self-Hosting"
+slug: "statusflare"
+draft: false
+---
+
+## Introduction
+
+Running your own infrastructure means living with the constant fear of the "Red Light" — that moment when a service goes down and you're the last to know. StatusFlare is my solution: a serverless status dashboard that watches my services so I don't have to.
+
+
+
+## Why StatusFlare?
+
+Most status pages are either:
+
+
+
+- **Over-engineered**: Complex setups requiring dedicated infrastructure
+- **Under-powered**: Simple uptime checks with no real insights
+- **Corporate**: Tied to specific monitoring services with vendor lock-in
+
+StatusFlare aims to be different: serverless, fast, and completely under my control.
+
+
+
+## Architecture Overview
+
+**Serverless Core**
+
+
+
+- Built on Cloudflare Workers for global edge deployment
+- Uses Cloudflare D1 for persistent data storage
+- Cron-based monitoring every 60 seconds from multiple global locations
+
+**Monitoring Capabilities**
+
+
+
+- HTTP/HTTPS endpoint checks with customizable timeouts
+- OAuth2 token support for protected APIs
+- JSON response parsing for detailed error information
+- Latency tracking and trend analysis
+
+**User Interface**
+
+
+
+- Glassmorphism design with Catppuccin color palette
+- Real-time status updates
+- Service-specific history pages
+- Dynamic SVG status badges for external use
+
+
+## Recent Enhancements
+
+The project has evolved significantly:
+
+
+**Incident Management**
+
+
+
+- Manual incident reporting system
+- Link incidents to specific services
+- Track resolution status and timeline
+
+**Authentication & Security**
+
+
+
+- Authelia OIDC integration for admin access
+- Role-based permissions
+- Secure API endpoints
+
+**Advanced Monitoring**
+
+
+
+- Custom HTTP methods and headers
+- OAuth2 token acquisition and caching
+- Smart response parsing for better error visibility
+
+**Developer Experience**
+
+
+
+- Real-time status badges for README files
+- Detailed service history with latency trends
+- Incident timeline visualization
+
+
+## Deployment Pipeline
+
+StatusFlare uses a fully automated CI/CD pipeline:
+
+
+
+- **Code Changes**: Push to main branch triggers pipeline
+- **Validation**: TypeScript type-checking and linting
+- **Build**: Compile and package for Cloudflare Workers
+- **Deploy**: Automatic deployment via Wrangler
+- **Migrate**: Database schema updates handled automatically
+
+The entire process from commit to production takes under 60 seconds.
+
+
+
+## Monitoring Strategy
+
+StatusFlare monitors my entire infrastructure:
+
+
+
+- **Core Services**: Nextcloud, Gitea, Jellyfin
+- **Network Services**: DNS, VPN endpoints
+- **Custom Applications**: Personal projects and APIs
+- **External Dependencies**: Third-party services I rely on
+
+Each service gets:
+
+
+
+- Health check endpoint
+- Latency tracking
+- Incident logging
+- Historical performance data
+
+
+## Lessons Learned
+
+Building a monitoring system taught me:
+
+
+**Serverless Isn't Magic**
+
+
+
+- Cold starts can affect monitoring accuracy
+- Database query limits require careful design
+- Edge deployment means debugging from afar
+
+**Monitoring is Hard**
+
+
+
+- False positives are worse than false negatives
+- Network issues can masquerade as service failures
+- Historical data is more valuable than real-time alerts
+
+**Self-Hosting Reality**
+
+
+
+- You are your own DevOps team
+- Backup plans are essential
+- Documentation saves hours of debugging
+
+
+## Future Plans
+
+
+- **Alerting System**: Email, SMS, and webhook notifications
+- **Performance Analytics**: Deeper insights into service behavior
+- **Multi-User Support**: Team collaboration features
+- **Plugin System**: Extensible monitoring capabilities
+
+
+## Philosophy
+
+StatusFlare embodies my belief that monitoring shouldn't be a burden. It should be:
+
+
+
+- **Reliable**: Always working, even when other services fail
+- **Informative**: Providing actionable insights, not just status lights
+- **Accessible**: Easy to understand for both technical and non-technical users
+- **Independent**: Not dependent on the services it monitors
+
+The goal isn't just to know when things break, but to understand how they work and predict when they might fail.
+
+
+

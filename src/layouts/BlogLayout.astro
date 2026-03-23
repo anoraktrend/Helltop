@@ -1,0 +1,126 @@
+---
+import Layout from './Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  title: string;
+  description?: string;
+  date?: Date;
+  author?: string;
+  category?: string;
+  readingTime?: number;
+}
+
+const { title, description, date, author, category, readingTime } = Astro.props;
+---
+
+<Layout title={`${title} | Helltop`} description={description}>
+  <!-- Reading Progress Bar -->
+  <div 
+    class="fixed top-0 left-0 h-1 bg-gradient-to-r from-ctp-mauve via-ctp-pink to-ctp-red z-50 transition-all duration-300 ease-out" 
+    id="progress-bar"
+    style="width: 0%"
+  ></div>
+
+  <article class="max-w-3xl mx-auto py-12 relative" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
+    <!-- Energetic Header -->
+    <header class="mb-20 relative group">
+      <!-- Animated Background Glow -->
+      <div class="absolute -top-32 -left-32 size-96 bg-ctp-mauve/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+      <div class="absolute top-0 -right-32 size-64 bg-ctp-pink/10 rounded-full blur-[100px] -z-10 animate-pulse delay-700"></div>
+      
+      <nav class="mb-12">
+        <a href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
+          <span class="p-2 bg-ctp-surface0 rounded-lg group-hover/back:bg-ctp-mauve group-hover/back:text-ctp-base transition-colors">
+            <Icon name="lucide:arrow-left" class="size-4" />
+          </span>
+          Back to Terminal
+        </a>
+      </nav>
+      
+      <div class="space-y-6">
+        {category && (
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-ctp-mauve"></span>
+            <span class="text-ctp-mauve font-black uppercase text-xs tracking-[0.4em]">
+              {category}
+            </span>
+          </div>
+        )}
+        
+        <h1 class="text-5xl sm:text-8xl font-black text-ctp-text leading-[0.9] tracking-tighter drop-shadow-sm">
+          {title}
+        </h1>
+        
+        {description && (
+          <p class="text-2xl text-ctp-subtext1 font-light leading-relaxed border-l-2 border-ctp-surface1 pl-6 py-2 italic">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <div class="mt-12 flex flex-wrap items-center gap-8 text-ctp-overlay1 font-mono text-[10px] uppercase tracking-[0.2em] border-t border-ctp-surface0 pt-8">
+        {date && (
+          <div class="flex items-center gap-3">
+            <Icon name="lucide:calendar" class="size-4 text-ctp-mauve" />
+            <time>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+          </div>
+        )}
+        {readingTime && (
+          <div class="flex items-center gap-3">
+            <Icon name="lucide:clock" class="size-4 text-ctp-pink" />
+            <span>{readingTime} MIN EXECUTION</span>
+          </div>
+        )}
+        {author && (
+          <div class="flex items-center gap-3">
+            <Icon name="lucide:user" class="size-4 text-ctp-blue" />
+            <span>{author}</span>
+          </div>
+        )}
+      </div>
+    </header>
+
+    <!-- Main Content with enhanced prose -->
+    <div class="prose prose-lg prose-invert max-w-none 
+      prose-headings:tracking-tighter prose-headings:font-black
+      prose-a:text-ctp-mauve prose-a:decoration-ctp-mauve/30 hover:prose-a:decoration-ctp-mauve prose-a:underline-offset-4
+      prose-img:rounded-3xl prose-img:shadow-2xl prose-img:shadow-ctp-mauve/5
+      prose-pre:border prose-pre:border-ctp-surface0 prose-pre:shadow-2xl
+      prose-blockquote:border-ctp-pink prose-blockquote:bg-ctp-mantle/30
+      selection:bg-ctp-mauve selection:text-ctp-base">
+      <slot />
+    </div>
+
+    <!-- Floating Action Elements -->
+    <div 
+      class="fixed bottom-8 right-8 flex flex-col gap-4 transition-all duration-500 z-40"
+      x-show="scrolled"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 translate-y-10"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 translate-y-0"
+      x-transition:leave-end="opacity-0 translate-y-10"
+    >
+      <button 
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="p-4 bg-ctp-mauve text-ctp-base rounded-2xl shadow-xl shadow-ctp-mauve/20 hover:scale-110 active:scale-95 transition-all group"
+        title="Jump to Top"
+      >
+        <Icon name="lucide:chevron-up" class="size-6 stroke-[3]" />
+      </button>
+    </div>
+  </article>
+
+  <script is:inline>
+    // Reading Progress Handler
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('progress-bar');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+  </script>
+</Layout>

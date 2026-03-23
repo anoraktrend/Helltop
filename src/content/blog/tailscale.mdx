@@ -1,0 +1,186 @@
+---
+title: "Tailscale: Your Private Network Without the Domain Name Bullshit"
+description: "Secure remote access to your homelab without buying domains, configuring DNS, or exposing ports to the internet"
+date: "2025-11-14"
+author: "Lucy Ada Randall"
+category: "Self-Hosting"
+slug: "tailscale"
+draft: false
+---
+
+## Introduction
+
+Tailscale solved my biggest problem with self-hosting: the networking nightmare. Before Tailscale, I was juggling dynamic DNS, port forwarding rules, and the constant fear of accidentally exposing something to the internet.
+
+
+
+## The Problem I Was Solving
+
+Self-hosting requires access to your services from anywhere, but traditional solutions are painful:
+
+
+
+- **Dynamic DNS**: Unreliable, requires constant updates
+- **Port forwarding**: Exposes services to the internet, security nightmare
+- **Traditional VPNs**: Complex setup, performance issues, maintenance overhead
+- **Cloudflare Tunnel**: Great but requires specific setup and understanding
+
+Tailscale eliminates all of this by creating a secure, private mesh network between your devices.
+
+
+
+## How Tailscale Works
+
+Tailscale uses WireGuard under the hood but removes the complexity:
+
+
+
+- **Automatic mesh networking**: Devices find each other automatically
+- **NAT traversal**: Works behind firewalls and NAT without configuration
+- **Zero-trust security**: Every connection is authenticated and encrypted
+- **Global relay**: Uses DERP servers when direct connections aren't possible
+
+
+## My Setup
+
+**Server Installation**
+
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+
+```
+**Client Access**
+
+
+
+- Install Tailscale on laptop, phone, tablet
+- Authenticate with the same account
+- Use MagicDNS for human-readable hostnames
+
+**Service Access**
+
+
+
+- Access services via `http://homeserver:8080` instead of IP addresses
+- No port forwarding required
+- All traffic encrypted end-to-end
+
+
+## Use Cases That Changed Everything
+
+**Remote Access**
+
+
+
+- Access Nextcloud, Jellyfin, Gitea from anywhere
+- No need to expose ports to the internet
+- Same performance as local network
+
+**Subnet Routing**
+
+
+
+- Route entire subnets through Tailscale
+- Access devices on my home network from anywhere
+- Perfect for IoT devices and network-attached storage
+
+**Exit Nodes**
+
+
+
+- Route all internet traffic through home connection
+- Access geo-restricted content
+- Maintain privacy when using public Wi-Fi
+
+**Docker Integration**
+
+
+
+- Run Tailscale on the host and bind containers to Tailscale IP
+- Or use sidecar containers for isolated networking
+- Secure inter-service communication
+
+
+## Security Benefits
+
+**Zero Configuration Security**
+
+
+
+- All connections encrypted by default
+- No open ports on my router
+- Device authentication required for all access
+
+**Access Control**
+
+
+
+- Fine-grained ACLs in the admin console
+- Can restrict which users access which services
+- Audit logs for all connection attempts
+
+**No Internet Exposure**
+
+
+
+- Services remain completely private
+- No attack surface on the public internet
+- Protection from automated scanning and attacks
+
+
+## Performance
+
+Surprisingly good performance:
+
+
+
+- Direct peer-to-peer connections when possible
+- DERP relay servers for when NAT traversal fails
+- Minimal overhead compared to direct connections
+- Better than traditional VPN solutions
+
+
+## Limitations and Considerations
+
+**Coordination Servers**
+
+
+
+- Tailscale's free tier relies on their coordination servers
+- For maximum control, you can self-host Headscale
+- But then you're responsible for maintaining it
+
+**Network Topology**
+
+
+
+- Mesh networking means every device connects to every other
+- Can be complex to troubleshoot network issues
+- Requires understanding of the mesh concept
+
+**Cost**
+
+
+
+- Free tier is generous for personal use
+- Paid plans needed for advanced features and business use
+- Still cheaper than most VPN solutions
+
+
+## Why I Recommend It
+
+Tailscale transformed my self-hosting experience:
+
+
+
+- **Simplicity**: Works out of the box
+- **Security**: Zero-config encryption and access control
+- **Reliability**: Never have to worry about DNS or port forwarding again
+- **Performance**: Better than traditional VPN solutions
+
+It's the networking layer I wish I had when I started self-hosting. No more router configuration, no more security worries, no more complex VPN setups.
+
+
+

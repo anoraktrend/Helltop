@@ -1,0 +1,96 @@
+---
+title: "Quester: A Modern MPD Client for Visual Audiophiles"
+description: "Building a visually rich Music Player Daemon (MPD) client that prioritizes album art, visual feedback, and a fluid user experience using Qt 6 and QML."
+date: "2026-02-06"
+author: "Lucy Ada Randall"
+category: "Music Player"
+slug: "quester"
+draft: false
+---
+
+## Introduction
+
+Music players have always been more than just tools to me — they're gateways to emotional experiences. From Winamp's skinnable interfaces to foobar2000's precision controls, I've always believed that how you interact with music shapes how you experience it.
+
+
+
+## The MPD Client Problem
+
+MPD (Music Player Daemon) is brilliant software: lightweight, reliable, and focused. But most clients treat it like a technical utility rather than a musical companion. They bury album art, ignore visual feedback, and feel like afterthoughts rather than experiences.
+
+
+I wanted a client that:
+
+
+
+- **Respects the music**: Makes album art central, not an afterthought
+- **Engages the senses**: Provides visual feedback that enhances listening
+- **Feels alive**: Modern, fluid interactions that don't fight you
+- **Stays true to MPD**: Lightweight, reliable, focused on playback
+
+
+## Introducing Quester
+
+Quester is my attempt to bridge the gap between technical excellence and musical experience. Built with Qt 6 and QML, it treats your music library as something beautiful to explore, not just data to manage.
+
+
+
+## Design Philosophy
+
+<h3>Visual First</h3>
+
+- **Album-centric browsing**: Cover Flow and Grid views put artwork front and center
+- **Dynamic visualizers**: Real-time spectrum and waveform displays that respond to the music
+- **Clean aesthetics**: Modern UI that enhances, not distracts from, your music
+
+<h3>Intuitive Interaction</h3>
+
+- **Drag-and-drop queue management**: Rearrange tracks as easily as moving files
+- **Smart playlists**: Automatically generated based on your listening patterns
+- **Multi-room control**: Manage multiple MPD outputs from one interface
+
+<h3>Technical Excellence</h3>
+
+- **FFTW-powered analysis**: Accurate, responsive visualizations
+- **TagLib integration**: Robust metadata and artwork handling
+- **Qt 6 performance**: Smooth, native-feeling interface across platforms
+
+
+## Technical Implementation
+
+The architecture balances performance with maintainability:
+
+
+<p>**Frontend**: QML provides declarative UI definitions that are easy to customize and maintain
+**Backend**: C++ handles MPD communication and audio processing efficiently
+**Integration**: Clean separation between UI logic and music management</p>
+
+## Building and Running
+
+Quester requires:
+
+
+
+- MPD server (version 0.22+)
+- Qt 6 development libraries
+- C++ compiler (GCC 11+ or Clang 12+)
+
+Build process:
+
+
+```bash
+mkdir build && cd build
+qmake ..
+make -j$(nproc)
+
+```
+
+## Why This Matters
+
+In an age of streaming algorithms and disposable interfaces, Quester is a statement: music deserves beautiful tools. It's not about features for features' sake, but about creating an interface that honors the artistry in both the music and the software.
+
+
+The goal isn't to replace every MPD client, but to offer an alternative for those who believe that software can be both technically sound and emotionally resonant.
+
+
+
