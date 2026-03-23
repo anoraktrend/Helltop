@@ -1,7 +1,8 @@
----
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import StatusBadge from '../components/StatusBadge.astro';
+import SystemStatus from '../components/SystemStatus.astro';
 
 const homeEntries = await getCollection('homepage');
 const home = homeEntries[0];
@@ -15,9 +16,13 @@ const { hero, sections } = home.data;
 <Layout title="Helltop | My Digital Rebellion">
   <!-- Hero Section -->
   <section class="py-20 text-center">
+    <div class="mb-10 flex justify-center">
+      <SystemStatus />
+    </div>
     <h1 class="text-5xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight">
       {hero.title}
     </h1>
+
     <p class="text-2xl sm:text-3xl text-ctp-subtext1 mb-8 font-light italic">
       {hero.subtitle}
     </p>
@@ -67,8 +72,11 @@ const { hero, sections } = home.data;
                 <div class="p-4 bg-ctp-base rounded-lg text-ctp-mauve group-hover:text-ctp-pink transition-colors">
                   <Icon name={item.icon} class="size-8" />
                 </div>
-                <div>
-                  <h3 class="text-xl font-bold text-ctp-text mb-1 group-hover:text-ctp-mauve transition-colors">{item.name}</h3>
+                <div class="flex-grow">
+                  <div class="flex items-center justify-between gap-4 mb-1">
+                    <h3 class="text-xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors">{item.name}</h3>
+                    <StatusBadge name={item.name} class="size-10" />
+                  </div>
                   <p class="text-ctp-subtext0 text-sm leading-relaxed">{item.function}</p>
                 </div>
               </a>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const statusUrl = `https://status.helltop.net/badge/${encodeURIComponent(name)}.svg`;
+---
+
+<div class:list={["relative flex items-center justify-center", className]}>
+  <img 
+    src={statusUrl} 
+    alt={`${name} status`} 
+    class="w-full h-full object-contain"
+    loading="lazy"
+  />
+</div>

@@ -3,6 +3,7 @@ import '../styles/global.css';
 import ThemeSwitcher from '../components/ThemeSwitcher.svelte';
 import SocialLinks from '../components/SocialLinks.astro';
 import { Icon } from 'astro-icon/components';
+import StatusBadge from '../components/StatusBadge.astro';
 
 interface Props {
 	title: string;
@@ -79,7 +80,8 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
             <Icon name="lucide:rss" class="size-5" />
           </a>
           <div class="h-4 w-px bg-ctp-surface0"></div>
-          <a href="https://status.helltop.net" target="_blank" rel="noopener noreferrer" class="hover:text-ctp-mauve transition-colors text-xs font-bold uppercase tracking-widest" title="System Status">
+          <a href="https://status.helltop.net" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-ctp-mauve transition-colors text-xs font-bold uppercase tracking-widest" title="System Status">
+            <StatusBadge name="all" class="size-4" />
             Status
           </a>
         </div>
