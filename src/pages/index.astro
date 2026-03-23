@@ -17,9 +17,6 @@ const { hero, sections } = home.data;
 <Layout title="Helltop | My Digital Rebellion">
   <!-- Hero Section -->
   <section class="py-20 text-center">
-    <div class="mb-10 flex justify-center">
-      <SystemStatus />
-    </div>
     <h1 class="text-5xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight">
       {hero.title}
     </h1>
@@ -38,6 +35,7 @@ const { hero, sections } = home.data;
       <section id={section.id} class="scroll-mt-24">
         <div class="flex items-center gap-4 mb-12">
           <h2 class="text-3xl font-bold text-ctp-mauve uppercase tracking-widest">{section.title}</h2>
+          {section.id === 'arsenal' && <SystemStatus />}
           <div class="h-px bg-ctp-surface0 flex-grow"></div>
         </div>
 
