@@ -2,19 +2,16 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
+const blog = await getCollection('blog');
 
-// Sort posts by date (if available) or title
-const sortedPosts = posts.sort((a, b) => {
+// Filter out drafts and sort posts by date (if available) or title
+const validBlogPosts = blog.filter((post) => post.data.draft !== true);
+const sortedPosts = validBlogPosts.sort((a, b) => {
   if (a.data.date && b.data.date) {
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
   }
   return a.data.title.localeCompare(b.data.title);
 });
----
-
 <Layout title="Blog | Helltop">
   <section class="py-12">
     <h1 class="text-4xl font-bold text-ctp-mauve mb-12 uppercase tracking-widest">The Archive</h1>

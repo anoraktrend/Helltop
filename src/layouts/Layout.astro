@@ -53,12 +53,28 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 		<link rel="dns-prefetch" href="https://status.helltop.net" />
 		<link rel="dns-prefetch" href="https://liberapay.com">
 
-		<script is:inline>
-		  // Prevent FOUT/FIT for theme switch
-		  const flavor = localStorage.getItem('catppuccin-flavor') || 'mocha';
-		  document.documentElement.classList.add(flavor);
-		</script>
-	</head>
+<script is:inline>
+	  // Prevent FOUT/FIT for theme switch
+	  const flavor = localStorage.getItem('catppuccin-flavor') || 'mocha';
+	  document.documentElement.classList.add(flavor);
+	</script>
+
+	<!-- Structured Data for Search Engines -->
+	<script type="application/ld+json">{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"url": "${Astro.url.origin}",
+		"name": "Helltop"
+	}</script>
+
+	<script type="application/ld+json">{
+		"@context": "https://schema.org",
+		"@type": "Blog",
+		"url": "${Astro.url.pathname.startsWith('/blog') ? Astro.url.origin + '/blog' : Astro.url.origin}",
+		"name": "${title}"
+	}</script>
+
+</head>
 	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`}>
 <nav aria-label="Main navigation" class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
 	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
