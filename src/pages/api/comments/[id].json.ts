@@ -4,22 +4,22 @@ import { comments } from '../../../db/schema';
 import { eq } from 'drizzle-orm';
 import { env } from 'cloudflare:workers';
 
-export const DELETE: APIRoute = async ({ params, cookies }) => {
+export const DELETE: APIRoute = async ({ params, cookies, locals }) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
     let isAuthorized = false;
 
-    if (sessionId) {
-      // @ts-ignore
-      const sessionKv = (env as any)?.SESSION;
-      if (sessionKv) {
-        const isValid = await sessionKv.get(`session:${sessionId}`);
-        if (isValid === 'valid') {
-          isAuthorized = true;
-        }
-      } else if (import.meta.env.DEV) {
+    // @ts-ignore
+    const runtime = locals.runtime;
+    const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+
+    if (sessionId && sessionKv) {
+      const isValid = await sessionKv.get(`session:${sessionId}`);
+      if (isValid === 'valid') {
         isAuthorized = true;
       }
+    } else if (import.meta.env.DEV) {
+      isAuthorized = true;
     }
 
     if (!isAuthorized) {

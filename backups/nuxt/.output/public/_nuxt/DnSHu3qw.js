@@ -1,1 +1,0 @@
-import{A as o,C as a,D as n,E as s,a9 as r}from"./iAe37yAp.js";const c={},l={class:"px-4 py-10 sm:px-8"},d={class:"max-w-none"};function _(t,e){return a(),n("div",l,[s("main",d,[r(t.$slots,"default",{},()=>[e[0]||(e[0]=s("h1",{class:"text-2xl"},"Page not found",-1))])])])}const i=o(c,[["render",_]]);export{i as default};

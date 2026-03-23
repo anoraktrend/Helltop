@@ -1,1 +1,0 @@
-export { default } from "/home/lucy/git/Helltop/node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_better-sqlite3@12.8.0__ioredis@5.10.0_magicast@0.5.2/node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue"

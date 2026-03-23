@@ -1,2 +1,0 @@
-import{d as o,g as e,s as r,a as t}from"../../../nitro/nitro.mjs";import"node:stream";import"node:fs/promises";import"node:path";import"node:process";import"cloudflare:workers";import"node:events";import"node:buffer";import"node:timers";import"node:util";const m=o(async o=>{const m=e(o,"remote-user"),s=e(o,"remote-name")||m,i=e(o,"remote-email");return m?(await t(o,{name:s,email:i,providerId:m}),r(o,"/_studio")):r(o,"/_studio")});export{m as default};
-//# sourceMappingURL=login.get.mjs.map

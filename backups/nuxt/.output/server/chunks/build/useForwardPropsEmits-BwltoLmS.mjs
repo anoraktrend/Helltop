@@ -1,2 +1,0 @@
-import{u as r}from"./useForwardProps-C9pAKts0.mjs";import{am as s,bc as o,b7 as t,m as a}from"../nitro/nitro.mjs";function useForwardPropsEmits(m,n){const u=r(m),e=n?function(r){const s=a(),m=s?.type.emits,n={};return m?.forEach(s=>{n[o(t(s))]=(...o)=>r(s,...o)}),n}(n):{};return s(()=>({...u.value,...e}))}export{useForwardPropsEmits as u};
-//# sourceMappingURL=useForwardPropsEmits-BwltoLmS.mjs.map

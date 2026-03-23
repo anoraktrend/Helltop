@@ -10,20 +10,21 @@ import { Icon } from 'astro-icon/components';
 const sessionId = Astro.cookies.get('admin_session')?.value;
 let isLoggedIn = false;
 
-if (sessionId) {
-  // @ts-ignore
-  const sessionKv = (env as any)?.SESSION;
-  if (sessionKv) {
-    const isValid = await sessionKv.get(`session:${sessionId}`);
-    if (isValid === 'valid') {
-      isLoggedIn = true;
-    }
-  } else if (import.meta.env.DEV) {
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+
+if (sessionId && sessionKv) {
+  const isValid = await sessionKv.get(`session:${sessionId}`);
+  if (isValid === 'valid') {
     isLoggedIn = true;
   }
+} else if (import.meta.env.DEV) {
+  isLoggedIn = true;
 }
 
 if (!isLoggedIn) {
+  console.log("Not logged in, redirecting to /api/auth/login");
   return Astro.redirect('/api/auth/login');
 }
 

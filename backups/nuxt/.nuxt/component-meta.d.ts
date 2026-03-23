@@ -1,5 +1,0 @@
-import type { ComponentData } from 'nuxt-component-meta'
-export type NuxtComponentMetaNames = 'ProseA' | 'ProseAccordion' | 'ProseAccordionItem' | 'ProseBadge' | 'ProseBlockquote' | 'ProseCallout' | 'ProseCard' | 'ProseCardGroup' | 'ProseCode' | 'ProseCodeCollapse' | 'ProseCodeGroup' | 'ProseCodeIcon' | 'ProseCodePreview' | 'ProseCodeTree' | 'ProseCollapsible' | 'ProseEm' | 'ProseField' | 'ProseFieldGroup' | 'ProseH1' | 'ProseH2' | 'ProseH3' | 'ProseH4' | 'ProseHr' | 'ProseIcon' | 'ProseImg' | 'ProseKbd' | 'ProseLi' | 'ProseOl' | 'ProseP' | 'ProsePre' | 'ProseScript' | 'ProseSteps' | 'ProseStrong' | 'ProseTable' | 'ProseTabs' | 'ProseTabsItem' | 'ProseTbody' | 'ProseTd' | 'ProseTh' | 'ProseThead' | 'ProseTr' | 'ProseUl' | 'ProseCaution' | 'ProseNote' | 'ProseTip' | 'ProseWarning' | 'ProseH5' | 'ProseH6' | 'Icon'
-export type NuxtComponentMeta = Record<NuxtComponentMetaNames, ComponentData>
-declare const components: NuxtComponentMeta
-export { components as default, components }

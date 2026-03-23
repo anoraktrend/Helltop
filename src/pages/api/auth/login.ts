@@ -1,12 +1,12 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const GET: APIRoute = async ({ request, cookies, redirect }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
   try {
     // @ts-ignore
-    const issuerUrl = (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    // @ts-ignore
-    const clientId = (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
+    const runtime = locals.runtime;
+    const issuerUrl = runtime?.env?.AUTHELIA_ISSUER_URL || (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
+    const clientId = runtime?.env?.AUTHELIA_CLIENT_ID || (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
 
     if (!issuerUrl || !clientId) {
       return new Response('Server misconfiguration: OIDC variables missing. Please configure AUTHELIA_ISSUER_URL and AUTHELIA_CLIENT_ID.', { status: 500 });
@@ -27,7 +27,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     cookies.set('oidc_state', state, {
       path: '/',
       httpOnly: true,
-      secure: true,
+      secure: import.meta.env.PROD,
       sameSite: 'lax',
       maxAge: 300 // 5 minutes expiration for login flow
     });
@@ -44,8 +44,8 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     authUrl.searchParams.set('state', state);
 
     return redirect(authUrl.toString(), 302);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login redirect error:', error);
-    return new Response('Login Error', { status: 500 });
+    return new Response(`Login Error: ${error.message || 'Unknown error'}`, { status: 500 });
   }
 };

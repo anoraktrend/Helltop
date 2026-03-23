@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const GET: APIRoute = async ({ request, cookies, redirect }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
   try {
     const url = new URL(request.url);
     const code = url.searchParams.get('code');
@@ -16,11 +16,10 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     }
 
     // @ts-ignore
-    const issuerUrl = (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    // @ts-ignore
-    const clientId = (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
-    // @ts-ignore
-    const clientSecret = (env as any)?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
+    const runtime = locals.runtime;
+    const issuerUrl = runtime?.env?.AUTHELIA_ISSUER_URL || (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
+    const clientId = runtime?.env?.AUTHELIA_CLIENT_ID || (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
+    const clientSecret = runtime?.env?.AUTHELIA_CLIENT_SECRET || (env as any)?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
 
     if (!issuerUrl || !clientId || !clientSecret) {
       return new Response('Server misconfiguration: Check OIDC environment variables.', { status: 500 });
@@ -81,15 +80,15 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     cookies.set('admin_session', sessionId, {
       path: '/',
       httpOnly: true,
-      secure: true,
+      secure: import.meta.env.PROD,
       sameSite: 'lax',
       maxAge: 86400 // 24 hours
     });
 
     // Successfully Authenticated, Redirect to Admin Dashboard
     return redirect('/admin', 302);
-  } catch (error) {
+  } catch (error: any) {
     console.error('OIDC callback error:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response(`Internal Server Error: ${error.message || 'Unknown error'}`, { status: 500 });
   }
 };

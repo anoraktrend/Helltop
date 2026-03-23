@@ -1,13 +1,14 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const POST: APIRoute = async ({ cookies }) => {
+export const POST: APIRoute = async ({ cookies, locals }) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
     
     if (sessionId) {
       // @ts-ignore
-      const sessionKv = (env as any)?.SESSION;
+      const runtime = locals.runtime;
+      const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
       if (sessionKv) {
         await sessionKv.delete(`session:${sessionId}`);
       }
