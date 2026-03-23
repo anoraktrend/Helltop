@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Comments from '../components/Comments.astro';
+import AuthorSidebar from '../components/AuthorSidebar.astro';
 
 interface Props {
   title: string;
@@ -24,83 +25,93 @@ const { title, description, date, author, category, readingTime, postId } = Astr
     style="width: 0%"
   ></div>
 
-  <article class="max-w-3xl mx-auto py-12 relative" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
-    <!-- Energetic Header -->
-    <header class="mb-20 relative group">
-      <!-- Animated Background Glow -->
-      <div class="absolute -top-32 -left-32 size-96 bg-ctp-mauve/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
-      <div class="absolute top-0 -right-32 size-64 bg-ctp-pink/10 rounded-full blur-[100px] -z-10 animate-pulse delay-700"></div>
-      
-      <nav class="mb-12">
-        <a href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
-          <span class="p-2 bg-ctp-surface0 rounded-lg group-hover/back:bg-ctp-mauve group-hover/back:text-ctp-base transition-colors">
-            <Icon name="lucide:arrow-left" class="size-4" />
-          </span>
-          Back to Terminal
-        </a>
-      </nav>
-      
-      <div class="space-y-6">
-        {category && (
-          <div class="flex items-center gap-3">
-            <span class="h-px w-8 bg-ctp-mauve"></span>
-            <span class="text-ctp-mauve font-black uppercase text-xs tracking-[0.4em]">
-              {category}
-            </span>
+  <div class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
+      <!-- Main Content -->
+      <article class="lg:col-span-3 relative">
+        <!-- Energetic Header -->
+        <header class="mb-20 relative group">
+          <!-- Animated Background Glow -->
+          <div class="absolute -top-32 -left-32 size-96 bg-ctp-mauve/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+          <div class="absolute top-0 -right-32 size-64 bg-ctp-pink/10 rounded-full blur-[100px] -z-10 animate-pulse delay-700"></div>
+          
+          <nav class="mb-12">
+            <a href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
+              <span class="p-2 bg-ctp-surface0 rounded-lg group-hover/back:bg-ctp-mauve group-hover/back:text-ctp-base transition-colors">
+                <Icon name="lucide:arrow-left" class="size-4" />
+              </span>
+              Back to Terminal
+            </a>
+          </nav>
+          
+          <div class="space-y-6">
+            {category && (
+              <div class="flex items-center gap-3">
+                <span class="h-px w-8 bg-ctp-mauve"></span>
+                <span class="text-ctp-mauve font-black uppercase text-xs tracking-[0.4em]">
+                  {category}
+                </span>
+              </div>
+            )}
+            
+            <h1 class="text-5xl sm:text-8xl font-black text-ctp-text leading-[0.9] tracking-tighter drop-shadow-sm">
+              {title}
+            </h1>
+            
+            {description && (
+              <p class="text-2xl text-ctp-subtext1 font-light leading-relaxed border-l-2 border-ctp-surface1 pl-6 py-2 italic">
+                {description}
+              </p>
+            )}
           </div>
-        )}
-        
-        <h1 class="text-5xl sm:text-8xl font-black text-ctp-text leading-[0.9] tracking-tighter drop-shadow-sm">
-          {title}
-        </h1>
-        
-        {description && (
-          <p class="text-2xl text-ctp-subtext1 font-light leading-relaxed border-l-2 border-ctp-surface1 pl-6 py-2 italic">
-            {description}
-          </p>
-        )}
-      </div>
 
-      <div class="mt-12 flex flex-wrap items-center gap-8 text-ctp-overlay1 font-mono text-[10px] uppercase tracking-[0.2em] border-t border-ctp-surface0 pt-8">
-        {date && (
-          <div class="flex items-center gap-3">
-            <Icon name="lucide:calendar" class="size-4 text-ctp-mauve" />
-            <time>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+          <div class="mt-12 flex flex-wrap items-center gap-8 text-ctp-overlay1 font-mono text-[10px] uppercase tracking-[0.2em] border-t border-ctp-surface0 pt-8">
+            {date && (
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:calendar" class="size-4 text-ctp-mauve" />
+                <time>{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+              </div>
+            )}
+            {readingTime && (
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:clock" class="size-4 text-ctp-pink" />
+                <span>{readingTime} MIN EXECUTION</span>
+              </div>
+            )}
+            {author && (
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:user" class="size-4 text-ctp-blue" />
+                <span>{author}</span>
+              </div>
+            )}
           </div>
-        )}
-        {readingTime && (
-          <div class="flex items-center gap-3">
-            <Icon name="lucide:clock" class="size-4 text-ctp-pink" />
-            <span>{readingTime} MIN EXECUTION</span>
-          </div>
-        )}
-        {author && (
-          <div class="flex items-center gap-3">
-            <Icon name="lucide:user" class="size-4 text-ctp-blue" />
-            <span>{author}</span>
-          </div>
-        )}
-      </div>
-    </header>
+        </header>
 
-    <!-- Main Content with enhanced prose -->
-    <div class="prose prose-lg prose-invert max-w-none 
-      prose-headings:tracking-tighter prose-headings:font-black
-      prose-a:text-ctp-mauve prose-a:decoration-ctp-mauve/30 hover:prose-a:decoration-ctp-mauve prose-a:underline-offset-4
-      prose-img:rounded-3xl prose-img:shadow-2xl prose-img:shadow-ctp-mauve/5
-      prose-pre:border prose-pre:border-ctp-surface0 prose-pre:shadow-2xl
-      prose-blockquote:border-ctp-pink prose-blockquote:bg-ctp-mantle/30
-      selection:bg-ctp-mauve selection:text-ctp-base">
-      <slot />
-    </div>
+        <!-- Main Content with enhanced prose -->
+        <div class="prose prose-lg prose-invert max-w-none 
+          prose-headings:tracking-tighter prose-headings:font-black
+          prose-a:text-ctp-mauve prose-a:decoration-ctp-mauve/30 hover:prose-a:decoration-ctp-mauve prose-a:underline-offset-4
+          prose-img:rounded-3xl prose-img:shadow-2xl prose-img:shadow-ctp-mauve/5
+          prose-pre:border prose-pre:border-ctp-surface0 prose-pre:shadow-2xl
+          prose-blockquote:border-ctp-pink prose-blockquote:bg-ctp-mantle/30
+          selection:bg-ctp-mauve selection:text-ctp-base">
+          <slot />
+        </div>
 
-    <!-- Custom Self-Hosted Comments Section -->
-    <div class="mt-32 pt-16 border-t border-ctp-surface0">
-      <div class="flex items-center gap-4 mb-12">
-        <h2 class="text-3xl font-black text-ctp-mauve uppercase tracking-tighter">Encrypted Comms</h2>
-        <div class="h-px bg-ctp-surface0 flex-grow">
+        <!-- Custom Self-Hosted Comments Section -->
+        <div class="mt-32 pt-16 border-t border-ctp-surface0">
+          <div class="flex items-center gap-4 mb-12">
+            <h2 class="text-3xl font-black text-ctp-mauve uppercase tracking-tighter">Encrypted Comms</h2>
+            <div class="h-px bg-ctp-surface0 flex-grow"></div>
+          </div>
           <Comments postId={postId} />
         </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="lg:col-span-1 hidden lg:block">
+        <AuthorSidebar author={author} />
+      </aside>
     </div>
 
     <!-- Floating Action Elements -->
@@ -122,7 +133,7 @@ const { title, description, date, author, category, readingTime, postId } = Astr
         <Icon name="lucide:chevron-up" class="size-6 stroke-[3]" />
       </button>
     </div>
-  </article>
+  </div>
 
   <script is:inline>
     // Reading Progress Handler

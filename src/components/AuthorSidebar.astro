@@ -1,0 +1,69 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  author?: string;
+}
+
+const { author = "Lucy Ada Randall" } = Astro.props;
+---
+
+<div class="sticky top-24 space-y-12">
+  <!-- Author Bio Card -->
+  <div class="relative group">
+    <div class="absolute -inset-1 bg-gradient-to-r from-ctp-mauve to-ctp-pink rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+    <div class="relative p-8 bg-ctp-crust rounded-2xl border border-ctp-surface0 shadow-2xl">
+      <div class="flex flex-col items-center text-center space-y-4">
+        <div class="size-20 bg-ctp-base rounded-2xl border border-ctp-surface1 flex items-center justify-center text-ctp-mauve shadow-inner group-hover:scale-110 transition-transform duration-500">
+          <Icon name="lucide:user" class="size-10 stroke-[1.5]" />
+        </div>
+        <div>
+          <h3 class="text-xl font-black text-ctp-text tracking-tight uppercase">{author}</h3>
+          <p class="text-xs font-mono text-ctp-mauve uppercase tracking-[0.2em] mt-1">System Architect</p>
+        </div>
+        <p class="text-sm text-ctp-subtext0 leading-relaxed font-light italic">
+          Building alternatives to the surveillance state one commit at a time. Corporate tech heretic.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminal Info -->
+  <div class="space-y-6">
+    <h4 class="text-[10px] font-black text-ctp-overlay1 uppercase tracking-[0.3em] px-2 flex items-center gap-2">
+      <span class="size-1.5 bg-ctp-mauve rounded-full animate-pulse"></span>
+      Mission Brief
+    </h4>
+    <div class="p-6 bg-ctp-mantle/50 rounded-xl border border-ctp-surface0 space-y-4">
+      <ul class="space-y-3 text-[11px] font-mono text-ctp-subtext1 uppercase tracking-wider">
+        <li class="flex items-start gap-3 group/item">
+          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">01.</span>
+          <span>Self-host everything</span>
+        </li>
+        <li class="flex items-start gap-3 group/item">
+          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">02.</span>
+          <span>Open source exclusively</span>
+        </li>
+        <li class="flex items-start gap-3 group/item">
+          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">03.</span>
+          <span>Weaponize self-reliance</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Links -->
+  <div class="space-y-4">
+    <h4 class="text-[10px] font-black text-ctp-overlay1 uppercase tracking-[0.3em] px-2">Encrypted Comms</h4>
+    <div class="flex flex-col gap-2">
+      <a href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+        <Icon name="lucide:mail" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
+        <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">E-Mail</span>
+      </a>
+      <a href="https://github.com/anoraktrend" target="_blank" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+        <Icon name="simple-icons:github" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
+        <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">GitHub</span>
+      </a>
+    </div>
+  </div>
+</div>
