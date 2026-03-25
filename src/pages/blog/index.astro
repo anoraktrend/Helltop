@@ -19,23 +19,33 @@ const sortedPosts = validBlogPosts.sort((a, b) => {
   <section class="py-12">
     <h1 class="text-4xl font-bold text-ctp-mauve mb-12 uppercase tracking-widest">The Archive</h1>
     
-    <div class="flex flex-col gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {sortedPosts.map((post) => (
-        <article class="group">
-          <Link href={`/blog/${post.data.slug}`} class="block">
-            <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
-              <h2 class="text-2xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors">
-                {post.data.title}
-              </h2>
+        <article class="group flex flex-col bg-ctp-mantle border border-ctp-surface0 rounded-xl overflow-hidden hover:border-ctp-mauve transition-all hover:-translate-y-1 shadow-lg hover:shadow-ctp-mauve/10">
+          <Link href={`/blog/${post.data.slug}`} class="flex flex-col h-full p-6">
+            <div class="flex justify-between items-start mb-4">
+              {post.data.category && (
+                <span class="px-2 py-1 bg-ctp-surface0 text-ctp-mauve text-xs font-bold uppercase tracking-widest rounded border border-ctp-surface1">
+                  {post.data.category}
+                </span>
+              )}
               {post.data.date && (
-                <time class="text-ctp-subtext0 font-mono text-sm">{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
+                <time class="text-ctp-subtext0 font-mono text-xs ml-auto">
+                  {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </time>
               )}
             </div>
-            <p class="text-ctp-subtext1 leading-relaxed">
+            
+            <h2 class="text-xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors mb-3 leading-tight">
+              {post.data.title}
+            </h2>
+            
+            <p class="text-ctp-subtext1 text-sm leading-relaxed mb-6 line-clamp-3">
               {post.data.description}
             </p>
-            <div class="mt-4 flex items-center gap-2 text-ctp-pink font-bold text-sm uppercase tracking-tighter group-hover:gap-4 transition-all">
-              Read More <span>&rarr;</span>
+            
+            <div class="mt-auto flex items-center gap-2 text-ctp-pink font-bold text-xs uppercase tracking-tighter group-hover:gap-4 transition-all">
+              Read Entry <span>&rarr;</span>
             </div>
           </Link>
         </article>
