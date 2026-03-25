@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Link } from 'astro-link';
 
 interface Props {
   author?: string;
@@ -56,14 +57,14 @@ const { author = "Lucy Ada Randall" } = Astro.props;
   <div class="space-y-4">
     <h4 class="text-[10px] font-black text-ctp-overlay1 uppercase tracking-[0.3em] px-2">Encrypted Comms</h4>
     <div class="flex flex-col gap-2">
-      <a href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+      <Link href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
         <Icon name="lucide:mail" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
         <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">E-Mail</span>
-      </a>
-      <a href="https://github.com/anoraktrend" target="_blank" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+      </Link>
+      <Link href="https://github.com/anoraktrend" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
         <Icon name="simple-icons:github" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
         <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">GitHub</span>
-      </a>
+      </Link>
     </div>
   </div>
 </div>

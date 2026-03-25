@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import { Icon } from 'astro-icon/components';
 import Comments from '../components/Comments.astro';
 import AuthorSidebar from '../components/AuthorSidebar.astro';
+import { Link } from 'astro-link';
 
 interface Props {
   title: string;
@@ -36,12 +37,12 @@ const { title, description, date, author, category, readingTime, postId } = Astr
           <div class="absolute top-0 -right-32 size-64 bg-ctp-pink/10 rounded-full blur-[100px] -z-10 animate-pulse delay-700"></div>
           
           <nav class="mb-12">
-            <a href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
+            <Link href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
               <span class="p-2 bg-ctp-surface0 rounded-lg group-hover/back:bg-ctp-mauve group-hover/back:text-ctp-base transition-colors">
                 <Icon name="lucide:arrow-left" class="size-4" />
               </span>
               Back to Terminal
-            </a>
+            </Link>
           </nav>
           
           <div class="space-y-6">

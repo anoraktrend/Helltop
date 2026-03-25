@@ -1,5 +1,6 @@
 ---
 import StatusBadge from './StatusBadge.astro';
+import { Link } from 'astro-link';
 
 let stats = { up: 0, total: 0 };
 let error = false;
@@ -22,9 +23,8 @@ const isAllUp = stats.up === stats.total && stats.total > 0;
 const isPartiallyDown = stats.up < stats.total && stats.up > 0;
 ---
 
-<a 
+<Link 
   href="https://status.helltop.net" 
-  target="_blank" 
   class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle border border-ctp-surface0 rounded-full hover:border-ctp-mauve hover:shadow-lg hover:shadow-ctp-mauve/5 transition-all group"
 >
   <div class="relative flex items-center justify-center">
@@ -60,4 +60,4 @@ const isPartiallyDown = stats.up < stats.total && stats.up > 0;
     <span class="text-[10px] font-mono text-ctp-mauve">{stats.up}/{stats.total}</span>
     <span class="text-[8px] font-bold text-ctp-overlay0 uppercase tracking-tighter">Online</span>
   </div>
-</a>
+</Link>

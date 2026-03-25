@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import { Link } from 'astro-link';
 ---
 
 <Layout title="About | Helltop" description="Lucy Ada Randall - Developer, open-source radical, and corporate tech heretic.">
@@ -76,14 +77,14 @@ import { Icon } from 'astro-icon/components';
         <div class="space-y-4">
           <h2 class="text-lg font-bold text-ctp-mauve uppercase tracking-widest px-2">Encrypted Comms</h2>
           <div class="flex flex-col gap-2">
-            <a href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+            <Link href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
               <Icon name="lucide:mail" class="size-5 text-ctp-pink group-hover:text-ctp-mauve" />
               <span class="text-sm font-mono">lucyrandall@helltop.net</span>
-            </a>
-            <a href="https://github.com/anoraktrend" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
+            </Link>
+            <Link href="https://github.com/anoraktrend" class="p-4 bg-ctp-mantle hover:bg-ctp-surface0 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
               <Icon name="simple-icons:github" class="size-5 text-ctp-pink group-hover:text-ctp-mauve" />
               <span class="text-sm font-mono">@anoraktrend</span>
-            </a>
+            </Link>
           </div>
         </div>
       </aside>
@@ -95,12 +96,12 @@ import { Icon } from 'astro-icon/components';
       <p class="text-ctp-subtext1 mb-8 max-w-xl mx-auto">
         I'm building networks with digital freedom fighters who are tired of asking permission. Let's build something that lasts.
       </p>
-      <a 
+      <Link 
         href="mailto:lucyrandall@helltop.net" 
         class="inline-block bg-ctp-mauve hover:bg-ctp-pink text-ctp-base font-bold py-4 px-10 rounded-2xl transition-all uppercase tracking-widest text-sm shadow-lg shadow-ctp-mauve/20"
       >
         Contact Headquarters
-      </a>
+      </Link>
     </div>
   </div>
 </Layout>

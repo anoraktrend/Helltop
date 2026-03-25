@@ -30,6 +30,7 @@
     "alpinejs": "^3.15.8",
     "astro": "^6.0.8",
     "astro-icon": "^1.1.5",
+    "astro-link": "^1.2.1",
     "drizzle-orm": "^0.45.1",
     "markdown-it": "^14.1.1",
     "rss": "^1.2.2",

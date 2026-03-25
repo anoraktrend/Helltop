@@ -5,6 +5,7 @@ import { getDb } from '../../db';
 import { comments } from '../../db/schema';
 import { desc } from 'drizzle-orm';
 import { Icon } from 'astro-icon/components';
+import { Link } from 'astro-link';
 
 // Session Verification
 const sessionId = Astro.cookies.get('admin_session')?.value;
@@ -77,9 +78,9 @@ try {
                     <span class="bg-ctp-surface0 px-2 py-1 rounded-md">{comment.author}</span>
                   </td>
                   <td class="px-6 py-4 font-mono text-xs text-ctp-mauve">
-                    <a href={`/blog/${comment.postId}`} class="hover:text-ctp-pink transition-colors" target="_blank">
+                    <Link href={`/blog/${comment.postId}`} class="hover:text-ctp-pink transition-colors">
                       {comment.postId}
-                    </a>
+                    </Link>
                   </td>
                   <td class="px-6 py-4 text-sm text-ctp-subtext0 max-w-md truncate" title={comment.body}>
                     {comment.body}

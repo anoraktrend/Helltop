@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { Link } from 'astro-link';
 
 const blog = await getCollection('blog');
 
@@ -21,7 +22,7 @@ const sortedPosts = validBlogPosts.sort((a, b) => {
     <div class="flex flex-col gap-12">
       {sortedPosts.map((post) => (
         <article class="group">
-          <a href={`/blog/${post.data.slug}`} class="block">
+          <Link href={`/blog/${post.data.slug}`} class="block">
             <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
               <h2 class="text-2xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors">
                 {post.data.title}
@@ -36,7 +37,7 @@ const sortedPosts = validBlogPosts.sort((a, b) => {
             <div class="mt-4 flex items-center gap-2 text-ctp-pink font-bold text-sm uppercase tracking-tighter group-hover:gap-4 transition-all">
               Read More <span>&rarr;</span>
             </div>
-          </a>
+          </Link>
         </article>
       ))}
     </div>

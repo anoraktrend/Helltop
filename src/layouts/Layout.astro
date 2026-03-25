@@ -4,6 +4,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher.svelte';
 import SocialLinks from '../components/SocialLinks.astro';
 import { Icon } from 'astro-icon/components';
 import StatusBadge from '../components/StatusBadge.astro';
+import { Link } from 'astro-link';
 
 interface Props {
 	title: string;
@@ -81,16 +82,16 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 	    <div class="flex justify-between h-16 items-center">
 	      <div class="flex items-center gap-8 text-ctp-overlay2">
-		<a href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-pink rounded" aria-label="Home">
+		<Link href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-pink rounded" aria-label="Home">
 		  Helltop
-		</a>
+		</Link>
 		<div class="hidden sm:flex gap-6">
-		  <a href="/blog" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="Blog">
+		  <Link href="/blog" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="Blog">
 			Blog
-		  </a>
-		  <a href="/about" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="About">
+		  </Link>
+		  <Link href="/about" class="hover:text-ctp-text transition-colors uppercase text-sm font-bold tracking-widest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-mauve rounded px-2 py-1" aria-label="About">
 			About
-		  </a>
+		  </Link>
 		</div>
 	      </div>
 	      <div class="flex items-center gap-6 text-ctp-overlay2">
@@ -113,14 +114,14 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
         <div class="flex justify-center items-center gap-6">
           <SocialLinks iconSize="5" spacing="6" />
           <div class="h-4 w-px bg-ctp-surface0"></div>
-          <a href="/rss.xml" class="hover:text-ctp-mauve transition-colors" title="RSS Feed">
+          <Link href="/rss.xml" class="hover:text-ctp-mauve transition-colors" title="RSS Feed">
             <Icon name="lucide:rss" class="size-5" />
-          </a>
+          </Link>
           <div class="h-4 w-px bg-ctp-surface0"></div>
-          <a href="https://status.helltop.net" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 hover:text-ctp-mauve transition-colors text-xs font-bold uppercase tracking-widest" title="System Status">
+          <Link href="https://status.helltop.net" class="flex items-center gap-2 hover:text-ctp-mauve transition-colors text-xs font-bold uppercase tracking-widest" title="System Status">
             <StatusBadge name="all" class="size-4" />
             Status
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { Link } from 'astro-link';
 
 interface Props {
   iconSize?: string;
@@ -20,14 +21,12 @@ const socials = [
 
 <div class={`flex gap-${spacing} ${className}`}>
   {socials.map((social) => (
-    <a
+    <Link
       href={social.url}
       title={social.name}
-      target="_blank"
-      rel="noopener noreferrer"
       class="hover:text-ctp-mauve transition-colors"
     >
       <Icon name={social.icon} class={`size-${iconSize}`} />
-    </a>
+    </Link>
   ))}
 </div>

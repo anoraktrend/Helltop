@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import StatusBadge from '../components/StatusBadge.astro';
 import SystemStatus from '../components/SystemStatus.astro';
+import { Link } from 'astro-link';
 
 const homeEntries = await getCollection('homepage');
 const home = homeEntries[0];
@@ -63,9 +64,8 @@ const { hero, sections } = home.data;
         {section.type === 'infrastructure' && (
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {section.items?.filter(item => !!item).map((item) => (
-              <a 
+              <Link 
                 href={item.url} 
-                target="_blank" 
                 class="flex items-start gap-6 p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-mauve hover:shadow-lg hover:shadow-ctp-mauve/10 transition-all group"
               >
                 <div class="p-4 bg-ctp-base rounded-lg text-ctp-mauve group-hover:text-ctp-pink transition-colors">
@@ -78,7 +78,7 @@ const { hero, sections } = home.data;
                   </div>
                   <p class="text-ctp-subtext0 text-sm leading-relaxed">{item.function}</p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         )}
@@ -86,14 +86,13 @@ const { hero, sections } = home.data;
         {section.type === 'software' && (
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {section.items?.map((item) => (
-              <a 
+              <Link 
                 href={item.url} 
-                target="_blank" 
                 class="block p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-pink hover:shadow-lg hover:shadow-ctp-pink/10 transition-all group"
               >
                 <h3 class="text-xl font-bold text-ctp-mauve mb-2 group-hover:text-ctp-pink transition-colors font-mono">&gt; {item.name}</h3>
                 <p class="text-ctp-subtext0 leading-relaxed">{item.description}</p>
-              </a>
+              </Link>
             ))}
           </div>
         )}
