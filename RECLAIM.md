@@ -60,7 +60,7 @@ This site is pre-configured for Cloudflare Workers.
 ## 🏴 Forgejo Integration
 If you're running your own Forgejo instance, make sure your runner has the following labels enabled:
 - `ubuntu-latest` (pointing to a complete image like `ghcr.io/catthehacker/ubuntu:act-latest`)
-- `node-20`
+- `node-24`
 
 ## ⚖️ License
 MIT. Build it, break it, host it. 

@@ -68,8 +68,24 @@ body {
 }
 
 .prose pre {
-  @apply rounded-2xl border border-ctp-surface0 shadow-lg !bg-ctp-mantle;
+  @apply rounded-2xl border border-ctp-surface0 shadow-lg !bg-ctp-mantle p-4;
 }
+
+/* Catppuccin Prism Colors */
+.token.keyword, .token.prolog, .token.doctype, .token.atrule { color: var(--ctp-mauve); }
+.token.builtin, .token.entity { color: var(--ctp-red); }
+.token.class-name, .token.symbol, .token.attr-name, .token.namespace { color: var(--ctp-yellow); }
+.token.function, .token.property, .token.tag, .token.selector { color: var(--ctp-blue); }
+.token.boolean, .token.number, .token.constant { color: var(--ctp-peach); }
+.token.string, .token.char, .token.url, .token.attr-value, .token.inserted { color: var(--ctp-green); }
+.token.regex { color: var(--ctp-pink); }
+.token.operator { color: var(--ctp-sky); }
+.token.variable { color: var(--ctp-text); }
+.token.punctuation, .token.comment { color: var(--ctp-overlay2); }
+.token.cdata { color: var(--ctp-teal); }
+.token.deleted { color: var(--ctp-red); }
+.token.important, .token.bold { font-weight: bold; }
+.token.italic { font-style: italic; }
 
 .prose code:not(pre code) {
   @apply bg-ctp-surface0 px-1.5 py-0.5 rounded-md font-mono text-sm;

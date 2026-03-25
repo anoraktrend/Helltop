@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
 
 interface Props {
-  author?: string;
+  author?: string | undefined;
 }
 
 const { author = "Lucy Ada Randall" } = Astro.props;

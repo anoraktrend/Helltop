@@ -7,11 +7,11 @@ import { Link } from 'astro-link';
 
 interface Props {
   title: string;
-  description?: string;
-  date?: Date;
-  author?: string;
-  tags?: string[];
-  readingTime?: number;
+  description?: string | undefined;
+  date?: Date | undefined;
+  author?: string | undefined;
+  tags?: string[] | undefined;
+  readingTime?: number | undefined;
   postId: string;
 }
 

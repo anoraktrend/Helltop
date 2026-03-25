@@ -4,7 +4,7 @@ import { comments } from '../../../db/schema';
 import { eq } from 'drizzle-orm';
 import { env } from 'cloudflare:workers';
 
-export const DELETE: APIRoute = async ({ params, cookies, locals }) => {
+export const DELETE: APIRoute = async ({ params, cookies }) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
     let isAuthorized = false;

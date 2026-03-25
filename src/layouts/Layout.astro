@@ -9,7 +9,7 @@ import Starfield from '../components/Starfield.astro';
 
 interface Props {
 	title: string;
-  description?: string;
+  description?: string | undefined;
 }
 
 const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Build your own." } = Astro.props;
@@ -63,19 +63,19 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 	</script>
 
 	<!-- Structured Data for Search Engines -->
-	<script type="application/ld+json">{
+	<script type="application/ld+json" is:inline set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "WebSite",
-		"url": "${Astro.url.origin}",
+		"url": Astro.url.origin,
 		"name": "Helltop"
-	}</script>
+	})} />
 
-	<script type="application/ld+json">{
+	<script type="application/ld+json" is:inline set:html={JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "Blog",
-		"url": "${Astro.url.pathname.startsWith('/blog') ? Astro.url.origin + '/blog' : Astro.url.origin}",
-		"name": "${title}"
-	}</script>
+		"url": Astro.url.pathname.startsWith('/blog') ? Astro.url.origin + '/blog' : Astro.url.origin,
+		"name": title
+	})} />
 
 </head>
 	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`} x-data="{ mobileMenuOpen: false }">

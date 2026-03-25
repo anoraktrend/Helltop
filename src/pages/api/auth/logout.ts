@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const POST: APIRoute = async ({ cookies, locals }) => {
+export const POST: APIRoute = async ({ cookies }) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
     

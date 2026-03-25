@@ -8,12 +8,28 @@ import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
+import remarkToc from 'remark-toc';
+import rehypePresetMinify from 'rehype-preset-minify';
 
 export default defineConfig({
   site: 'https://helltop.net/',
   output: 'server',
   adapter: cloudflare(),
-  integrations: [svelte(), icon(), mdx(), alpinejs(), sitemap()],
+  markdown: {
+    syntaxHighlight: 'prism',
+  },
+  integrations: [
+    svelte(), 
+    icon(), 
+    mdx({
+      remarkPlugins: [remarkToc],
+      rehypePlugins: [rehypePresetMinify],
+      remarkRehype: { footnoteLabel: 'Footnotes' },
+      gfm: true,
+    }), 
+    alpinejs(), 
+    sitemap()
+  ],
   vite: {
     optimizeDeps: {
       exclude: ['@astrojs/audit', '@astrojs/toolbar', '@astrojs/xray', 'audit', 'toolbar', 'xray']

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   try {
     const url = new URL(request.url);
     const code = url.searchParams.get('code');

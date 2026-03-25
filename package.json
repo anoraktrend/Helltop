@@ -3,14 +3,21 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.14.1"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-types": "wrangler types"
+    "generate-types": "wrangler types",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.5.0",
@@ -32,7 +39,8 @@
     "astro-icon": "^1.1.5",
     "astro-link": "^1.2.1",
     "drizzle-orm": "^0.45.1",
-    "markdown-it": "^14.1.1",
+    "rehype-preset-minify": "^7.0.1",
+    "remark-toc": "^9.0.0",
     "rss": "^1.2.2",
     "sanitize-html": "^2.17.2",
     "svelte": "^5.54.0",
@@ -44,9 +52,16 @@
   },
   "devDependencies": {
     "@catppuccin/tailwindcss": "^1.0.0",
-    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.7.5",
     "@types/rss": "^0.0.32",
     "@types/sanitize-html": "^2.16.1",
-    "drizzle-kit": "^0.31.10"
+    "drizzle-kit": "^0.31.10",
+    "gts": "^7.0.0",
+    "typescript": "^5.6.3"
+  },
+  "overrides": {
+    "fast-xml-parser": "5.5.9",
+    "tmp": "0.2.5",
+    "esbuild": "^0.25.0"
   }
 }

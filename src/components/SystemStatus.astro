@@ -8,7 +8,7 @@ let error = false;
 try {
   const res = await fetch('https://status.helltop.net/api/status');
   if (res.ok) {
-    const data = await res.json();
+    const data = await res.json() as any;
     stats.total = data.services.length;
     stats.up = data.services.filter((s: any) => s.latest?.status === 'up').length;
   } else {

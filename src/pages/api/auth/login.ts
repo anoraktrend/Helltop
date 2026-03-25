@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
 
-export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect }) => {
   try {
     // @ts-ignore
     const issuerUrl = (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
