@@ -38,80 +38,6 @@
   let currentMouseX = 0;
   let currentMouseY = 0;
   let currentScrollY = 0;
-
-  function handleMouseMove(e: MouseEvent) {
-    targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-    targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
-  }
-
-  function handleScroll() {
-    targetScrollY = window.scrollY;
-  }
-
-  // Set up listeners once
-  if (typeof window !== 'undefined') {
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-    // Initial scroll value
-    targetScrollY = currentScrollY = window.scrollY;
-  }
-
-  function initStarfield() {
-    if (!isWebGLSupported()) return;
-
-    const canvas = document.getElementById('starfield') as HTMLCanvasElement;
-    if (!canvas) return;
-
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl') as WebGLRenderingContext;
-    if (!gl) return;
-
-    const vsSource = `
-      attribute vec4 aVertexPosition;
-      void main() {
-        gl_Position = aVertexPosition;
-      }
-    `;
-
-<div class="starfield-container" id="starfield-container">
-  <canvas id="starfield"></canvas>
-</div>
-
-<style>
-  .starfield-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-    background: #1e1e2e;
-  }
-  
-  #starfield {
-    width: 100%;
-    height: 100%;
-    display: block;
-    opacity: 1;
-  }
-</style>
-
-<script>
-  function isWebGLSupported() {
-    try {
-      const canvas = document.createElement('canvas');
-      return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-    } catch (e) {
-      return false;
-    }
-  }
-
-  let targetMouseX = 0;
-  let targetMouseY = 0;
-  let targetScrollY = 0;
-  let currentMouseX = 0;
-  let currentMouseY = 0;
-  let currentScrollY = 0;
   let currentMode = 3.0; // 0: Latte, 1: Frappe, 2: Macchiato, 3: Mocha
 
   function handleMouseMove(e: MouseEvent) {
@@ -217,20 +143,12 @@
         return fract(p.x * p.y);
       }
 
-      // 0: Mocha - Cosmic Starfield
-      vec3 renderMocha(vec2 uv, vec2 mouseEffect, float scrollEffect) {
-        vec3 color = MOCHA_BASE;
-        vec2 st1 = uv * 2.0 + mouseEffect * 0.5 + vec2(0.0, scrollEffect * 0.4) + vec2(uTime * 0.04, uTime * 0.02);
-        vec2 ipos1 = floor(st1 * 20.0);
-        vec2 fpos1 = fract(st1 * 20.0);
-        float h1 = hash(ipos1);
-        if (h1 > 0.98) color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h1, distance(fpos1, vec2(0.5))));
-
-        vec2 st2 = uv * 4.0 + mouseEffect + vec2(0.0, scrollEffect * 0.8) + vec2(-uTime * 0.02, uTime * 0.01);
-        vec2 ipos2 = floor(st2 * 15.0);
-        vec2 fpos2 = fract(st2 * 15.0);
-        float h2 = hash(ipos2);
-        if (h2 > 0.99) color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, distance(fpos2, vec2(0.5))));
+      // 0: Latte - Ethereal Light
+      vec3 renderLatte(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+        float f = fbm(uv * 1.5 + uTime * 0.05 + mouseEffect * 0.2 + vec2(0.0, scrollEffect * 0.1));
+        vec3 color = mix(LATTE_BASE, LATTE_SURFACE, f);
+        color = mix(color, LATTE_MAUVE, 0.15 * fbm(uv * 2.0 - uTime * 0.02));
+        color = mix(color, LATTE_SKY, 0.1 * fbm(uv * 3.0 + uTime * 0.03));
         return color;
       }
 
@@ -261,12 +179,20 @@
         return color;
       }
 
-      // 3: Latte - Ethereal Light
-      vec3 renderLatte(vec2 uv, vec2 mouseEffect, float scrollEffect) {
-        float f = fbm(uv * 1.5 + uTime * 0.05 + mouseEffect * 0.2 + vec2(0.0, scrollEffect * 0.1));
-        vec3 color = mix(LATTE_BASE, LATTE_SURFACE, f);
-        color = mix(color, LATTE_MAUVE, 0.15 * fbm(uv * 2.0 - uTime * 0.02));
-        color = mix(color, LATTE_SKY, 0.1 * fbm(uv * 3.0 + uTime * 0.03));
+      // 3: Mocha - Cosmic Starfield
+      vec3 renderMocha(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+        vec3 color = MOCHA_BASE;
+        vec2 st1 = uv * 2.0 + mouseEffect * 0.5 + vec2(0.0, scrollEffect * 0.4) + vec2(uTime * 0.04, uTime * 0.02);
+        vec2 ipos1 = floor(st1 * 20.0);
+        vec2 fpos1 = fract(st1 * 20.0);
+        float h1 = hash(ipos1);
+        if (h1 > 0.98) color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h1, distance(fpos1, vec2(0.5))));
+
+        vec2 st2 = uv * 4.0 + mouseEffect + vec2(0.0, scrollEffect * 0.8) + vec2(-uTime * 0.02, uTime * 0.01);
+        vec2 ipos2 = floor(st2 * 15.0);
+        vec2 fpos2 = fract(st2 * 15.0);
+        float h2 = hash(ipos2);
+        if (h2 > 0.99) color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, distance(fpos2, vec2(0.5))));
         return color;
       }
 
@@ -357,5 +283,3 @@
   initStarfield();
   document.addEventListener('astro:after-swap', initStarfield);
 </script>
-
-
