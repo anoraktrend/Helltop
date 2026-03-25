@@ -1,5 +1,5 @@
 {
-  "extends": "astro/tsconfigs/strictest",
+  "extends": "./node_modules/astro/tsconfigs/strictest.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
@@ -9,6 +9,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "outDir": "dist",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["@cloudflare/workers-types"],
     "baseUrl": ".",
