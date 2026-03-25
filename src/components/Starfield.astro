@@ -11,18 +11,13 @@
     height: 100%;
     z-index: -1;
     pointer-events: none;
-    background: #1e1e2e; /* Fallback for very old devices */
+    background: #1e1e2e;
   }
   
   #starfield {
     width: 100%;
     height: 100%;
     display: block;
-    opacity: 0;
-    transition: opacity 1s ease-in;
-  }
-
-  #starfield.ready {
     opacity: 1;
   }
 </style>
@@ -37,11 +32,32 @@
     }
   }
 
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+  let targetScrollY = 0;
+  let currentMouseX = 0;
+  let currentMouseY = 0;
+  let currentScrollY = 0;
+
+  function handleMouseMove(e: MouseEvent) {
+    targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    targetMouseY = (e.clientY / window.innerHeight) * 2 - 1;
+  }
+
+  function handleScroll() {
+    targetScrollY = window.scrollY;
+  }
+
+  // Set up listeners once
+  if (typeof window !== 'undefined') {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    // Initial scroll value
+    targetScrollY = currentScrollY = window.scrollY;
+  }
+
   function initStarfield() {
-    if (!isWebGLSupported()) {
-      console.log('WebGL not supported, falling back to static background');
-      return;
-    }
+    if (!isWebGLSupported()) return;
 
     const canvas = document.getElementById('starfield') as HTMLCanvasElement;
     if (!canvas) return;
@@ -60,6 +76,8 @@
       precision highp float;
       uniform vec2 uResolution;
       uniform float uTime;
+      uniform vec2 uMouse;
+      uniform float uScroll;
 
       float hash(vec2 p) {
         p = fract(p * vec2(123.34, 456.21));
@@ -73,30 +91,33 @@
         // Dark background matching mocha base
         vec3 color = vec3(0.117, 0.117, 0.180); // #1e1e2e
         
-        // Scrolling star field
+        // Interactive star field - Layer 1
         vec2 st = uv * 2.0;
-        st += vec2(uTime * 0.05, uTime * 0.02);
+        st += vec2(uMouse.x * 0.05, -uMouse.y * 0.05);
+        st.y += uScroll * 0.0002;
+        st += vec2(uTime * 0.005, uTime * 0.002);
         
         vec2 ipos = floor(st * 20.0);
         vec2 fpos = fract(st * 20.0);
         
         float h = hash(ipos);
         if (h > 0.98) {
-          float size = (h - 0.98) * 50.0;
-          float pulse = 0.5 + 0.5 * sin(uTime * 2.0 + h * 10.0);
           float dist = distance(fpos, vec2(0.5));
-          color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h, dist)) * pulse;
+          color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h, dist));
         }
 
-        // Layer 2
-        st = uv * 4.0 + vec2(-uTime * 0.03, uTime * 0.01);
+        // Interactive star field - Layer 2
+        st = uv * 4.0;
+        st += vec2(uMouse.x * 0.1, -uMouse.y * 0.1);
+        st.y += uScroll * 0.0004;
+        st += vec2(-uTime * 0.003, uTime * 0.001);
+        
         ipos = floor(st * 15.0);
         fpos = fract(st * 15.0);
         h = hash(ipos);
         if (h > 0.99) {
-          float pulse = 0.5 + 0.5 * sin(uTime * 3.0 + h * 20.0);
           float dist = distance(fpos, vec2(0.5));
-          color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, dist)) * pulse;
+          color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, dist));
         }
 
         gl_FragColor = vec4(color, 1.0);
@@ -130,6 +151,8 @@
     const positionAttributeLocation = gl.getAttribLocation(program, "aVertexPosition");
     const resolutionUniformLocation = gl.getUniformLocation(program, "uResolution");
     const timeUniformLocation = gl.getUniformLocation(program, "uTime");
+    const mouseUniformLocation = gl.getUniformLocation(program, "uMouse");
+    const scrollUniformLocation = gl.getUniformLocation(program, "uScroll");
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -152,7 +175,11 @@
     resize();
 
     function render(time: number) {
-      if (time > 0) canvas.classList.add('ready');
+      // Smooth lerping
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+      currentScrollY += (targetScrollY - currentScrollY) * 0.05;
+
       gl!.clearColor(0, 0, 0, 0);
       gl!.clear(gl!.COLOR_BUFFER_BIT);
 
@@ -163,6 +190,8 @@
 
       gl!.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
       gl!.uniform1f(timeUniformLocation, time * 0.001);
+      gl!.uniform2f(mouseUniformLocation, currentMouseX, currentMouseY);
+      gl!.uniform1f(scrollUniformLocation, currentScrollY);
 
       gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
       requestAnimationFrame(render);
@@ -175,3 +204,5 @@
   initStarfield();
   document.addEventListener('astro:after-swap', initStarfield);
 </script>
+
+
