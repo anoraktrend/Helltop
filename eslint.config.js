@@ -1,15 +1,18 @@
-let customConfig = [];
-let hasIgnoresFile = false;
-try {
-  require.resolve('./eslint.ignores.js');
-  hasIgnoresFile = true;
-} catch {
-  // eslint.ignores.js doesn't exist
-}
+import {createRequire} from 'module';
+const require = createRequire(import.meta.url);
+import ignores from './eslint.ignores.js';
 
-if (hasIgnoresFile) {
-  const ignores = require('./eslint.ignores.js');
-  customConfig = [{ignores}];
-}
+const gts = require('gts');
 
-module.exports = [...customConfig, ...require('gts')];
+export default [
+  {
+    ignores,
+  },
+  ...gts.map(config => ({
+    ...config,
+    languageOptions: {
+      ...config.languageOptions,
+      sourceType: 'module',
+    },
+  })),
+];

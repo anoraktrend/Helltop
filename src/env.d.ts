@@ -2,6 +2,6 @@
 
 declare namespace App {
   interface Locals {
-    cfContext: any;
+    cfContext: unknown;
   }
 }

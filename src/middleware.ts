@@ -1,4 +1,4 @@
-import { defineMiddleware } from "astro:middleware";
+import {defineMiddleware} from 'astro:middleware';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
