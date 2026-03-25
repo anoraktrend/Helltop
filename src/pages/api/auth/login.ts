@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
     });
 
     const url = new URL(request.url);
-    const redirectUri = `${url.origin}/api/auth/callback`;
+    const redirectUri = `${url.origin}/auth/oidc/callback`;
 
     // Build the authorization redirect URL
     const authUrl = new URL(authEndpoint);

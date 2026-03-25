@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
     const config = await configRes.json() as { token_endpoint: string };
     const tokenEndpoint = config.token_endpoint;
 
-    const redirectUri = `${url.origin}/api/auth/callback`;
+    const redirectUri = `${url.origin}/auth/oidc/callback`;
 
     // Exchange Authorization Code for Tokens
     const tokenParams = new URLSearchParams();
