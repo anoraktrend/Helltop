@@ -95,7 +95,7 @@
         vec2 st = uv * 2.0;
         st += vec2(uMouse.x * 0.05, -uMouse.y * 0.05);
         st.y += uScroll * 0.0002;
-        st += vec2(uTime * 0.005, uTime * 0.002);
+        st += vec2(uTime * 0.04, uTime * 0.02);
         
         vec2 ipos = floor(st * 20.0);
         vec2 fpos = fract(st * 20.0);
@@ -110,7 +110,7 @@
         st = uv * 4.0;
         st += vec2(uMouse.x * 0.1, -uMouse.y * 0.1);
         st.y += uScroll * 0.0004;
-        st += vec2(-uTime * 0.003, uTime * 0.001);
+        st += vec2(-uTime * 0.02, uTime * 0.01);
         
         ipos = floor(st * 15.0);
         fpos = fract(st * 15.0);
