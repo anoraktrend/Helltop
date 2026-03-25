@@ -24,7 +24,9 @@
 	},
 	"vars": {
 		"ENVIRONMENT": "production",
-		"ASTRO_DB_REMOTE_URL": "libsql://helltop-anoraktrend.aws-us-west-2.turso.io"
+		"ASTRO_DB_REMOTE_URL": "libsql://helltop-anoraktrend.aws-us-west-2.turso.io",
+		"AUTHELIA_ISSUER_URL": "https://auth.helltop.net",
+		"AUTHELIA_CLIENT_ID": "helltop"
 	},
 	"observability": {
 		"enabled": true
