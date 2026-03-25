@@ -11,9 +11,7 @@ import { Link } from 'astro-link';
 const sessionId = Astro.cookies.get('admin_session')?.value;
 let isLoggedIn = false;
 
-// @ts-ignore
-const runtime = Astro.locals.runtime;
-const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+const sessionKv = (env as any)?.SESSION;
 
 if (sessionId && sessionKv) {
   const isValid = await sessionKv.get(`session:${sessionId}`);
@@ -32,7 +30,7 @@ if (!isLoggedIn) {
 // Fetch Comments
 let allComments: any[] = [];
 try {
-  const db = getDb(runtime?.env);
+  const db = getDb();
   allComments = await db.select().from(comments).orderBy(desc(comments.publishedAt));
 } catch (error) {
   console.error("Failed to load comments in admin:", error);

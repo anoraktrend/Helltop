@@ -3,9 +3,9 @@ import * as schema from './schema';
 // @ts-ignore - cloudflare:workers is a virtual module provided by the adapter
 import { env } from 'cloudflare:workers';
 
-export function getDb(runtimeEnv?: any) {
-  // Try to get D1 from runtimeEnv (Astro.locals.runtime.env) or global env
-  const d1 = runtimeEnv?.DB || (env as any)?.DB;
+export function getDb() {
+  // In Astro v6 with @astrojs/cloudflare, we import env directly from 'cloudflare:workers'
+  const d1 = (env as any)?.DB;
   
   if (!d1) {
     if (import.meta.env.DEV) {

@@ -16,10 +16,9 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
     }
 
     // @ts-ignore
-    const runtime = locals.runtime;
-    const issuerUrl = runtime?.env?.AUTHELIA_ISSUER_URL || (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    const clientId = runtime?.env?.AUTHELIA_CLIENT_ID || (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
-    const clientSecret = runtime?.env?.AUTHELIA_CLIENT_SECRET || (env as any)?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
+    const issuerUrl = (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
+    const clientId = (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
+    const clientSecret = (env as any)?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
 
     if (!issuerUrl || !clientId || !clientSecret) {
       return new Response('Server misconfiguration: Check OIDC environment variables.', { status: 500 });
@@ -68,7 +67,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
     const sessionId = crypto.randomUUID();
     
     // @ts-ignore
-    const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+    const sessionKv = (env as any)?.SESSION;
     if (sessionKv) {
       // Set session expiration to 24 hours
       await sessionKv.put(`session:${sessionId}`, 'valid', { expirationTtl: 86400 });

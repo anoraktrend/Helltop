@@ -10,8 +10,7 @@ export const DELETE: APIRoute = async ({ params, cookies, locals }) => {
     let isAuthorized = false;
 
     // @ts-ignore
-    const runtime = locals.runtime;
-    const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+    const sessionKv = (env as any)?.SESSION;
 
     if (sessionId && sessionKv) {
       const isValid = await sessionKv.get(`session:${sessionId}`);
@@ -31,7 +30,7 @@ export const DELETE: APIRoute = async ({ params, cookies, locals }) => {
       return new Response(JSON.stringify({ error: 'Comment ID is required' }), { status: 400 });
     }
 
-    const db = getDb(runtime?.env);
+    const db = getDb();
     const commentId = parseInt(id, 10);
     
     if (isNaN(commentId)) {

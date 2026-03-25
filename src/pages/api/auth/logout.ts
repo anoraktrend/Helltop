@@ -7,8 +7,7 @@ export const POST: APIRoute = async ({ cookies, locals }) => {
     
     if (sessionId) {
       // @ts-ignore
-      const runtime = locals.runtime;
-      const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
+      const sessionKv = (env as any)?.SESSION;
       if (sessionKv) {
         await sessionKv.delete(`session:${sessionId}`);
       }

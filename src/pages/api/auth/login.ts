@@ -4,9 +4,8 @@ import { env } from 'cloudflare:workers';
 export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
   try {
     // @ts-ignore
-    const runtime = locals.runtime;
-    const issuerUrl = runtime?.env?.AUTHELIA_ISSUER_URL || (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    const clientId = runtime?.env?.AUTHELIA_CLIENT_ID || (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
+    const issuerUrl = (env as any)?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
+    const clientId = (env as any)?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
 
     if (!issuerUrl || !clientId) {
       return new Response('Server misconfiguration: OIDC variables missing. Please configure AUTHELIA_ISSUER_URL and AUTHELIA_CLIENT_ID.', { status: 500 });
