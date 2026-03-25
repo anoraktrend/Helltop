@@ -1,15 +1,14 @@
 import type {APIRoute} from 'astro';
-// @ts-expect-error - cloudflare:workers is a virtual module provided by the adapter
 import {env} from 'cloudflare:workers';
 
 export const GET: APIRoute = async ({request, cookies, redirect}) => {
   try {
     const issuerUrl =
-      (env as Record<string, string | undefined>)?.AUTHELIA_ISSUER_URL ||
-      import.meta.env.AUTHELIA_ISSUER_URL;
+      (env as unknown as Record<string, string | undefined>)
+        ?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
     const clientId =
-      (env as Record<string, string | undefined>)?.AUTHELIA_CLIENT_ID ||
-      import.meta.env.AUTHELIA_CLIENT_ID;
+      (env as unknown as Record<string, string | undefined>)
+        ?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
 
     if (!issuerUrl || !clientId) {
       return new Response(

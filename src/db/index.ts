@@ -1,11 +1,12 @@
 import {drizzle} from 'drizzle-orm/d1';
 import * as schema from './schema';
-// @ts-expect-error - cloudflare:workers is a virtual module provided by the adapter
 import {env} from 'cloudflare:workers';
 
 export function getDb() {
   // In Astro v6 with @astrojs/cloudflare, we import env directly from 'cloudflare:workers'
-  const d1 = (env as Record<string, unknown>)?.DB as D1Database | undefined;
+  const d1 = (env as unknown as Record<string, unknown>)?.DB as
+    | D1Database
+    | undefined;
 
   if (!d1) {
     if (import.meta.env.DEV) {
