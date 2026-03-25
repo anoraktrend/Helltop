@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import sanitizeHtml from 'sanitize-html';
 
 export async function GET(context: { site: URL }) {
-  const blog = await getCollection('blog', ({ data }) => {
+  const blog = await getCollection('blog', ({ data }: CollectionEntry<'blog'>) => {
     return data.draft !== true;
   });
 
