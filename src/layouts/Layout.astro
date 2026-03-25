@@ -5,6 +5,7 @@ import SocialLinks from '../components/SocialLinks.astro';
 import { Icon } from 'astro-icon/components';
 import StatusBadge from '../components/StatusBadge.astro';
 import { Link } from 'astro-link';
+import Starfield from '../components/Starfield.astro';
 
 interface Props {
 	title: string;
@@ -78,6 +79,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 
 </head>
 	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`}>
+		<Starfield />
 <nav aria-label="Main navigation" class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
 	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 	    <div class="flex justify-between h-16 items-center">

@@ -1,0 +1,156 @@
+<div class="starfield-container">
+  <canvas id="starfield"></canvas>
+</div>
+
+<style>
+  .starfield-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: transparent;
+  }
+  
+  #starfield {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+
+<script>
+  function initStarfield() {
+    const canvas = document.getElementById('starfield') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const gl = canvas.getContext('webgl');
+    if (!gl) return;
+
+    const vsSource = `
+      attribute vec4 aVertexPosition;
+      void main() {
+        gl_Position = aVertexPosition;
+      }
+    `;
+
+    const fsSource = `
+      precision highp float;
+      uniform vec2 uResolution;
+      uniform float uTime;
+
+      float hash(vec2 p) {
+        p = fract(p * vec2(123.34, 456.21));
+        p += dot(p, p + 45.32);
+        return fract(p.x * p.y);
+      }
+
+      void main() {
+        vec2 uv = (gl_FragCoord.xy - 0.5 * uResolution.xy) / min(uResolution.y, uResolution.x);
+        
+        // Dark background matching mocha base
+        vec3 color = vec3(0.117, 0.117, 0.180); // #1e1e2e
+        
+        // Scrolling star field
+        vec2 st = uv * 2.0;
+        st += vec2(uTime * 0.05, uTime * 0.02);
+        
+        vec2 ipos = floor(st * 20.0);
+        vec2 fpos = fract(st * 20.0);
+        
+        float h = hash(ipos);
+        if (h > 0.98) {
+          float size = (h - 0.98) * 50.0;
+          float pulse = 0.5 + 0.5 * sin(uTime * 2.0 + h * 10.0);
+          float dist = distance(fpos, vec2(0.5));
+          color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h, dist)) * pulse;
+        }
+
+        // Layer 2
+        st = uv * 4.0 + vec2(-uTime * 0.03, uTime * 0.01);
+        ipos = floor(st * 15.0);
+        fpos = fract(st * 15.0);
+        h = hash(ipos);
+        if (h > 0.99) {
+          float pulse = 0.5 + 0.5 * sin(uTime * 3.0 + h * 20.0);
+          float dist = distance(fpos, vec2(0.5));
+          color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, dist)) * pulse;
+        }
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+      const shader = gl.createShader(type);
+      if (!shader) return null;
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    }
+
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vertexShader || !fragmentShader) return;
+
+    const program = gl.createProgram();
+    if (!program) return;
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+
+    const positionAttributeLocation = gl.getAttribLocation(program, "aVertexPosition");
+    const resolutionUniformLocation = gl.getUniformLocation(program, "uResolution");
+    const timeUniformLocation = gl.getUniformLocation(program, "uTime");
+
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    const positions = [
+      -1.0,  1.0,
+       1.0,  1.0,
+      -1.0, -1.0,
+       1.0, -1.0,
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+    function resize() {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      gl!.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function render(time: number) {
+      gl!.clearColor(0, 0, 0, 0);
+      gl!.clear(gl!.COLOR_BUFFER_BIT);
+
+      gl!.useProgram(program);
+      gl!.enableVertexAttribArray(positionAttributeLocation);
+      gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
+      gl!.vertexAttribPointer(positionAttributeLocation, 2, gl!.FLOAT, false, 0, 0);
+
+      gl!.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+      gl!.uniform1f(timeUniformLocation, time * 0.001);
+
+      gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  // Initialize on load and on view transitions
+  initStarfield();
+  document.addEventListener('astro:after-swap', initStarfield);
+</script>
