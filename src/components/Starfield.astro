@@ -112,7 +112,7 @@
   let currentMouseX = 0;
   let currentMouseY = 0;
   let currentScrollY = 0;
-  let currentMode = 0.0; // 0: Mocha, 1: Frappe, 2: Macchiato, 3: Latte
+  let currentMode = 3.0; // 0: Latte, 1: Frappe, 2: Macchiato, 3: Mocha
 
   function handleMouseMove(e: MouseEvent) {
     targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
@@ -125,10 +125,10 @@
 
   function updateThemeMode() {
     const classes = document.documentElement.classList;
-    if (classes.contains('frappe')) currentMode = 1.0;
+    if (classes.contains('latte')) currentMode = 0.0;
+    else if (classes.contains('frappe')) currentMode = 1.0;
     else if (classes.contains('macchiato')) currentMode = 2.0;
-    else if (classes.contains('latte')) currentMode = 3.0;
-    else currentMode = 0.0; // Default to Mocha
+    else currentMode = 3.0; // Default to Mocha
   }
 
   if (typeof window !== 'undefined') {
@@ -276,10 +276,10 @@
         float scrollEffect = uScroll * 0.0005;
 
         vec3 color;
-        if (uMode < 0.5) color = renderMocha(uv, mouseEffect, scrollEffect);
+        if (uMode < 0.5) color = renderLatte(uv, mouseEffect, scrollEffect);
         else if (uMode < 1.5) color = renderFrappe(uv, mouseEffect, scrollEffect);
         else if (uMode < 2.5) color = renderMacchiato(uv, mouseEffect, scrollEffect);
-        else color = renderLatte(uv, mouseEffect, scrollEffect);
+        else color = renderMocha(uv, mouseEffect, scrollEffect);
 
         gl_FragColor = vec4(color, 1.0);
       }

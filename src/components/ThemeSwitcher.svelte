@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  type Flavor = 'mocha' | 'frappe' | 'macchiato' | 'latte';
-  const flavors: Flavor[] = ['mocha', 'frappe', 'macchiato', 'latte'];
+  type Flavor = 'latte' | 'frappe' | 'macchiato' | 'mocha';
+  const flavors: Flavor[] = ['latte', 'frappe', 'macchiato', 'mocha'];
   
   let currentFlavor: Flavor = $state('mocha');
 
