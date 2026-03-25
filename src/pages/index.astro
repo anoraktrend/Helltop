@@ -17,21 +17,21 @@ const { hero, sections } = home.data;
 
 <Layout title="Helltop | My Digital Rebellion">
   <!-- Hero Section -->
-  <section class="py-20 text-center">
-    <h1 class="text-5xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight">
+  <section class="py-12 sm:py-20 text-center px-4">
+    <h1 class="text-4xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight break-words">
       {hero.title}
     </h1>
 
-    <p class="text-2xl sm:text-3xl text-ctp-subtext1 mb-8 font-light italic">
+    <p class="text-xl sm:text-3xl text-ctp-subtext1 mb-8 font-light italic">
       {hero.subtitle}
     </p>
-    <p class="max-w-2xl mx-auto text-ctp-subtext0 leading-relaxed text-lg">
+    <p class="max-w-2xl mx-auto text-ctp-subtext0 leading-relaxed text-base sm:text-lg">
       {hero.description}
     </p>
   </section>
 
   <!-- Dynamic Sections -->
-  <div class="flex flex-col gap-32">
+  <div class="flex flex-col gap-20 sm:gap-32">
     {sections.map((section) => (
       <section id={section.id} class="scroll-mt-24">
         <div class="flex items-center gap-4 mb-12">

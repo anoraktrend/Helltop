@@ -78,12 +78,12 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 	}</script>
 
 </head>
-	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`}>
+	<body class="min-h-screen flex flex-col font-sans" aria-label={`Helltop - ${title}`} x-data="{ mobileMenuOpen: false }">
 		<Starfield />
 <nav aria-label="Main navigation" class="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 bg-ctp-base/80 border-b border-ctp-surface0">
 	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 	    <div class="flex justify-between h-16 items-center">
-	      <div class="flex items-center gap-8 text-ctp-overlay2">
+	      <div class="flex items-center gap-4 sm:gap-8 text-ctp-overlay2">
 		<Link href="/" class="text-xl font-bold text-ctp-mauve hover:text-ctp-pink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ctp-pink rounded" aria-label="Home">
 		  Helltop
 		</Link>
@@ -96,13 +96,49 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 		  </Link>
 		</div>
 	      </div>
-	      <div class="flex items-center gap-6 text-ctp-overlay2">
+	      <div class="flex items-center gap-3 sm:gap-6 text-ctp-overlay2">
 		<SocialLinks iconSize="5" spacing="4" class="hidden lg:flex" />
 		<div class="h-6 w-px bg-ctp-surface0 hidden md:block"></div>
 		<ThemeSwitcher client:load aria-label="Toggle dark mode" />
+                
+                <!-- Mobile Menu Button -->
+                <button 
+                  @click="mobileMenuOpen = !mobileMenuOpen" 
+                  class="sm:hidden p-2 text-ctp-mauve hover:bg-ctp-surface0 rounded-lg transition-colors focus:outline-none"
+                  aria-label="Toggle mobile menu"
+                >
+                  <Icon name="lucide:menu" x-show="!mobileMenuOpen" class="size-6" />
+                  <Icon name="lucide:x" x-show="mobileMenuOpen" class="size-6" style="display: none;" />
+                </button>
 	      </div>
 	    </div>
 	  </div>
+
+          <!-- Mobile Menu Overlay -->
+          <div 
+            x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-4"
+            class="sm:hidden bg-ctp-mantle border-b border-ctp-surface0"
+            style="display: none;"
+          >
+            <div class="px-4 pt-2 pb-6 space-y-1">
+              <Link href="/blog" class="block px-3 py-4 text-base font-bold text-ctp-text hover:text-ctp-mauve hover:bg-ctp-surface0 rounded-lg transition-all uppercase tracking-widest">
+                Blog
+              </Link>
+              <Link href="/about" class="block px-3 py-4 text-base font-bold text-ctp-text hover:text-ctp-mauve hover:bg-ctp-surface0 rounded-lg transition-all uppercase tracking-widest">
+                About
+              </Link>
+              <div class="pt-4 mt-4 border-t border-ctp-surface0">
+                <p class="px-3 text-xs font-black text-ctp-overlay1 uppercase tracking-widest mb-4">Social Transmissions</p>
+                <SocialLinks iconSize="6" spacing="6" class="px-3" />
+              </div>
+            </div>
+          </div>
 	</nav>
 
     <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
