@@ -68,7 +68,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect, locals }) => {
     const sessionId = crypto.randomUUID();
     
     // @ts-ignore
-    const sessionKv = (env as any)?.SESSION;
+    const sessionKv = runtime?.env?.SESSION || (env as any)?.SESSION;
     if (sessionKv) {
       // Set session expiration to 24 hours
       await sessionKv.put(`session:${sessionId}`, 'valid', { expirationTtl: 86400 });

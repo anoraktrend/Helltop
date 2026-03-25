@@ -31,7 +31,7 @@ export const DELETE: APIRoute = async ({ params, cookies, locals }) => {
       return new Response(JSON.stringify({ error: 'Comment ID is required' }), { status: 400 });
     }
 
-    const db = getDb();
+    const db = getDb(runtime?.env);
     const commentId = parseInt(id, 10);
     
     if (isNaN(commentId)) {

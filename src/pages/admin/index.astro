@@ -32,7 +32,7 @@ if (!isLoggedIn) {
 // Fetch Comments
 let allComments: any[] = [];
 try {
-  const db = getDb();
+  const db = getDb(runtime?.env);
   allComments = await db.select().from(comments).orderBy(desc(comments.publishedAt));
 } catch (error) {
   console.error("Failed to load comments in admin:", error);
@@ -78,7 +78,7 @@ try {
                     <span class="bg-ctp-surface0 px-2 py-1 rounded-md">{comment.author}</span>
                   </td>
                   <td class="px-6 py-4 font-mono text-xs text-ctp-mauve">
-                    <Link href={`/blog/${comment.postId}`} class="hover:text-ctp-pink transition-colors">
+                    <Link href={`/blog/${comment.postId}`} class="hover:text-ctp-pink transition-colors" target="_blank">
                       {comment.postId}
                     </Link>
                   </td>

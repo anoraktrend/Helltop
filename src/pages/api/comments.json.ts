@@ -3,9 +3,10 @@ import { getDb } from '../../db';
 import { comments } from '../../db/schema';
 import { eq, desc } from 'drizzle-orm';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    const db = getDb();
+    // @ts-ignore
+    const db = getDb(locals.runtime?.env);
     const body = await request.json();
     const { author, body: commentBody, post_id } = body;
     
@@ -28,9 +29,10 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-export const GET: APIRoute = async ({ request: _request }) => {
+export const GET: APIRoute = async ({ request: _request, locals }) => {
   try {
-    const db = getDb();
+    // @ts-ignore
+    const db = getDb(locals.runtime?.env);
     const url = new URL(_request.url);
     const postId = url.searchParams.get('postId');
 
