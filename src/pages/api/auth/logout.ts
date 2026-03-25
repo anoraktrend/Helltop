@@ -1,5 +1,4 @@
 import type {APIRoute} from 'astro';
-// @ts-expect-error - cloudflare:workers is a virtual module provided by the adapter
 import {env} from 'cloudflare:workers';
 
 export const POST: APIRoute = async ({cookies}) => {
@@ -7,7 +6,7 @@ export const POST: APIRoute = async ({cookies}) => {
     const sessionId = cookies.get('admin_session')?.value;
 
     if (sessionId) {
-      const sessionKv = (env as Record<string, KVNamespace | undefined>)
+      const sessionKv = (env as unknown as Record<string, KVNamespace | undefined>)
         ?.SESSION;
       if (sessionKv) {
         await sessionKv.delete(`session:${sessionId}`);

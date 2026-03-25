@@ -1,5 +1,4 @@
 import type {APIRoute} from 'astro';
-// @ts-expect-error - cloudflare:workers is a virtual module provided by the adapter
 import {env} from 'cloudflare:workers';
 
 interface OIDCConfig {
@@ -28,14 +27,14 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
     }
 
     const issuerUrl =
-      (env as Record<string, string | undefined>)?.AUTHELIA_ISSUER_URL ||
-      import.meta.env.AUTHELIA_ISSUER_URL;
+      (env as unknown as Record<string, string | undefined>)
+        ?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
     const clientId =
-      (env as Record<string, string | undefined>)?.AUTHELIA_CLIENT_ID ||
-      import.meta.env.AUTHELIA_CLIENT_ID;
+      (env as unknown as Record<string, string | undefined>)
+        ?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
     const clientSecret =
-      (env as Record<string, string | undefined>)?.AUTHELIA_CLIENT_SECRET ||
-      import.meta.env.AUTHELIA_CLIENT_SECRET;
+      (env as unknown as Record<string, string | undefined>)
+        ?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
 
     if (!issuerUrl || !clientId || !clientSecret) {
       return new Response(
@@ -90,7 +89,8 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
     // Create Local Session using Cloudflare KV
     const sessionId = crypto.randomUUID();
 
-    const sessionKv = (env as Record<string, KVNamespace | undefined>)?.SESSION;
+    const sessionKv = (env as unknown as Record<string, KVNamespace | undefined>)
+      ?.SESSION;
     if (sessionKv) {
       // Set session expiration to 24 hours
       await sessionKv.put(`session:${sessionId}`, 'valid', {

@@ -56,7 +56,6 @@ export const GET: APIRoute = async ({request: _request}) => {
       .orderBy(desc(comments.publishedAt));
 
     if (postId) {
-      // @ts-expect-error - drizzle query types can be complex
       query.where(eq(comments.postId, postId));
     }
 
