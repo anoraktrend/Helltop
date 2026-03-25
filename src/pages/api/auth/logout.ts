@@ -6,8 +6,9 @@ export const POST: APIRoute = async ({cookies}) => {
     const sessionId = cookies.get('admin_session')?.value;
 
     if (sessionId) {
-      const sessionKv = (env as unknown as Record<string, KVNamespace | undefined>)
-        ?.SESSION;
+      const sessionKv = (
+        env as unknown as Record<string, KVNamespace | undefined>
+      )?.SESSION;
       if (sessionKv) {
         await sessionKv.delete(`session:${sessionId}`);
       }

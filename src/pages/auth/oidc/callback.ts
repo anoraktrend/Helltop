@@ -89,8 +89,9 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
     // Create Local Session using Cloudflare KV
     const sessionId = crypto.randomUUID();
 
-    const sessionKv = (env as unknown as Record<string, KVNamespace | undefined>)
-      ?.SESSION;
+    const sessionKv = (
+      env as unknown as Record<string, KVNamespace | undefined>
+    )?.SESSION;
     if (sessionKv) {
       // Set session expiration to 24 hours
       await sessionKv.put(`session:${sessionId}`, 'valid', {

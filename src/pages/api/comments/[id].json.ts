@@ -9,8 +9,9 @@ export const DELETE: APIRoute = async ({params, cookies}) => {
     const sessionId = cookies.get('admin_session')?.value;
     let isAuthorized = false;
 
-    const sessionKv = (env as unknown as Record<string, KVNamespace | undefined>)
-      ?.SESSION;
+    const sessionKv = (
+      env as unknown as Record<string, KVNamespace | undefined>
+    )?.SESSION;
 
     if (sessionId && sessionKv) {
       const isValid = await sessionKv.get(`session:${sessionId}`);
