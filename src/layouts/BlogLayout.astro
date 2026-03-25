@@ -28,22 +28,28 @@ const { title, description, date, author, tags, readingTime, postId } = Astro.pr
 
   <div class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-16">
-      <!-- Main Content -->
-      <article class="lg:col-span-3 relative">
+      <!-- Main Content Container with Blur Shader -->
+      <article class="lg:col-span-3 relative group/content">
+        <!-- The "Blur Shader" Background (Expanded to cover header) -->
+        <div class="absolute -inset-4 sm:-inset-10 bg-ctp-base/60 backdrop-blur-3xl rounded-[3rem] border border-ctp-surface0/50 shadow-2xl -z-10 transition-all duration-500 group-hover/content:border-ctp-mauve/20 group-hover/content:bg-ctp-base/70"></div>
+
+        <!-- Header Bar -->
+        <div class="flex justify-between items-center mb-12 border-b border-ctp-surface0/30 pb-6">
+          <Link href="/blog" class="inline-flex items-center gap-2 px-4 py-2 bg-ctp-surface0/50 hover:bg-ctp-mauve text-ctp-subtext0 hover:text-ctp-base rounded-xl transition-all font-mono text-[10px] uppercase tracking-widest group/back border border-ctp-surface1/50 hover:border-ctp-mauve/50 shadow-sm">
+            <Icon name="lucide:arrow-left" class="size-3.5 group-hover/back:-translate-x-1 transition-transform" />
+            Back to Terminal
+          </Link>
+          <div class="flex items-center gap-3">
+            <span class="size-2 bg-ctp-green rounded-full animate-pulse shadow-[0_0_8px_rgba(166,227,161,0.5)]"></span>
+            <span class="font-mono text-[10px] text-ctp-overlay1 uppercase tracking-tighter">Connection Stable</span>
+          </div>
+        </div>
+
         <!-- Energetic Header -->
-        <header class="mb-20 relative group">
+        <header class="mb-16 relative group">
           <!-- Animated Background Glow -->
           <div class="absolute -top-32 -left-32 size-96 bg-ctp-mauve/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
           <div class="absolute top-0 -right-32 size-64 bg-ctp-pink/10 rounded-full blur-[100px] -z-10 animate-pulse delay-700"></div>
-          
-          <nav class="mb-12">
-            <Link href="/blog" class="inline-flex items-center gap-2 text-ctp-subtext0 hover:text-ctp-mauve transition-all font-mono text-xs uppercase tracking-[0.3em] group/back">
-              <span class="p-2 bg-ctp-surface0 rounded-lg group-hover/back:bg-ctp-mauve group-hover/back:text-ctp-base transition-colors">
-                <Icon name="lucide:arrow-left" class="size-4" />
-              </span>
-              Back to Terminal
-            </Link>
-          </nav>
           
           <div class="space-y-6">
             {tags && tags.length > 0 && (
@@ -70,7 +76,7 @@ const { title, description, date, author, tags, readingTime, postId } = Astro.pr
             )}
           </div>
 
-          <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-ctp-overlay1 font-mono text-[10px] uppercase tracking-[0.2em] border-t border-ctp-surface0 pt-8">
+          <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-ctp-overlay1 font-mono text-[10px] uppercase tracking-[0.2em] pt-8">
             {date && (
               <div class="flex items-center gap-3">
                 <Icon name="lucide:calendar" class="size-4 text-ctp-mauve" />
@@ -92,7 +98,7 @@ const { title, description, date, author, tags, readingTime, postId } = Astro.pr
           </div>
         </header>
 
-        <!-- Main Content with enhanced prose -->
+        <!-- Main Content -->
         <div class="prose prose-lg prose-invert max-w-none 
           prose-headings:tracking-tighter prose-headings:font-black
           prose-a:text-ctp-mauve prose-a:decoration-ctp-mauve/30 hover:prose-a:decoration-ctp-mauve prose-a:underline-offset-4
@@ -102,7 +108,10 @@ const { title, description, date, author, tags, readingTime, postId } = Astro.pr
           selection:bg-ctp-mauve selection:text-ctp-base">
           <slot />
         </div>
-        <Comments postId={postId} />
+
+        <div class="mt-24 border-t border-ctp-surface0/30 pt-12">
+          <Comments postId={postId} />
+        </div>
       </article>
 
       <!-- Sidebar -->
