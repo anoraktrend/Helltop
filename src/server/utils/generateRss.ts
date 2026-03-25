@@ -1,3 +1,4 @@
+import { glob } from 'astro/loaders'
 import RSS from 'rss'
 import fs from 'fs/promises'
 import path from 'path'
@@ -61,113 +62,45 @@ interface Post {
   tags?: string[]
   tag?: string
   author?: string
-  content_raw?: string
-  _path?: string
-  slug?: string
+  contentRaw?: string
+  path?: string
 }
 
 export async function generateRss() {
   const baseUrl = process.env.SITE_URL || 'https://helltop.net'
 
-  const feed = new RSS({
-    title: 'Helltop Blog',
-    description: 'Latest blog posts',
-    feed_url: `${baseUrl}/rss.xml`,
-    site_url: baseUrl,
-    language: 'en',
-    pubDate: new Date(),
-    custom_namespaces: {
-      atom: 'http://www.w3.org/2005/Atom'
-    },
-    custom_elements: [
-      { 'atom:link': { _attr: { href: `${baseUrl}/rss.xml`, rel: 'self', type: 'application/rss+xml' } } },
-      { lastBuildDate: new Date().toUTCString() }
-    ],
-  })
-
-  // Read markdown files directly from src/content/blog
-  const posts: Post[] = []
+  // Read MDX files directly and decode using gray-matter's frontmatter parsing
   try {
-    const contentDir = path.join(process.cwd(), 'src', 'content', 'blog')
-    const entries = await fs.readdir(contentDir)
-    const mdFiles = entries.filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
+    const blogPath = path.join(process.cwd(), 'src', 'content', 'blog')
+    const entries = await fs.readdir(blogPath, { withFileTypes: true })
+    const mdxFiles = entries.filter(e => e.isFile() && /\.(md|mdx)$/.test(e.name))
 
-    for (const file of mdFiles) {
-      const full = path.join(contentDir, file)
-      const txt = await fs.readFile(full, 'utf8')
-      const fm = parseFrontmatter(txt)
-      const slug = file.replace(/\.mdx?$/, '')
+    const posts: Post[] = []
+    for (const file of mdxFiles) {
+      const full = path.join(blogPath, file.name)
+      const content = await fs.readFile(full, 'utf8')
+      
+      // Parse frontmatter (MDX uses YAML frontmatter like MD files)
+      const firstSeparator = content.indexOf('---') + 3
+      const afterFrontmatterIdx = content.slice(firstSeparator).indexOf('\n') >= 0 
+        ? firstSeparator + afterFrontmatterIdx + 1
+        : firstSeparator
+      const bodyStart = content.indexOf('\n', afterFrontmatterIdx) + 1
+      
+      const frontmatterBlock = content.slice(0, bodyStart - firstSeparator).trim()
+      let body = content.slice(bodyStart).trim()
+      
+      // Convert markdown to HTML in body for MDX content
+      const md = new MarkdownIt({ html: true })
+      body = md.render(body)
+
+      const slug = file.name.replace(/\.(md|mdx)$/, '')
       posts.push({
-        title: fm.title,
-        description: fm.description || fm.excerpt || '',
-        date: fm.date,
-        draft: fm.draft as boolean | undefined,
-        tags: fm.tags as string[] | undefined,
-        _path: `/blog/${slug}`,
+        contentRaw: body,
+        path: `/blog/${slug}`,
         slug,
-        author: fm.author,
-        content_raw: stripFrontmatter(txt),
       })
-    }
-    // sort by date desc
-    posts.sort((a, b) => {
-      const dateA = a.date ? new Date(a.date).getTime() : 0
-      const dateB = b.date ? new Date(b.date).getTime() : 0
-      return dateB - dateA
-    })
-    console.log(`generateRss: loaded ${posts.length} posts from src/content/blog`)
-  } catch (err) {
-    console.warn('RSS: failed to read content files:', err)
-  }
-
-  const md = new MarkdownIt({ html: true })
-
-  for (const post of posts) {
-    if (post.draft) continue
-
-    const postPath = post._path || (post.slug ? `/blog/${post.slug}` : '/')
-    const postDate = post.date || post.publishedAt || post.createdAt
-
-    // Render markdown to HTML
-    const contentHtml = post.content_raw ? md.render(post.content_raw) : ''
-    const description = post.description || ''
-
-    const item: {
-      title: string
-      description: string
-      url: string
-      guid: string
-      date: Date
-      categories: string[]
-      author: string
-      custom_elements?: Array<{ 'content:encoded': { _cdata: string } }>
-    } = {
-      title: post.title || 'Untitled',
-      description,
-      url: `${baseUrl}${postPath}`,
-      guid: `${baseUrl}${postPath}`,
-      date: postDate ? new Date(postDate) : new Date(),
-      categories: Array.isArray(post.tags) ? post.tags : post.tag ? [post.tag] : [],
-      author: post.author || 'helltop.net',
-    }
-
-    // Add full content as content:encoded
-    if (contentHtml) {
-      item.custom_elements = [
-        { 'content:encoded': { _cdata: contentHtml } }
-      ]
-    }
-
-    feed.item(item)
-  }
-
-  const xml = feed.xml({ indent: true })
-
-  // Write to public/
-  const publicDir = path.join(process.cwd(), 'public')
-  await fs.mkdir(publicDir, { recursive: true })
-  await fs.writeFile(path.join(publicDir, 'rss.xml'), xml, 'utf8')
-  console.log('Generated rss.xml in public/')
-
-  return xml
-}
+      
+      // Parse frontmatter fields
+    } catch (err) {
+      if (frontmatterBlock) {
