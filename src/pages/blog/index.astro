@@ -24,11 +24,13 @@ const sortedPosts = validBlogPosts.sort((a, b) => {
         <article class="group flex flex-col bg-ctp-mantle border border-ctp-surface0 rounded-xl overflow-hidden hover:border-ctp-mauve transition-all hover:-translate-y-1 shadow-lg hover:shadow-ctp-mauve/10">
           <Link href={`/blog/${post.data.slug}`} class="flex flex-col h-full p-6">
             <div class="flex justify-between items-start mb-4">
-              {post.data.category && (
-                <span class="px-2 py-1 bg-ctp-surface0 text-ctp-mauve text-xs font-bold uppercase tracking-widest rounded border border-ctp-surface1">
-                  {post.data.category}
-                </span>
-              )}
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags && post.data.tags.map((tag) => (
+                  <span class="px-2 py-1 bg-ctp-surface0 text-ctp-mauve text-[10px] font-bold uppercase tracking-widest rounded border border-ctp-surface1">
+                    {tag}
+                  </span>
+                ))}
+              </div>
               {post.data.date && (
                 <time class="text-ctp-subtext0 font-mono text-xs ml-auto">
                   {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}

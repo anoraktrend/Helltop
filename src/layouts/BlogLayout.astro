@@ -10,12 +10,12 @@ interface Props {
   description?: string;
   date?: Date;
   author?: string;
-  category?: string;
+  tags?: string[];
   readingTime?: number;
   postId: string;
 }
 
-const { title, description, date, author, category, readingTime, postId } = Astro.props;
+const { title, description, date, author, tags, readingTime, postId } = Astro.props;
 ---
 
 <Layout title={`${title} | Helltop`} description={description}>
@@ -46,12 +46,16 @@ const { title, description, date, author, category, readingTime, postId } = Astr
           </nav>
           
           <div class="space-y-6">
-            {category && (
-              <div class="flex items-center gap-3">
-                <span class="h-px w-8 bg-ctp-mauve"></span>
-                <span class="text-ctp-mauve font-black uppercase text-xs tracking-[0.4em]">
-                  {category}
-                </span>
+            {tags && tags.length > 0 && (
+              <div class="flex flex-wrap items-center gap-4">
+                {tags.map((tag) => (
+                  <div class="flex items-center gap-3">
+                    <span class="h-px w-4 bg-ctp-mauve"></span>
+                    <span class="text-ctp-mauve font-black uppercase text-[10px] tracking-[0.4em]">
+                      {tag}
+                    </span>
+                  </div>
+                ))}
               </div>
             )}
             
