@@ -112,7 +112,7 @@
   let currentMouseX = 0;
   let currentMouseY = 0;
   let currentScrollY = 0;
-  let currentMode = 0.0; // 0 for Stars, 1 for Clouds
+  let currentMode = 0.0; // 0: Mocha, 1: Frappe, 2: Macchiato, 3: Latte
 
   function handleMouseMove(e: MouseEvent) {
     targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
@@ -124,11 +124,13 @@
   }
 
   function updateThemeMode() {
-    const isFrappe = document.documentElement.classList.contains('frappe') || document.documentElement.className === 'frappe';
-    currentMode = isFrappe ? 1.0 : 0.0;
+    const classes = document.documentElement.classList;
+    if (classes.contains('frappe')) currentMode = 1.0;
+    else if (classes.contains('macchiato')) currentMode = 2.0;
+    else if (classes.contains('latte')) currentMode = 3.0;
+    else currentMode = 0.0; // Default to Mocha
   }
 
-  // Set up listeners once
   if (typeof window !== 'undefined') {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
@@ -163,15 +165,25 @@
       uniform float uScroll;
       uniform float uMode;
 
-      // Catppuccin Mocha (Stars)
+      // Color Palettes
       const vec3 MOCHA_BASE = vec3(0.117, 0.117, 0.180);
       
-      // Catppuccin Frappe (Clouds)
-      const vec3 FRAPPE_BASE = vec3(0.188, 0.204, 0.275);     // #303446
-      const vec3 FRAPPE_SURFACE = vec3(0.255, 0.271, 0.349);  // #414559
-      const vec3 FRAPPE_MAUVE = vec3(0.792, 0.620, 0.902);    // #ca9ee6
-      const vec3 FRAPPE_LAVENDER = vec3(0.729, 0.733, 0.945); // #babbf1
+      const vec3 FRAPPE_BASE = vec3(0.188, 0.204, 0.275);
+      const vec3 FRAPPE_SURFACE = vec3(0.255, 0.271, 0.349);
+      const vec3 FRAPPE_MAUVE = vec3(0.792, 0.620, 0.902);
+      const vec3 FRAPPE_LAVENDER = vec3(0.729, 0.733, 0.945);
 
+      const vec3 MACCHIATO_BASE = vec3(0.141, 0.153, 0.227);
+      const vec3 MACCHIATO_SURFACE = vec3(0.212, 0.227, 0.310);
+      const vec3 MACCHIATO_MAUVE = vec3(0.776, 0.627, 0.965);
+      const vec3 MACCHIATO_PEACH = vec3(0.961, 0.663, 0.498);
+
+      const vec3 LATTE_BASE = vec3(0.937, 0.945, 0.961);
+      const vec3 LATTE_SURFACE = vec3(0.800, 0.816, 0.855);
+      const vec3 LATTE_MAUVE = vec3(0.533, 0.224, 0.937);
+      const vec3 LATTE_SKY = vec3(0.016, 0.647, 0.898);
+
+      // Noise functions
       float random(vec2 st) {
         return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
       }
@@ -205,48 +217,57 @@
         return fract(p.x * p.y);
       }
 
-      vec3 renderStars(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+      // 0: Mocha - Cosmic Starfield
+      vec3 renderMocha(vec2 uv, vec2 mouseEffect, float scrollEffect) {
         vec3 color = MOCHA_BASE;
-        
-        // Layer 1
-        vec2 st = uv * 2.0 + mouseEffect * 0.5 + vec2(0.0, scrollEffect * 0.4) + vec2(uTime * 0.04, uTime * 0.02);
-        vec2 ipos = floor(st * 20.0);
-        vec2 fpos = fract(st * 20.0);
-        float h = hash(ipos);
-        if (h > 0.98) {
-          float dist = distance(fpos, vec2(0.5));
-          color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h, dist));
-        }
+        vec2 st1 = uv * 2.0 + mouseEffect * 0.5 + vec2(0.0, scrollEffect * 0.4) + vec2(uTime * 0.04, uTime * 0.02);
+        vec2 ipos1 = floor(st1 * 20.0);
+        vec2 fpos1 = fract(st1 * 20.0);
+        float h1 = hash(ipos1);
+        if (h1 > 0.98) color += vec3(0.8, 0.7, 1.0) * (1.0 - smoothstep(0.0, 0.1 * h1, distance(fpos1, vec2(0.5))));
 
-        // Layer 2
-        st = uv * 4.0 + mouseEffect + vec2(0.0, scrollEffect * 0.8) + vec2(-uTime * 0.02, uTime * 0.01);
-        ipos = floor(st * 15.0);
-        fpos = fract(st * 15.0);
-        h = hash(ipos);
-        if (h > 0.99) {
-          float dist = distance(fpos, vec2(0.5));
-          color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, dist));
-        }
+        vec2 st2 = uv * 4.0 + mouseEffect + vec2(0.0, scrollEffect * 0.8) + vec2(-uTime * 0.02, uTime * 0.01);
+        vec2 ipos2 = floor(st2 * 15.0);
+        vec2 fpos2 = fract(st2 * 15.0);
+        float h2 = hash(ipos2);
+        if (h2 > 0.99) color += vec3(1.0, 0.8, 0.9) * (1.0 - smoothstep(0.0, 0.05, distance(fpos2, vec2(0.5))));
         return color;
       }
 
-      vec3 renderClouds(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+      // 1: Frappe - Drifting Clouds
+      vec3 renderFrappe(vec2 uv, vec2 mouseEffect, float scrollEffect) {
         vec2 st = uv * 3.0;
-        vec2 q = vec2(0.0);
-        q.x = fbm(st + 0.1 * uTime + mouseEffect);
-        q.y = fbm(st + vec2(1.0) + scrollEffect);
-
-        vec2 r = vec2(0.0);
-        r.x = fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * uTime + mouseEffect * 0.5);
-        r.y = fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * uTime + scrollEffect * 0.5);
-
+        vec2 q = vec2(fbm(st + 0.1 * uTime + mouseEffect), fbm(st + vec2(1.0) + scrollEffect));
+        vec2 r = vec2(fbm(st + 1.0 * q + vec2(1.7, 9.2) + 0.15 * uTime + mouseEffect * 0.5), 
+                      fbm(st + 1.0 * q + vec2(8.3, 2.8) + 0.126 * uTime + scrollEffect * 0.5));
         float f = fbm(st + r);
-
         vec3 color = mix(FRAPPE_BASE, FRAPPE_SURFACE, clamp((f * f) * 4.0, 0.0, 1.0));
         color = mix(color, FRAPPE_MAUVE, clamp(length(q), 0.0, 1.0) * 0.2);
         color = mix(color, FRAPPE_LAVENDER, clamp(length(r.x), 0.0, 1.0) * 0.1);
-
         return color * (f * f * f + 0.6 * f * f + 0.5 * f);
+      }
+
+      // 2: Macchiato - Fluid Swirls
+      vec3 renderMacchiato(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+        vec2 st = uv * 2.0;
+        for(int n = 1; n < 4; n++){
+          float i = float(n);
+          st += vec2(0.7 / i * sin(i * st.y + uTime + 0.3 * i) + 0.8 + mouseEffect.x, 
+                     0.4 / i * sin(i * st.x + uTime + 0.3 * i) + 1.6 + scrollEffect);
+        }
+        vec3 color = mix(MACCHIATO_BASE, MACCHIATO_SURFACE, 0.5 + 0.5 * sin(st.x + st.y));
+        color = mix(color, MACCHIATO_MAUVE, 0.3 * sin(uTime * 0.5));
+        color = mix(color, MACCHIATO_PEACH, 0.2 * cos(st.y + uTime));
+        return color;
+      }
+
+      // 3: Latte - Ethereal Light
+      vec3 renderLatte(vec2 uv, vec2 mouseEffect, float scrollEffect) {
+        float f = fbm(uv * 1.5 + uTime * 0.05 + mouseEffect * 0.2 + vec2(0.0, scrollEffect * 0.1));
+        vec3 color = mix(LATTE_BASE, LATTE_SURFACE, f);
+        color = mix(color, LATTE_MAUVE, 0.15 * fbm(uv * 2.0 - uTime * 0.02));
+        color = mix(color, LATTE_SKY, 0.1 * fbm(uv * 3.0 + uTime * 0.03));
+        return color;
       }
 
       void main() {
@@ -255,11 +276,10 @@
         float scrollEffect = uScroll * 0.0005;
 
         vec3 color;
-        if (uMode > 0.5) {
-          color = renderClouds(uv, mouseEffect, scrollEffect);
-        } else {
-          color = renderStars(uv, mouseEffect, scrollEffect);
-        }
+        if (uMode < 0.5) color = renderMocha(uv, mouseEffect, scrollEffect);
+        else if (uMode < 1.5) color = renderFrappe(uv, mouseEffect, scrollEffect);
+        else if (uMode < 2.5) color = renderMacchiato(uv, mouseEffect, scrollEffect);
+        else color = renderLatte(uv, mouseEffect, scrollEffect);
 
         gl_FragColor = vec4(color, 1.0);
       }
@@ -298,13 +318,7 @@
 
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    const positions = [
-      -1.0,  1.0,
-       1.0,  1.0,
-      -1.0, -1.0,
-       1.0, -1.0,
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,1, 1,1, -1,-1, 1,-1]), gl.STATIC_DRAW);
 
     function resize() {
       if (!canvas) return;
@@ -323,7 +337,6 @@
 
       gl!.clearColor(0, 0, 0, 0);
       gl!.clear(gl!.COLOR_BUFFER_BIT);
-
       gl!.useProgram(program);
       gl!.enableVertexAttribArray(positionAttributeLocation);
       gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
@@ -338,7 +351,6 @@
       gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
       requestAnimationFrame(render);
     }
-
     requestAnimationFrame(render);
   }
 
