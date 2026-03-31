@@ -17,89 +17,143 @@ const { hero, sections } = home.data;
 
 <Layout title="Helltop | My Digital Rebellion">
   <!-- Hero Section -->
-  <section class="py-12 sm:py-20 text-center px-4">
-    <h1 class="text-4xl sm:text-7xl font-bold text-ctp-mauve mb-6 tracking-tight break-words">
+  <section class="py-20 sm:py-32 text-center px-4 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[32rem] bg-tron-blue/10 rounded-full blur-[160px] -z-10 animate-pulse"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[20rem] border border-tron-blue/5 rounded-full -z-10"></div>
+    
+    <h1 class="text-5xl sm:text-8xl font-black text-white mb-8 tracking-tighter break-words tron-glow-text uppercase leading-none select-none">
       {hero.title}
     </h1>
 
-    <p class="text-xl sm:text-3xl text-ctp-subtext1 mb-8 font-light italic">
-      {hero.subtitle}
-    </p>
-    <p class="max-w-2xl mx-auto text-ctp-subtext0 leading-relaxed text-base sm:text-lg">
+    <div class="inline-block relative">
+      <p class="text-xl sm:text-3xl text-text-muted mb-10 font-light italic tracking-tight relative z-10">
+        {hero.subtitle}
+      </p>
+      <div class="absolute -bottom-2 left-0 w-full h-px bg-gradient-to-r from-transparent via-tron-orange/50 to-transparent shadow-[0_0_15px_rgba(245,194,231,0.5)]"></div>
+    </div>
+    
+    <p class="max-w-3xl mx-auto text-text-overlay leading-relaxed text-base sm:text-lg font-mono mt-10 bg-white/5 p-8 backdrop-blur-sm border border-white/5 rounded-2xl tracking-wide">
       {hero.description}
     </p>
   </section>
 
   <!-- Dynamic Sections -->
-  <div class="flex flex-col gap-20 sm:gap-32">
+  <div class="flex flex-col gap-32 sm:gap-48">
     {sections.map((section) => (
-      <section id={section.id} class="scroll-mt-24">
-        <div class="flex items-center gap-4 mb-12">
-          <h2 class="text-3xl font-bold text-ctp-mauve uppercase tracking-widest">{section.title}</h2>
+      <section id={section.id} class="scroll-mt-32 relative group/sec">
+        <!-- Section Header -->
+        <div class="flex items-center gap-8 mb-16">
+          <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_rgba(203,166,247,1)]"></div>
+          <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-[0.6em] tron-glow-text whitespace-nowrap">
+            {section.title}
+          </h2>
           {section.id === 'arsenal' && <SystemStatus />}
-          <div class="h-px bg-ctp-surface0 flex-grow"></div>
+          <div class="h-[1px] flex-grow bg-gradient-to-r from-tron-blue/30 to-transparent shadow-[0_0_10px_rgba(203,166,247,0.2)]"></div>
         </div>
 
         {section.type === 'text' && (
-          <div class="prose prose-invert max-w-none">
-            <p class="text-xl text-ctp-text mb-8 leading-relaxed font-mono">{section.content}</p>
+          <div class="space-y-16">
+            <div class="relative">
+              <div class="absolute -inset-4 bg-tron-blue/5 rounded-2xl blur-xl -z-10 opacity-0 group-hover/sec:opacity-100 transition-opacity duration-1000"></div>
+              <p class="text-xl sm:text-2xl text-text-main/90 leading-relaxed font-mono bg-ctp-mantle/40 backdrop-blur-md p-10 border-l-4 border-tron-blue shadow-[0_0_40px_rgba(0,0,0,0.3)] rounded-r-2xl">
+                {section.content}
+              </p>
+            </div>
+            
             {section.list && (
-              <div class="grid sm:grid-cols-2 gap-8">
+              <div class="grid sm:grid-cols-2 gap-10">
                 {section.list.map((item) => (
-                  <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0 hover:border-ctp-mauve/50 transition-colors">
-                    <h3 class="text-ctp-pink font-bold mb-2 uppercase text-sm tracking-widest">{item.title}</h3>
-                    <p class="text-ctp-subtext0 leading-relaxed">{item.text}</p>
+                  <div class="tron-card p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 group/card">
+                    <div class="flex items-center gap-3 mb-4">
+                      <div class="size-1.5 bg-ctp-pink rounded-full group-hover/card:bg-tron-blue group-hover/card:shadow-[0_0_8px_rgba(203,166,247,1)] transition-all"></div>
+                      <h3 class="text-ctp-pink font-black uppercase text-[10px] tracking-[0.5em] group-hover/card:text-tron-blue transition-all">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <p class="text-text-dim leading-relaxed text-xs group-hover/card:text-text-main transition-colors font-mono tracking-wider italic">
+                      {item.text}
+                    </p>
                   </div>
                 ))}
               </div>
             )}
+            
             {section.quote && (
-              <blockquote class="mt-12 border-l-4 border-ctp-mauve pl-6 italic text-2xl text-ctp-subtext1 font-mono">
-                "{section.quote}"
-              </blockquote>
+              <div class="relative group/quote">
+                <div class="absolute -inset-4 bg-tron-orange/5 rounded-full blur-3xl -z-10 opacity-50"></div>
+                <blockquote class="border-l-4 border-tron-orange pl-10 italic text-2xl sm:text-3xl text-text-dim font-mono bg-gradient-to-r from-tron-orange/10 to-transparent py-10 shadow-[0_0_50px_rgba(245,194,231,0.05)] rounded-r-[3rem]">
+                  <span class="text-tron-orange text-5xl absolute -top-2 -left-4 opacity-40">"</span>
+                  {section.quote}
+                </blockquote>
+              </div>
             )}
           </div>
         )}
 
         {section.type === 'infrastructure' && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {section.items?.filter(item => !!item).map((item) => (
-              <Link 
-                href={item.url} 
-                class="flex items-start gap-6 p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-mauve hover:shadow-lg hover:shadow-ctp-mauve/10 transition-all group"
-              >
-                <div class="p-4 bg-ctp-base rounded-lg text-ctp-mauve group-hover:text-ctp-pink transition-colors">
-                  <Icon name={item.icon} class="size-8" />
-                </div>
-                <div class="flex-grow">
-                  <div class="flex items-center justify-between gap-4 mb-1">
-                    <h3 class="text-xl font-bold text-ctp-text group-hover:text-ctp-mauve transition-colors">{item.name}</h3>
-                    <StatusBadge name={item.name} class="size-10" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {section.items?.filter(item => !!item).map((item) => {
+              const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
+              const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
+              const glowColor = isExternal ? 'rgba(245,194,231,0.6)' : 'rgba(203,166,247,0.6)';
+              return (
+                <Link 
+                  href={item.url} 
+                  aria-label={`Access infrastructure: ${item.name}`}
+                  class={`flex items-start gap-8 p-8 tron-card rounded-2xl border-${themeColor}/15 hover:border-${themeColor}/70 transition-all duration-700 group/item`}
+                >
+                  <div class={`p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_rgba(0,0,0,0.1)] group-hover:shadow-[0_0_25px_${glowColor}] group-hover:item:scale-110 transition-all duration-500`}>
+                    <Icon name={item.icon} class="size-10" />
                   </div>
-                  <p class="text-ctp-subtext0 text-sm leading-relaxed">{item.function}</p>
-                </div>
-              </Link>
-            ))}
+                  <div class="flex-grow pt-1">
+                    <div class="flex items-center justify-between gap-4 mb-3">
+                      <h3 class={`text-2xl font-black text-text-main group-hover/item:text-${themeColor} transition-colors uppercase tracking-tighter`}>
+                        {item.name}
+                      </h3>
+                      <StatusBadge name={item.name} class="size-12" />
+                    </div>
+                    <p class="text-text-overlay text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">
+                      {item.function}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
 
         {section.type === 'software' && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {section.items?.map((item) => (
-              <Link 
-                href={item.url} 
-                class="block p-6 bg-ctp-mantle rounded-xl border border-ctp-surface0 hover:border-ctp-pink hover:shadow-lg hover:shadow-ctp-pink/10 transition-all group"
-              >
-                <h3 class="text-xl font-bold text-ctp-mauve mb-2 group-hover:text-ctp-pink transition-colors font-mono">&gt; {item.name}</h3>
-                <p class="text-ctp-subtext0 leading-relaxed">{item.description}</p>
-              </Link>
-            ))}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {section.items?.map((item) => {
+              const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
+              const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
+              const glowColor = isExternal ? 'rgba(245,194,231,1)' : 'rgba(203,166,247,1)';
+              return (
+                <Link 
+                  href={item.url} 
+                  aria-label={`Open software: ${item.name}`}
+                  class={`block p-8 tron-card rounded-2xl border-${themeColor}/20 hover:border-${themeColor}/80 transition-all duration-700 group/soft`}
+                >
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class={`size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowColor}]`}></div>
+                    <h3 class={`text-2xl font-black text-text-main group-hover/soft:text-${themeColor} transition-all font-mono uppercase tracking-tighter`}>
+                      {item.name}
+                    </h3>
+                  </div>
+                  <p class="text-text-dim leading-relaxed text-xs group-hover/soft:text-text-muted transition-colors font-mono tracking-wide italic">
+                    {item.description}
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         )}
 
         {section.type === 'cta' && (
-          <div class="bg-ctp-mauve/10 border border-ctp-mauve/20 p-8 rounded-2xl text-center">
-            <p class="text-xl text-ctp-text mb-0" set:html={section.content}></p>
+          <div class="tron-card border-tron-blue/50 p-16 rounded-[3rem] text-center shadow-[0_0_60px_rgba(203,166,247,0.1)] relative overflow-hidden group/cta">
+            <div class="absolute inset-0 bg-gradient-to-b from-tron-blue/10 to-transparent"></div>
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-tron-blue to-transparent"></div>
+            <p class="text-2xl sm:text-3xl font-light italic text-text-muted mb-0 drop-shadow-xl relative z-10 font-mono tracking-tight group-hover/cta:scale-105 transition-transform duration-1000" set:html={section.content}></p>
           </div>
         )}
       </section>

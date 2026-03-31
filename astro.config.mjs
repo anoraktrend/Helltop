@@ -10,6 +10,7 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import remarkToc from 'remark-toc';
 import rehypePresetMinify from 'rehype-preset-minify';
+import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
   site: 'https://helltop.net/',
@@ -31,6 +32,14 @@ export default defineConfig({
     sitemap()
   ],
   vite: {
+    resolve: {
+      alias: {
+        debug: fileURLToPath(new URL('./src/utils/debug-mock.js', import.meta.url)),
+      },
+    },
+    ssr: {
+      noExternal: ['debug'],
+    },
     optimizeDeps: {
       exclude: ['@astrojs/audit', '@astrojs/toolbar', '@astrojs/xray', 'audit', 'toolbar', 'xray']
     },

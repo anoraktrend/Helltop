@@ -41,6 +41,7 @@
   onclick={nextFlavor}
   class="p-2 rounded-lg hover:bg-ctp-surface0 transition-colors flex items-center justify-center gap-2 text-xl"
   title="Switch Flavor"
+  aria-label="Switch theme flavor"
 >
   <span>{icons[currentFlavor]}</span>
   <span class="text-xs uppercase font-bold tracking-widest text-ctp-subtext0 hidden sm:inline">

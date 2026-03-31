@@ -23,37 +23,41 @@ try {
 ---
 
 <div>
-  <h2 class="text-3xl font-bold text-ctp-mauve mb-12 uppercase tracking-widest">COMMUNICATIONS</h2>
+  <div class="flex items-center gap-6 mb-16">
+    <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_rgba(203,166,247,1)] animate-pulse"></div>
+    <h2 class="text-3xl font-black text-text-main uppercase tracking-[0.5em] tron-glow-text">COMMUNICATIONS</h2>
+    <div class="h-px flex-grow bg-tron-blue/20"></div>
+  </div>
 
   <!-- Comment Form -->
-  <div class="bg-ctp-mantle p-8 rounded-2xl border border-ctp-surface0 mb-16 space-y-6">
-    <div class="space-y-2">
-      <label for="author" class="block text-sm font-bold text-ctp-subtext0 uppercase tracking-widest">Identity</label>
+  <div class="tron-card p-10 rounded-3xl border-tron-blue/10 mb-20 space-y-8 group/form">
+    <div class="space-y-3">
+      <label for="author" class="block text-[10px] font-black text-text-overlay uppercase tracking-[0.4em] px-2">Identity Signature</label>
       <input 
         type="text" 
         id="author" 
         name="author" 
         required 
-        placeholder="Digital Nomad"
-        class="w-full bg-ctp-base border border-ctp-surface0 rounded-lg px-4 py-3 text-ctp-text focus:border-ctp-mauve focus:ring-1 focus:ring-ctp-mauve outline-none transition-all font-mono"
+        placeholder="USER_ID"
+        class="w-full bg-ctp-crust/40 border border-tron-blue/20 rounded-xl px-6 py-4 text-text-main focus:border-tron-blue focus:ring-1 focus:ring-tron-blue/50 outline-none transition-all font-mono placeholder:text-text-overlay/30"
       />
     </div>
     
-    <div class="space-y-2">
-      <label for="body" class="block text-sm font-bold text-ctp-subtext0 uppercase tracking-widest">Transmission</label>
+    <div class="space-y-3">
+      <label for="body" class="block text-[10px] font-black text-text-overlay uppercase tracking-[0.4em] px-2">Transmission Data</label>
       <textarea 
         id="body" 
         name="body" 
         required 
         rows="4" 
-        placeholder="Enter your message here..."
-        class="w-full bg-ctp-base border border-ctp-surface0 rounded-lg px-4 py-3 text-ctp-text focus:border-ctp-mauve focus:ring-1 focus:ring-ctp-mauve outline-none transition-all font-mono"
+        placeholder="SECURE_TRANSMISSION_PROTOCOL_READY..."
+        class="w-full bg-ctp-crust/40 border border-tron-blue/20 rounded-xl px-6 py-4 text-text-main focus:border-tron-blue focus:ring-1 focus:ring-tron-blue/50 outline-none transition-all font-mono placeholder:text-text-overlay/30"
       ></textarea>
     </div>
 
     <button 
       id="submit-comment"
-      class="bg-ctp-mauve hover:bg-ctp-mauve/80 text-ctp-mantle font-bold py-3 px-6 rounded-lg transition-all font-mono uppercase tracking-widest"
+      class="w-full sm:w-auto bg-tron-blue/10 hover:bg-tron-blue/20 text-tron-blue border border-tron-blue/40 hover:border-tron-blue font-black py-4 px-10 rounded-xl transition-all font-mono uppercase tracking-[0.3em] shadow-[0_0_20px_rgba(203,166,247,0.1)] hover:shadow-[0_0_30px_rgba(203,166,247,0.3)] active:scale-95"
       data-postid={postId}
     >
       Transmit Message
@@ -61,23 +65,27 @@ try {
   </div>
 
   <!-- Comments List -->
-  <div class="space-y-12">
+  <div class="space-y-10">
     {initialComments.length === 0 ? (
-      <p class="text-ctp-subtext1 italic font-mono text-center py-8 bg-ctp-mantle rounded-xl border border-dashed border-ctp-surface0">
-        No transmissions received yet. Be the first to break the silence.
-      </p>
+      <div class="text-text-dim italic font-mono text-center py-16 bg-tron-blue/5 rounded-3xl border border-dashed border-tron-blue/20">
+        <p class="uppercase tracking-widest text-[10px] mb-2 opacity-50">Empty Node</p>
+        No transmissions received. Be the first to break the silence.
+      </div>
     ) : (
       initialComments.map((comment) => (
-        <div class="bg-ctp-mantle p-6 rounded-xl border border-ctp-surface0">
-          <div class="flex justify-between items-start mb-3">
-            <span class="bg-ctp-mauve text-ctp-mantle px-3 py-1 rounded-full text-sm font-mono uppercase tracking-widest">
-              {comment.author}
-            </span>
-            <span class="text-ctp-subtext1 text-sm font-mono">
-              {new Date(comment.publishedAt).toLocaleDateString()}
+        <div class="tron-card p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/30 transition-all duration-500">
+          <div class="flex justify-between items-center mb-6 border-b border-tron-blue/5 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="size-2 bg-tron-blue rounded-full shadow-[0_0_8px_rgba(203,166,247,0.8)]"></div>
+              <span class="text-tron-blue text-[11px] font-black uppercase tracking-[0.3em]">
+                {comment.author}
+              </span>
+            </div>
+            <span class="text-text-overlay text-[9px] font-mono uppercase tracking-widest">
+              {new Date(comment.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
             </span>
           </div>
-          <p class="text-ctp-text font-mono leading-relaxed">{comment.body}</p>
+          <p class="text-text-muted font-mono leading-relaxed text-sm tracking-wide">{comment.body}</p>
         </div>
       ))
     )}

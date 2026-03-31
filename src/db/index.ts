@@ -13,12 +13,27 @@ export function getDb() {
       console.warn(
         'D1 database binding "DB" not found. Comments will be disabled in local dev unless using wrangler.',
       );
-      // Return a proxy that handles common drizzle methods to prevent crashing
-      return {
-        select: () => ({from: () => ({where: () => ({orderBy: () => []})})}),
-        insert: () => ({values: () => ({returning: () => []})}),
-        delete: () => ({where: () => []}),
-      } as unknown as ReturnType<typeof drizzle>;
+      
+      // A more robust mock using Proxy to handle arbitrary chains and be thenable
+      const createMock = (data: any = []) => {
+        const mock: any = new Proxy(() => mock, {
+          get(target, prop) {
+            if (prop === 'then') {
+              return (resolve: any) => resolve(data);
+            }
+            if (prop === 'catch') {
+              return (reject: any) => {};
+            }
+            return mock;
+          },
+          apply() {
+            return mock;
+          }
+        });
+        return mock;
+      };
+
+      return createMock() as unknown as ReturnType<typeof drizzle>;
     }
     throw new Error('D1 database binding "DB" not found');
   }

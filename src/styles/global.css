@@ -6,95 +6,208 @@
 @import "@catppuccin/tailwindcss/macchiato.css";
 
 @theme {
-  --font-sans: 'Space Mono', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Space Mono', 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: 'Space Mono', 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Catppuccin Mocha Mappings for Tron: Legacy Fusion */
+  --color-tron-blue: #cba6f7;   /* Mauve - Primary Identity */
+  --color-tron-orange: #f5c2e7; /* Pink - Accent/Rinzler */
+  
+  /* Strictly following Catppuccin palette for surfaces */
+  --color-tron-black: var(--color-ctp-base);    /* #1e1e2e - Default Background */
+  --color-tron-surface: var(--color-ctp-mantle); /* #181825 - Secondary Surface */
+  --color-tron-crust: var(--color-ctp-crust);   /* #11111b - Deepest Surface */
+
+  /* Text theme variables */
+  --color-text-main: var(--color-ctp-text);
+  --color-text-muted: var(--color-ctp-subtext1);
+  --color-text-dim: var(--color-ctp-subtext0);
+  --color-text-overlay: var(--color-ctp-overlay1);
 }
 
 :root {
-  --highlight-color: var(--ctp-mauve);
+  --highlight-color: var(--color-tron-blue);
+  --grid-size: 80px;
 }
 
 body {
-  @apply bg-ctp-base text-ctp-text transition-colors duration-300;
+  @apply bg-ctp-base text-text-main transition-colors duration-300;
+  
+  /* The Grid - using Mauve with low opacity */
+  background-image: 
+    linear-gradient(to right, rgba(203, 166, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 166, 247, 0.08) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Selection following Catppuccin guide: Surface2 background */
+::selection {
+  background-color: #585b70; /* Mocha Surface2 */
+  color: #cdd6f4; /* Mocha Text */
+}
+
+/* Scanline / Grid Pulse Effect */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(203, 166, 247, 0.03) 50%,
+    transparent 100%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.3;
+}
+
+/* Horizontal Scanning Line */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  background: linear-gradient(to bottom, transparent, rgba(203, 166, 247, 0.05), transparent);
+  pointer-events: none;
+  z-index: 99;
+  animation: scan 8s linear infinite;
+}
+
+@keyframes scan {
+  from { transform: translateY(-100vh); }
+  to { transform: translateY(100vh); }
+}
+
+@layer components {
+  @keyframes pulse-x {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes flicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(203, 166, 247, 0.7)); }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(203, 166, 247, 0.2)); }
+  }
+
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .tron-border {
+    @apply border border-tron-blue/30 shadow-[0_0_15px_rgba(203,166,247,0.1)] hover:border-tron-blue/70 hover:shadow-[0_0_25px_rgba(203,166,247,0.3)] transition-all duration-500;
+  }
+  
+  .tron-glow-text {
+    @apply text-tron-blue font-black tracking-tighter uppercase;
+    animation: flicker 12s infinite;
+  }
+
+  .tron-orange-glow-text {
+    @apply text-tron-orange drop-shadow-[0_0_10px_rgba(245,194,231,0.7)] font-black tracking-tighter uppercase;
+  }
+
+  .tron-card {
+    @apply bg-ctp-mantle/60 backdrop-blur-2xl border border-tron-blue/15 shadow-[0_0_40px_rgba(0,0,0,0.3)] relative overflow-hidden transition-all duration-500;
+    background-image: radial-gradient(circle at top right, rgba(203, 166, 247, 0.05), transparent);
+  }
+
+  .tron-card::before {
+    content: "";
+    @apply absolute -inset-[100%] opacity-10 pointer-events-none;
+    background-image: 
+      linear-gradient(to right, rgba(203, 166, 247, 0.2) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(203, 166, 247, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .tron-card:hover {
+    @apply border-tron-blue/40 shadow-[0_0_50px_rgba(203,166,247,0.1)];
+  }
+
+  /* Identity Disc Style */
+  .identity-disc {
+    @apply size-24 rounded-full border-[6px] border-tron-blue shadow-[0_0_30px_rgba(203,166,247,0.4),inset_0_0_20px_rgba(203,166,247,0.4)] relative flex items-center justify-center bg-ctp-crust transition-transform duration-700;
+  }
+
+  .identity-disc::before {
+    content: "";
+    @apply absolute inset-1 rounded-full border border-tron-blue/30;
+    animation: rotate-slow 10s linear infinite;
+  }
 }
 
 .prose {
-  @apply max-w-none text-ctp-text;
-  --tw-prose-body: var(--ctp-text);
-  --tw-prose-headings: var(--ctp-mauve);
-  --tw-prose-lead: var(--ctp-subtext1);
-  --tw-prose-links: var(--ctp-blue);
-  --tw-prose-bold: var(--ctp-pink);
-  --tw-prose-counters: var(--ctp-rosewater);
-  --tw-prose-bullets: var(--ctp-mauve);
-  --tw-prose-hr: var(--ctp-surface0);
-  --tw-prose-quotes: var(--ctp-subtext0);
-  --tw-prose-quote-borders: var(--ctp-mauve);
-  --tw-prose-captions: var(--ctp-subtext1);
-  --tw-prose-kbd: var(--ctp-text);
-  --tw-prose-kbd-shadows: var(--ctp-surface0);
-  --tw-prose-code: var(--ctp-sky);
-  --tw-prose-pre-code: var(--ctp-text);
-  --tw-prose-pre-bg: var(--ctp-mantle);
-  --tw-prose-th-borders: var(--ctp-surface0);
-  --tw-prose-td-borders: var(--ctp-surface1);
+  @apply max-w-none text-text-main/90;
+  --tw-prose-body: var(--color-text-main);
+  --tw-prose-headings: var(--color-ctp-mauve);
+  --tw-prose-lead: var(--color-text-muted);
+  --tw-prose-links: var(--color-ctp-sky); /* Blue/Sky for links per guide */
+  --tw-prose-bold: var(--color-ctp-pink);
+  --tw-prose-counters: var(--color-ctp-rosewater);
+  --tw-prose-bullets: var(--color-ctp-mauve);
+  --tw-prose-hr: var(--color-ctp-surface0);
+  --tw-prose-quotes: var(--color-text-dim);
+  --tw-prose-quote-borders: var(--color-ctp-pink);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-kbd: var(--color-text-main);
+  --tw-prose-kbd-shadows: var(--color-ctp-surface0);
+  --tw-prose-code: var(--color-ctp-sky);
+  --tw-prose-pre-code: var(--color-text-main);
+  --tw-prose-pre-bg: var(--color-tron-crust);
+  --tw-prose-th-borders: var(--color-ctp-surface0);
+  --tw-prose-td-borders: var(--color-ctp-surface1);
 }
 
-.prose h1 {
-  @apply text-4xl sm:text-5xl tracking-tight font-bold mb-8 mt-16 text-ctp-mauve;
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply font-black tracking-tighter uppercase;
 }
 
-.prose h2 {
-  @apply text-3xl sm:text-4xl tracking-tight font-bold mb-6 mt-12 text-ctp-mauve;
-}
-
-.prose h3 {
-  @apply text-2xl sm:text-3xl tracking-tight font-bold mb-4 mt-10 text-ctp-pink;
-}
-
-.prose h4 {
-  @apply text-xl sm:text-2xl tracking-tight font-bold mb-4 mt-8 text-ctp-pink;
-}
-
-.prose h5 {
-  @apply text-lg sm:text-xl tracking-tight font-bold mb-2 mt-6 text-ctp-maroon;
-}
-
-.prose h6 {
-  @apply text-base sm:text-lg tracking-tight font-bold mb-2 mt-4 text-ctp-maroon uppercase tracking-widest;
-}
+.prose h1 { @apply text-4xl sm:text-6xl mb-12 mt-20 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]; }
+.prose h2 { @apply text-3xl sm:text-4xl mb-8 mt-16 text-ctp-mauve border-l-4 border-tron-blue pl-6; }
+.prose h3 { @apply text-2xl sm:text-3xl mb-6 mt-12 text-ctp-pink border-l-4 border-tron-orange pl-6; }
 
 .prose a {
-  @apply no-underline hover:underline transition-colors;
+  @apply no-underline transition-all duration-300 relative inline-block text-ctp-sky;
+}
+
+.prose a:hover {
+  @apply text-ctp-mauve;
+  text-shadow: 0 0 12px rgba(203, 166, 247, 0.8);
 }
 
 .prose pre {
-  @apply rounded-2xl border border-ctp-surface0 shadow-lg !bg-ctp-mantle p-4;
+  @apply rounded-2xl border border-tron-blue/20 shadow-2xl !bg-ctp-crust/80 backdrop-blur-md p-6 my-10;
 }
 
-/* Catppuccin Prism Colors */
-.token.keyword, .token.prolog, .token.doctype, .token.atrule { color: var(--ctp-mauve); }
-.token.builtin, .token.entity { color: var(--ctp-red); }
-.token.class-name, .token.symbol, .token.attr-name, .token.namespace { color: var(--ctp-yellow); }
-.token.function, .token.property, .token.tag, .token.selector { color: var(--ctp-blue); }
-.token.boolean, .token.number, .token.constant { color: var(--ctp-peach); }
-.token.string, .token.char, .token.url, .token.attr-value, .token.inserted { color: var(--ctp-green); }
-.token.regex { color: var(--ctp-pink); }
-.token.operator { color: var(--ctp-sky); }
-.token.variable { color: var(--ctp-text); }
-.token.punctuation, .token.comment { color: var(--ctp-overlay2); }
-.token.cdata { color: var(--ctp-teal); }
-.token.deleted { color: var(--ctp-red); }
-.token.important, .token.bold { font-weight: bold; }
-.token.italic { font-style: italic; }
+/* Catppuccin Prism Colors with Tron Glow */
+.token.keyword, .token.prolog, .token.doctype, .token.atrule { color: var(--color-ctp-mauve); text-shadow: 0 0 5px var(--color-ctp-mauve); }
+.token.builtin, .token.entity { color: var(--color-ctp-red); }
+.token.class-name, .token.symbol, .token.attr-name, .token.namespace { color: var(--color-ctp-yellow); }
+.token.function, .token.property, .token.tag, .token.selector { color: var(--color-ctp-blue); text-shadow: 0 0 5px var(--color-ctp-blue); }
+.token.boolean, .token.number, .token.constant { color: var(--color-ctp-peach); text-shadow: 0 0 5px var(--color-ctp-peach); }
+.token.string, .token.char, .token.url, .token.attr-value, .token.inserted { color: var(--color-ctp-green); }
+.token.regex { color: var(--color-ctp-pink); }
+.token.operator { color: var(--color-ctp-sky); }
+.token.variable { color: var(--color-ctp-text); }
+.token.punctuation, .token.comment { color: var(--color-ctp-overlay2); }
 
 .prose code:not(pre code) {
-  @apply bg-ctp-surface0 px-1.5 py-0.5 rounded-md font-mono text-sm;
+  @apply bg-ctp-surface0 text-ctp-sky px-2 py-0.5 rounded border border-ctp-surface1 font-mono text-sm;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-ctp-mauve bg-ctp-mantle/50 py-2 px-6 rounded-r-xl italic;
+  @apply border-l-4 border-ctp-pink bg-ctp-pink/5 py-4 px-8 rounded-r-2xl italic my-10 text-white/80;
 }
 
 .prose img {
-  @apply rounded-2xl border border-ctp-surface0 shadow-2xl mx-auto my-12;
+  @apply rounded-3xl border border-tron-blue/30 shadow-[0_0_50px_rgba(203,166,247,0.15)] mx-auto my-16 transition-transform duration-700 hover:scale-[1.02];
 }

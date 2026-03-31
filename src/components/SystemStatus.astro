@@ -6,7 +6,15 @@ let stats = { up: 0, total: 0 };
 let error = false;
 
 try {
-  const res = await fetch('https://status.helltop.net/api/status');
+  // Use a timeout to prevent hanging the worker if the status service is slow
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 2000);
+  
+  const res = await fetch('https://status.helltop.net/api/status', {
+    signal: controller.signal
+  });
+  clearTimeout(timeoutId);
+
   if (res.ok) {
     const data = await res.json() as any;
     stats.total = data.services.length;
@@ -15,7 +23,7 @@ try {
     error = true;
   }
 } catch (e) {
-  console.error('Failed to fetch status stats', e);
+  console.error('Failed to fetch status stats:', e);
   error = true;
 }
 
@@ -25,21 +33,22 @@ const isPartiallyDown = stats.up < stats.total && stats.up > 0;
 
 <Link 
   href="https://status.helltop.net" 
-  class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle border border-ctp-surface0 rounded-full hover:border-ctp-mauve hover:shadow-lg hover:shadow-ctp-mauve/5 transition-all group"
+  aria-label={`System Status: ${isAllUp ? 'All systems online' : stats.total - stats.up + ' nodes critical'}`}
+  class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_rgba(203,166,247,0.15)] transition-all group"
 >
   <div class="relative flex items-center justify-center">
     <StatusBadge name="all" class="size-5" />
     {!error && stats.total > 0 && (
       <div class:list={[
         "absolute inset-0 rounded-full animate-ping opacity-40",
-        isAllUp ? "bg-green-500" : "bg-red-500"
+        isAllUp ? "bg-tron-blue" : "bg-tron-orange"
       ]}></div>
     )}
   </div>
   
   <div class="flex flex-col items-start leading-tight">
-    <span class="text-[9px] font-black text-ctp-overlay1 uppercase tracking-[0.25em]">Network Status</span>
-    <span class="text-xs font-bold text-ctp-subtext1 group-hover:text-ctp-mauve transition-colors uppercase tracking-widest mt-0.5">
+    <span class="text-[9px] font-black text-text-overlay uppercase tracking-[0.3em]">Network Status</span>
+    <span class="text-[10px] font-bold text-text-muted group-hover:text-tron-blue transition-colors uppercase tracking-[0.2em] mt-0.5">
       {error ? (
         "Status Offline"
       ) : stats.total === 0 ? (
@@ -47,17 +56,17 @@ const isPartiallyDown = stats.up < stats.total && stats.up > 0;
       ) : isAllUp ? (
         "All Systems Go"
       ) : isPartiallyDown ? (
-        <span class="text-ctp-yellow">{stats.total - stats.up} Nodes Critical</span>
+        <span class="text-tron-orange">{stats.total - stats.up} Nodes Critical</span>
       ) : (
-        <span class="text-ctp-red">Total Outage</span>
+        <span class="text-tron-orange">Total Outage</span>
       )}
     </span>
   </div>
 
-  <div class="h-4 w-px bg-ctp-surface1 mx-1"></div>
+  <div class="h-4 w-px bg-tron-blue/20 mx-1"></div>
   
   <div class="flex items-center gap-1.5">
-    <span class="text-[10px] font-mono text-ctp-mauve">{stats.up}/{stats.total}</span>
-    <span class="text-[8px] font-bold text-ctp-overlay0 uppercase tracking-tighter">Online</span>
+    <span class="text-[10px] font-mono text-tron-blue">{stats.up}/{stats.total}</span>
+    <span class="text-[8px] font-bold text-text-overlay uppercase tracking-widest">Active</span>
   </div>
 </Link>

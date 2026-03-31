@@ -1,70 +1,90 @@
 ---
+import { getEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
 
 interface Props {
-  author?: string | undefined;
+  authorSlug?: string | undefined;
 }
 
-const { author = "Lucy Ada Randall" } = Astro.props;
+const { authorSlug = "me" } = Astro.props;
+const author = await getEntry('authors', authorSlug);
+
+if (!author) {
+  throw new Error(`Author "${authorSlug}" not found in "authors" collection`);
+}
+
+const { data } = author;
 ---
 
-<div class="sticky top-24 space-y-12">
+<div class="sticky top-24 space-y-16">
   <!-- Author Bio Card -->
   <div class="relative group">
-    <div class="absolute -inset-1 bg-gradient-to-r from-ctp-mauve to-ctp-pink rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-    <div class="relative p-8 bg-ctp-crust rounded-2xl border border-ctp-surface0 shadow-2xl">
-      <div class="flex flex-col items-center text-center space-y-4">
-        <div class="size-20 bg-ctp-base rounded-2xl border border-ctp-surface1 flex items-center justify-center text-ctp-mauve shadow-inner group-hover:scale-110 transition-transform duration-500">
-          <Icon name="lucide:user" class="size-10 stroke-[1.5]" />
+    <div class="absolute -inset-2 bg-tron-blue/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+    <div class="relative p-10 tron-card rounded-3xl border-tron-blue/20 shadow-2xl">
+      <div class="flex flex-col items-center text-center space-y-6">
+        <div class="relative group/avatar">
+          <div class="absolute -inset-1 bg-tron-blue/40 rounded-full blur-md opacity-0 group-hover/avatar:opacity-100 transition-opacity"></div>
+          <div class="identity-disc size-28 shadow-[0_0_30px_rgba(203,166,247,0.3)] group-hover:scale-105 transition-transform duration-700 relative overflow-hidden bg-ctp-crust border-2 border-tron-blue/50">
+            <img 
+              src="/uploads/Author.png" 
+              alt={`${data.name} ${data.surname} - Digital Nomad`} 
+              class="size-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+            />
+          </div>
         </div>
         <div>
-          <h3 class="text-xl font-black text-ctp-text tracking-tight uppercase">{author}</h3>
-          <p class="text-xs font-mono text-ctp-mauve uppercase tracking-[0.2em] mt-1">System Architect</p>
+          <h3 class="text-xl font-black text-white tracking-tight uppercase tron-glow-text">{data.name} {data.surname}</h3>
+          <p class="text-[10px] font-mono text-tron-blue uppercase tracking-[0.4em] mt-2">System Architect</p>
         </div>
-        <p class="text-sm text-ctp-subtext0 leading-relaxed font-light italic">
-          Building alternatives to the surveillance state one commit at a time. Corporate tech heretic.
+        <p class="text-sm text-text-muted leading-relaxed font-light italic font-mono">
+          {data.sub_role}
         </p>
       </div>
     </div>
   </div>
 
   <!-- Terminal Info -->
-  <div class="space-y-6">
-    <h4 class="text-[10px] font-black text-ctp-overlay1 uppercase tracking-[0.3em] px-2 flex items-center gap-2">
-      <span class="size-1.5 bg-ctp-mauve rounded-full animate-pulse"></span>
+  <div class="space-y-8">
+    <h4 class="text-[10px] font-black text-text-overlay uppercase tracking-[0.5em] px-4 flex items-center gap-3">
+      <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_10px_rgba(203,166,247,1)]"></span>
       Mission Brief
     </h4>
-    <div class="p-6 bg-ctp-mantle/50 rounded-xl border border-ctp-surface0 space-y-4">
-      <ul class="space-y-3 text-[11px] font-mono text-ctp-subtext1 uppercase tracking-wider">
-        <li class="flex items-start gap-3 group/item">
-          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">01.</span>
-          <span>Self-host everything</span>
-        </li>
-        <li class="flex items-start gap-3 group/item">
-          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">02.</span>
-          <span>Open source exclusively</span>
-        </li>
-        <li class="flex items-start gap-3 group/item">
-          <span class="text-ctp-pink group-hover/item:text-ctp-mauve transition-colors">03.</span>
-          <span>Weaponize self-reliance</span>
-        </li>
+    <div class="p-8 tron-card rounded-2xl border-tron-blue/10 space-y-6">
+      <ul class="space-y-5 text-[10px] font-mono text-text-dim tracking-widest">
+        {data.manifesto.map((item) => (
+          <li class="flex items-start gap-4 group/item">
+            <span class="text-tron-blue group-hover/item:tron-glow-text transition-all font-black uppercase">{item.slice(0, 3)}</span>
+            <span class="group-hover/item:text-text-main transition-colors leading-relaxed">{item.slice(4)}</span>
+          </li>
+        ))}
       </ul>
     </div>
   </div>
 
   <!-- Links -->
-  <div class="space-y-4">
-    <h4 class="text-[10px] font-black text-ctp-overlay1 uppercase tracking-[0.3em] px-2">Encrypted Comms</h4>
-    <div class="flex flex-col gap-2">
-      <Link href="mailto:lucyrandall@helltop.net" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
-        <Icon name="lucide:mail" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
-        <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">E-Mail</span>
-      </Link>
-      <Link href="https://github.com/anoraktrend" class="p-4 bg-ctp-mantle/30 hover:bg-ctp-surface0/50 border border-ctp-surface0 rounded-xl transition-all flex items-center gap-4 group">
-        <Icon name="simple-icons:github" class="size-4 text-ctp-pink group-hover:text-ctp-mauve transition-colors" />
-        <span class="text-[10px] font-mono uppercase tracking-widest text-ctp-subtext1">GitHub</span>
-      </Link>
+  <div class="space-y-6">
+    <h4 class="text-[10px] font-black text-text-overlay uppercase tracking-[0.5em] px-4">Identity Verification</h4>
+    <div class="flex flex-col gap-3">
+      {data.links.map((link) => {
+        const isExternal = !link.url.startsWith('mailto:') && !link.url.startsWith('/') && !link.url.includes('helltop.net');
+        const linkName = link.url.startsWith('mailto:') ? 'E-Mail' : (link.url.includes('github.com') ? 'GitHub' : link.name);
+        const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
+        const glowColor = isExternal ? 'rgba(245,194,231,0.5)' : 'rgba(203,166,247,0.5)';
+        
+        return (
+          <Link 
+            href={link.url} 
+            aria-label={`Verify identity via ${linkName}`}
+            class={`p-5 tron-card hover:bg-${themeColor}/5 border-${themeColor}/10 hover:border-${themeColor}/60 rounded-2xl transition-all flex items-center gap-5 group`}
+          >
+            <Icon name={link.icon} class={`size-5 text-${themeColor} group-hover:scale-110 transition-all drop-shadow-[0_0_8px_${glowColor}]`} />
+            <span class={`text-[10px] font-mono uppercase tracking-[0.3em] text-text-overlay group-hover:text-${themeColor} transition-colors`}>
+              {linkName}
+            </span>
+          </Link>
+        );
+      })}
     </div>
   </div>
 </div>

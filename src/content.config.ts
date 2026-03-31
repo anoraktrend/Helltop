@@ -1,4 +1,4 @@
-import {defineCollection} from 'astro:content';
+import {defineCollection, reference} from 'astro:content';
 import {z} from 'astro/zod';
 import {glob} from 'astro/loaders';
 
@@ -8,7 +8,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     date: z.coerce.date().optional(),
-    author: z.string().optional(),
+    author: reference('authors').optional(),
     tags: z.array(z.string()).default([]),
     slug: z.string(),
     layout: z.string().optional(),
@@ -50,4 +50,35 @@ const homepage = defineCollection({
   }),
 });
 
-export const collections = {blog, homepage};
+const authors = defineCollection({
+  loader: glob({pattern: '**/me.mdx', base: 'src/content/authors'}),
+  schema: z.object({
+    name: z.string(),
+    surname: z.string(),
+    role: z.string(),
+    sub_role: z.string(),
+    short_bio: z.string(),
+    battlegrounds: z.array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+      }),
+    ),
+    manifesto: z.array(z.string()),
+    links: z.array(
+      z.object({
+        name: z.string(),
+        url: z.string(),
+        icon: z.string(),
+      }),
+    ),
+    cta: z.object({
+      title: z.string(),
+      description: z.string(),
+      button_text: z.string(),
+      email: z.string(),
+    }),
+  }),
+});
+
+export const collections = {blog, homepage, authors};

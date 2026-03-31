@@ -24,7 +24,8 @@ const socials = [
     <Link
       href={social.url}
       title={social.name}
-      class="hover:text-ctp-mauve transition-colors"
+      aria-label={social.name}
+      class="text-text-dim hover:text-tron-orange transition-all hover:scale-125 drop-shadow-[0_0_8px_rgba(245,194,231,0.3)]"
     >
       <Icon name={social.icon} class={`size-${iconSize}`} />
     </Link>
