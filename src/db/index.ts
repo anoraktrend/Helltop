@@ -17,12 +17,12 @@ export function getDb() {
       // A more robust mock using Proxy to handle arbitrary chains and be thenable
       const createMock = (data: any = []) => {
         const mock: any = new Proxy(() => mock, {
-          get(target, prop) {
+          get(_target, prop) {
             if (prop === 'then') {
               return (resolve: any) => resolve(data);
             }
             if (prop === 'catch') {
-              return (reject: any) => {};
+              return (_reject: any) => {};
             }
             return mock;
           },
