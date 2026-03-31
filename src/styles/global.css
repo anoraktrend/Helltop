@@ -171,7 +171,7 @@ body::after {
   @apply font-black tracking-tighter uppercase;
 }
 
-.prose h1 { @apply text-4xl sm:text-6xl mb-12 mt-20 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]; }
+.prose h1 { @apply text-4xl sm:text-6xl mb-12 mt-20 text-text-main drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]; }
 .prose h2 { @apply text-3xl sm:text-4xl mb-8 mt-16 text-ctp-mauve border-l-4 border-tron-blue pl-6; }
 .prose h3 { @apply text-2xl sm:text-3xl mb-6 mt-12 text-ctp-pink border-l-4 border-tron-orange pl-6; }
 
@@ -205,7 +205,7 @@ body::after {
 }
 
 .prose blockquote {
-  @apply border-l-4 border-ctp-pink bg-ctp-pink/5 py-4 px-8 rounded-r-2xl italic my-10 text-white/80;
+  @apply border-l-4 border-ctp-pink bg-ctp-pink/5 py-4 px-8 rounded-r-2xl italic my-10 text-text-muted;
 }
 
 .prose img {
