@@ -31,11 +31,13 @@ export const POST: APIRoute = async ({request}) => {
       );
     }
 
+    const parentId = parent_id ? parseInt(String(parent_id), 10) : null;
+
     await db.insert(comments).values({
       author,
       body: commentBody,
       postId: post_id,
-      parentId: parent_id,
+      parentId: isNaN(Number(parentId)) ? null : parentId,
       publishedAt: new Date(),
     });
 
