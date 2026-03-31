@@ -15,6 +15,13 @@
       "when": 1774098401020,
       "tag": "0001_perpetual_ikaris",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1774998594846,
+      "tag": "0002_crazy_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }
