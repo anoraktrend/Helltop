@@ -10,12 +10,22 @@
     "isolatedModules": true,
     "noEmit": true,
     "outDir": "dist",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["@cloudflare/workers-types"],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "@cloudflare/workers-types"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
   "include": [
     ".astro/types.d.ts",
@@ -27,5 +37,9 @@
     "worker-configuration.d.ts",
     "drizzle.config.ts"
   ],
-  "exclude": ["dist", "node_modules", "coverage"]
+  "exclude": [
+    "dist",
+    "node_modules",
+    "coverage"
+  ]
 }
