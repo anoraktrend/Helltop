@@ -8,13 +8,10 @@ import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
-import keystatic from '@keystatic/astro';
 import remarkToc from 'remark-toc';
 import rehypePresetMinify from 'rehype-preset-minify';
 import { fileURLToPath } from 'node:url';
-
 import react from '@astrojs/react';
-import markdoc from '@astrojs/markdoc';
 
 export default defineConfig({
   site: 'https://helltop.net/',
@@ -23,12 +20,19 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: 'prism',
   },
-  integrations: [svelte(), icon(), mdx({
-    remarkPlugins: [remarkToc],
-    rehypePlugins: [rehypePresetMinify],
-    remarkRehype: { footnoteLabel: 'Footnotes' },
-    gfm: true,
-  }), alpinejs(), sitemap(), keystatic(), react(), markdoc()],
+  integrations: [
+    svelte(), 
+    icon(), 
+    mdx({
+      remarkPlugins: [remarkToc],
+      rehypePlugins: [rehypePresetMinify],
+      remarkRehype: { footnoteLabel: 'Footnotes' },
+      gfm: true,
+    }), 
+    alpinejs(), 
+    sitemap(),
+    react()
+  ],
   vite: {
     resolve: {
       alias: {
