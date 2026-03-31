@@ -3,65 +3,54 @@ title: "EE: The Easy Editor"
 description: "The Easy Editor That Actually Lives Up to Its Name"
 date: "2025-12-03"
 author: "Lucy Ada Randall"
-tags: ["TUIs", "Minimalism", "Editing"]
+tags: ["TUIs", "Minimalism", "Editing", "History"]
 slug: "ee"
 draft: false
 ---
 
 ## Introduction
 
+Have you ever opened a terminal, wanted to write some text, and opened a program which was so unintuitive you had to look up how to close it online? The author of `ee`, Hugh Mahon, certainly had. He released `ee` because he hated seeing "new users and non-computer types get frustrated by vi" and wanted to see more intuitive interfaces for basic tools become more pervasive.
+
+For people new to computers, or for those who just use them for email, `ee` is intended to be a simple, terminal-based editor that requires no instruction to use.
+
 ![Screenshot of EE text editor interface](/uploads/ee.png)
 
-
-FreeBSD ships with EE for a reason: it understands that most users just want to edit text, not learn a new language. In an ecosystem where every tool assumes you've read the manual, EE is a breath of fresh air.
-
-
-
-## What Sets EE Apart
-
-What sets EE apart:
-
-
-
-- **Immediate usability**: No modes, no hidden commands, no muscle memory required
-- **Clear interface**: Every function is visible and labeled
-- **Consistent behavior**: What works in one context works in all contexts
-
+FreeBSD ships with EE, a testament to its stability and alignment with a philosophy of clarity. In an ecosystem where every tool assumes you've read the manual, EE is a breath of fresh air.
 
 ## Interface Philosophy
 
-Unlike vi/vim's modal approach or emacs' key chord complexity, EE presents a straightforward interface. You can see all available commands at a glance, and they do exactly what they say they'll do.
+Unlike vi's modal approach or Emacs' key chord complexity, EE presents a straightforward interface. Its simplified design is highlighted by the use of **pop-up menus**, which make it possible for users to carry out tasks without needing to remember commands.
 
-
+Furthermore, a toggleable **information window** at the top of the screen shows the user the most important operations available with control-keys. You can see all available commands at a glance, and they do exactly what they say they'll do.
 
 ## Design Philosophy
 
-The philosophy behind EE is simple: software should adapt to humans, not the other way around. When you're troubleshooting a server at 2 AM, you don't want to remember which mode you're in or what obscure key combination does what.
+The philosophy behind EE is simple: software should adapt to humans, not the other way around. Hugh Mahon's goals for `ee` were clear:
+1. To be so easy to use as to **require no instruction**.
+2. To be **easy to compile** and, if necessary, port to new platforms by people with relatively little knowledge of C and UNIX.
+3. To have a **minimum number of files** to be dealt with for compilation and installation.
+4. To have **enough functionality** to be useful to a large number of people.
 
+When you're troubleshooting a server at 2 AM, you don't want to remember which mode you're in or what obscure key combination does what. EE respects your time and cognitive load.
 
+## Under the Hood
 
-## Power Without Complexity
-
-EE proves that powerful software doesn't need to be complicated. It handles all the basic editing tasks efficiently without forcing you to become a keyboard ninja.
-
-
+While being simple for the user, `ee` has some interesting technical details.
+- It was developed using **K&R C** ("classic C"), but it can also be compiled with ANSI C.
+- To ensure consistent behavior across different UNIX systems, `ee` includes `new_curse`, a custom subset of the `curses` library. The author notes that vendor-supplied `curses` often has defects, and `new_curse` was developed to provide a reliable screen painting experience.
+- It relies on the **virtual memory** abilities of the host platform and does not have its own memory management capabilities.
+- Building the editor is as simple as typing `make`. A makefile is generated that takes into account the characteristics of your system, and then the editor is built.
 
 ## Usage
 
 Usage is as simple as:
 
-
 ```bash
 ee /path/to/file
-
 ```
 No flags, no options, no configuration needed. Just open and edit.
 
-
-
 ## When to Use EE
 
-This is the editor I reach for when I need to make quick changes without ceremony. When the goal is editing text, not demonstrating mastery of arcane key combinations.
-
-
-
+This is the editor I reach for when I need to make quick changes without ceremony. When the goal is editing text, not demonstrating mastery of arcane key combinations. It's a tool that does one job well and gets out of your way.

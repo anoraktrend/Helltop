@@ -1,7 +1,7 @@
 ---
 title: "Maintaning AEE: Another Easy Editor"
 description: "Preserving simple, instruction-free editing for modern systems. Power ≠ complex."
-date: "2026-03-07"
+date: "2026-03-28"
 author: "Lucy Ada Randall"
 tags: ["TUIs", "Open Source", "Editing"]
 slug: "AEE"
@@ -12,27 +12,31 @@ draft: false
 
 ![Screenshot of AEE text editor interface](/uploads/aee.png)
 
-In a world obsessed with feature bloat, AEE stands as a monument to restraint. This isn't just another text editor — it's a philosophical statement against the tyranny of complexity.
+In the unix space, terminal text editors have been the battle grounds of holy wars.
+From Vi vs Emacs to the modern Micro vs Nano, EE and AEE have just been here. That whole time.
+This is just another text editor. And a simple one.
 
 ## Why I Maintain This Fork
 
-I maintain this fork because someone has to. The original AEE was perfect in its minimalism, but modern systems broke it. Rather than abandon it to obsolescence, I patched the build system and fixed compatibility issues while preserving its soul.
+I maintain this fork because someone has to, and the original developer is dead.
+The original AEE was a masterpiece of simple programming, but it was ancient, and it hadn't been buildable for a while.
+Rather than abandon it to obsolescence, I:
+1. Ripped out the original build system and replaced it with a modern one.
+2. Removed unneccessary cruft that made it only useful on ancient unixes. 
+3. Began to modernize the code.
 
 ## What Makes AEE Special
 
-What makes AEE special:
-
-- **Zero learning curve**: Open a file, start typing. No modes, no hidden commands.
-- **Predictable behavior**: What you see is what you get, every time.
-- **Lightweight**: Starts instantly, uses minimal resources.
+Using EE  for the first time was a revelation to me. It made me wonder why no other terminal text editor was as easy to use as it was. Then i found AEE.
+AEE was a port of EE that had the unfortunate state of being incomplete, and relying on code conventions too old to be useful. 
 
 ## Technical Changes
 
 The changes I made were surgical:
 
-- Updated CMake configuration for modern compilers
-- Fixed ncurses compatibility across distributions
-- Maintained exact behavioral compatibility
+- Switched from create.make scripts to a CMake configuration.
+- With the above, converted to ncurses, removing the obsolete new_curse subset and the equally unusable xcurse setup.
+- began to update the C code.
 
 ## Use Cases
 

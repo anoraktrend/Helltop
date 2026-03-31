@@ -34,8 +34,9 @@ Clone and customize:
 git clone https://github.com/anoraktrend/Helltop my-site
 cd my-site
 
-# Replace content in content/ with your own
-# Modify 1.index.json, 3.about.md, and blog posts
+# Replace content in src/content/ with your own
+# E.G. Modify homepage/1.index.json and blog posts
+# Also edit and fill src/pages/about.astro with your info
 
 # Install dependencies
 pnpm install
@@ -61,6 +62,7 @@ pnpm run build
 npx wrangler deploy
 
 ```
+OR setup a Cloudflare worker pointing to your github or gitlab.
 
 ## Architecture Decisions
 

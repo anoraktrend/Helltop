@@ -12,22 +12,17 @@ draft: false
 
 Self-hosting isn't just a technical choice — it's a declaration of independence. I've built my own digital infrastructure because I refuse to be a product in someone else's business model.
 
-
-
 ## My Current Stack
 
-**Core Infrastructure**
+**Core Infrastructure*
 
-
-
-- **Nginx Proxy Manager Plus**: Handles SSL certificates, routing, and access control with a clean web interface
+- ~~**Nginx Proxy Manager Plus**: Handles SSL certificates, routing, and access control with a clean web interface~~
+- **Clouflare Tunnels**: Currently using cloudflare tunnels instead of NPMplus, This works best when stuck behind a cgnat.
 - **Tailscale**: Zero-config VPN for secure access without exposing ports to the internet
 
 **Data and Collaboration**
 
-
-
-- **Gitea**: Git hosting I actually control, with built-in CI/CD and issue tracking
+- **Forgejo**: Git hosting I actually control, with built-in CI/CD and issue tracking
 - **Nextcloud**: Files, calendars, contacts, and collaborative document editing
 - **Immich**: Photo and video backup that respects privacy and doesn't feed data to ad algorithms
 
@@ -35,7 +30,7 @@ Self-hosting isn't just a technical choice — it's a declaration of independenc
 
 
 
-- **Jellyfin**: Media server for movies, TV shows, and music I actually own
+- **Jellyfin**: Media server for movies, TV shows, and music I actually own, or at least have digital copies of.
 - **Beets**: Music library management that ensures perfect metadata before importing to Jellyfin
 
 
@@ -43,15 +38,11 @@ Self-hosting isn't just a technical choice — it's a declaration of independenc
 
 **Control Over Convenience**
 
-
-
 - No algorithmic filtering deciding what I see
 - No unexpected policy changes or service shutdowns
 - No data mining or behavioral profiling
 
 **Long-term Thinking**
-
-
 
 - Data formats I control and understand
 - No vendor lock-in or proprietary file formats
@@ -59,18 +50,13 @@ Self-hosting isn't just a technical choice — it's a declaration of independenc
 
 **Security and Privacy**
 
-
-
 - Encryption I control, not a corporation
 - No third-party access to personal data
 - Transparent security practices
 
-
 ## The Reality Check
 
 Self-hosting isn't free. It requires:
-
-
 
 - **Hardware investment**: Servers, storage, and networking equipment
 - **Time commitment**: Setup, maintenance, and troubleshooting
@@ -79,39 +65,29 @@ Self-hosting isn't free. It requires:
 
 But the alternative — renting digital space from corporations — comes with its own costs: loss of control, privacy violations, and the constant threat of service changes or shutdowns.
 
-
-
 ## Getting Started
 
 **Phase 1: Foundation**
 
-
-
-- Repurpose old hardware or invest in a small server
-- Install Docker and a reverse proxy
-- Set up Tailscale for secure access
+- [x] Repurpose old hardware or invest in a small server
+- [x] Install Docker and a reverse proxy
+- [x] Set up Tailscale for secure access
 
 **Phase 2: Essentials**
 
-
-
-- Deploy Nextcloud for files and collaboration
-- Add Gitea for code hosting
-- Configure automated backups
+- [x] Deploy Nextcloud for files and collaboration
+- [x] Add Gitea for code hosting
+- [ ] Configure automated backups
 
 **Phase 3: Enhancement**
 
-
-
-- Add media services (Jellyfin, Immich)
-- Implement monitoring and alerting
-- Fine-tune security and access controls
-
+- [x] Add media services (Jellyfin, Immich)
+- [x] Implement monitoring and alerting
+- [x] Fine-tune security and access controls
 
 ## Philosophy
 
 This isn't about technical superiority — it's about autonomy. Every service I run is a choice to keep control over my digital life. Some services might be less polished than their corporate counterparts, but they're mine.
-
 
 The goal isn't to recreate every convenience the cloud offers, but to maintain control over what matters most: my data, my workflow, and my privacy.
 
