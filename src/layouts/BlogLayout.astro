@@ -63,7 +63,7 @@ if (!author) {
           </Link>
           <div class="flex items-center gap-4 bg-ctp-crust/40 px-5 py-2 rounded-full border border-tron-blue/10">
             <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_15px_rgba(203,166,247,1)]"></span>
-            <span class="font-mono text-[10px] text-white/50 uppercase tracking-[0.5em]">Sync Level: 100%</span>
+            <span class="font-mono text-[10px] text-text-dim uppercase tracking-[0.5em]">Sync Level: 100%</span>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ if (!author) {
                 {tags.map((tag) => (
                   <div class="flex items-center gap-4 group/tag">
                     <span class="h-px w-8 bg-tron-blue/40 shadow-[0_0_10px_rgba(203,166,247,0.8)] group-hover/tag:w-12 transition-all duration-500"></span>
-                    <span class="text-tron-blue font-black uppercase text-[11px] tracking-[0.6em] tron-glow-text group-hover/tag:text-white transition-colors">
+                    <span class="text-tron-blue font-black uppercase text-[11px] tracking-[0.6em] tron-glow-text group-hover/tag:text-text-main transition-colors">
                       {tag}
                     </span>
                   </div>
@@ -83,28 +83,28 @@ if (!author) {
               </div>
             )}
             
-            <h1 class="text-4xl sm:text-7xl font-black text-white leading-[0.85] tracking-tighter break-words tron-glow-text uppercase">
+            <h1 class="text-4xl sm:text-7xl font-black text-text-main leading-[0.85] tracking-tighter break-words tron-glow-text uppercase">
               {title}
             </h1>
             
             {description && (
-              <p class="text-2xl sm:text-3xl text-white/70 font-light leading-relaxed border-l-8 border-tron-blue/50 pl-10 py-4 italic bg-gradient-to-r from-tron-blue/10 to-transparent font-mono tracking-tight">
+              <p class="text-2xl sm:text-3xl text-text-muted font-light leading-relaxed border-l-8 border-tron-blue/50 pl-10 py-4 italic bg-gradient-to-r from-tron-blue/10 to-transparent font-mono tracking-tight">
                 {description}
               </p>
             )}
           </div>
 
-          <div class="mt-16 flex flex-wrap items-center gap-x-16 gap-y-8 text-white/40 font-mono text-[11px] uppercase tracking-[0.5em] pt-10 border-t border-tron-blue/20">
+          <div class="mt-16 flex flex-wrap items-center gap-x-16 gap-y-8 text-text-dim font-mono text-[11px] uppercase tracking-[0.5em] pt-10 border-t border-tron-blue/20">
             {date && (
               <div class="flex items-center gap-4 group/meta">
                 <Icon name="lucide:calendar" class="size-5 text-tron-blue drop-shadow-[0_0_8px_rgba(203,166,247,0.6)] group-hover/meta:scale-110 transition-transform" />
-                <time class="text-white/60 group-hover:text-tron-blue transition-colors">{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                <time class="text-text-muted group-hover:text-tron-blue transition-colors">{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
               </div>
             )}
             {readingTime && (
               <div class="flex items-center gap-4 group/meta">
                 <Icon name="lucide:clock" class="size-5 text-tron-orange drop-shadow-[0_0_8px_rgba(245,194,231,0.6)] group-hover/meta:scale-110 transition-transform" />
-                <span class="text-white/60 group-hover:text-tron-orange transition-colors">{readingTime} MIN EXECUTION</span>
+                <span class="text-text-muted group-hover:text-tron-orange transition-colors">{readingTime} MIN EXECUTION</span>
               </div>
             )}
             {author && (
@@ -112,7 +112,7 @@ if (!author) {
                 <div class="size-6 rounded-full border-2 border-tron-blue/30 flex items-center justify-center bg-ctp-crust group-hover:meta:border-tron-blue transition-colors">
                   <Icon name="lucide:user" class="size-3 text-tron-blue" />
                 </div>
-                <span class="text-white/60 group-hover:text-tron-blue transition-colors">{author.data.name} {author.data.surname}</span>
+                <span class="text-text-muted group-hover:text-tron-blue transition-colors">{author.data.name} {author.data.surname}</span>
               </div>
             )}
           </div>
