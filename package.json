@@ -35,6 +35,8 @@
     "@effect/cli": "^0.73.2",
     "@iconify-json/lucide": "^1.2.98",
     "@iconify-json/simple-icons": "^1.2.74",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
     "@tailwindcss/vite": "^4.2.2",
     "@types/alpinejs": "^3.13.11",
     "@types/react": "^19.2.14",
