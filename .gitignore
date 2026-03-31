@@ -28,5 +28,3 @@ pnpm-debug.log*
 .netlify
 AGENTS.md
 build/
-
-node_modules

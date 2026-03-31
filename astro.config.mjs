@@ -11,7 +11,6 @@ import sitemap from '@astrojs/sitemap';
 import remarkToc from 'remark-toc';
 import rehypePresetMinify from 'rehype-preset-minify';
 import { fileURLToPath } from 'node:url';
-import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://helltop.net/',
@@ -30,8 +29,7 @@ export default defineConfig({
       gfm: true,
     }), 
     alpinejs(), 
-    sitemap(),
-    react()
+    sitemap()
   ],
   vite: {
     resolve: {
