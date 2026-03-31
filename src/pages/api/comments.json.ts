@@ -7,13 +7,14 @@ interface CommentRequestBody {
   author: string;
   body: string;
   post_id: string;
+  parent_id?: number;
 }
 
 export const POST: APIRoute = async ({request}) => {
   try {
     const db = getDb();
     const body = (await request.json()) as CommentRequestBody;
-    const {author, body: commentBody, post_id} = body;
+    const {author, body: commentBody, post_id, parent_id} = body;
 
     if (!author || !commentBody || !post_id) {
       console.error('Missing fields in comment submission:', {
@@ -34,6 +35,7 @@ export const POST: APIRoute = async ({request}) => {
       author,
       body: commentBody,
       postId: post_id,
+      parentId: parent_id,
       publishedAt: new Date(),
     });
 

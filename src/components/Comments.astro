@@ -1,7 +1,8 @@
 ---
 import { getDb } from '../db';
 import { comments } from '../db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, asc } from 'drizzle-orm';
+import CommentItem from './CommentItem.astro';
 
 interface Props {
   postId: string;
@@ -9,20 +10,74 @@ interface Props {
 
 const { postId } = Astro.props;
 
-// Fetch initial comments directly on the server from D1
-let initialComments: any[] = [];
+// Fetch all comments for this post
+let allComments: any[] = [];
 try {
   const db = getDb();
-  initialComments = await db.select()
+  allComments = await db.select()
     .from(comments)
     .where(eq(comments.postId, postId))
-    .orderBy(desc(comments.publishedAt));
+    .orderBy(asc(comments.publishedAt));
 } catch (error) {
-  console.error('Error fetching initial comments:', error);
+  console.error('Error fetching comments:', error);
 }
+
+// Threading logic
+const commentMap = new Map();
+const threadedComments: any[] = [];
+
+allComments.forEach(comment => {
+  comment.replies = [];
+  commentMap.set(comment.id, comment);
+});
+
+allComments.forEach(comment => {
+  if (comment.parentId && commentMap.has(comment.parentId)) {
+    commentMap.get(comment.parentId).replies.push(comment);
+  } else {
+    threadedComments.push(comment);
+  }
+});
 ---
 
-<div>
+<div x-data={`{ 
+  replyTo: null,
+  author: '',
+  body: '',
+  submitting: false,
+  setReply(id) {
+    this.replyTo = id;
+    this.$nextTick(() => {
+      document.getElementById('comment-form').scrollIntoView({ behavior: 'smooth' });
+    });
+  },
+  async submit() {
+    if (!this.author || !this.body) {
+      alert('Please fill in all fields');
+      return;
+    }
+    this.submitting = true;
+    try {
+      const response = await fetch('/api/comments.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          author: this.author,
+          body: this.body,
+          post_id: '${postId}',
+          parent_id: this.replyTo
+        })
+      });
+      if (response.ok) {
+        location.reload();
+      } else {
+        alert('Transmission failed.');
+      }
+    } finally {
+      this.submitting = false;
+    }
+  }
+}`}>
   <div class="flex items-center gap-6 mb-16">
     <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_rgba(203,166,247,1)] animate-pulse"></div>
     <h2 class="text-3xl font-black text-text-main uppercase tracking-[0.5em] tron-glow-text">COMMUNICATIONS</h2>
@@ -30,13 +85,20 @@ try {
   </div>
 
   <!-- Comment Form -->
-  <div class="tron-card p-10 rounded-3xl border-tron-blue/10 mb-20 space-y-8 group/form">
+  <div id="comment-form" class="tron-card p-10 rounded-3xl border-tron-blue/10 mb-20 space-y-8 group/form">
+    <div class="flex justify-between items-center">
+      <h3 class="text-xs font-black text-tron-blue uppercase tracking-[0.4em]" x-text="replyTo ? 'Reply to Protocol #' + replyTo : 'New Protocol Initiation'"></h3>
+      <template x-if="replyTo">
+        <button @click="replyTo = null" class="text-[9px] text-tron-orange uppercase tracking-widest hover:underline">Cancel Reply</button>
+      </template>
+    </div>
+
     <div class="space-y-3">
       <label for="author" class="block text-[10px] font-black text-text-overlay uppercase tracking-[0.4em] px-2">Identity Signature</label>
       <input 
         type="text" 
         id="author" 
-        name="author" 
+        x-model="author"
         required 
         placeholder="USER_ID"
         class="w-full bg-ctp-crust/40 border border-tron-blue/20 rounded-xl px-6 py-4 text-text-main focus:border-tron-blue focus:ring-1 focus:ring-tron-blue/50 outline-none transition-all font-mono placeholder:text-text-overlay/30"
@@ -47,7 +109,7 @@ try {
       <label for="body" class="block text-[10px] font-black text-text-overlay uppercase tracking-[0.4em] px-2">Transmission Data</label>
       <textarea 
         id="body" 
-        name="body" 
+        x-model="body"
         required 
         rows="4" 
         placeholder="SECURE_TRANSMISSION_PROTOCOL_READY..."
@@ -56,87 +118,25 @@ try {
     </div>
 
     <button 
-      id="submit-comment"
-      class="w-full sm:w-auto bg-tron-blue/10 hover:bg-tron-blue/20 text-tron-blue border border-tron-blue/40 hover:border-tron-blue font-black py-4 px-10 rounded-xl transition-all font-mono uppercase tracking-[0.3em] shadow-[0_0_20px_rgba(203,166,247,0.1)] hover:shadow-[0_0_30px_rgba(203,166,247,0.3)] active:scale-95"
-      data-postid={postId}
+      @click="submit()"
+      :disabled="submitting"
+      class="w-full sm:w-auto bg-tron-blue/10 hover:bg-tron-blue/20 text-tron-blue border border-tron-blue/40 hover:border-tron-blue font-black py-4 px-10 rounded-xl transition-all font-mono uppercase tracking-[0.3em] shadow-[0_0_20px_rgba(203,166,247,0.1)] hover:shadow-[0_0_30px_rgba(203,166,247,0.3)] active:scale-95 disabled:opacity-50"
     >
-      Transmit Message
+      <span x-text="submitting ? 'Transmitting...' : 'Transmit Message'"></span>
     </button>
   </div>
 
   <!-- Comments List -->
-  <div class="space-y-10">
-    {initialComments.length === 0 ? (
+  <div class="space-y-12">
+    {threadedComments.length === 0 ? (
       <div class="text-text-dim italic font-mono text-center py-16 bg-tron-blue/5 rounded-3xl border border-dashed border-tron-blue/20">
         <p class="uppercase tracking-widest text-[10px] mb-2 opacity-50">Empty Node</p>
         No transmissions received. Be the first to break the silence.
       </div>
     ) : (
-      initialComments.map((comment) => (
-        <div class="tron-card p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/30 transition-all duration-500">
-          <div class="flex justify-between items-center mb-6 border-b border-tron-blue/5 pb-4">
-            <div class="flex items-center gap-3">
-              <div class="size-2 bg-tron-blue rounded-full shadow-[0_0_8px_rgba(203,166,247,0.8)]"></div>
-              <span class="text-tron-blue text-[11px] font-black uppercase tracking-[0.3em]">
-                {comment.author}
-              </span>
-            </div>
-            <span class="text-text-overlay text-[9px] font-mono uppercase tracking-widest">
-              {new Date(comment.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-            </span>
-          </div>
-          <p class="text-text-muted font-mono leading-relaxed text-sm tracking-wide">{comment.body}</p>
-        </div>
+      threadedComments.map((comment) => (
+        <CommentItem comment={comment} />
       ))
     )}
   </div>
-
-  <script>
-    const button = document.getElementById('submit-comment');
-    if (button) {
-      button.addEventListener('click', async () => {
-        const postId = button.getAttribute('data-postid');
-        const authorInput = document.getElementById('author') as HTMLInputElement;
-        const bodyInput = document.getElementById('body') as HTMLTextAreaElement;
-        const author = authorInput.value;
-        const body = bodyInput.value;
-        
-        if (!author || !body) {
-          alert('Please fill in all fields');
-          return;
-        }
-
-        const btn = button as HTMLButtonElement;
-        btn.disabled = true;
-        btn.textContent = 'Transmitting...';
-
-        try {
-          const response = await fetch('/api/comments.json', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              author,
-              body,
-              post_id: postId
-            })
-          });
-
-          if (response.ok) {
-            alert('Message transmitted successfully!');
-            location.reload();
-          } else {
-            alert('Failed to transmit message. Please try again.');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Network error. Please try again.');
-        } finally {
-          btn.disabled = false;
-          btn.textContent = 'Transmit Message';
-        }
-      });
-    }
-  </script>
 </div>

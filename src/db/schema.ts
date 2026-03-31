@@ -5,6 +5,7 @@ export const comments = sqliteTable('comments', {
   author: text('author').notNull(),
   body: text('body').notNull(),
   postId: text('post_id').notNull(),
+  parentId: integer('parent_id'),
   publishedAt: integer('published_at', {mode: 'timestamp'})
     .notNull()
     .$defaultFn(() => new Date()),
