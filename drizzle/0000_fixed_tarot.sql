@@ -1,4 +1,4 @@
-CREATE TABLE `comments` (
+CREATE TABLE IF NOT EXISTS `comments` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`author` text NOT NULL,
 	`body` text NOT NULL,
