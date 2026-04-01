@@ -13,58 +13,58 @@ const sortedPosts = posts.sort((a, b) => {
 ---
 
 <Layout title="Archive | Helltop">
-  <div class="max-w-6xl mx-auto py-20 px-4">
+  <div class="max-w-6xl mx-auto py-12 sm:py-20 px-4">
     <!-- Archive Header -->
-    <header class="mb-24 relative">
-      <div class="flex items-center gap-8 mb-8">
-        <div class="size-4 bg-tron-blue rounded-full shadow-[0_0_15px_var(--glow-blue-100)] animate-pulse"></div>
-        <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-[0.4em] tron-glow-text">
+    <header class="mb-16 sm:mb-24 relative">
+      <div class="flex items-center gap-4 sm:gap-8 mb-6 sm:mb-8">
+        <div class="size-3 sm:size-4 bg-tron-blue rounded-full shadow-[0_0_15px_var(--glow-blue-100)] animate-pulse"></div>
+        <h1 class="text-3xl sm:text-6xl font-black uppercase tracking-[0.2em] sm:tracking-[0.4em] tron-glow-text">
           Transmissions
         </h1>
-        <div class="h-[2px] flex-grow bg-gradient-to-r from-tron-blue/40 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
+        <div class="h-[1px] sm:h-[2px] flex-grow bg-gradient-to-r from-tron-blue/40 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
       </div>
-      <p class="text-text-dim font-mono text-sm tracking-widest uppercase opacity-60 ml-12">
+      <p class="text-text-dim font-mono text-xs sm:text-sm tracking-widest uppercase opacity-60 ml-8 sm:ml-12">
         Archive of all established communication protocols and tactical data.
       </p>
     </header>
 
     <!-- Post Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
       {sortedPosts.map((post) => (
         <Link 
           href={`/blog/${post.id}`}
           class="group block relative"
         >
-          <article class="h-full tron-card p-10 rounded-[2.5rem] border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 flex flex-col justify-between">
+          <article class="h-full tron-card p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 flex flex-col justify-between">
             <div>
-              <div class="flex justify-between items-start mb-10">
-                <div class="flex flex-wrap gap-3">
+              <div class="flex justify-between items-start mb-6 sm:mb-10">
+                <div class="flex flex-wrap gap-2 sm:gap-3">
                   {post.data.tags?.slice(0, 2).map((tag) => (
-                    <span class="px-4 py-1.5 bg-tron-blue/5 text-tron-blue border border-tron-blue/20 rounded-lg text-[9px] font-black uppercase tracking-widest group-hover:bg-tron-blue/20 transition-all">
+                    <span class="px-3 sm:px-4 py-1 sm:py-1.5 bg-tron-blue/5 text-tron-blue border border-tron-blue/20 rounded-lg text-[8px] sm:text-[9px] font-black uppercase tracking-widest group-hover:bg-tron-blue/20 transition-all">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <span class="text-[10px] font-mono text-text-dim uppercase tracking-widest pt-1.5">
+                <span class="text-[9px] sm:text-[10px] font-mono text-text-dim uppercase tracking-widest pt-1 sm:pt-1.5">
                   {post.data.date?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
                 </span>
               </div>
 
-              <h2 class="text-3xl font-black text-text-main mb-6 group-hover:text-tron-blue transition-colors uppercase leading-tight tracking-tighter">
+              <h2 class="text-2xl sm:text-3xl font-black text-text-main mb-4 sm:mb-6 group-hover:text-tron-blue transition-colors uppercase leading-tight tracking-tighter">
                 {post.data.title}
               </h2>
               
-              <p class="text-text-dim text-sm leading-relaxed mb-10 line-clamp-3 font-mono italic">
+              <p class="text-text-dim text-xs sm:text-sm leading-relaxed mb-8 sm:mb-10 line-clamp-3 font-mono italic">
                 {post.data.description}
               </p>
             </div>
 
-            <div class="flex items-center justify-between pt-8 border-t border-tron-blue/5">
-              <span class="text-[10px] font-black text-tron-blue uppercase tracking-[0.3em] flex items-center gap-3">
+            <div class="flex items-center justify-between pt-6 sm:pt-8 border-t border-tron-blue/5">
+              <span class="text-[9px] sm:text-[10px] font-black text-tron-blue uppercase tracking-[0.3em] flex items-center gap-2 sm:gap-3">
                 Access Protocol
-                <Icon name="lucide:arrow-right" class="size-4 group-hover:translate-x-2 transition-transform" />
+                <Icon name="lucide:arrow-right" class="size-3 sm:size-4 group-hover:translate-x-2 transition-transform" />
               </span>
-              <div class="size-2 bg-tron-blue/20 rounded-full group-hover:bg-tron-blue group-hover:shadow-[0_0_10px_var(--glow-blue-100)] transition-all"></div>
+              <div class="size-1.5 sm:size-2 bg-tron-blue/20 rounded-full group-hover:bg-tron-blue group-hover:shadow-[0_0_10px_var(--glow-blue-100)] transition-all"></div>
             </div>
           </article>
         </Link>
