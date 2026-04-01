@@ -82,7 +82,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 		<Starfield />
 <nav aria-label="Main navigation" 
   class="sticky top-0 z-40 w-full transition-all duration-500 border-b"
-  :class="scrolled ? 'bg-ctp-base/80 backdrop-blur-xl border-tron-blue/40 shadow-[0_0_30px_rgba(203,166,247,0.15)] py-2' : 'bg-transparent border-transparent py-4'"
+  :class="scrolled ? 'bg-ctp-base/80 backdrop-blur-xl border-tron-blue/40 shadow-[0_0_30px_var(--glow-blue-15)] py-2' : 'bg-transparent border-transparent py-4'"
 >
 	  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 	    <div class="flex justify-between h-16 items-center">
@@ -90,32 +90,32 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 		<div class="hidden sm:flex items-center bg-ctp-crust/40 rounded-xl p-1 border border-tron-blue/10">
 		  <Link 
         href="/" 
-        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname === '/' ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_rgba(203,166,247,0.2)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
+        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname === '/' ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
         aria-label="Home"
       >
 			  Helltop
         {Astro.url.pathname === '/' && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_rgba(203,166,247,1)]"></span>
+          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
         )}
 		  </Link>
 		  <Link 
         href="/blog" 
-        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/blog') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_rgba(203,166,247,0.2)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
+        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/blog') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
         aria-label="Blog"
       >
 			  Blog
         {Astro.url.pathname.startsWith('/blog') && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_rgba(203,166,247,1)]"></span>
+          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
         )}
 		  </Link>
 		  <Link 
         href="/about" 
-        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/about') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_rgba(203,166,247,0.2)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
+        class={`px-6 py-2 rounded-lg transition-all uppercase text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/about') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
         aria-label="About"
       >
 			  About
         {Astro.url.pathname.startsWith('/about') && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_rgba(203,166,247,1)]"></span>
+          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
         )}
 		  </Link>
 		</div>
@@ -147,7 +147,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 -translate-y-10"
-            class="sm:hidden bg-ctp-crust/98 backdrop-blur-3xl border-b border-tron-blue/40 shadow-[0_20px_50px_rgba(203,166,247,0.2)]"
+            class="sm:hidden bg-ctp-crust/98 backdrop-blur-3xl border-b border-tron-blue/40 shadow-[0_20px_50px_var(--glow-blue-20)]"
             style="display: none;"
           >
             <div class="px-6 pt-4 pb-10 space-y-2">
@@ -171,7 +171,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 
     <footer class="bg-ctp-crust/90 backdrop-blur-xl border-t border-tron-blue/20 py-16 text-center mt-32 relative overflow-hidden">
       <!-- Footer Grid Glow -->
-      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-tron-blue shadow-[0_0_30px_2px_rgba(203,166,247,0.8)]"></div>
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-tron-blue shadow-[0_0_30px_2px_var(--glow-blue-80)]"></div>
       
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10">
         <div class="flex flex-col items-center gap-4">
@@ -186,7 +186,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
           <div class="h-6 w-px bg-tron-blue/20"></div>
           <Link 
             href="/rss.xml" 
-            class="text-text-dim hover:text-tron-blue transition-all hover:scale-125 hover:drop-shadow-[0_0_8px_rgba(203,166,247,0.6)]" 
+            class="text-text-dim hover:text-tron-blue transition-all hover:scale-125 hover:drop-shadow-[0_0_8px_var(--glow-blue-60)]" 
             title="RSS Feed"
             aria-label="RSS Feed"
           >
@@ -195,7 +195,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
           <div class="h-6 w-px bg-tron-blue/20"></div>
           <Link href="https://status.helltop.net" class="flex items-center gap-4 text-text-dim hover:text-tron-orange transition-all hover:scale-105 text-[10px] font-black uppercase tracking-[0.4em] group" title="System Status">
             <StatusBadge name="all" class="size-3" />
-            <span class="group-hover:text-tron-orange transition-colors drop-shadow-[0_0_8px_rgba(245,194,231,0)] group-hover:drop-shadow-[0_0_12px_rgba(245,194,231,0.5)]">System Status</span>
+            <span class="group-hover:text-tron-orange transition-colors drop-shadow-[0_0_8px_var(--glow-orange-10)] group-hover:drop-shadow-[0_0_12px_var(--glow-orange-50)]">System Status</span>
           </Link>
         </div>
       </div>

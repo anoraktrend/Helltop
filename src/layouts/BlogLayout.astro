@@ -30,7 +30,7 @@ if (!author) {
 <Layout title={`${title} | Helltop`} description={description}>
   <!-- Reading Progress Bar -->
   <div 
-    class="fixed top-0 left-0 h-[3px] bg-tron-blue z-50 transition-all duration-300 ease-out shadow-[0_0_15px_rgba(203,166,247,1)] overflow-hidden" 
+    class="fixed top-0 left-0 h-[3px] bg-tron-blue z-50 transition-all duration-300 ease-out shadow-[0_0_15px_var(--glow-blue-100)] overflow-hidden" 
     id="progress-bar"
     style="width: 0%"
   >
@@ -43,9 +43,9 @@ if (!author) {
       <!-- Main Content Container with Tron Styling -->
       <article class="lg:col-span-3 relative group/content">
         <!-- Tron Card Background -->
-        <div class="absolute -inset-6 sm:-inset-14 tron-card rounded-[3rem] border-tron-blue/25 -z-10 transition-all duration-1000 group-hover/content:border-tron-blue/50 group-hover/content:shadow-[0_0_60px_rgba(203,166,247,0.2)] overflow-hidden">
+        <div class="absolute -inset-6 sm:-inset-14 tron-card rounded-[3rem] border-tron-blue/25 -z-10 transition-all duration-1000 group-hover/content:border-tron-blue/50 group-hover/content:shadow-[0_0_60px_var(--glow-blue-20)] overflow-hidden">
           <!-- Animated Laser Grid in background of card -->
-          <div class="absolute inset-0 opacity-15 pointer-events-none bg-[length:40px_40px]" style="background-image: linear-gradient(rgba(203, 166, 247, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(203, 166, 247, 0.2) 1px, transparent 1px);"></div>
+          <div class="absolute inset-0 opacity-15 pointer-events-none bg-[length:40px_40px]" style="background-image: linear-gradient(var(--glow-blue-20) 1px, transparent 1px), linear-gradient(90deg, var(--glow-blue-20) 1px, transparent 1px);"></div>
           <!-- Corner Accents -->
           <div class="absolute top-0 right-0 size-48 bg-gradient-to-bl from-tron-blue/15 to-transparent"></div>
           <div class="absolute bottom-0 left-0 size-48 bg-gradient-to-tr from-tron-blue/15 to-transparent"></div>
@@ -56,13 +56,13 @@ if (!author) {
           <Link 
             href="/blog" 
             aria-label="Return to blog grid"
-            class="inline-flex items-center gap-4 px-6 py-3 bg-tron-blue/5 hover:bg-tron-blue/20 text-tron-blue rounded-xl transition-all font-mono text-[11px] uppercase tracking-[0.4em] group/back border border-tron-blue/30 hover:border-tron-blue/70 shadow-[0_0_20px_rgba(203,166,247,0.15)] active:scale-95"
+            class="inline-flex items-center gap-4 px-6 py-3 bg-tron-blue/5 hover:bg-tron-blue/20 text-tron-blue rounded-xl transition-all font-mono text-[11px] uppercase tracking-[0.4em] group/back border border-tron-blue/30 hover:border-tron-blue/70 shadow-[0_0_20px_var(--glow-blue-15)] active:scale-95"
           >
             <Icon name="lucide:arrow-left" class="size-4 group-hover/back:-translate-x-2 transition-transform" />
             &gt; Local Grid
           </Link>
           <div class="flex items-center gap-4 bg-ctp-crust/40 px-5 py-2 rounded-full border border-tron-blue/10">
-            <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_15px_rgba(203,166,247,1)]"></span>
+            <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_15px_var(--glow-blue-100)]"></span>
             <span class="font-mono text-[10px] text-text-dim uppercase tracking-[0.5em]">Sync Level: 100%</span>
           </div>
         </div>
@@ -74,7 +74,7 @@ if (!author) {
               <div class="flex flex-wrap items-center gap-6">
                 {tags.map((tag) => (
                   <div class="flex items-center gap-4 group/tag">
-                    <span class="h-px w-8 bg-tron-blue/40 shadow-[0_0_10px_rgba(203,166,247,0.8)] group-hover/tag:w-12 transition-all duration-500"></span>
+                    <span class="h-px w-8 bg-tron-blue/40 shadow-[0_0_10px_var(--glow-blue-80)] group-hover/tag:w-12 transition-all duration-500"></span>
                     <span class="text-tron-blue font-black uppercase text-[11px] tracking-[0.6em] tron-glow-text group-hover/tag:text-text-main transition-colors">
                       {tag}
                     </span>
@@ -97,13 +97,13 @@ if (!author) {
           <div class="mt-16 flex flex-wrap items-center gap-x-16 gap-y-8 text-text-dim font-mono text-[11px] uppercase tracking-[0.5em] pt-10 border-t border-tron-blue/20">
             {date && (
               <div class="flex items-center gap-4 group/meta">
-                <Icon name="lucide:calendar" class="size-5 text-tron-blue drop-shadow-[0_0_8px_rgba(203,166,247,0.6)] group-hover/meta:scale-110 transition-transform" />
+                <Icon name="lucide:calendar" class="size-5 text-tron-blue drop-shadow-[0_0_8px_var(--glow-blue-60)] group-hover/meta:scale-110 transition-transform" />
                 <time class="text-text-muted group-hover:text-tron-blue transition-colors">{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
               </div>
             )}
             {readingTime && (
               <div class="flex items-center gap-4 group/meta">
-                <Icon name="lucide:clock" class="size-5 text-tron-orange drop-shadow-[0_0_8px_rgba(245,194,231,0.6)] group-hover/meta:scale-110 transition-transform" />
+                <Icon name="lucide:clock" class="size-5 text-tron-orange drop-shadow-[0_0_8px_var(--glow-orange-60)] group-hover/meta:scale-110 transition-transform" />
                 <span class="text-text-muted group-hover:text-tron-orange transition-colors">{readingTime} MIN EXECUTION</span>
               </div>
             )}
@@ -122,7 +122,7 @@ if (!author) {
         <div class="prose prose-xl prose-invert max-w-none 
           prose-headings:tracking-tighter prose-headings:font-black
           prose-a:text-tron-blue prose-a:decoration-tron-blue/40 hover:prose-a:decoration-tron-blue prose-a:underline-offset-8
-          prose-img:rounded-[2.5rem] prose-img:shadow-[0_0_60px_rgba(203,166,247,0.15)]
+          prose-img:rounded-[2.5rem] prose-img:shadow-[0_0_60px_var(--glow-blue-15)]
           prose-pre:border prose-pre:border-tron-blue/30 prose-pre:shadow-3xl
           prose-blockquote:border-tron-orange prose-blockquote:bg-tron-orange/5 prose-blockquote:rounded-r-3xl
           selection:bg-ctp-surface2 selection:text-ctp-text">
@@ -155,7 +155,7 @@ if (!author) {
     >
       <button 
         @click="window.scrollTo({top: 0, behavior: 'smooth'})"
-        class="p-4 bg-ctp-mantle/80 backdrop-blur-md text-ctp-mauve rounded-2xl border border-ctp-mauve/30 shadow-[0_0_20px_rgba(203,166,247,0.2)] hover:border-ctp-mauve/60 hover:shadow-[0_0_30px_rgba(203,166,247,0.4)] hover:scale-110 active:scale-95 transition-all group"
+        class="p-4 bg-ctp-mantle/80 backdrop-blur-md text-ctp-mauve rounded-2xl border border-ctp-mauve/30 shadow-[0_0_20px_color-mix(in_srgb,var(--color-ctp-mauve)_20%,transparent)] hover:border-ctp-mauve/60 hover:shadow-[0_0_30px_color-mix(in_srgb,var(--color-ctp-mauve)_40%,transparent)] hover:scale-110 active:scale-95 transition-all group"
         title="Jump to Top"
         aria-label="Jump to Top"
       >

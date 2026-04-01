@@ -79,7 +79,7 @@ allComments.forEach(comment => {
   }
 }`}>
   <div class="flex items-center gap-6 mb-16">
-    <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_rgba(203,166,247,1)] animate-pulse"></div>
+    <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_var(--glow-blue-100)] animate-pulse"></div>
     <h2 class="text-3xl font-black text-text-main uppercase tracking-[0.5em] tron-glow-text">COMMUNICATIONS</h2>
     <div class="h-px flex-grow bg-tron-blue/20"></div>
   </div>
@@ -120,7 +120,7 @@ allComments.forEach(comment => {
     <button 
       @click="submit()"
       :disabled="submitting"
-      class="w-full sm:w-auto bg-tron-blue/10 hover:bg-tron-blue/20 text-tron-blue border border-tron-blue/40 hover:border-tron-blue font-black py-4 px-10 rounded-xl transition-all font-mono uppercase tracking-[0.3em] shadow-[0_0_20px_rgba(203,166,247,0.1)] hover:shadow-[0_0_30px_rgba(203,166,247,0.3)] active:scale-95 disabled:opacity-50"
+      class="w-full sm:w-auto bg-tron-blue/10 hover:bg-tron-blue/20 text-tron-blue border border-tron-blue/40 hover:border-tron-blue font-black py-4 px-10 rounded-xl transition-all font-mono uppercase tracking-[0.3em] shadow-[0_0_20px_var(--glow-blue-10)] hover:shadow-[0_0_30px_var(--glow-blue-30)] active:scale-95 disabled:opacity-50"
     >
       <span x-text="submitting ? 'Transmitting...' : 'Transmit Message'"></span>
     </button>

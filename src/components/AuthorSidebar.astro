@@ -25,7 +25,7 @@ const { data } = author;
       <div class="flex flex-col items-center text-center space-y-6">
         <div class="relative group/avatar">
           <div class="absolute -inset-1 bg-tron-blue/40 rounded-full blur-md opacity-0 group-hover/avatar:opacity-100 transition-opacity"></div>
-          <div class="identity-disc size-28 shadow-[0_0_30px_rgba(203,166,247,0.3)] group-hover:scale-105 transition-transform duration-700 relative overflow-hidden bg-ctp-crust border-2 border-tron-blue/50">
+          <div class="identity-disc size-28 shadow-[0_0_30px_var(--glow-blue-30)] group-hover:scale-105 transition-transform duration-700 relative overflow-hidden bg-ctp-crust border-2 border-tron-blue/50">
             <img 
               src="/uploads/Author.png" 
               alt={`${data.name} ${data.surname} - Digital Nomad`} 
@@ -47,7 +47,7 @@ const { data } = author;
   <!-- Terminal Info -->
   <div class="space-y-8">
     <h4 class="text-[10px] font-black text-text-overlay uppercase tracking-[0.5em] px-4 flex items-center gap-3">
-      <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_10px_rgba(203,166,247,1)]"></span>
+      <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_10px_var(--glow-blue-100)]"></span>
       Mission Brief
     </h4>
     <div class="p-8 tron-card rounded-2xl border-tron-blue/10 space-y-6">
@@ -70,7 +70,7 @@ const { data } = author;
         const isExternal = !link.url.startsWith('mailto:') && !link.url.startsWith('/') && !link.url.includes('helltop.net');
         const linkName = link.url.startsWith('mailto:') ? 'E-Mail' : (link.url.includes('github.com') ? 'GitHub' : link.name);
         const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
-        const glowColor = isExternal ? 'rgba(245,194,231,0.5)' : 'rgba(203,166,247,0.5)';
+        const glowVar = isExternal ? 'var(--glow-orange-50)' : 'var(--glow-blue-50)';
         
         return (
           <Link 
@@ -78,7 +78,7 @@ const { data } = author;
             aria-label={`Verify identity via ${linkName}`}
             class={`p-5 tron-card hover:bg-${themeColor}/5 border-${themeColor}/10 hover:border-${themeColor}/60 rounded-2xl transition-all flex items-center gap-5 group`}
           >
-            <Icon name={link.icon} class={`size-5 text-${themeColor} group-hover:scale-110 transition-all drop-shadow-[0_0_8px_${glowColor}]`} />
+            <Icon name={link.icon} class={`size-5 text-${themeColor} group-hover:scale-110 transition-all drop-shadow-[0_0_8px_${glowVar}]`} />
             <span class={`text-[10px] font-mono uppercase tracking-[0.3em] text-text-overlay group-hover:text-${themeColor} transition-colors`}>
               {linkName}
             </span>

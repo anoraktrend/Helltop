@@ -34,7 +34,7 @@ const isPartiallyDown = stats.up < stats.total && stats.up > 0;
 <Link 
   href="https://status.helltop.net" 
   aria-label={`System Status: ${isAllUp ? 'All systems online' : stats.total - stats.up + ' nodes critical'}`}
-  class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_rgba(203,166,247,0.15)] transition-all group"
+  class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_var(--glow-blue-15)] transition-all group"
 >
   <div class="relative flex items-center justify-center">
     <StatusBadge name="all" class="size-5" />

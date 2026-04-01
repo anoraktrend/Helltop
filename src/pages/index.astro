@@ -29,7 +29,7 @@ const { hero, sections } = home.data;
       <p class="text-xl sm:text-3xl text-text-muted mb-10 font-light italic tracking-tight relative z-10">
         {hero.subtitle}
       </p>
-      <div class="absolute -bottom-2 left-0 w-full h-px bg-gradient-to-r from-transparent via-tron-orange/50 to-transparent shadow-[0_0_15px_rgba(245,194,231,0.5)]"></div>
+      <div class="absolute -bottom-2 left-0 w-full h-px bg-gradient-to-r from-transparent via-tron-orange/50 to-transparent shadow-[0_0_15px_var(--glow-orange-50)]"></div>
     </div>
     
     <p class="max-w-3xl mx-auto text-text-overlay leading-relaxed text-base sm:text-lg font-mono mt-10 bg-white/5 p-8 backdrop-blur-sm border border-white/5 rounded-2xl tracking-wide">
@@ -43,19 +43,19 @@ const { hero, sections } = home.data;
       <section id={section.id} class="scroll-mt-32 relative group/sec">
         <!-- Section Header -->
         <div class="flex items-center gap-8 mb-16">
-          <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_rgba(203,166,247,1)]"></div>
+          <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_var(--glow-blue-100)]"></div>
           <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-[0.6em] tron-glow-text whitespace-nowrap">
             {section.title}
           </h2>
           {section.id === 'arsenal' && <SystemStatus />}
-          <div class="h-[1px] flex-grow bg-gradient-to-r from-tron-blue/30 to-transparent shadow-[0_0_10px_rgba(203,166,247,0.2)]"></div>
+          <div class="h-[1px] flex-grow bg-gradient-to-r from-tron-blue/30 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
         </div>
 
         {section.type === 'text' && (
           <div class="space-y-16">
             <div class="relative">
               <div class="absolute -inset-4 bg-tron-blue/5 rounded-2xl blur-xl -z-10 opacity-0 group-hover/sec:opacity-100 transition-opacity duration-1000"></div>
-              <p class="text-xl sm:text-2xl text-text-main/90 leading-relaxed font-mono bg-ctp-mantle/40 backdrop-blur-md p-10 border-l-4 border-tron-blue shadow-[0_0_40px_rgba(0,0,0,0.3)] rounded-r-2xl">
+              <p class="text-xl sm:text-2xl text-text-main/90 leading-relaxed font-mono bg-ctp-mantle/40 backdrop-blur-md p-10 border-l-4 border-tron-blue shadow-[0_0_40px_var(--glow-blue-15)] rounded-r-2xl">
                 {section.content}
               </p>
             </div>
@@ -65,8 +65,8 @@ const { hero, sections } = home.data;
                 {section.list.map((item) => (
                   <div class="tron-card p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 group/card">
                     <div class="flex items-center gap-3 mb-4">
-                      <div class="size-1.5 bg-ctp-pink rounded-full group-hover/card:bg-tron-blue group-hover/card:shadow-[0_0_8px_rgba(203,166,247,1)] transition-all"></div>
-                      <h3 class="text-ctp-pink font-black uppercase text-[10px] tracking-[0.5em] group-hover/card:text-tron-blue transition-all">
+                      <div class="size-1.5 bg-ctp-peach rounded-full group-hover/card:bg-tron-blue group-hover/card:shadow-[0_0_8px_var(--glow-blue-100)] transition-all"></div>
+                      <h3 class="text-ctp-peach font-black uppercase text-[10px] tracking-[0.5em] group-hover/card:text-tron-blue transition-all">
                         {item.title}
                       </h3>
                     </div>
@@ -81,7 +81,7 @@ const { hero, sections } = home.data;
             {section.quote && (
               <div class="relative group/quote">
                 <div class="absolute -inset-4 bg-tron-orange/5 rounded-full blur-3xl -z-10 opacity-50"></div>
-                <blockquote class="border-l-4 border-tron-orange pl-10 italic text-2xl sm:text-3xl text-text-dim font-mono bg-gradient-to-r from-tron-orange/10 to-transparent py-10 shadow-[0_0_50px_rgba(245,194,231,0.05)] rounded-r-[3rem]">
+                <blockquote class="border-l-4 border-tron-orange pl-10 italic text-2xl sm:text-3xl text-text-dim font-mono bg-gradient-to-r from-tron-orange/10 to-transparent py-10 shadow-[0_0_50px_var(--glow-orange-5)] rounded-r-[3rem]">
                   <span class="text-tron-orange text-5xl absolute -top-2 -left-4 opacity-40">"</span>
                   {section.quote}
                 </blockquote>
@@ -95,14 +95,14 @@ const { hero, sections } = home.data;
             {section.items?.filter(item => !!item).map((item) => {
               const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
               const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
-              const glowColor = isExternal ? 'rgba(245,194,231,0.6)' : 'rgba(203,166,247,0.6)';
+              const glowVar = isExternal ? 'var(--glow-orange-60)' : 'var(--glow-blue-60)';
               return (
                 <Link 
                   href={item.url} 
                   aria-label={`Access infrastructure: ${item.name}`}
                   class={`flex items-start gap-8 p-8 tron-card rounded-2xl border-${themeColor}/15 hover:border-${themeColor}/70 transition-all duration-700 group/item`}
                 >
-                  <div class={`p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_rgba(0,0,0,0.1)] group-hover:shadow-[0_0_25px_${glowColor}] group-hover:item:scale-110 transition-all duration-500`}>
+                  <div class={`p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_var(--glow-blue-5)] group-hover:shadow-[0_0_25px_${glowVar}] group-hover:item:scale-110 transition-all duration-500`}>
                     <Icon name={item.icon} class="size-10" />
                   </div>
                   <div class="flex-grow pt-1">
@@ -127,7 +127,7 @@ const { hero, sections } = home.data;
             {section.items?.map((item) => {
               const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
               const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
-              const glowColor = isExternal ? 'rgba(245,194,231,1)' : 'rgba(203,166,247,1)';
+              const glowVar = isExternal ? 'var(--glow-orange-100)' : 'var(--glow-blue-100)';
               return (
                 <Link 
                   href={item.url} 
@@ -135,7 +135,7 @@ const { hero, sections } = home.data;
                   class={`block p-8 tron-card rounded-2xl border-${themeColor}/20 hover:border-${themeColor}/80 transition-all duration-700 group/soft`}
                 >
                   <div class="flex items-center gap-3 mb-4">
-                    <div class={`size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowColor}]`}></div>
+                    <div class={`size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowVar}]`}></div>
                     <h3 class={`text-2xl font-black text-text-main group-hover/soft:text-${themeColor} transition-all font-mono uppercase tracking-tighter`}>
                       {item.name}
                     </h3>
@@ -150,7 +150,7 @@ const { hero, sections } = home.data;
         )}
 
         {section.type === 'cta' && (
-          <div class="tron-card border-tron-blue/50 p-16 rounded-[3rem] text-center shadow-[0_0_60px_rgba(203,166,247,0.1)] relative overflow-hidden group/cta">
+          <div class="tron-card border-tron-blue/50 p-16 rounded-[3rem] text-center shadow-[0_0_60px_var(--glow-blue-10)] relative overflow-hidden group/cta">
             <div class="absolute inset-0 bg-gradient-to-b from-tron-blue/10 to-transparent"></div>
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-tron-blue to-transparent"></div>
             <p class="text-2xl sm:text-3xl font-light italic text-text-muted mb-0 drop-shadow-xl relative z-10 font-mono tracking-tight group-hover/cta:scale-105 transition-transform duration-1000" set:html={section.content}></p>
