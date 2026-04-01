@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import CommentItem from './CommentItem.astro';
+import RecursiveCommentItem from './CommentItem.astro';
 
 interface Props {
   comment: any;
@@ -44,7 +44,7 @@ const { comment, depth = 0 } = Astro.props;
   {comment.replies && comment.replies.length > 0 && (
     <div class="space-y-6">
       {comment.replies.map((reply: any) => (
-        <CommentItem comment={reply} depth={depth + 1} />
+        <RecursiveCommentItem comment={reply} depth={depth + 1} />
       ))}
     </div>
   )}

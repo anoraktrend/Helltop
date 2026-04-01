@@ -1,6 +1,6 @@
 ---
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, render as astroRender } from 'astro:content';
 
 const { slug } = Astro.params;
 if (!slug) {
@@ -14,7 +14,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const { Content } = await render(post);
+const { Content } = await astroRender(post);
 
 // Calculate reading time
 const wordCount = post.body ? post.body.split(/\s+/).length : 200;
