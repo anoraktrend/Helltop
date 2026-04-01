@@ -7,7 +7,7 @@ My Digital Rebellion. Fuck the corporate cloud. Build your own.
 This repository is built on the following principles:
 
 - **Ease of Use:** To be so easy to use as to require no instruction.
-- **Accessibility:** To be easy to compile and, if necessary, port to new platforms by people with relatively little knowledge of C and UNIX.
+- **Code Accessibility:** To be easy to compile and, if necessary, port to new platforms by people with relatively little knowledge of C and UNIX.
 - **Simplicity:** To have a minimum number of files to be dealt with for compilation and installation.
 - **Utility:** To have enough functionality to be useful to a large number of people.
 
