@@ -1,69 +1,74 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
 
-const blog = await getCollection('blog');
-
-// Filter out drafts and sort posts by date (if available) or title
-const validBlogPosts = blog.filter((post) => post.data.draft !== true);
-const sortedPosts = validBlogPosts.sort((a, b) => {
-  if (a.data.date && b.data.date) {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
-  }
-  return a.data.title.localeCompare(b.data.title);
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const dateB = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return dateB - dateA;
 });
 ---
 
-<Layout title="Blog | Helltop">
-  <section class="py-12">
-    <div class="flex items-center gap-8 mb-20">
-      <div class="size-4 bg-tron-blue rounded-full shadow-[0_0_15px_rgba(203,166,247,1)] animate-pulse"></div>
-      <h1 class="text-4xl sm:text-5xl font-black text-text-main uppercase tracking-[0.6em] tron-glow-text whitespace-nowrap">
-        The Archive
-      </h1>
-      <div class="h-[2px] flex-grow bg-gradient-to-r from-tron-blue/40 to-transparent shadow-[0_0_10px_rgba(203,166,247,0.2)]"></div>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-16">
+<Layout title="Archive | Helltop">
+  <div class="max-w-6xl mx-auto py-20 px-4">
+    <!-- Archive Header -->
+    <header class="mb-24 relative">
+      <div class="flex items-center gap-8 mb-8">
+        <div class="size-4 bg-tron-blue rounded-full shadow-[0_0_15px_var(--glow-blue-100)] animate-pulse"></div>
+        <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-[0.4em] tron-glow-text">
+          Transmissions
+        </h1>
+        <div class="h-[2px] flex-grow bg-gradient-to-r from-tron-blue/40 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
+      </div>
+      <p class="text-text-dim font-mono text-sm tracking-widest uppercase opacity-60 ml-12">
+        Archive of all established communication protocols and tactical data.
+      </p>
+    </header>
+
+    <!-- Post Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
       {sortedPosts.map((post) => (
-        <article class="group relative">
-          <!-- Hover Glow -->
-          <div class="absolute -inset-2 bg-tron-blue/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-          
-          <div class="tron-card h-full rounded-3xl border-tron-blue/15 hover:border-tron-blue/60 transition-all duration-700 overflow-hidden flex flex-col">
-            <Link href={`/blog/${post.data.slug}`} class="flex flex-col h-full p-8" aria-label={`Read post: ${post.data.title}`}>
-              <div class="flex justify-between items-start mb-6">
+        <Link 
+          href={`/blog/${post.id}`}
+          class="group block relative"
+        >
+          <article class="h-full tron-card p-10 rounded-[2.5rem] border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between items-start mb-10">
                 <div class="flex flex-wrap gap-3">
-                  {post.data.tags && post.data.tags.map((tag) => (
-                    <span class="px-3 py-1 bg-tron-blue/5 text-tron-blue text-[10px] font-black uppercase tracking-widest rounded-lg border border-tron-blue/20 group-hover:border-tron-blue/50 transition-colors">
+                  {post.data.tags?.slice(0, 2).map((tag) => (
+                    <span class="px-4 py-1.5 bg-tron-blue/5 text-tron-blue border border-tron-blue/20 rounded-lg text-[9px] font-black uppercase tracking-widest group-hover:bg-tron-blue/20 transition-all">
                       {tag}
                     </span>
                   ))}
                 </div>
-                {post.data.date && (
-                  <time class="text-text-overlay font-mono text-[10px] ml-auto uppercase tracking-widest bg-ctp-crust/40 px-3 py-1 rounded-full border border-white/5">
-                    {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </time>
-                )}
+                <span class="text-[10px] font-mono text-text-dim uppercase tracking-widest pt-1.5">
+                  {post.data.date?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+                </span>
               </div>
-              
-              <h2 class="text-2xl font-black text-text-main group-hover:text-tron-blue transition-colors mb-4 leading-tight uppercase tracking-tighter">
+
+              <h2 class="text-3xl font-black text-text-main mb-6 group-hover:text-tron-blue transition-colors uppercase leading-tight tracking-tighter">
                 {post.data.title}
               </h2>
               
-              <p class="text-text-muted text-sm leading-relaxed mb-8 line-clamp-3 font-mono italic tracking-wide group-hover:text-text-main transition-colors">
+              <p class="text-text-dim text-sm leading-relaxed mb-10 line-clamp-3 font-mono italic">
                 {post.data.description}
               </p>
-              
-              <div class="mt-auto flex items-center gap-3 text-tron-orange font-black text-[10px] uppercase tracking-[0.3em] group-hover:gap-6 transition-all">
-                <span class="h-px w-6 bg-tron-orange/40 group-hover:w-10 transition-all"></span>
-                Read Entry <span class="group-hover:translate-x-2 transition-transform">&rarr;</span>
-              </div>
-            </Link>
-          </div>
-        </article>
+            </div>
+
+            <div class="flex items-center justify-between pt-8 border-t border-tron-blue/5">
+              <span class="text-[10px] font-black text-tron-blue uppercase tracking-[0.3em] flex items-center gap-3">
+                Access Protocol
+                <Icon name="lucide:arrow-right" class="size-4 group-hover:translate-x-2 transition-transform" />
+              </span>
+              <div class="size-2 bg-tron-blue/20 rounded-full group-hover:bg-tron-blue group-hover:shadow-[0_0_10px_var(--glow-blue-100)] transition-all"></div>
+            </div>
+          </article>
+        </Link>
       ))}
     </div>
-  </section>
+  </div>
 </Layout>
