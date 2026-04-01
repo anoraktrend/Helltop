@@ -10,14 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-types": "wrangler types",
-    "lint": "gts lint",
-    "clean": "gts clean",
-    "compile": "tsc",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run lint"
+    "check": "astro check",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.5.0",
@@ -29,7 +23,6 @@
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/svelte": "^8.0.4",
     "@cloudflare/workers-types": "^4.20260317.1",
-    "@effect/cli": "^0.73.2",
     "@iconify-json/lucide": "^1.2.98",
     "@iconify-json/simple-icons": "^1.2.74",
     "@tailwindcss/vite": "^4.2.2",
@@ -57,7 +50,6 @@
     "@types/rss": "^0.0.32",
     "@types/sanitize-html": "^2.16.1",
     "drizzle-kit": "^0.31.10",
-    "gts": "^7.0.0",
     "typescript": "^5.6.3"
   },
   "pnpm": {
