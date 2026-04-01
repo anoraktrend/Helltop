@@ -129,6 +129,11 @@ if (!author) {
           <slot />
         </div>
 
+        <!-- Mobile/Tablet Author Info -->
+        <div class="mt-20 lg:hidden">
+          <AuthorSidebar authorSlug={authorSlug} />
+        </div>
+
         <div class="mt-20 sm:mt-32 border-t border-tron-blue/15 pt-12 sm:pt-16">
           <Comments postId={postId} />
         </div>

@@ -17,56 +17,58 @@ const { hero, sections } = home.data;
 
 <Layout title="Helltop | My Digital Rebellion">
   <!-- Hero Section -->
-  <section class="py-20 sm:py-32 text-center px-4 relative overflow-hidden">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[32rem] bg-tron-blue/10 rounded-full blur-[160px] -z-10 animate-pulse"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[20rem] border border-tron-blue/5 rounded-full -z-10"></div>
+  <section class="py-16 sm:py-32 text-center px-4 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[24rem] sm:size-[32rem] bg-tron-blue/10 rounded-full blur-[120px] sm:blur-[160px] -z-10 animate-pulse"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[16rem] sm:size-[20rem] border border-tron-blue/5 rounded-full -z-10"></div>
     
-    <h1 class="text-5xl sm:text-8xl font-black text-text-main mb-8 tracking-tighter break-words tron-glow-text uppercase leading-none select-none">
+    <h1 class="text-4xl sm:text-8xl font-black text-text-main mb-6 sm:mb-8 tracking-tighter break-words tron-glow-text uppercase leading-tight sm:leading-none select-none">
       {hero.title}
     </h1>
 
     <div class="inline-block relative">
-      <p class="text-xl sm:text-3xl text-text-muted mb-10 font-light italic tracking-tight relative z-10">
+      <p class="text-lg sm:text-3xl text-text-muted mb-8 sm:mb-10 font-light italic tracking-tight relative z-10">
         {hero.subtitle}
       </p>
-      <div class="absolute -bottom-2 left-0 w-full h-px bg-gradient-to-r from-transparent via-tron-orange/50 to-transparent shadow-[0_0_15px_var(--glow-orange-50)]"></div>
+      <div class="absolute -bottom-2 left-0 w-full h-px bg-gradient-to-r from-transparent via-tron-orange/50 to-transparent shadow-[0_0:15px_var(--glow-orange-50)]"></div>
     </div>
     
-    <p class="max-w-3xl mx-auto text-text-overlay leading-relaxed text-base sm:text-lg font-mono mt-10 bg-white/5 p-8 backdrop-blur-sm border border-white/5 rounded-2xl tracking-wide">
+    <p class="max-w-3xl mx-auto text-text-overlay leading-relaxed text-sm sm:text-lg font-mono mt-8 sm:mt-10 bg-white/5 p-6 sm:p-8 backdrop-blur-sm border border-white/5 rounded-2xl tracking-wide">
       {hero.description}
     </p>
   </section>
 
   <!-- Dynamic Sections -->
-  <div class="flex flex-col gap-32 sm:gap-48">
+  <div class="flex flex-col gap-24 sm:gap-48">
     {sections.map((section) => (
       <section id={section.id} class="scroll-mt-32 relative group/sec">
         <!-- Section Header -->
-        <div class="flex items-center gap-8 mb-16">
-          <div class="size-3 bg-tron-blue rounded-full shadow-[0_0_12px_var(--glow-blue-100)]"></div>
-          <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-[0.6em] tron-glow-text whitespace-nowrap">
-            {section.title}
-          </h2>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mb-12 sm:mb-16 px-2">
+          <div class="flex items-center gap-4">
+            <div class="size-2 sm:size-3 bg-tron-blue rounded-full shadow-[0_0_12px_var(--glow-blue-100)]"></div>
+            <h2 class="text-xl sm:text-3xl font-black uppercase tracking-[0.3em] sm:tracking-[0.6em] tron-glow-text whitespace-nowrap">
+              {section.title}
+            </h2>
+          </div>
           {section.id === 'arsenal' && <SystemStatus />}
-          <div class="h-[1px] flex-grow bg-gradient-to-r from-tron-blue/30 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
+          <div class="hidden sm:block h-[1px] flex-grow bg-gradient-to-r from-tron-blue/30 to-transparent shadow-[0_0_10px_var(--glow-blue-20)]"></div>
         </div>
 
         {section.type === 'text' && (
-          <div class="space-y-16">
+          <div class="space-y-12 sm:space-y-16">
             <div class="relative">
               <div class="absolute -inset-4 bg-tron-blue/5 rounded-2xl blur-xl -z-10 opacity-0 group-hover/sec:opacity-100 transition-opacity duration-1000"></div>
-              <p class="text-xl sm:text-2xl text-text-main/90 leading-relaxed font-mono bg-ctp-mantle/40 backdrop-blur-md p-10 border-l-4 border-tron-blue shadow-[0_0_40px_var(--glow-blue-15)] rounded-r-2xl">
+              <p class="text-lg sm:text-2xl text-text-main/90 leading-relaxed font-mono bg-ctp-mantle/40 backdrop-blur-md p-6 sm:p-10 border-l-4 border-tron-blue shadow-[0_0_40px_var(--glow-blue-15)] rounded-r-2xl">
                 {section.content}
               </p>
             </div>
             
             {section.list && (
-              <div class="grid sm:grid-cols-2 gap-10">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
                 {section.list.map((item) => (
-                  <div class="tron-card p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 group/card">
+                  <div class="tron-card p-6 sm:p-8 rounded-2xl border-tron-blue/10 hover:border-tron-blue/60 transition-all duration-700 group/card">
                     <div class="flex items-center gap-3 mb-4">
                       <div class="size-1.5 bg-ctp-peach rounded-full group-hover/card:bg-tron-blue group-hover/card:shadow-[0_0_8px_var(--glow-blue-100)] transition-all"></div>
-                      <h3 class="text-ctp-peach font-black uppercase text-[10px] tracking-[0.5em] group-hover/card:text-tron-blue transition-all">
+                      <h3 class="text-ctp-peach font-black uppercase text-[10px] tracking-[0.4em] sm:tracking-[0.5em] group-hover/card:text-tron-blue transition-all">
                         {item.title}
                       </h3>
                     </div>
@@ -81,8 +83,8 @@ const { hero, sections } = home.data;
             {section.quote && (
               <div class="relative group/quote">
                 <div class="absolute -inset-4 bg-tron-orange/5 rounded-full blur-3xl -z-10 opacity-50"></div>
-                <blockquote class="border-l-4 border-tron-orange pl-10 italic text-2xl sm:text-3xl text-text-dim font-mono bg-gradient-to-r from-tron-orange/10 to-transparent py-10 shadow-[0_0_50px_var(--glow-orange-5)] rounded-r-[3rem]">
-                  <span class="text-tron-orange text-5xl absolute -top-2 -left-4 opacity-40">"</span>
+                <blockquote class="border-l-4 border-tron-orange pl-6 sm:pl-10 italic text-xl sm:text-3xl text-text-dim font-mono bg-gradient-to-r from-tron-orange/10 to-transparent py-8 sm:py-10 shadow-[0_0_50px_var(--glow-orange-5)] rounded-r-[2rem] sm:rounded-r-[3rem]">
+                  <span class="text-tron-orange text-4xl sm:text-5xl absolute -top-2 -left-4 opacity-40">"</span>
                   {section.quote}
                 </blockquote>
               </div>
@@ -91,7 +93,7 @@ const { hero, sections } = home.data;
         )}
 
         {section.type === 'infrastructure' && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {section.items?.filter(item => !!item).map((item) => {
               const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
               const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
@@ -100,19 +102,19 @@ const { hero, sections } = home.data;
                 <Link 
                   href={item.url} 
                   aria-label={`Access infrastructure: ${item.name}`}
-                  class={`flex items-start gap-8 p-8 tron-card rounded-2xl border-${themeColor}/15 hover:border-${themeColor}/70 transition-all duration-700 group/item`}
+                  class={`flex items-start gap-6 sm:gap-8 p-6 sm:p-8 tron-card rounded-2xl border-${themeColor}/15 hover:border-${themeColor}/70 transition-all duration-700 group/item`}
                 >
-                  <div class={`p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_var(--glow-blue-5)] group-hover:shadow-[0_0_25px_${glowVar}] group-hover:item:scale-110 transition-all duration-500`}>
-                    <Icon name={item.icon} class="size-10" />
+                  <div class={`p-4 sm:p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_var(--glow-blue-5)] group-hover:shadow-[0_0_25px_${glowVar}] group-hover:item:scale-110 transition-all duration-500`}>
+                    <Icon name={item.icon} class="size-8 sm:size-10" />
                   </div>
                   <div class="flex-grow pt-1">
                     <div class="flex items-center justify-between gap-4 mb-3">
-                      <h3 class={`text-2xl font-black text-text-main group-hover/item:text-${themeColor} transition-colors uppercase tracking-tighter`}>
+                      <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/item:text-${themeColor} transition-colors uppercase tracking-tighter`}>
                         {item.name}
                       </h3>
-                      <StatusBadge name={item.name} class="size-12" />
+                      <StatusBadge name={item.name} class="size-8 sm:size-12" />
                     </div>
-                    <p class="text-text-overlay text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">
+                    <p class="text-text-overlay text-[9px] sm:text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">
                       {item.function}
                     </p>
                   </div>
@@ -123,7 +125,7 @@ const { hero, sections } = home.data;
         )}
 
         {section.type === 'software' && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {section.items?.map((item) => {
               const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
               const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
@@ -132,11 +134,11 @@ const { hero, sections } = home.data;
                 <Link 
                   href={item.url} 
                   aria-label={`Open software: ${item.name}`}
-                  class={`block p-8 tron-card rounded-2xl border-${themeColor}/20 hover:border-${themeColor}/80 transition-all duration-700 group/soft`}
+                  class={`block p-6 sm:p-8 tron-card rounded-2xl border-${themeColor}/20 hover:border-${themeColor}/80 transition-all duration-700 group/soft`}
                 >
                   <div class="flex items-center gap-3 mb-4">
-                    <div class={`size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowVar}]`}></div>
-                    <h3 class={`text-2xl font-black text-text-main group-hover/soft:text-${themeColor} transition-all font-mono uppercase tracking-tighter`}>
+                    <div class={`size-1.5 sm:size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowVar}]`}></div>
+                    <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/soft:text-${themeColor} transition-all font-mono uppercase tracking-tighter`}>
                       {item.name}
                     </h3>
                   </div>
@@ -150,10 +152,10 @@ const { hero, sections } = home.data;
         )}
 
         {section.type === 'cta' && (
-          <div class="tron-card border-tron-blue/50 p-16 rounded-[3rem] text-center shadow-[0_0_60px_var(--glow-blue-10)] relative overflow-hidden group/cta">
+          <div class="tron-card border-tron-blue/50 p-10 sm:p-16 rounded-[2rem] sm:rounded-[3rem] text-center shadow-[0_0_60px_var(--glow-blue-10)] relative overflow-hidden group/cta">
             <div class="absolute inset-0 bg-gradient-to-b from-tron-blue/10 to-transparent"></div>
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-tron-blue to-transparent"></div>
-            <p class="text-2xl sm:text-3xl font-light italic text-text-muted mb-0 drop-shadow-xl relative z-10 font-mono tracking-tight group-hover/cta:scale-105 transition-transform duration-1000" set:html={section.content}></p>
+            <p class="text-xl sm:text-3xl font-light italic text-text-muted mb-0 drop-shadow-xl relative z-10 font-mono tracking-tight group-hover/cta:scale-105 transition-transform duration-1000" set:html={section.content}></p>
           </div>
         )}
       </section>
