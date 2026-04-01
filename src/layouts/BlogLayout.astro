@@ -38,44 +38,44 @@ if (!author) {
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-48 -translate-x-full animate-[pulse-x_1.5s_infinite]"></div>
   </div>
 
-  <div class="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-20">
+  <div class="max-w-6xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8" x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 100">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 sm:gap-20">
       <!-- Main Content Container with Tron Styling -->
       <article class="lg:col-span-3 relative group/content">
         <!-- Tron Card Background -->
-        <div class="absolute -inset-6 sm:-inset-14 tron-card rounded-[3rem] border-tron-blue/25 -z-10 transition-all duration-1000 group-hover/content:border-tron-blue/50 group-hover/content:shadow-[0_0_60px_var(--glow-blue-20)] overflow-hidden">
+        <div class="absolute -inset-4 sm:-inset-14 tron-card rounded-[2rem] sm:rounded-[3rem] border-tron-blue/25 -z-10 transition-all duration-1000 group-hover/content:border-tron-blue/50 group-hover/content:shadow-[0_0_60px_var(--glow-blue-20)] overflow-hidden">
           <!-- Animated Laser Grid in background of card -->
           <div class="absolute inset-0 opacity-15 pointer-events-none bg-[length:40px_40px]" style="background-image: linear-gradient(var(--glow-blue-20) 1px, transparent 1px), linear-gradient(90deg, var(--glow-blue-20) 1px, transparent 1px);"></div>
           <!-- Corner Accents -->
-          <div class="absolute top-0 right-0 size-48 bg-gradient-to-bl from-tron-blue/15 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 size-48 bg-gradient-to-tr from-tron-blue/15 to-transparent"></div>
+          <div class="absolute top-0 right-0 size-32 sm:size-48 bg-gradient-to-bl from-tron-blue/15 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 size-32 sm:size-48 bg-gradient-to-tr from-tron-blue/15 to-transparent"></div>
         </div>
 
         <!-- Header Bar -->
-        <div class="flex justify-between items-center mb-16 border-b border-tron-blue/20 pb-8 relative">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12 sm:mb-16 border-b border-tron-blue/20 pb-8 relative">
           <Link 
             href="/blog" 
             aria-label="Return to blog grid"
-            class="inline-flex items-center gap-4 px-6 py-3 bg-tron-blue/5 hover:bg-tron-blue/20 text-tron-blue rounded-xl transition-all font-mono text-[11px] uppercase tracking-[0.4em] group/back border border-tron-blue/30 hover:border-tron-blue/70 shadow-[0_0_20px_var(--glow-blue-15)] active:scale-95"
+            class="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-2.5 sm:py-3 bg-tron-blue/5 hover:bg-tron-blue/20 text-tron-blue rounded-xl transition-all font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.4em] group/back border border-tron-blue/30 hover:border-tron-blue/70 shadow-[0_0_20px_var(--glow-blue-15)] active:scale-95"
           >
-            <Icon name="lucide:arrow-left" class="size-4 group-hover/back:-translate-x-2 transition-transform" />
+            <Icon name="lucide:arrow-left" class="size-3 sm:size-4 group-hover/back:-translate-x-2 transition-transform" />
             &gt; Local Grid
           </Link>
-          <div class="flex items-center gap-4 bg-ctp-crust/40 px-5 py-2 rounded-full border border-tron-blue/10">
-            <span class="size-2 bg-tron-blue rounded-full animate-pulse shadow-[0_0_15px_var(--glow-blue-100)]"></span>
-            <span class="font-mono text-[10px] text-text-dim uppercase tracking-[0.5em]">Sync Level: 100%</span>
+          <div class="flex items-center gap-3 bg-ctp-crust/40 px-4 py-1.5 rounded-full border border-tron-blue/10">
+            <span class="size-1.5 bg-tron-blue rounded-full animate-pulse shadow-[0_0_15px_var(--glow-blue-100)]"></span>
+            <span class="font-mono text-[9px] text-text-dim uppercase tracking-[0.4em]">Sync Level: 100%</span>
           </div>
         </div>
 
         <!-- Energetic Header -->
-        <header class="mb-20 relative group">
-          <div class="space-y-8">
+        <header class="mb-12 sm:mb-20 relative group">
+          <div class="space-y-6 sm:space-y-8">
             {tags && tags.length > 0 && (
-              <div class="flex flex-wrap items-center gap-6">
+              <div class="flex flex-wrap items-center gap-4 sm:gap-6">
                 {tags.map((tag) => (
-                  <div class="flex items-center gap-4 group/tag">
-                    <span class="h-px w-8 bg-tron-blue/40 shadow-[0_0_10px_var(--glow-blue-80)] group-hover/tag:w-12 transition-all duration-500"></span>
-                    <span class="text-tron-blue font-black uppercase text-[11px] tracking-[0.6em] tron-glow-text group-hover/tag:text-text-main transition-colors">
+                  <div class="flex items-center gap-3 sm:gap-4 group/tag">
+                    <span class="h-px w-6 sm:w-8 bg-tron-blue/40 shadow-[0_0_10px_var(--glow-blue-80)] group-hover/tag:w-12 transition-all duration-500"></span>
+                    <span class="text-tron-blue font-black uppercase text-[10px] sm:text-[11px] tracking-[0.4em] sm:tracking-[0.6em] tron-glow-text group-hover/tag:text-text-main transition-colors">
                       {tag}
                     </span>
                   </div>
@@ -83,33 +83,33 @@ if (!author) {
               </div>
             )}
             
-            <h1 class="text-4xl sm:text-7xl font-black text-text-main leading-[0.85] tracking-tighter break-words tron-glow-text uppercase">
+            <h1 class="text-3xl sm:text-7xl font-black text-text-main leading-tight sm:leading-[0.85] tracking-tighter break-words tron-glow-text uppercase">
               {title}
             </h1>
             
             {description && (
-              <p class="text-2xl sm:text-3xl text-text-muted font-light leading-relaxed border-l-8 border-tron-blue/50 pl-10 py-4 italic bg-gradient-to-r from-tron-blue/10 to-transparent font-mono tracking-tight">
+              <p class="text-lg sm:text-3xl text-text-muted font-light leading-relaxed border-l-4 sm:border-l-8 border-tron-blue/50 pl-6 sm:pl-10 py-3 sm:py-4 italic bg-gradient-to-r from-tron-blue/10 to-transparent font-mono tracking-tight">
                 {description}
               </p>
             )}
           </div>
 
-          <div class="mt-16 flex flex-wrap items-center gap-x-16 gap-y-8 text-text-dim font-mono text-[11px] uppercase tracking-[0.5em] pt-10 border-t border-tron-blue/20">
+          <div class="mt-12 sm:mt-16 flex flex-wrap items-center gap-x-10 sm:gap-x-16 gap-y-6 text-text-dim font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.3em] sm:tracking-[0.5em] pt-8 sm:pt-10 border-t border-tron-blue/20">
             {date && (
-              <div class="flex items-center gap-4 group/meta">
-                <Icon name="lucide:calendar" class="size-5 text-tron-blue drop-shadow-[0_0_8px_var(--glow-blue-60)] group-hover/meta:scale-110 transition-transform" />
+              <div class="flex items-center gap-3 sm:gap-4 group/meta">
+                <Icon name="lucide:calendar" class="size-4 sm:size-5 text-tron-blue drop-shadow-[0_0_8px_var(--glow-blue-60)] group-hover/meta:scale-110 transition-transform" />
                 <time class="text-text-muted group-hover:text-tron-blue transition-colors">{date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
               </div>
             )}
             {readingTime && (
-              <div class="flex items-center gap-4 group/meta">
-                <Icon name="lucide:clock" class="size-5 text-tron-orange drop-shadow-[0_0_8px_var(--glow-orange-60)] group-hover/meta:scale-110 transition-transform" />
+              <div class="flex items-center gap-3 sm:gap-4 group/meta">
+                <Icon name="lucide:clock" class="size-4 sm:size-5 text-tron-orange drop-shadow-[0_0_8px_var(--glow-orange-60)] group-hover:meta:scale-110 transition-transform" />
                 <span class="text-text-muted group-hover:text-tron-orange transition-colors">{readingTime} MIN EXECUTION</span>
               </div>
             )}
             {author && (
-              <div class="flex items-center gap-4 group/meta">
-                <div class="size-6 rounded-full border-2 border-tron-blue/30 flex items-center justify-center bg-ctp-crust group-hover:meta:border-tron-blue transition-colors">
+              <div class="flex items-center gap-3 sm:gap-4 group/meta">
+                <div class="size-5 sm:size-6 rounded-full border-2 border-tron-blue/30 flex items-center justify-center bg-ctp-crust group-hover:meta:border-tron-blue transition-colors">
                   <Icon name="lucide:user" class="size-3 text-tron-blue" />
                 </div>
                 <span class="text-text-muted group-hover:text-tron-blue transition-colors">{author.data.name} {author.data.surname}</span>
@@ -119,17 +119,17 @@ if (!author) {
         </header>
 
         <!-- Main Content -->
-        <div class="prose prose-xl prose-invert max-w-none 
+        <div class="prose prose-lg sm:prose-xl prose-invert max-w-none 
           prose-headings:tracking-tighter prose-headings:font-black
           prose-a:text-tron-blue prose-a:decoration-tron-blue/40 hover:prose-a:decoration-tron-blue prose-a:underline-offset-8
-          prose-img:rounded-[2.5rem] prose-img:shadow-[0_0_60px_var(--glow-blue-15)]
+          prose-img:rounded-2xl sm:prose-img:rounded-[2.5rem] prose-img:shadow-[0_0_60px_var(--glow-blue-15)]
           prose-pre:border prose-pre:border-tron-blue/30 prose-pre:shadow-3xl
-          prose-blockquote:border-tron-orange prose-blockquote:bg-tron-orange/5 prose-blockquote:rounded-r-3xl
+          prose-blockquote:border-tron-orange prose-blockquote:bg-tron-orange/5 prose-blockquote:rounded-r-2xl sm:prose-blockquote:rounded-r-3xl
           selection:bg-ctp-surface2 selection:text-ctp-text">
           <slot />
         </div>
 
-        <div class="mt-32 border-t border-tron-blue/15 pt-16">
+        <div class="mt-20 sm:mt-32 border-t border-tron-blue/15 pt-12 sm:pt-16">
           <Comments postId={postId} />
         </div>
       </article>
