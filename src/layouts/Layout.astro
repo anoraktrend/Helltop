@@ -78,7 +78,7 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 	})} />
 
 </head>
-	<body class="min-h-screen flex flex-col font-sans selection:bg-ctp-surface2 selection:text-text-main overflow-x-hidden" aria-label={`Helltop - ${title}`} x-data="{ scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 20">
+	<body class="min-h-screen flex flex-col font-sans selection:bg-ctp-surface2 selection:text-text-main overflow-x-hidden" aria-label={`Helltop - ${title}`} x-data="{ mobileMenuOpen: false, scrolled: false }" @scroll.window="scrolled = window.pageYOffset > 20">
 		<Starfield />
 <nav aria-label="Main navigation" 
   class="sticky top-0 z-40 w-full transition-all duration-500 border-b"
@@ -124,9 +124,37 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 		<SocialLinks iconSize="5" spacing="6" class="hidden lg:flex" />
 		<div class="h-6 w-px bg-tron-blue/20 hidden md:block"></div>
 		<ThemeSwitcher client:load aria-label="Toggle dark mode" />
+                
+                <!-- Social Menu Button (Mobile/Tablet) -->
+                <button 
+                  @click="mobileMenuOpen = !mobileMenuOpen" 
+                  class="lg:hidden p-3 text-tron-blue hover:bg-tron-blue/10 rounded-xl transition-all border border-tron-blue/20 active:scale-90"
+                  aria-label="Toggle social menu"
+                >
+                  <Icon name="lucide:share-2" x-show="!mobileMenuOpen" class="size-5" />
+                  <Icon name="lucide:x" x-show="mobileMenuOpen" class="size-5" style="display: none;" />
+                </button>
 	      </div>
 	    </div>
 	  </div>
+
+          <!-- Social Menu Overlay -->
+          <div 
+            x-show="mobileMenuOpen" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 -translate-y-10"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-10"
+            class="lg:hidden bg-ctp-crust/98 backdrop-blur-3xl border-b border-tron-blue/40 shadow-[0_20px_50px_var(--glow-blue-20)]"
+            style="display: none;"
+          >
+            <div class="px-6 pt-4 pb-10">
+                <p class="px-4 text-[10px] font-black text-text-overlay uppercase tracking-[0.5em] mb-6">Grid Identity</p>
+                <SocialLinks iconSize="6" spacing="8" class="px-4" />
+            </div>
+          </div>
 	</nav>
 
     <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
