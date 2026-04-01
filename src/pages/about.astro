@@ -37,13 +37,9 @@ const { Content } = await astroRender(author);
               {data.name} <span class="text-text-main">{data.surname}</span>
             </h1>
           </div>
-          <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-12">
-            <p class="text-xl sm:text-2xl text-tron-blue font-mono uppercase tracking-[0.4em]">
-              {data.role}
-            </p>
-            <div class="h-8 w-px bg-tron-blue/20 hidden sm:block"></div>
-            <SystemStatus />
-          </div>
+          <p class="text-xl sm:text-2xl text-tron-blue font-mono uppercase tracking-[0.4em]">
+            {data.role}
+          </p>
           <p class="text-text-dim text-lg leading-relaxed max-w-2xl font-light italic">
             "{data.short_bio}"
           </p>
@@ -65,10 +61,13 @@ const { Content } = await astroRender(author);
       <aside class="space-y-12">
         <!-- Battlegrounds -->
         <div class="space-y-8">
-          <h2 class="text-xs font-black text-text-overlay uppercase tracking-[0.5em] px-4 flex items-center gap-3">
-            <span class="size-2 bg-tron-blue rounded-full shadow-[0_0_10px_var(--glow-blue-100)]"></span>
-            Current Operations
-          </h2>
+          <div class="px-4 space-y-6">
+            <h2 class="text-xs font-black text-text-overlay uppercase tracking-[0.5em] flex items-center gap-3">
+              <span class="size-2 bg-tron-blue rounded-full shadow-[0_0_10px_var(--glow-blue-100)]"></span>
+              Current Operations
+            </h2>
+            <SystemStatus />
+          </div>
           <div class="space-y-4">
             {data.battlegrounds.map((bg) => (
               <div class="p-6 tron-card rounded-2xl border-tron-blue/10 hover:border-tron-blue/40 transition-all group/bg">
