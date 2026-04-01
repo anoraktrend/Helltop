@@ -40,6 +40,9 @@ const { Content } = await astroRender(author);
           <p class="text-xl sm:text-2xl text-tron-blue font-mono uppercase tracking-[0.4em]">
             {data.role}
           </p>
+          <p class="text-text-main text-sm font-mono uppercase tracking-[0.2em] opacity-80 max-w-xl">
+            {data.sub_role}
+          </p>
           <p class="text-text-dim text-lg leading-relaxed max-w-2xl font-light italic">
             "{data.short_bio}"
           </p>
@@ -49,11 +52,34 @@ const { Content } = await astroRender(author);
 
     <!-- Main Bio Content -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 mb-32">
-      <div class="lg:col-span-2">
+      <div class="lg:col-span-2 space-y-16">
         <div class="relative group/bio">
           <div class="absolute -inset-8 bg-tron-blue/5 rounded-[3rem] blur-3xl -z-10"></div>
           <div class="prose prose-xl bg-ctp-mantle/30 p-10 rounded-3xl border border-tron-blue/10 shadow-[0_0_40px_var(--glow-blue-10)]">
             <Content />
+          </div>
+        </div>
+
+        <!-- Manifesto -->
+        <div class="relative group/manifesto">
+          <div class="absolute -inset-8 bg-tron-orange/5 rounded-[3rem] blur-3xl -z-10"></div>
+          <div class="p-10 rounded-3xl border border-tron-orange/20 bg-ctp-crust/50 shadow-[0_0_30px_var(--glow-orange-10)]">
+            <h2 class="text-xs font-black text-tron-orange uppercase tracking-[0.6em] mb-10 flex items-center gap-3">
+              <span class="size-2 bg-tron-orange rounded-full shadow-[0_0_10px_var(--glow-orange-100)] animate-pulse"></span>
+              Core Directives
+            </h2>
+            <div class="grid sm:grid-cols-2 gap-8">
+              {data.manifesto.map((item) => (
+                <div class="flex items-start gap-4 group/item">
+                  <div class="text-tron-orange font-mono text-lg opacity-40 group-hover/item:opacity-100 transition-opacity">
+                    {item.split('.')[0]}.
+                  </div>
+                  <div class="text-text-main font-mono text-sm tracking-widest uppercase py-1 group-hover/item:text-tron-orange transition-colors">
+                    {item.split('.').slice(1).join('.').trim()}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
