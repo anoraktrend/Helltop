@@ -1,0 +1,114 @@
+---
+title: "Build a kickass private setup on Linux"
+description: "Mullvad VPN + debrid services = actually private browsing and downloading that doesn't suck"
+date: "2025-11-30"
+author: me
+tags: ["Privacy Tools", "Guides", "Media Server"]
+slug: "pyp"
+draft: false
+---
+
+Alright let's cut the corporate bullshit. This is how you actually set up a privacy focused stack on Linux that works, no fluff. We're using Mullvad VPN + a good debrid service.
+
+### First off: why Linux?
+
+Look, Windows and macOS are fine for most people but if you actually care about privacy you need full control over your system. Linux gives you that. It's open source, no weird telemetry you can't turn off, you own everything that runs on your machine.
+
+This guide works for anything Debian based - so Ubuntu, Mint, Pop!_OS, whatever you're running.
+
+---
+
+### Mullvad VPN
+
+If you're not using Mullvad yet, what are you even doing. This is the gold standard for VPNs right now. Based in Sweden, zero logs, they don't ask for your email, name, anything. You literally just get an account number and that's it. They even accept cash through the mail if you're extra paranoid.
+
+**How to install this thing on Linux:**
+
+1.  Go grab the `.deb` package from their [downloads page](https://mullvad.net/en/download/linux)
+2.  Open up a terminal, cd to your downloads folder and run these:
+    ```bash
+    sudo dpkg -i MullvadVPN-VERSION.deb
+    sudo apt-get install -f
+    ```
+    (replace the filename with whatever you actually downloaded obviously)
+
+3.  **Actually using it:**
+    *   You can just open the GUI app from your menu like normal
+    *   Or if you live in the terminal like me:
+        *   `mullvad account login YOUR_ACCOUNT_NUMBER`
+        *   `mullvad connect` to turn it on
+        *   `mullvad disconnect` to turn it off
+        *   `mullvad status` check if it's actually working
+
+---
+
+### Okay what are debrid services?
+
+Ever tried downloading something and hit those stupid 60 second wait timers? Or slow as hell download speeds? Debrid services fix that. They give you premium direct download links for basically every file host out there.
+
+Two good options right now:
+*   [Real-Debrid](http://real-debrid.com/?id=12356753) - the old reliable one
+*   [Torbox](https://torbox.app/subscription?referral=49f53f7a-17d8-449e-b075-f0241527f4c7) - the new privacy focused kid on the block
+
+These are referral links, pick the one you want, but I get a kickback for these links. 
+RDT client (my preferred way to use these) has a full list of supported debrids with somlinks that help its developer.
+
+---
+
+### Torbox vs Real-Debrid: which one should you pick?
+
+Let's break this down honestly:
+
+✅ **Real-Debrid:**
+*   Been around forever
+*   Has literally everything cached. If it exists on the internet, RD probably has it already
+*   Works with basically every single file hoster
+*   **Crazy cheap:** 20€ for 6 months. Insane value.
+*   ❌ **Big catch:** They *do* keep download logs. Not great for privacy.
+
+✅ **Torbox:**
+*   Brand new, built from the ground up for privacy
+*   Zero logs policy
+*   Does cloud torrenting for you - they download the torrent on their servers then you just stream or direct download it
+*   Also has Usenet access on the good plans
+*   Pricing: Pro tier is $110/year
+*   ❌ Catch: Doesn't have quite as big a library as RD yet.
+
+**Quick decision guide:**
+Just want everything to work all the time and need it cheap? Get Real-Debrid.
+Don't mind paying more and need Usenet on top of torrents? Get Torbox.
+
+---
+
+### Important heads up about VPNs + Debrid
+
+This is the thing nobody tells you. Some debrid services will straight up block common VPN IP ranges. This list changes constantly.
+
+Before you pay for anything:
+1.  Connect your VPN
+2.  Go test the free trial
+3.  Check /r/RealDebrid or /r/Torbox on Reddit for recent reports
+
+Nothing worse than paying for a year of something just to find out it doesn't work with your VPN.
+
+---
+
+### If you run YAMS this will change your life
+
+If you're running a self hosted media server with YAMS, do yourself a favour and install `rdt-client`.
+
+It's a tiny docker container that:
+*   Watches a folder for torrent files
+*   Automatically sends them to your debrid service
+*   Downloads the finished file straight to your server
+*   Puts it right where Plex/Jellyfin can find it
+
+You drop a torrent file in a folder. 5 minutes later it's in your library. That's it. No more messing around with download clients.
+
+---
+
+### Wrapping up
+
+That's really all there is to it. Linux + good VPN + solid debrid = you can basically do whatever you want online without anyone watching.
+
+Just don't be an idiot. Always double check your VPN is actually connected before you start downloading anything. Stay safe out there.
