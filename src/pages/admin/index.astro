@@ -1,31 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { env } from 'cloudflare:workers';
 import { getDb } from '../../db';
 import { comments } from '../../db/schema';
 import { desc } from 'drizzle-orm';
 import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
+import { getKv } from '../../utils/env';
 
-// Session Verification
 const sessionId = Astro.cookies.get('admin_session')?.value;
-let isLoggedIn = false;
+const isLoggedIn = sessionId
+  ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
+  : !!import.meta.env.DEV;
 
-const sessionKv = (env as any)?.SESSION;
-
-if (sessionId && sessionKv) {
-  const isValid = await sessionKv.get(`session:${sessionId}`);
-  if (isValid === 'valid') {
-    isLoggedIn = true;
-  }
-} else if (import.meta.env.DEV) {
-  isLoggedIn = true;
-}
-
-if (!isLoggedIn) {
-  console.log("Not logged in, redirecting to /api/auth/login");
-  return Astro.redirect('/api/auth/login');
-}
+if (!isLoggedIn) return Astro.redirect('/api/auth/login');
 
 // Fetch Comments
 let allComments: any[] = [];

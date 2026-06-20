@@ -1,5 +1,5 @@
 import type {APIRoute} from 'astro';
-import {env} from 'cloudflare:workers';
+import { getEnv, getKv } from '../../../utils/env';
 
 interface OIDCConfig {
   token_endpoint: string;
@@ -16,25 +16,16 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
     const code = url.searchParams.get('code');
     const state = url.searchParams.get('state');
 
-    // CSRF Protection via Stateful Cookies
     const expectedState = cookies.get('oidc_state')?.value;
     cookies.delete('oidc_state', {path: '/'});
 
     if (!code || !state || state !== expectedState) {
-      return new Response('Invalid or missing state/code parameters', {
-        status: 400,
-      });
+      return new Response('Invalid or missing state/code parameters', {status: 400});
     }
 
-    const issuerUrl =
-      (env as unknown as Record<string, string | undefined>)
-        ?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    const clientId =
-      (env as unknown as Record<string, string | undefined>)
-        ?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
-    const clientSecret =
-      (env as unknown as Record<string, string | undefined>)
-        ?.AUTHELIA_CLIENT_SECRET || import.meta.env.AUTHELIA_CLIENT_SECRET;
+    const issuerUrl = getEnv('AUTHELIA_ISSUER_URL');
+    const clientId = getEnv('AUTHELIA_CLIENT_ID');
+    const clientSecret = getEnv('AUTHELIA_CLIENT_SECRET');
 
     if (!issuerUrl || !clientId || !clientSecret) {
       return new Response(
@@ -86,17 +77,10 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
       return new Response('Did not receive an ID Token', {status: 400});
     }
 
-    // Create Local Session using Cloudflare KV
     const sessionId = crypto.randomUUID();
-
-    const sessionKv = (
-      env as unknown as Record<string, KVNamespace | undefined>
-    )?.SESSION;
+    const sessionKv = getKv('SESSION');
     if (sessionKv) {
-      // Set session expiration to 24 hours
-      await sessionKv.put(`session:${sessionId}`, 'valid', {
-        expirationTtl: 86400,
-      });
+      await sessionKv.put(`session:${sessionId}`, 'valid', { expirationTtl: 86400 });
     } else if (!import.meta.env.DEV) {
       return new Response(
         'Server misconfiguration: SESSION KV binding missing',

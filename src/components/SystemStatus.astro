@@ -27,39 +27,28 @@ try {
   error = true;
 }
 
-const isAllUp = stats.up === stats.total && stats.total > 0;
-const isPartiallyDown = stats.up < stats.total && stats.up > 0;
+const allUp = stats.up === stats.total && stats.total > 0;
 ---
 
 <Link 
   href="https://status.helltop.net" 
-  aria-label={`System Status: ${isAllUp ? 'All systems online' : stats.total - stats.up + ' nodes critical'}`}
+  aria-label={`System Status: ${allUp ? 'All systems online' : stats.total - stats.up + ' nodes critical'}`}
   class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_var(--glow-blue-15)] transition-all group"
 >
   <div class="relative flex items-center justify-center">
     <StatusBadge name="all" class="size-5" />
     {!error && stats.total > 0 && (
-      <div class:list={[
-        "absolute inset-0 rounded-full animate-ping opacity-40",
-        isAllUp ? "bg-tron-blue" : "bg-tron-orange"
-      ]}></div>
+      <div class={`absolute inset-0 rounded-full animate-ping opacity-40 ${allUp ? 'bg-tron-blue' : 'bg-tron-orange'}`}></div>
     )}
   </div>
   
   <div class="flex flex-col items-start leading-tight">
     <span class="text-[9px] font-black text-text-overlay uppercase tracking-[0.3em]">Network Status</span>
     <span class="text-[10px] font-bold text-text-muted group-hover:text-tron-blue transition-colors uppercase tracking-[0.2em] mt-0.5">
-      {error ? (
-        "Status Offline"
-      ) : stats.total === 0 ? (
-        "No Services Tracked"
-      ) : isAllUp ? (
-        "All Systems Go"
-      ) : isPartiallyDown ? (
+      {error ? "Status Offline" : stats.total === 0 ? "No Services Tracked" : allUp ? "All Systems Go" : stats.total - stats.up === stats.total ?
+        <span class="text-tron-orange">Total Outage</span> :
         <span class="text-tron-orange">{stats.total - stats.up} Nodes Critical</span>
-      ) : (
-        <span class="text-tron-orange">Total Outage</span>
-      )}
+      }
     </span>
   </div>
 

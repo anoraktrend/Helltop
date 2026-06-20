@@ -1,40 +1,19 @@
 import {drizzle} from 'drizzle-orm/d1';
 import * as schema from './schema';
-import {env} from 'cloudflare:workers';
+import { env } from 'cloudflare:workers';
+
+function mockDb(): ReturnType<typeof drizzle> {
+  const p: any = new Proxy(() => p, {
+    get: (_, prop) => prop === 'then' ? (r: (x: any) => any) => r([]) : prop === 'catch' ? () => {} : p,
+    apply: () => p,
+  });
+  return p;
+}
 
 export function getDb() {
-  // In Astro v6 with @astrojs/cloudflare, we import env directly from 'cloudflare:workers'
-  const d1 = (env as unknown as Record<string, unknown>)?.DB as
-    | D1Database
-    | undefined;
-
+  const d1 = (env as unknown as Record<string, unknown>).DB as D1Database | undefined;
   if (!d1) {
-    if (import.meta.env.DEV) {
-      console.warn(
-        'D1 database binding "DB" not found. Comments will be disabled in local dev unless using wrangler.',
-      );
-      
-      // A more robust mock using Proxy to handle arbitrary chains and be thenable
-      const createMock = (data: any = []) => {
-        const mock: any = new Proxy(() => mock, {
-          get(_target, prop) {
-            if (prop === 'then') {
-              return (resolve: any) => resolve(data);
-            }
-            if (prop === 'catch') {
-              return (_reject: any) => {};
-            }
-            return mock;
-          },
-          apply() {
-            return mock;
-          }
-        });
-        return mock;
-      };
-
-      return createMock() as unknown as ReturnType<typeof drizzle>;
-    }
+    if (import.meta.env.DEV) return mockDb();
     throw new Error('D1 database binding "DB" not found');
   }
   return drizzle(d1, {schema});

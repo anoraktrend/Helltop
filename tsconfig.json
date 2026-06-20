@@ -11,7 +11,7 @@
     "noEmit": true,
     "outDir": "dist",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "types": ["@cloudflare/workers-types"],
+    "types": [],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

@@ -88,36 +88,21 @@ const { title, description = "My Digital Rebellion. Fuck the corporate cloud. Bu
 	    <div class="flex justify-between h-16 items-center">
 	      <div class="flex items-center gap-4 sm:gap-12">
 		<div class="flex items-center bg-ctp-crust/40 rounded-xl p-1 border border-tron-blue/10">
-		  <Link 
-        href="/" 
-        class={`px-4 sm:px-6 py-2 rounded-lg transition-all uppercase text-[10px] sm:text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname === '/' ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
-        aria-label="Home"
-      >
-			  Helltop
-        {Astro.url.pathname === '/' && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
-        )}
-		  </Link>
-		  <Link 
-        href="/blog" 
-        class={`px-4 sm:px-6 py-2 rounded-lg transition-all uppercase text-[10px] sm:text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/blog') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
-        aria-label="Blog"
-      >
-			  Blog
-        {Astro.url.pathname.startsWith('/blog') && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
-        )}
-		  </Link>
-		  <Link 
-        href="/about" 
-        class={`px-4 sm:px-6 py-2 rounded-lg transition-all uppercase text-[10px] sm:text-sm font-black tracking-widest relative group/nav ${Astro.url.pathname.startsWith('/about') ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`} 
-        aria-label="About"
-      >
-			  About
-        {Astro.url.pathname.startsWith('/about') && (
-          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>
-        )}
-		  </Link>
+		  {[
+        { href: '/', label: 'Helltop', match: (p: string) => p === '/' },
+        { href: '/blog', label: 'Blog', match: (p: string) => p.startsWith('/blog') },
+        { href: '/about', label: 'About', match: (p: string) => p.startsWith('/about') },
+      ].map(({ href, label, match }) => {
+        const active = match(Astro.url.pathname);
+        return (
+          <Link href={href} aria-label={label}
+            class={`px-4 sm:px-6 py-2 rounded-lg transition-all uppercase text-[10px] sm:text-sm font-black tracking-widest relative group/nav ${active ? 'bg-tron-blue/20 text-tron-blue shadow-[0_0_15px_var(--glow-blue-20)] border border-tron-blue/30' : 'text-text-overlay hover:text-text-main hover:bg-white/5'}`}
+          >
+            {label}
+            {active && <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-tron-blue shadow-[0_0_10px_var(--glow-blue-100)]"></span>}
+          </Link>
+        );
+      })}
 		</div>
 	      </div>
 	      <div class="flex items-center gap-3 sm:gap-6">

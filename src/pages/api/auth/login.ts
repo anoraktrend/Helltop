@@ -1,14 +1,10 @@
 import type {APIRoute} from 'astro';
-import {env} from 'cloudflare:workers';
+import { getEnv } from '../../../utils/env';
 
 export const GET: APIRoute = async ({request, cookies, redirect}) => {
   try {
-    const issuerUrl =
-      (env as unknown as Record<string, string | undefined>)
-        ?.AUTHELIA_ISSUER_URL || import.meta.env.AUTHELIA_ISSUER_URL;
-    const clientId =
-      (env as unknown as Record<string, string | undefined>)
-        ?.AUTHELIA_CLIENT_ID || import.meta.env.AUTHELIA_CLIENT_ID;
+    const issuerUrl = getEnv('AUTHELIA_ISSUER_URL');
+    const clientId = getEnv('AUTHELIA_CLIENT_ID');
 
     if (!issuerUrl || !clientId) {
       return new Response(

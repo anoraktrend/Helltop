@@ -2,30 +2,17 @@ import type {APIRoute} from 'astro';
 import {getDb} from '../../../db';
 import {comments} from '../../../db/schema';
 import {eq} from 'drizzle-orm';
-import {env} from 'cloudflare:workers';
+import { getKv } from '../../../utils/env';
 
 export const DELETE: APIRoute = async ({params, cookies}) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
-    let isAuthorized = false;
-
-    const sessionKv = (
-      env as unknown as Record<string, KVNamespace | undefined>
-    )?.SESSION;
-
-    if (sessionId && sessionKv) {
-      const isValid = await sessionKv.get(`session:${sessionId}`);
-      if (isValid === 'valid') {
-        isAuthorized = true;
-      }
-    } else if (import.meta.env.DEV) {
-      isAuthorized = true;
-    }
+    const isAuthorized = sessionId
+      ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
+      : !!import.meta.env.DEV;
 
     if (!isAuthorized) {
-      return new Response(JSON.stringify({error: 'Unauthorized'}), {
-        status: 401,
-      });
+      return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
     }
 
     const {id} = params;

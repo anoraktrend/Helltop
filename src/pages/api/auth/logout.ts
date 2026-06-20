@@ -1,17 +1,12 @@
 import type {APIRoute} from 'astro';
-import {env} from 'cloudflare:workers';
+import { getKv } from '../../../utils/env';
 
 export const POST: APIRoute = async ({cookies}) => {
   try {
     const sessionId = cookies.get('admin_session')?.value;
 
     if (sessionId) {
-      const sessionKv = (
-        env as unknown as Record<string, KVNamespace | undefined>
-      )?.SESSION;
-      if (sessionKv) {
-        await sessionKv.delete(`session:${sessionId}`);
-      }
+      await getKv('SESSION')?.delete(`session:${sessionId}`);
     }
 
     cookies.delete('admin_session', {path: '/'});

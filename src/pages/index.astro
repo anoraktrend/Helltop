@@ -13,6 +13,10 @@ if (!home) {
 }
 
 const { hero, sections } = home.data;
+function itemTheme(item: any) {
+  const external = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
+  return { external, color: external ? 'tron-orange' : 'tron-blue', glow: external ? 'orange' : 'blue' };
+}
 ---
 
 <Layout title="Helltop | My Digital Rebellion">
@@ -92,59 +96,33 @@ const { hero, sections } = home.data;
           </div>
         )}
 
-        {section.type === 'infrastructure' && (
+        {(section.type === 'infrastructure' || section.type === 'software') && (
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {section.items?.filter(item => !!item).map((item) => {
-              const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
-              const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
-              const glowVar = isExternal ? 'var(--glow-orange-60)' : 'var(--glow-blue-60)';
-              return (
-                <Link 
-                  href={item.url} 
-                  aria-label={`Access infrastructure: ${item.name}`}
-                  class={`flex items-start gap-6 sm:gap-8 p-6 sm:p-8 tron-card rounded-2xl border-${themeColor}/15 hover:border-${themeColor}/70 transition-all duration-700 group/item`}
-                >
-                  <div class={`p-4 sm:p-5 bg-ctp-crust rounded-full text-${themeColor} border-2 border-${themeColor}/30 shadow-[0_0_15px_var(--glow-blue-5)] group-hover:shadow-[0_0_25px_${glowVar}] group-hover:item:scale-110 transition-all duration-500`}>
+            {section.items?.map((item) => {
+              const { color, glow } = itemTheme(item);
+              const glowVal = `var(--glow-${glow}-${section.type === 'infrastructure' ? '60' : '100'})`;
+              return section.type === 'infrastructure' ? (
+                <Link href={item.url} aria-label={`Access infrastructure: ${item.name}`}
+                  class={`flex items-start gap-6 sm:gap-8 p-6 sm:p-8 tron-card rounded-2xl border-${color}/15 hover:border-${color}/70 transition-all duration-700 group/item`}>
+                  <div class={`p-4 sm:p-5 bg-ctp-crust rounded-full text-${color} border-2 border-${color}/30 shadow-[0_0_15px_var(--glow-blue-5)] group-hover:shadow-[0_0_25px_${glowVal}] transition-all duration-500`}>
                     <Icon name={item.icon} class="size-8 sm:size-10" />
                   </div>
                   <div class="flex-grow pt-1">
                     <div class="flex items-center justify-between gap-4 mb-3">
-                      <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/item:text-${themeColor} transition-colors uppercase tracking-tighter`}>
-                        {item.name}
-                      </h3>
+                      <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/item:text-${color} transition-colors uppercase tracking-tighter`}>{item.name}</h3>
                       <StatusBadge name={item.name} class="size-8 sm:size-12" />
                     </div>
-                    <p class="text-text-overlay text-[9px] sm:text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">
-                      {item.function}
-                    </p>
+                    <p class="text-text-overlay text-[9px] sm:text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">{item.function}</p>
                   </div>
                 </Link>
-              );
-            })}
-          </div>
-        )}
-
-        {section.type === 'software' && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {section.items?.map((item) => {
-              const isExternal = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
-              const themeColor = isExternal ? 'tron-orange' : 'tron-blue';
-              const glowVar = isExternal ? 'var(--glow-orange-100)' : 'var(--glow-blue-100)';
-              return (
-                <Link 
-                  href={item.url} 
-                  aria-label={`Open software: ${item.name}`}
-                  class={`block p-6 sm:p-8 tron-card rounded-2xl border-${themeColor}/20 hover:border-${themeColor}/80 transition-all duration-700 group/soft`}
-                >
+              ) : (
+                <Link href={item.url} aria-label={`Open software: ${item.name}`}
+                  class={`block p-6 sm:p-8 tron-card rounded-2xl border-${color}/20 hover:border-${color}/80 transition-all duration-700 group/soft`}>
                   <div class="flex items-center gap-3 mb-4">
-                    <div class={`size-1.5 sm:size-2 bg-${themeColor} rounded-full shadow-[0_0_8px_${glowVar}]`}></div>
-                    <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/soft:text-${themeColor} transition-all font-mono uppercase tracking-tighter`}>
-                      {item.name}
-                    </h3>
+                    <div class={`size-1.5 sm:size-2 bg-${color} rounded-full shadow-[0_0_8px_${glowVal}]`}></div>
+                    <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/soft:text-${color} transition-all font-mono uppercase tracking-tighter`}>{item.name}</h3>
                   </div>
-                  <p class="text-text-dim leading-relaxed text-xs group-hover/soft:text-text-muted transition-colors font-mono tracking-wide italic">
-                    {item.description}
-                  </p>
+                  <p class="text-text-dim leading-relaxed text-xs group-hover/soft:text-text-muted transition-colors font-mono tracking-wide italic">{item.description}</p>
                 </Link>
               );
             })}
