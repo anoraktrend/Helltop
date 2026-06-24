@@ -8,26 +8,20 @@ import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
-import remarkToc from 'remark-toc';
-import rehypePresetMinify from 'rehype-preset-minify';
 import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
   site: 'https://helltop.net/',
   output: 'server',
   adapter: cloudflare(),
+  compressHTML: true,
   markdown: {
     syntaxHighlight: 'prism',
   },
   integrations: [
     svelte(), 
     icon(), 
-    mdx({
-      remarkPlugins: [remarkToc],
-      rehypePlugins: [rehypePresetMinify],
-      remarkRehype: { footnoteLabel: 'Footnotes' },
-      gfm: true,
-    }), 
+    mdx(), 
     alpinejs(), 
     sitemap()
   ],

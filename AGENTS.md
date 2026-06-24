@@ -19,7 +19,7 @@ npm run astro [command] # https://astro.build/commands/
 npm run generate-types
 ```
 
-The project is an Astro v6 application with Cloudflare Workers adapter, using D1 databases. Tests are not configured yet; add testing framework when needed (Vitest/Jest recommended for Astro projects).
+The project is an Astro v7 application with Cloudflare Workers adapter, using D1 databases. Tests are not configured yet; add testing framework when needed (Vitest/Jest recommended for Astro projects).
 
 ## TypeScript & Types
 
