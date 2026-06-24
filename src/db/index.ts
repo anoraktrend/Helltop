@@ -2,12 +2,10 @@ import {drizzle} from 'drizzle-orm/d1';
 import * as schema from './schema';
 import { env } from 'cloudflare:workers';
 
-function mockDb(): ReturnType<typeof drizzle> {
-  const p: any = new Proxy(() => p, {
-    get: (_, prop) => prop === 'then' ? (r: (x: any) => any) => r([]) : prop === 'catch' ? () => {} : p,
-    apply: () => p,
+function mockDb() {
+  return new Proxy({} as ReturnType<typeof drizzle>, {
+    get: () => () => Promise.resolve([]),
   });
-  return p;
 }
 
 export function getDb() {

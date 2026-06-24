@@ -31,13 +31,13 @@ export const POST: APIRoute = async ({request}) => {
       );
     }
 
-    const parentId = parent_id ? parseInt(String(parent_id), 10) : null;
+    const parentId = parent_id ? Number(parent_id) : null;
 
     await db.insert(comments).values({
       author,
       body: commentBody,
       postId: post_id,
-      parentId: isNaN(Number(parentId)) ? null : parentId,
+      parentId: Number.isFinite(parentId) ? parentId : null,
       publishedAt: new Date(),
     });
 
@@ -48,10 +48,10 @@ export const POST: APIRoute = async ({request}) => {
   }
 };
 
-export const GET: APIRoute = async ({request: _request}) => {
+export const GET: APIRoute = async ({request}) => {
   try {
     const db = getDb();
-    const url = new URL(_request.url);
+    const url = new URL(request.url);
     const postId = url.searchParams.get('postId');
 
     const query = db

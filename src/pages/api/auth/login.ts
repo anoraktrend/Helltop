@@ -1,47 +1,24 @@
 import type {APIRoute} from 'astro';
-import { getEnv } from '../../../utils/env';
+import { getOidcConfig, getOidcCredentials } from '../../../utils/oidc';
 
 export const GET: APIRoute = async ({request, cookies, redirect}) => {
   try {
-    const issuerUrl = getEnv('AUTHELIA_ISSUER_URL');
-    const clientId = getEnv('AUTHELIA_CLIENT_ID');
+    const { authorization_endpoint: authEndpoint } = await getOidcConfig();
+    const { clientId } = getOidcCredentials();
 
-    if (!issuerUrl || !clientId) {
-      return new Response(
-        'Server misconfiguration: OIDC variables missing. Please configure AUTHELIA_ISSUER_URL and AUTHELIA_CLIENT_ID.',
-        {status: 500},
-      );
-    }
-
-    // Fetch openid-configuration to get the actual auth endpoint dynamically
-    const configRes = await fetch(
-      `${issuerUrl}/.well-known/openid-configuration`,
-    );
-    if (!configRes.ok) {
-      return new Response(
-        `Failed to fetch OIDC configuration from ${issuerUrl}`,
-        {status: 500},
-      );
-    }
-    const config = (await configRes.json()) as {authorization_endpoint: string};
-    const authEndpoint = config.authorization_endpoint;
-
-    // Generate secure random state string
     const state = crypto.randomUUID();
 
-    // Store state in a strict cookie to mitigate CSRF attacks
     cookies.set('oidc_state', state, {
       path: '/',
       httpOnly: true,
       secure: import.meta.env.PROD,
       sameSite: 'lax',
-      maxAge: 300, // 5 minutes expiration for login flow
+      maxAge: 300,
     });
 
     const url = new URL(request.url);
     const redirectUri = `${url.origin}/auth/oidc/callback`;
 
-    // Build the authorization redirect URL
     const authUrl = new URL(authEndpoint);
     authUrl.searchParams.set('response_type', 'code');
     authUrl.searchParams.set('client_id', clientId);
@@ -51,10 +28,8 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
 
     return redirect(authUrl.toString(), 302);
   } catch (error) {
-    const e = error as Error;
-    console.error('Login redirect error:', e);
-    return new Response(`Login Error: ${e.message || 'Unknown error'}`, {
-      status: 500,
-    });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Login redirect error:', message);
+    return new Response(`Login Error: ${message}`, {status: 500});
   }
 };

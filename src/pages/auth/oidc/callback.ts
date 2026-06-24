@@ -1,9 +1,6 @@
 import type {APIRoute} from 'astro';
-import { getEnv, getKv } from '../../../utils/env';
-
-interface OIDCConfig {
-  token_endpoint: string;
-}
+import { getKv } from '../../../utils/env';
+import { getOidcConfig, getOidcCredentials } from '../../../utils/oidc';
 
 interface TokenResponse {
   id_token: string;
@@ -23,30 +20,10 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
       return new Response('Invalid or missing state/code parameters', {status: 400});
     }
 
-    const issuerUrl = getEnv('AUTHELIA_ISSUER_URL');
-    const clientId = getEnv('AUTHELIA_CLIENT_ID');
-    const clientSecret = getEnv('AUTHELIA_CLIENT_SECRET');
-
-    if (!issuerUrl || !clientId || !clientSecret) {
-      return new Response(
-        'Server misconfiguration: Check OIDC environment variables.',
-        {status: 500},
-      );
-    }
-
-    // Dynamically retrieve the token endpoint
-    const configRes = await fetch(
-      `${issuerUrl}/.well-known/openid-configuration`,
-    );
-    if (!configRes.ok) {
-      return new Response('Failed to fetch OIDC configuration', {status: 500});
-    }
-    const config = (await configRes.json()) as OIDCConfig;
-    const tokenEndpoint = config.token_endpoint;
-
+    const { token_endpoint: tokenEndpoint } = await getOidcConfig();
+    const { clientId, clientSecret } = getOidcCredentials();
     const redirectUri = `${url.origin}/auth/oidc/callback`;
 
-    // Exchange Authorization Code for Tokens
     const tokenParams = new URLSearchParams();
     tokenParams.set('grant_type', 'authorization_code');
     tokenParams.set('client_id', clientId);
@@ -60,19 +37,16 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
-      body: tokenParams.toString(),
+      body: tokenParams,
     });
 
     if (!tokenRes.ok) {
       const errText = await tokenRes.text();
       console.error('Authelia Token exchange failed:', errText);
-      return new Response('Token exchange failed with Identity Provider', {
-        status: 400,
-      });
+      return new Response('Token exchange failed with Identity Provider', {status: 400});
     }
 
     const tokens = (await tokenRes.json()) as TokenResponse;
-    // Minimal Token Validation: The token was directly obtained over TLS back-channel using the client secret.
     if (!tokens.id_token) {
       return new Response('Did not receive an ID Token', {status: 400});
     }
@@ -82,29 +56,21 @@ export const GET: APIRoute = async ({request, cookies, redirect}) => {
     if (sessionKv) {
       await sessionKv.put(`session:${sessionId}`, 'valid', { expirationTtl: 86400 });
     } else if (!import.meta.env.DEV) {
-      return new Response(
-        'Server misconfiguration: SESSION KV binding missing',
-        {status: 500},
-      );
+      return new Response('Server misconfiguration: SESSION KV binding missing', {status: 500});
     }
 
-    // Set HTTP-Only Session Cookie
     cookies.set('admin_session', sessionId, {
       path: '/',
       httpOnly: true,
       secure: import.meta.env.PROD,
       sameSite: 'lax',
-      maxAge: 86400, // 24 hours
+      maxAge: 86400,
     });
 
-    // Successfully Authenticated, Redirect to Admin Dashboard
     return redirect('/admin', 302);
   } catch (error) {
-    const e = error as Error;
-    console.error('OIDC callback error:', e);
-    return new Response(
-      `Internal Server Error: ${e.message || 'Unknown error'}`,
-      {status: 500},
-    );
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('OIDC callback error:', message);
+    return new Response(`Internal Server Error: ${message}`, {status: 500});
   }
 };

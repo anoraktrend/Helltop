@@ -1,9 +1,11 @@
 import { env } from 'cloudflare:workers';
 
+const _env = env as unknown as Record<string, string | KVNamespace | undefined>;
+
 export function getEnv(key: string): string | undefined {
-  return (env as unknown as Record<string, string | undefined>)?.[key] || import.meta.env[key];
+  return (_env[key] as string) ?? import.meta.env[key];
 }
 
 export function getKv(name: string): KVNamespace | undefined {
-  return (env as unknown as Record<string, KVNamespace | undefined>)?.[name];
+  return _env[name] as KVNamespace | undefined;
 }
