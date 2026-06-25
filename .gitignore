@@ -27,3 +27,4 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 build/
+AGENTS.md BADGES.md README.md
