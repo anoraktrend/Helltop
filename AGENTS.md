@@ -4,19 +4,19 @@
 
 ```bash
 # Development server
-npm run dev
+bun run dev
 
 # Production build
-npm run build
+bun run build
 
 # Preview production build
-npm run preview
+bun run preview
 
 # Run CLI commands
-npm run astro [command] # https://astro.build/commands/
+bun run astro [command] # https://astro.build/commands/
 
 # Generate Cloudflare Workers types
-npm run generate-types
+bun run generate-types
 ```
 
 The project is an Astro v7 application with Cloudflare Workers adapter, using D1 databases. Tests are not configured yet; add testing framework when needed (Vitest/Jest recommended for Astro projects).

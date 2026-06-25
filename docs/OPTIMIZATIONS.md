@@ -69,10 +69,10 @@ Astro already performs automatic code splitting. Verify production build:
 
 ```bash
 # Check bundle size
-npm run build && du -sh dist/
+bun run build && du -sh dist/
 
 # Preview and test locally
-npm run preview
+bun run preview
 ```
 
 ### Caching Strategy

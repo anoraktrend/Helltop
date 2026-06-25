@@ -23,11 +23,11 @@ This repository is built on the following principles:
 
 | Command | Action |
 | :--- | :--- |
-| `pnpm install` | Install all necessary dependencies |
-| `pnpm run dev` | Launch local development server |
-| `pnpm run build` | Build the production artifact for Cloudflare Pages |
-| `pnpm run astro check` | Run type checking and accessibility audits |
-| `pnpm run generate-types` | Generate Cloudflare Worker types from wrangler.jsonc |
+| `bun install` | Install all necessary dependencies |
+| `bun run dev` | Launch local development server |
+| `bun run build` | Build the production artifact for Cloudflare Pages |
+| `bun run check` | Run type checking and accessibility audits |
+| `bun run generate-types` | Generate Cloudflare Worker types from wrangler.jsonc |
 
 ## 🛠 Infrastructure
 
