@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import {getCollection} from 'astro:content';
-import sanitizeHtml from 'sanitize-html';
+import {sanitizeHtml} from '../utils/sanitize';
 
 export async function GET(context: {site: URL}) {
   const posts = await getCollection('blog', ({data}) => !data.draft);
@@ -25,11 +25,8 @@ export async function GET(context: {site: URL}) {
       description: post.data.description,
       link: `/blog/${post.data.slug}`,
       content: sanitizeHtml(post.rendered?.html ?? post.data.description ?? '', {
-        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-        transformTags: {
-          a: (_, a) => ({tagName: 'a', attribs: {...a, href: absUrl(a.href)}}),
-          img: (_, a) => ({tagName: 'img', attribs: {...a, src: absUrl(a.src)}}),
-        },
+        a: (a) => ({...a, href: absUrl(a.href)}),
+        img: (a) => ({...a, src: absUrl(a.src)}),
       }),
     })),
   });
