@@ -1,64 +1,37 @@
 ---
-import StatusBadge from './StatusBadge.astro';
 import { Link } from 'astro-link';
 
-let stats = { up: 0, total: 0 };
-let error = false;
-
+let online = false;
 try {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-  const res = await fetch('https://status.helltop.net/api/health', {
-    signal: controller.signal
+  const res = await fetch('https://status.helltop.net/badges/all.svg', {
+    method: 'HEAD',
+    signal: AbortSignal.timeout(5000)
   });
-  clearTimeout(timeoutId);
-
-  if (res.ok) {
-    const data = await res.json() as {
-      status: string;
-      services: { total: number; healthy: number; degraded: number; unknown: number };
-      checked: { name: string; status: string; latency_ms: number }[];
-    };
-    stats.total = data.services.total;
-    stats.up = data.services.healthy;
-  } else {
-    error = true;
-  }
-} catch (e) {
-  console.error('Failed to fetch status stats:', e);
-  error = true;
-}
-
-const allUp = stats.up === stats.total && stats.total > 0;
+  online = res.ok;
+} catch {}
 ---
 
 <Link 
   href="https://status.helltop.net" 
-  aria-label={`System Status: ${allUp ? 'All systems online' : stats.total - stats.up + ' nodes critical'}`}
+  aria-label={`System Status: ${online ? 'Online' : 'Offline'}`}
   class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_var(--glow-blue-15)] transition-all group"
 >
   <div class="relative flex items-center justify-center">
-    <StatusBadge name="all" class="size-5" />
-    {!error && stats.total > 0 && (
-      <div class={`absolute inset-0 rounded-full animate-ping opacity-40 ${allUp ? 'bg-tron-blue' : 'bg-tron-orange'}`}></div>
+    <img 
+      src="https://status.helltop.net/badges/all.svg" 
+      alt="System status" 
+      class="size-5 object-contain"
+      loading="lazy"
+    />
+    {online && (
+      <div class="absolute inset-0 rounded-full animate-ping opacity-40 bg-tron-blue"></div>
     )}
   </div>
   
   <div class="flex flex-col items-start leading-tight">
     <span class="text-[9px] font-black text-text-overlay uppercase tracking-[0.3em]">Network Status</span>
     <span class="text-[10px] font-bold text-text-muted group-hover:text-tron-blue transition-colors uppercase tracking-[0.2em] mt-0.5">
-      {error ? "Status Offline" : stats.total === 0 ? "No Services Tracked" : allUp ? "All Systems Go" : stats.total - stats.up === stats.total ?
-        <span class="text-tron-orange">Total Outage</span> :
-        <span class="text-tron-orange">{stats.total - stats.up} Nodes Critical</span>
-      }
+      {online ? "Online" : "Offline"}
     </span>
-  </div>
-
-  <div class="h-4 w-px bg-tron-blue/20 mx-1"></div>
-  
-  <div class="flex items-center gap-1.5">
-    <span class="text-[10px] font-mono text-tron-blue">{stats.up}/{stats.total}</span>
-    <span class="text-[8px] font-bold text-text-overlay uppercase tracking-widest">Active</span>
   </div>
 </Link>

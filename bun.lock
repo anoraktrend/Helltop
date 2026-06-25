@@ -10,7 +10,6 @@
         "@astrojs/mdx": "^7.0.0",
         "@astrojs/rss": "^4.0.18",
         "@astrojs/svelte": "^9.0.0",
-        "@tinacms/astro": "^0.5.0",
         "@tinacms/cli": "^2.5.1",
         "alpinejs": "^3.15.8",
         "astro": "^7.0.2",
@@ -723,8 +722,6 @@
     "@tanstack/virtual-core": ["@tanstack/virtual-core@3.17.1", "", {}, "sha512-VZyW2Uiml5tmBZwPGrSD3Sz73OxzljQMCmzYHsUTPEuTsERf5xwa+uWb01xEzkz3ZSYTjj8NEb/mKHvgKxyZdA=="],
 
     "@tinacms/app": ["@tinacms/app@2.5.6", "", { "dependencies": { "@graphiql/toolkit": "0.8.4", "@headlessui/react": "2.1.8", "@heroicons/react": "^1.0.6", "@monaco-editor/react": "4.7.0-rc.0", "@tinacms/mdx": "2.1.7", "final-form": "4.20.10", "graphiql": "3.0.0-alpha.1", "graphql": "15.8.0", "monaco-editor": "0.31.0", "react": "^18.3.1", "react-dom": "^18.3.1", "react-router-dom": "^6.30.3", "tinacms": "3.9.3", "typescript": "^5.7.3", "zod": "^3.24.2" } }, "sha512-15AFrJ4QsF9uk6sCy19ZFGsPhhIOWCzX3XJRYwEjLHomHmwClnznTRtU2sDNnjWipE+zycwLfRlaE/VT16oiJA=="],
-
-    "@tinacms/astro": ["@tinacms/astro@0.5.0", "", { "dependencies": { "@tinacms/bridge": "0.3.0" }, "peerDependencies": { "astro": "^5.0.0 || ^6.0.0" } }, "sha512-0Nv5svFVuB9JNnR/mZZRla654+w+yRHMV+DDGkMAjV7LYWetTDJVW6lx6sh/S8jDc7Eqr5IfVHSE3YWnAZXTZQ=="],
 
     "@tinacms/bridge": ["@tinacms/bridge@0.3.0", "", {}, "sha512-I7rHRprsL+9e4W5kcyWVEk+ApGGxEZgXBEt5W+rMrODpFxmmxaTMLks7It2DIBVOeXCPZguvirUd3DNqC0Yy0Q=="],
 

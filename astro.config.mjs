@@ -8,8 +8,6 @@ import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
-import tina from '@tinacms/astro/integration';
-import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 
 export default defineConfig({
   site: 'https://helltop.net/',
@@ -20,7 +18,6 @@ export default defineConfig({
     syntaxHighlight: 'prism',
   },
   integrations: [
-    tina(),
     svelte(), 
     icon({
       include: {
@@ -33,8 +30,13 @@ export default defineConfig({
     sitemap()
   ],
   vite: {
+    optimizeDeps: {
+      exclude: ['astro-icon', 'astro-link'],
+    },
+    ssr: {
+      external: ['@iconify/utils'],
+    },
     plugins: [
-      tinaAdminDevRedirect(),
       tailwindcss(),
       Fonts({
         google: {
@@ -45,8 +47,5 @@ export default defineConfig({
         },
       }),
     ],
-    ssr: {
-      noExternal: ['@tinacms/astro', '@tinacms/bridge'],
-    },
   },
 });
