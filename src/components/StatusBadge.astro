@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { name, class: className } = Astro.props;
-const statusUrl = `https://status.helltop.net/badges/${encodeURIComponent(name)}.svg`;
+const statusUrl = `https://status.helltop.net/badge/${encodeURIComponent(name)}.svg`;
 ---
 
 <div class:list={["relative flex items-center justify-center", className]}>

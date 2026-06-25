@@ -1,37 +1,34 @@
 ---
 import { Link } from 'astro-link';
 
-let online = false;
+let status: 'up' | 'degraded' | 'down' = 'down';
 try {
-  const res = await fetch('https://status.helltop.net/badges/all.svg', {
-    method: 'HEAD',
-    signal: AbortSignal.timeout(5000)
+  const res = await fetch('https://status.helltop.net/api/health', {
+    signal: AbortSignal.timeout(4000)
   });
-  online = res.ok;
+  if (res.ok) {
+    const data = await res.json() as { status?: string };
+    status = data.status === 'up' ? 'up' : data.status === 'degraded' ? 'degraded' : 'down';
+  }
 } catch {}
 ---
 
 <Link 
   href="https://status.helltop.net" 
-  aria-label={`System Status: ${online ? 'Online' : 'Offline'}`}
+  aria-label={`System Status: ${status}`}
   class="inline-flex items-center gap-4 px-5 py-2.5 bg-ctp-mantle/40 border border-tron-blue/20 rounded-full hover:border-tron-blue/60 hover:shadow-[0_0_20px_var(--glow-blue-15)] transition-all group"
 >
   <div class="relative flex items-center justify-center">
     <img 
-      src="https://status.helltop.net/badges/all.svg" 
+      src={`https://status.helltop.net/badges/${status}.svg`} 
       alt="System status" 
       class="size-5 object-contain"
       loading="lazy"
     />
-    {online && (
-      <div class="absolute inset-0 rounded-full animate-ping opacity-40 bg-tron-blue"></div>
-    )}
   </div>
   
   <div class="flex flex-col items-start leading-tight">
     <span class="text-[9px] font-black text-text-overlay uppercase tracking-[0.3em]">Network Status</span>
-    <span class="text-[10px] font-bold text-text-muted group-hover:text-tron-blue transition-colors uppercase tracking-[0.2em] mt-0.5">
-      {online ? "Online" : "Offline"}
-    </span>
+    <span class="text-[10px] font-bold text-text-muted group-hover:text-tron-blue transition-colors uppercase tracking-[0.2em] mt-0.5">{status === 'up' ? 'Online' : status === 'degraded' ? 'Partial Outage' : 'Offline'}</span>
   </div>
 </Link>
