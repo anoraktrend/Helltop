@@ -13,6 +13,24 @@ if (!home) {
 }
 
 const { hero, sections } = home.data;
+
+type HealthEntry = { name: string; status: string };
+let healthEntries: HealthEntry[] = [];
+try {
+  const res = await fetch('https://status.helltop.net/api/health', {
+    signal: AbortSignal.timeout(4000)
+  });
+  if (res.ok) {
+    const data = await res.json() as { checked?: HealthEntry[] };
+    healthEntries = data.checked ?? [];
+  }
+} catch {}
+
+const badgeStatus = (badge: string): string => {
+  const lower = badge.toLowerCase();
+  const entry = healthEntries.find(e => e.name.toLowerCase().includes(lower));
+  return entry?.status ?? 'down';
+};
 function itemTheme(item: any) {
   const external = item.url && !item.url.startsWith('/') && !item.url.includes('helltop.net');
   return { external, color: external ? 'tron-orange' : 'tron-blue', glow: external ? 'orange' : 'blue' };
@@ -110,7 +128,7 @@ function itemTheme(item: any) {
                   <div class="flex-grow pt-1">
                     <div class="flex items-center justify-between gap-4 mb-3">
                       <h3 class={`text-xl sm:text-2xl font-black text-text-main group-hover/item:text-${color} transition-colors uppercase tracking-tighter`}>{item.name}</h3>
-                      <StatusBadge name={item.badge} class="size-8 sm:size-12" />
+                      <StatusBadge status={badgeStatus(item.badge)} class="size-8 sm:size-12" />
                     </div>
                     <p class="text-text-overlay text-[9px] sm:text-[10px] font-mono group-hover/item:text-text-muted transition-colors leading-relaxed tracking-wide">{item.function}</p>
                   </div>
