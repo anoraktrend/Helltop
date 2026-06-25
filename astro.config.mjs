@@ -8,6 +8,9 @@ import mdx from '@astrojs/mdx';
 import alpinejs from '@astrojs/alpinejs';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
+import tina from '@tinacms/astro/integration';
+import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
+
 export default defineConfig({
   site: 'https://helltop.net/',
   output: 'server',
@@ -17,10 +20,11 @@ export default defineConfig({
     syntaxHighlight: 'prism',
   },
   integrations: [
+    tina(),
     svelte(), 
     icon({
       include: {
-        lucide: ['share-2', 'x', 'rss', 'arrow-left', 'calendar', 'clock', 'user', 'chevron-up', 'arrow-right', 'log-out', 'trash-2', 'reply', 'mail'],
+        lucide: ['share-2', 'x', 'rss', 'arrow-left', 'calendar', 'clock', 'user', 'chevron-up', 'arrow-right', 'log-out', 'trash-2', 'reply', 'mail', 'edit'],
         'simple-icons': ['liberapay', 'github', 'codeberg', 'mastodon', 'bluesky', 'forgejo', 'nextcloud', 'jellyfin', 'immich', 'authelia', 'vaultwarden'],
       },
     }), 
@@ -30,6 +34,7 @@ export default defineConfig({
   ],
   vite: {
     plugins: [
+      tinaAdminDevRedirect(),
       tailwindcss(),
       Fonts({
         google: {
@@ -40,5 +45,8 @@ export default defineConfig({
         },
       }),
     ],
+    ssr: {
+      noExternal: ['@tinacms/astro', '@tinacms/bridge'],
+    },
   },
 });
