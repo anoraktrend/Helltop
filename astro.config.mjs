@@ -21,7 +21,7 @@ export default defineConfig({
     svelte(), 
     icon({
       include: {
-        lucide: ['share-2', 'x', 'rss', 'arrow-left', 'calendar', 'clock', 'user', 'chevron-up', 'arrow-right', 'log-out', 'trash-2', 'reply', 'mail', 'edit'],
+        lucide: ['share-2', 'x', 'rss', 'arrow-left', 'calendar', 'clock', 'user', 'chevron-up', 'arrow-right', 'log-out', 'trash-2', 'reply', 'mail'],
         'simple-icons': ['liberapay', 'github', 'codeberg', 'mastodon', 'bluesky', 'forgejo', 'nextcloud', 'jellyfin', 'immich', 'authelia', 'vaultwarden'],
       },
     }), 

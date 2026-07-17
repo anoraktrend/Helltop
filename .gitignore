@@ -1,6 +1,9 @@
+coverage/
 ref/
 # build output
 dist/
+
+.wrangler
 
 # generated types
 .astro/
@@ -28,8 +31,3 @@ pnpm-debug.log*
 .netlify
 build/
 AGENTS.md BADGES.md
-
-# TinaCMS
-.tina/__generated__/
-.tina/__generated_db/
-public/admin/
