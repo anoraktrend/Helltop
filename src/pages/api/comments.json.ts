@@ -1,7 +1,8 @@
 import type {APIRoute} from 'astro';
 import {getDb} from '../../db';
 import {comments} from '../../db/schema';
-import {eq, desc} from 'drizzle-orm';
+import {eq, desc, inArray} from 'drizzle-orm';
+import { getKv } from '../../utils/env';
 
 interface CommentRequestBody {
   author: string;
@@ -45,6 +46,45 @@ export const POST: APIRoute = async ({request}) => {
   } catch (error) {
     console.error('Error in POST /api/comments.json:', error);
     return new Response(JSON.stringify({error: 'Failed'}), {status: 500});
+  }
+};
+
+export const DELETE: APIRoute = async ({request, cookies}) => {
+  try {
+    const sessionId = cookies.get('admin_session')?.value;
+    const isAuthorized = sessionId
+      ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
+      : !!import.meta.env.DEV;
+
+    if (!isAuthorized) {
+      return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
+    }
+
+    const body = (await request.json()) as {ids?: unknown};
+
+    if (!Array.isArray(body.ids) || body.ids.length === 0) {
+      return new Response(JSON.stringify({error: 'Comment IDs are required'}), {
+        status: 400,
+      });
+    }
+
+    const ids = [...new Set(body.ids.map((id) => Number(id)).filter((id) => Number.isFinite(id)))];
+
+    if (ids.length === 0) {
+      return new Response(JSON.stringify({error: 'Invalid ID format'}), {
+        status: 400,
+      });
+    }
+
+    const db = getDb();
+    await db.delete(comments).where(inArray(comments.id, ids));
+
+    return new Response(JSON.stringify({success: true, deleted: ids.length}), {status: 200});
+  } catch (error) {
+    console.error('Error in DELETE /api/comments.json:', error);
+    return new Response(JSON.stringify({error: 'Internal Server Error'}), {
+      status: 500,
+    });
   }
 };
 

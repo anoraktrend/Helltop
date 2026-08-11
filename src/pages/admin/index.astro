@@ -37,11 +37,36 @@ try {
       </button>
     </div>
 
+    <div class="flex justify-between items-center mb-6">
+      <button 
+        id="delete-selected-btn"
+        class="bg-ctp-red/10 hover:bg-ctp-red/20 text-ctp-red border border-ctp-red/30 px-4 py-2 rounded-lg transition-colors font-mono text-sm uppercase tracking-widest flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled
+      >
+        <Icon name="lucide:trash-2" class="size-4" />
+        Delete Selected (<span id="selected-count">0</span>)
+      </button>
+      <button 
+        id="select-all-btn"
+        class="bg-ctp-surface0 hover:bg-ctp-surface1 text-ctp-text px-4 py-2 rounded-lg transition-colors font-mono text-sm uppercase tracking-widest"
+      >
+        Select All
+      </button>
+    </div>
+
     <div class="bg-ctp-mantle rounded-xl border border-ctp-surface0 overflow-hidden shadow-sm">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-ctp-crust text-ctp-subtext0 text-xs uppercase tracking-wider font-mono border-b border-ctp-surface0">
+              <th class="px-6 py-4 font-bold">
+                <input 
+                  type="checkbox" 
+                  id="select-all-checkbox"
+                  class="select-checkbox size-4 accent-ctp-mauve cursor-pointer"
+                  title="Select all comments"
+                />
+              </th>
               <th class="px-6 py-4 font-bold">Author</th>
               <th class="px-6 py-4 font-bold">Post ID</th>
               <th class="px-6 py-4 font-bold">Comment</th>
@@ -52,13 +77,21 @@ try {
           <tbody class="divide-y divide-ctp-surface0/50">
             {allComments.length === 0 ? (
               <tr>
-                <td colspan="5" class="px-6 py-12 text-center text-ctp-subtext1 font-mono italic">
+                <td colspan="6" class="px-6 py-12 text-center text-ctp-subtext1 font-mono italic">
                   No transmissions found in the database.
                 </td>
               </tr>
             ) : (
               allComments.map((comment) => (
                 <tr class="hover:bg-ctp-base/50 transition-colors group">
+                  <td class="px-6 py-4">
+                    <input 
+                      type="checkbox" 
+                      class="select-checkbox size-4 accent-ctp-mauve cursor-pointer"
+                      data-id={comment.id}
+                      title="Select this comment"
+                    />
+                  </td>
                   <td class="px-6 py-4 font-mono text-sm text-ctp-text">
                     <span class="bg-ctp-surface0 px-2 py-1 rounded-md">{comment.author}</span>
                   </td>
@@ -101,6 +134,87 @@ try {
           window.location.href = '/';
         } catch (err) {
           console.error("Logout failed:", err);
+        }
+      });
+    }
+
+    // Mass Delete Logic
+    const deleteBtn = document.getElementById('delete-selected-btn') as HTMLButtonElement | null;
+    const deleteBtnText = document.getElementById('selected-count') as HTMLElement | null;
+    const selectAllBtn = document.getElementById('select-all-btn');
+    const selectAllCheckbox = document.getElementById('select-all-checkbox') as HTMLInputElement | null;
+    const checkboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.select-checkbox:not(#select-all-checkbox)'));
+
+    const getSelected = () => checkboxes.filter(cb => cb.isConnected && cb.checked);
+    const getSelectedRows = () => getSelected().map(cb => cb.closest('tr') as HTMLTableRowElement | null).filter((row): row is HTMLTableRowElement => row !== null);
+
+    function updateSelectionUI() {
+      const selected = getSelected();
+      const count = selected.length;
+      if (deleteBtn) deleteBtn.disabled = count === 0;
+      if (deleteBtnText) deleteBtnText.textContent = String(count);
+      if (selectAllCheckbox) selectAllCheckbox.checked = count > 0 && count === checkboxes.length;
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateSelectionUI));
+
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', () => {
+        checkboxes.forEach(cb => { cb.checked = selectAllCheckbox.checked; });
+        updateSelectionUI();
+      });
+    }
+
+    if (selectAllBtn) {
+      selectAllBtn.addEventListener('click', () => {
+        const selectAll = selectionIsEmpty();
+        checkboxes.forEach(cb => { cb.checked = selectAll; });
+        updateSelectionUI();
+      });
+    }
+
+    function selectionIsEmpty() {
+      return document.querySelectorAll<HTMLInputElement>('.select-checkbox:checked:not(#select-all-checkbox)').length === 0;
+    }
+
+    function setBusy(busy: boolean) {
+      if (deleteBtn) deleteBtn.disabled = busy || getSelected().length === 0;
+      checkboxes.forEach(cb => { cb.disabled = busy; });
+      if (selectAllCheckbox) selectAllCheckbox.disabled = busy;
+      if (selectAllBtn) selectAllBtn.setAttribute('aria-disabled', busy ? 'true' : 'false');
+    }
+
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', async () => {
+        const ids = getSelected().map(cb => cb.dataset.id).filter((id): id is string => !!id);
+        if (ids.length === 0) return;
+
+        if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected comment${ids.length > 1 ? 's' : ''}?`)) return;
+
+        setBusy(true);
+
+        try {
+          const res = await fetch('/api/comments.json', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids })
+          });
+
+          if (res.ok) {
+            const rows = getSelectedRows();
+            rows.forEach(row => {
+              row.style.opacity = '0';
+              setTimeout(() => row.remove(), 300);
+            });
+            setTimeout(updateSelectionUI, 350);
+          } else {
+            alert('Failed to delete comments. You may have been logged out.');
+          }
+        } catch (err) {
+          console.error('Mass delete error:', err);
+          alert('Network error occurred.');
+        } finally {
+          setBusy(false);
         }
       });
     }
