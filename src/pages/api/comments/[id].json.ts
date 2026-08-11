@@ -2,16 +2,11 @@ import type {APIRoute} from 'astro';
 import {getDb} from '../../../db';
 import {comments} from '../../../db/schema';
 import {eq} from 'drizzle-orm';
-import { getKv } from '../../../utils/env';
+import { isAdmin } from '../../../utils/admin';
 
 export const DELETE: APIRoute = async ({params, cookies}) => {
   try {
-    const sessionId = cookies.get('admin_session')?.value;
-    const isAuthorized = sessionId
-      ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
-      : !!import.meta.env.DEV;
-
-    if (!isAuthorized) {
+    if (!(await isAdmin(cookies))) {
       return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
     }
 

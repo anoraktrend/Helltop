@@ -2,7 +2,10 @@ import type {APIRoute} from 'astro';
 import {getDb} from '../../db';
 import {comments} from '../../db/schema';
 import {eq, desc, inArray} from 'drizzle-orm';
-import { getKv } from '../../utils/env';
+import { isAdmin } from '../../utils/admin';
+
+const MAX_BULK_DELETE = 500;
+const BATCH_SIZE = 100;
 
 interface CommentRequestBody {
   author: string;
@@ -51,18 +54,13 @@ export const POST: APIRoute = async ({request}) => {
 
 export const DELETE: APIRoute = async ({request, cookies}) => {
   try {
-    const sessionId = cookies.get('admin_session')?.value;
-    const isAuthorized = sessionId
-      ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
-      : !!import.meta.env.DEV;
-
-    if (!isAuthorized) {
+    if (!(await isAdmin(cookies))) {
       return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
     }
 
-    const body = (await request.json()) as {ids?: unknown};
+    const body = (await request.json().catch(() => null)) as {ids?: unknown} | null;
 
-    if (!Array.isArray(body.ids) || body.ids.length === 0) {
+    if (!body || !Array.isArray(body.ids) || body.ids.length === 0) {
       return new Response(JSON.stringify({error: 'Comment IDs are required'}), {
         status: 400,
       });
@@ -76,8 +74,18 @@ export const DELETE: APIRoute = async ({request, cookies}) => {
       });
     }
 
+    if (ids.length > MAX_BULK_DELETE) {
+      return new Response(JSON.stringify({error: 'Too many comment IDs'}), {
+        status: 413,
+      });
+    }
+
     const db = getDb();
-    await db.delete(comments).where(inArray(comments.id, ids));
+
+    // D1 limits statements to 100 bindings each — chunk to be safe
+    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+      await db.delete(comments).where(inArray(comments.id, ids.slice(i, i + BATCH_SIZE)));
+    }
 
     return new Response(JSON.stringify({success: true, deleted: ids.length}), {status: 200});
   } catch (error) {

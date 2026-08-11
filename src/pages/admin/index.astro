@@ -1,21 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getDb } from '../../db';
-import { comments } from '../../db/schema';
+import { comments, type Comment } from '../../db/schema';
 import { desc } from 'drizzle-orm';
 import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
-import { getKv } from '../../utils/env';
+import { isAdmin } from '../../utils/admin';
 
-const sessionId = Astro.cookies.get('admin_session')?.value;
-const isLoggedIn = sessionId
-  ? await getKv('SESSION')?.get(`session:${sessionId}`) === 'valid'
-  : !!import.meta.env.DEV;
+const isLoggedIn = await isAdmin(Astro.cookies);
 
 if (!isLoggedIn) return Astro.redirect('/api/auth/login');
 
 // Fetch Comments
-let allComments: any[] = [];
+let allComments: Comment[] = [];
 try {
   const db = getDb();
   allComments = await db.select().from(comments).orderBy(desc(comments.publishedAt));
@@ -56,7 +53,7 @@ try {
 
     <div class="bg-ctp-mantle rounded-xl border border-ctp-surface0 overflow-hidden shadow-sm">
       <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+        <table id="comments-table" class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-ctp-crust text-ctp-subtext0 text-xs uppercase tracking-wider font-mono border-b border-ctp-surface0">
               <th class="px-6 py-4 font-bold">
@@ -125,136 +122,138 @@ try {
   </div>
 
   <script>
-    // Logout Logic
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', async () => {
-        try {
-          await fetch('/api/auth/logout', { method: 'POST' });
-          window.location.href = '/';
-        } catch (err) {
-          console.error("Logout failed:", err);
-        }
-      });
-    }
-
-    // Mass Delete Logic
-    const deleteBtn = document.getElementById('delete-selected-btn') as HTMLButtonElement | null;
-    const deleteBtnText = document.getElementById('selected-count') as HTMLElement | null;
-    const selectAllBtn = document.getElementById('select-all-btn');
+    const table = document.getElementById('comments-table');
     const selectAllCheckbox = document.getElementById('select-all-checkbox') as HTMLInputElement | null;
-    const checkboxes = Array.from(document.querySelectorAll<HTMLInputElement>('.select-checkbox:not(#select-all-checkbox)'));
+    const selectAllBtn = document.getElementById('select-all-btn') as HTMLButtonElement | null;
+    const deleteBtn = document.getElementById('delete-selected-btn') as HTMLButtonElement | null;
+    const countSpan = document.getElementById('selected-count');
 
-    const getSelected = () => checkboxes.filter(cb => cb.isConnected && cb.checked);
-    const getSelectedRows = () => getSelected().map(cb => cb.closest('tr') as HTMLTableRowElement | null).filter((row): row is HTMLTableRowElement => row !== null);
+    const rowCheckboxes = (): HTMLInputElement[] =>
+      table
+        ? Array.from(table.querySelectorAll<HTMLInputElement>('.select-checkbox'))
+            .filter(cb => cb !== selectAllCheckbox)
+        : [];
+
+    const getSelectedIds = (): string[] =>
+      rowCheckboxes()
+        .filter(cb => cb.checked)
+        .map(cb => cb.dataset.id)
+        .filter((id): id is string => !!id);
 
     function updateSelectionUI() {
-      const selected = getSelected();
-      const count = selected.length;
-      if (deleteBtn) deleteBtn.disabled = count === 0;
-      if (deleteBtnText) deleteBtnText.textContent = String(count);
-      if (selectAllCheckbox) selectAllCheckbox.checked = count > 0 && count === checkboxes.length;
+      const selected = getSelectedIds().length;
+      const total = rowCheckboxes().length;
+      if (deleteBtn) deleteBtn.disabled = selected === 0;
+      if (countSpan) countSpan.textContent = String(selected);
+      if (selectAllCheckbox) selectAllCheckbox.checked = selected > 0 && selected === total;
     }
 
-    checkboxes.forEach(cb => cb.addEventListener('change', updateSelectionUI));
-
-    if (selectAllCheckbox) {
-      selectAllCheckbox.addEventListener('change', () => {
-        checkboxes.forEach(cb => { cb.checked = selectAllCheckbox.checked; });
-        updateSelectionUI();
-      });
-    }
-
-    if (selectAllBtn) {
-      selectAllBtn.addEventListener('click', () => {
-        const selectAll = selectionIsEmpty();
-        checkboxes.forEach(cb => { cb.checked = selectAll; });
-        updateSelectionUI();
-      });
-    }
-
-    function selectionIsEmpty() {
-      return document.querySelectorAll<HTMLInputElement>('.select-checkbox:checked:not(#select-all-checkbox)').length === 0;
+    function setSelected(checked: boolean) {
+      rowCheckboxes().forEach(cb => { cb.checked = checked; });
+      updateSelectionUI();
     }
 
     function setBusy(busy: boolean) {
-      if (deleteBtn) deleteBtn.disabled = busy || getSelected().length === 0;
-      checkboxes.forEach(cb => { cb.disabled = busy; });
+      if (deleteBtn) deleteBtn.disabled = busy || getSelectedIds().length === 0;
+      rowCheckboxes().forEach(cb => { cb.disabled = busy; });
       if (selectAllCheckbox) selectAllCheckbox.disabled = busy;
-      if (selectAllBtn) selectAllBtn.setAttribute('aria-disabled', busy ? 'true' : 'false');
+      if (selectAllBtn) selectAllBtn.disabled = busy;
     }
 
-    if (deleteBtn) {
-      deleteBtn.addEventListener('click', async () => {
-        const ids = getSelected().map(cb => cb.dataset.id).filter((id): id is string => !!id);
-        if (ids.length === 0) return;
-
-        if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected comment${ids.length > 1 ? 's' : ''}?`)) return;
-
-        setBusy(true);
-
-        try {
-          const res = await fetch('/api/comments.json', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ids })
-          });
-
-          if (res.ok) {
-            const rows = getSelectedRows();
-            rows.forEach(row => {
-              row.style.opacity = '0';
-              setTimeout(() => row.remove(), 300);
-            });
-            setTimeout(updateSelectionUI, 350);
-          } else {
-            alert('Failed to delete comments. You may have been logged out.');
-          }
-        } catch (err) {
-          console.error('Mass delete error:', err);
-          alert('Network error occurred.');
-        } finally {
-          setBusy(false);
-        }
-      });
+    function fadeOutRow(row: HTMLElement) {
+      row.style.opacity = '0';
+      setTimeout(() => row.remove(), 300);
     }
 
-    // Delete Logic
-    const deleteButtons = document.querySelectorAll('.delete-btn');
-    deleteButtons.forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        const id = (e.currentTarget as HTMLButtonElement).getAttribute('data-id');
-        if (!id) return;
+    // Single delegated listener for all row checkboxes
+    table?.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target === selectAllCheckbox) return;
+      if (target.classList.contains('select-checkbox')) updateSelectionUI();
+    });
 
-        if (confirm('Are you sure you want to permanently delete this comment?')) {
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<span class="text-xs">...</span>';
-          btn.setAttribute('disabled', 'true');
+    // Single delegated listener for select + single-delete buttons
+    table?.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const btn = target.closest<HTMLButtonElement>('.delete-btn');
+      if (!btn) return;
 
-          try {
-            const res = await fetch(`/api/comments/${id}.json`, {
-              method: 'DELETE'
+      const id = btn.dataset.id;
+      if (!id) return;
+      if (!confirm('Are you sure you want to permanently delete this comment?')) return;
+
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="text-xs">...</span>';
+      btn.disabled = true;
+
+      fetch(`/api/comments/${id}.json`, { method: 'DELETE' })
+        .then(res => {
+          if (!res.ok) throw new Error('delete failed');
+          const row = btn.closest('tr');
+          if (row) fadeOutRow(row);
+          updateSelectionUI();
+        })
+        .catch(err => {
+          console.error('Delete error:', err);
+          alert('Failed to delete comment. You may have been logged out.');
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        });
+    });
+
+    // Logout
+    document.getElementById('logout-btn')?.addEventListener('click', async () => {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        window.location.href = '/';
+      } catch (err) {
+        console.error("Logout failed:", err);
+      }
+    });
+
+    // Select all (header checkbox)
+    selectAllCheckbox?.addEventListener('change', () => {
+      setSelected(selectAllCheckbox.checked);
+    });
+
+    // Select all (button toggle)
+    selectAllBtn?.addEventListener('click', () => {
+      setSelected(getSelectedIds().length === 0);
+    });
+
+    // Mass delete
+    deleteBtn?.addEventListener('click', async () => {
+      const ids = getSelectedIds();
+      if (ids.length === 0) return;
+
+      if (!confirm(`Are you sure you want to permanently delete ${ids.length} selected comment${ids.length > 1 ? 's' : ''}?`)) return;
+
+      setBusy(true);
+
+      try {
+        const res = await fetch('/api/comments.json', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids })
+        });
+
+        if (res.ok) {
+          rowCheckboxes()
+            .filter(cb => cb.checked)
+            .forEach(cb => {
+              const row = cb.closest('tr');
+              if (row) fadeOutRow(row);
             });
-
-            if (res.ok) {
-              const row = btn.closest('tr');
-              if (row) {
-                row.style.opacity = '0';
-                setTimeout(() => row.remove(), 300);
-              }
-            } else {
-              alert('Failed to delete comment. You may have been logged out.');
-              btn.innerHTML = originalText;
-              btn.removeAttribute('disabled');
-            }
-          } catch (err) {
-            console.error('Delete error:', err);
-            alert('Network error occurred.');
-            btn.innerHTML = originalText;
-            btn.removeAttribute('disabled');
-          }
+          updateSelectionUI();
+        } else {
+          alert('Failed to delete comments. You may have been logged out.');
         }
-      });
+      } catch (err) {
+        console.error('Mass delete error:', err);
+        alert('Network error occurred.');
+      } finally {
+        setBusy(false);
+      }
     });
   </script>
 </Layout>
