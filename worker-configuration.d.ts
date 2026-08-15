@@ -4,6 +4,7 @@
 declare namespace Cloudflare {
 	interface Env {
 		SESSION: KVNamespace;
+		RATE_LIMIT: KVNamespace;
 		DB: D1Database;
 		ENVIRONMENT: "production";
 		AUTHELIA_ISSUER_URL: "https://auth.helltop.net";

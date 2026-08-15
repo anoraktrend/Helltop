@@ -6,6 +6,10 @@
 		{
 			"binding": "SESSION",
 			"id": "35060e7735dd4c09ac7e7ff9f206be35"
+		},
+		{
+			"binding": "RATE_LIMIT",
+			"id": "11dad14f86f04340be5d42265ac6864c"
 		}
 	],
 	"d1_databases": [
