@@ -1,0 +1,118 @@
+---
+title: "Basix & bpm: A From-Scratch Linux Built for Control"
+description: "How a 124-package musl distro and its no-frills package manager scratch an itch for minimalism."
+date: "2026-08-15"
+author: me
+tags: ["Linux", "Distributions", "Open Source"]
+slug: "basix"
+draft: false
+---
+
+## Introduction
+
+Every so often I find myself down a rabbit hole rebuilding parts of my stack from scratch. This time it led me to **Basix** — a tiny, from-scratch Linux distribution built around a hand-rolled package manager called **bpm**. At ~124 packages and counting, it's the anti-distro: no systemd baggage, no glibc, no autoconf hell. Just musl, busybox, and a build system that dares to be simple.
+
+## What Is Basix?
+
+Basix is a source-based Linux distribution created by [kkrruumm](https://github.com/kkrruumm). It targets musl libc, ships no autotools chain, and treats every package as a flat directory with a single `template` file plus optional `files/` and `patches/` folders. One template, one binary package — no subpackages, no dependency graphs you can't reason about.
+
+The upstream package repo ([basix-packages](https://github.com/kkrruumm/basix-packages)) is permissively licensed (BSD-3-Clause) and ships with exactly zero READMEs or CI. That it works at all is a feature.
+
+## bpm: The Package Manager
+
+**bpm** is a shell script installed to `/usr/lib/bpm` with companion libraries (`common.sh`, `pkg.sh`, `build.sh`, `sandbox.sh`, etc.). The author calls it "the result of ~3 years of intermittent effort," with ideas "borderline stolen from xbps-src and kiss." There are no docs outside the code — welcome to the playground.
+
+### Commands at a Glance
+
+| Command | Alias | Purpose |
+|---|---|---|
+| `build` | `b` | Build packages + missing deps in order |
+| `install` | `i` | Build if needed, then install into `$BPM_ROOT` |
+| `remove` | `r` | Remove installed packages |
+| `update` | `u` | Pull repos, rebuild what changed |
+| `search` | `s` | Search repositories (globs ok) |
+| `query` | `q` | Show resolved template metadata |
+| `files` | `f` | List files owned by a package |
+| `owns` | `o` | Show which package owns a path |
+| `checksum` | `c` | Print BLAKE3 sums of dist_files |
+
+### A Template Example
+
+A package is just shell-sourced variables:
+
+```sh
+pkg_name=b3sum
+version=1.3.1
+revision=1
+build_style=gnu-makefile
+dist_files="https://git.sr.ht/~mcf/b3sum/archive/….tar.gz"
+checksum="3a78d3bbb0e553359035da0c5ce9a2eaadcc658d…"
+use_flags="static"
+use_default="+static"
+
+pre_build() {
+    use static && LDFLAGS="$LDFLAGS -static"
+    export LDFLAGS
+}
+```
+
+### Build Styles & Use Flags
+
+bpm ships **23 build styles** — `gnu-configure`, `gnu-makefile`, `meson`, `cmake`, `cargo`, `go`, `python3-module`, `custom`, `meta`, and more. The style files live in `/usr/lib/bpm/style/`. Templates can override any phase (`do_build`, `do_install`) for fine-grained control.
+
+**Use flags** resolve last-wins: template `use_default` → global `BPM_USE` → per-package `package.use`. Flip a flag, and the archive is invalidated — a rebuild is triggered automatically.
+
+### Sandboxed, Reproducible Builds
+
+Set `BPM_SANDBOX=1` and every build runs inside private mount/pid/ipc/uts namespaces (with a user namespace for unprivileged users). Undeclared `makedepends`? Hard failure. Environment scrubbed in build roots. And because basix ships no autotools, GNU release tarballs without bundled `configure` scripts simply won't build — you grab the right dist files and it just works.
+
+## FrankenBasix: The Personal Spin
+
+[FrankenBasix](https://github.com/anoraktrend/frankenbasix) is an overlay repo I maintain. It drops into `/etc/bpm/repos.conf` above `core`, shadowing or extending upstream packages and adding new ones.
+
+Key additions:
+
+- **Skeleton templates** — one for every build style, so you never have to remember what a style expects.
+- **bpm extensions** — `bpm-use-depends` (flag-aware dependency injection) and `bpm-sccache` (optional compiler caching via `bpm_sccache=1`).
+- **Notable packages** — `systemd` 261.2 (48 USE flags, libucontext), the full LLVM monorepo as a single package, `rust` + bootstrap, `linux-cachyos`, `chimerautils`, and a PAM session stack (`seatd`, `greetd`, `libfido2`).
+
+### Conventions
+
+A few hard-learned rules:
+
+- Never name a flag `man`, `doc`, `ssl`, or `zlib` — the global defaults are `zlib ssl man doc -x11 -wayland -pulseaudio -bluetooth -nls`, and `+man`/`+doc` often pull in texinfo or doxygen which basix doesn't ship.
+- BLAKE3 checksums are 64 chars. bpm truncates comparison to the shorter string, so full length matters.
+- `mirrors.edge.kernel.org` and `www.gnupg.org/ftp/gcrypt/` are reliable; `ftp.gnu.org` sometimes serves HTML instead of tarballs — always `file`-check your downloads.
+
+## FrankenUTB: The Unverified Sibling
+
+[FrankenUTB](https://github.com/anoraktrend/frankenutb) is the untested sibling: 17 package templates, none of them built or verified. Two groups:
+
+**Gardenhouse systemd replacements** (10 pkgs) — Codeberg collection of portable, systemd-free reimplementations: `sysuserd`, `seedfiles`, `gardenhostd`, `gardenerdb`, `gardenlock`, `sysext`, `gardendevd`, `libudev-garden`, `hwdb`, `python-gobject`.
+
+**libudev-garden variants** (7 pkgs) — ports of existing basix templates (`libdrm`, `libinput`, `mesa`, `sway`, `wlroots`, `libfido2`) that swap `libudev-zero` for `libudev-garden` for use with `gardendevd`.
+
+If you're building on systemd-free basix and want these, FrankenUTB is your starting point — just don't expect them to work out of the box.
+
+## Relationship at a Glance
+
+```
+           kkrruumm/bpm (the engine, MIT)
+                   │ interprets `template`s
+   ┌───────────────┴─────────────────────────┐
+ basix-packages (core repo)   frankenbasix + frankenutb (overlays)
+         └───────────────┬─────────────────────────┘
+                 /etc/bpm/repos.conf priority → `bpm build/install`
+```
+
+basix is the distro. bpm is the manager. basix-packages is the repo. FrankenBasix is the maintained overlay with extensions and new packages. FrankenUTB is the wild west — useful, but come prepared to debug.
+
+## Why Basix?
+
+Because minimalism isn't about having less — it's about having exactly what you need, and nothing you don't.
+
+For a control freak who wants to know why every package builds the way it does, who needs musl over glibc, and who isn't afraid to read shell scripts instead of documentation, Basix scratches an itch nothing else does.
+
+---
+
+*Check out the full [BASIX_BPM.md](/packages/BASIX_BPM.md) reference for the gritty details.*
