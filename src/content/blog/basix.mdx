@@ -97,22 +97,27 @@ If you're building on systemd-free basix and want these, FrankenUTB is your star
 ## Relationship at a Glance
 
 ```
-           kkrruumm/bpm (the engine, MIT)
-                   │ interprets `template`s
+      kkrruumm/bpm (the engine, MIT)
+         interprets "template"s
+                   │
    ┌───────────────┴─────────────────────────┐
- basix-packages (core repo)   frankenbasix + frankenutb (overlays)
-         └───────────────┬─────────────────────────┘
-                 /etc/bpm/repos.conf priority → `bpm build/install`
+   │frankenbasix/frankenutb/local (overlays) │
+   │      basix-packages (core repo)         │
+   └───────────────┬─────────────────────────┘
+  /etc/bpm/repos.conf priority → "bpm build/install"
 ```
 
 basix is the distro. bpm is the manager. basix-packages is the repo. FrankenBasix is the maintained overlay with extensions and new packages. FrankenUTB is the wild west — useful, but come prepared to debug.
 
 ## Why Basix?
 
-Because minimalism isn't about having less — it's about having exactly what you need, and nothing you don't.
+Because minimalism is about having exactly what you need, and nothing you don't... not just less for the sake of it.
 
 For a control freak who wants to know why every package builds the way it does, who needs musl over glibc, and who isn't afraid to read shell scripts instead of documentation, Basix scratches an itch nothing else does.
 
----
 
-*Check out the full [Unofficial Basix Docs](https://basix.helltop.net) reference for the gritty details.*
+
+
+---
+-# *Check out the full [Unofficial Basix Docs](https://basix.helltop.net) reference for the gritty details.*
+
