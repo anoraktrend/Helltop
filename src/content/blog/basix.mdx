@@ -76,13 +76,10 @@ Key additions:
 - **bpm extensions** — `bpm-use-depends` (flag-aware dependency injection) and `bpm-sccache` (optional compiler caching via `bpm_sccache=1`).
 - **Notable packages** — `systemd` 261.2 (48 USE flags, libucontext), the full LLVM monorepo as a single package, `rust` + bootstrap, `linux-cachyos`, `chimerautils`, and a PAM session stack (`seatd`, `greetd`, `libfido2`).
 
-### Conventions
+### Some important things I learned
 
-A few hard-learned rules:
-
-- Never name a flag `man`, `doc`, `ssl`, or `zlib` — the global defaults are `zlib ssl man doc -x11 -wayland -pulseaudio -bluetooth -nls`, and `+man`/`+doc` often pull in texinfo or doxygen which basix doesn't ship.
-- BLAKE3 checksums are 64 chars. bpm truncates comparison to the shorter string, so full length matters.
-- `mirrors.edge.kernel.org` and `www.gnupg.org/ftp/gcrypt/` are reliable; `ftp.gnu.org` sometimes serves HTML instead of tarballs — always `file`-check your downloads.
+BPM is like a kiss variant of gentoo, in that it uses USE flags like gentoo does, but we intend for it to utilize mostly global use flags. Gentoo has a lot of local use flags which could be consilidated into a global use flag.
+BPM uses blake3 for its checksums, the blake3 sums were chosen for performance purposes. You are encouraged to make a local overlay in order to choose your local mirrors, your local overlay should be ***above*** the core repo.
 
 ## FrankenUTB: The Unverified Sibling
 
