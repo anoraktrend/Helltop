@@ -1,8 +1,7 @@
 ---
-import { getDb } from '../db';
-import { comments } from '../db/schema';
-import { eq, asc } from 'drizzle-orm';
+import { getCommentsCollection } from '../db';
 import CommentItem from './CommentItem.astro';
+import { serializeComment } from '../db/schema';
 
 interface Props {
   postId: string;
@@ -11,31 +10,33 @@ interface Props {
 const { postId } = Astro.props;
 
 // Fetch all comments for this post
-let allComments: any[] = [];
+let allComments: ReturnType<typeof serializeComment>[] = [];
+// Keep extended shape with replies for threading
+type ThreadedComment = ReturnType<typeof serializeComment> & { replies: ThreadedComment[] };
+
 try {
-  const db = getDb();
-  allComments = await db.select()
-    .from(comments)
-    .where(eq(comments.postId, postId))
-    .orderBy(asc(comments.publishedAt));
+  const collection = await getCommentsCollection();
+  const raw = await collection.find({ postId }).sort({ publishedAt: 1 }).toArray();
+  allComments = raw.map(serializeComment);
 } catch (error) {
   console.error('Error fetching comments:', error);
 }
 
-// Threading logic
-const commentMap = new Map();
-const threadedComments: any[] = [];
+// Threading logic – parentId is string | null, id is string
+const commentMap = new Map<string, ThreadedComment>();
+const threadedComments: ThreadedComment[] = [];
 
-allComments.forEach(comment => {
-  comment.replies = [];
-  commentMap.set(comment.id, comment);
+allComments.forEach((comment) => {
+  const threaded = { ...comment, replies: [] as ThreadedComment[] };
+  commentMap.set(threaded.id, threaded);
 });
 
-allComments.forEach(comment => {
+allComments.forEach((comment) => {
+  const threaded = commentMap.get(comment.id)!;
   if (comment.parentId && commentMap.has(comment.parentId)) {
-    commentMap.get(comment.parentId).replies.push(comment);
+    commentMap.get(comment.parentId)!.replies.push(threaded);
   } else {
-    threadedComments.push(comment);
+    threadedComments.push(threaded);
   }
 });
 ---

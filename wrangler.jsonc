@@ -12,20 +12,11 @@
 			"id": "11dad14f86f04340be5d42265ac6864c"
 		}
 	],
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "helltop_db",
-			"database_id": "83dc0b5e-3933-41e3-8556-694d34e3f414",
-			"migrations_dir": "drizzle"
-		}
-	],
 	"routes": [
 		{ "pattern": "helltop.net", "custom_domain": true }
 	],
 	"vars": {
 		"ENVIRONMENT": "production",
-		"ASTRO_DB_REMOTE_URL": "libsql://helltop-anoraktrend.aws-us-west-2.turso.io",
 		"AUTHELIA_ISSUER_URL": "https://auth.helltop.net",
 		"AUTHELIA_CLIENT_ID": "helltop"
 	},

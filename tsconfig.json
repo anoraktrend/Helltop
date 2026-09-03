@@ -24,8 +24,7 @@
     "src/**/*.d.ts",
     "src/**/*.astro",
     "src/**/*.svelte",
-    "worker-configuration.d.ts",
-    "drizzle.config.ts"
+    "worker-configuration.d.ts"
   ],
   "exclude": ["dist", "node_modules", "coverage"]
 }

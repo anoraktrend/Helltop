@@ -30,7 +30,7 @@ const { comment, depth = 0 } = Astro.props;
           {new Date(comment.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
         </span>
         <button 
-          @click={`setReply(${comment.id})`}
+          @click={`setReply('${comment.id}')`}
           class="text-[9px] sm:text-[10px] font-black text-tron-blue hover:text-text-main uppercase tracking-[0.2em] transition-colors flex items-center gap-2 group/reply-btn"
         >
           <Icon name="lucide:reply" class="size-2.5 sm:size-3 group-hover/reply-btn:-translate-x-1 transition-transform" />

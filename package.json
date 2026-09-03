@@ -24,7 +24,7 @@
     "astro": "^7.0.2",
     "astro-icon": "^1.1.5",
     "astro-link": "^1.2.1",
-    "drizzle-orm": "^0.45.1",
+    "mongodb": "^6.20.0",
     "svelte": "^5.54.0"
   },
   "devDependencies": {
@@ -34,7 +34,6 @@
     "@iconify-json/lucide": "^1.2.98",
     "@iconify-json/simple-icons": "^1.2.74",
     "@tailwindcss/vite": "^4.3.1",
-    "drizzle-kit": "^0.31.10",
     "tailwindcss": "^4.3.1",
     "typescript": "^5.9.3",
     "unplugin-fonts": "^2.0.0",

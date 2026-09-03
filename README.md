@@ -13,8 +13,8 @@ This repository is built on the following principles:
 
 ## 🚀 Stack
 
-- **Framework:** Astro 6 (Server-side rendering on Cloudflare)
-- **Database:** Drizzle ORM + Cloudflare D1 (SQLite)
+- **Framework:** Astro 7 (Server-side rendering on Cloudflare)
+- **Database:** MongoDB (official `mongodb` driver 6.x) via MongoDB Atlas
 - **Styling:** Tailwind CSS 4 + Catppuccin Mocha
 - **Components:** Astro, Svelte 5, Alpine.js
 - **CMS:** Local MDX-based Content Layer
@@ -25,7 +25,7 @@ This repository is built on the following principles:
 | :--- | :--- |
 | `bun install` | Install all necessary dependencies |
 | `bun run dev` | Launch local development server |
-| `bun run build` | Build the production artifact for Cloudflare Pages |
+| `bun run build` | Build the production artifact for Cloudflare Workers |
 | `bun run check` | Run type checking and accessibility audits |
 | `bun run generate-types` | Generate Cloudflare Worker types from wrangler.jsonc |
 
@@ -37,6 +37,14 @@ Helltop is designed for sovereign computing. It integrates with:
 - **StatusFlare:** For distributed monitoring and status badges.
 - **Forgejo:** For git hosting.
 - **Tailscale:** For secure mesh networking.
+- **MongoDB Atlas:** For comment persistence (collection `comments`, connection via `MONGODB_URI` secret).
+
+### MongoDB Setup
+
+1. Create a MongoDB Atlas cluster (or self-host).
+2. Set `MONGODB_URI` as a Worker secret: `wrangler secret put MONGODB_URI`
+3. Optionally set `MONGODB_DB` (defaults to DB encoded in URI or `helltop`).
+4. Add `MONGODB_URI` and `MONGODB_DB` to `.env` / `.dev.vars` for local dev.
 
 ---
 

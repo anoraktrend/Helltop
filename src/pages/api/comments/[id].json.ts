@@ -1,37 +1,34 @@
-import type {APIRoute} from 'astro';
-import {getDb} from '../../../db';
-import {comments} from '../../../db/schema';
-import {eq} from 'drizzle-orm';
+import type { APIRoute } from 'astro';
+import { getCommentsCollection } from '../../../db';
+import { ObjectId } from 'mongodb';
 import { isAdmin } from '../../../utils/admin';
 
-export const DELETE: APIRoute = async ({params, cookies}) => {
+export const DELETE: APIRoute = async ({ params, cookies }) => {
   try {
     if (!(await isAdmin(cookies))) {
-      return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
     }
 
-    const {id} = params;
+    const { id } = params;
     if (!id) {
-      return new Response(JSON.stringify({error: 'Comment ID is required'}), {
+      return new Response(JSON.stringify({ error: 'Comment ID is required' }), {
         status: 400,
       });
     }
 
-    const db = getDb();
-    const commentId = parseInt(id, 10);
-
-    if (isNaN(commentId)) {
-      return new Response(JSON.stringify({error: 'Invalid ID format'}), {
+    if (!ObjectId.isValid(id)) {
+      return new Response(JSON.stringify({ error: 'Invalid ID format' }), {
         status: 400,
       });
     }
 
-    await db.delete(comments).where(eq(comments.id, commentId));
+    const collection = await getCommentsCollection();
+    await collection.deleteOne({ _id: new ObjectId(id) } as never);
 
-    return new Response(JSON.stringify({success: true}), {status: 200});
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
     console.error(`Error deleting comment ${params?.id}:`, error);
-    return new Response(JSON.stringify({error: 'Internal Server Error'}), {
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,
     });
   }

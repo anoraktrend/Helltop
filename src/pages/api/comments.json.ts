@@ -1,13 +1,12 @@
-import type {APIRoute} from 'astro';
-import {getDb} from '../../db';
-import {comments} from '../../db/schema';
-import {eq, desc, inArray} from 'drizzle-orm';
+import type { APIRoute } from 'astro';
+import { getCommentsCollection } from '../../db';
+import { ObjectId } from 'mongodb';
+import { serializeComment } from '../../db/schema';
 import { isAdmin } from '../../utils/admin';
 import { getKv } from '../../utils/env';
 import { checkRateLimit, getClientIp, type RateLimitResult } from '../../utils/rateLimit';
 
 const MAX_BULK_DELETE = 500;
-const BATCH_SIZE = 100;
 
 // Comment spam protection: burst of 5, sustained ~12/min per IP
 const COMMENT_LIMIT = { capacity: 5, refillPerSecond: 0.2, ttlSeconds: 60 } as const;
@@ -16,7 +15,7 @@ interface CommentRequestBody {
   author: string;
   body: string;
   post_id: string;
-  parent_id?: number;
+  parent_id?: string | number | null;
 }
 
 function rateLimitHeaders(rl: RateLimitResult): Record<string, string> {
@@ -27,7 +26,7 @@ function rateLimitHeaders(rl: RateLimitResult): Record<string, string> {
   };
 }
 
-export const POST: APIRoute = async ({request}) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const rateLimit = await checkRateLimit(
       getKv('RATE_LIMIT'),
@@ -41,13 +40,12 @@ export const POST: APIRoute = async ({request}) => {
           error: 'Rate limit exceeded. Please try again later.',
           retryAfter: rateLimit.retryAfter,
         }),
-        {status: 429, headers: rateLimitHeaders(rateLimit)},
+        { status: 429, headers: rateLimitHeaders(rateLimit) },
       );
     }
 
-    const db = getDb();
     const body = (await request.json()) as CommentRequestBody;
-    const {author, body: commentBody, post_id, parent_id} = body;
+    const { author, body: commentBody, post_id, parent_id } = body;
 
     if (!author || !commentBody || !post_id) {
       console.error('Missing fields in comment submission:', {
@@ -58,95 +56,103 @@ export const POST: APIRoute = async ({request}) => {
       return new Response(
         JSON.stringify({
           error: 'Missing fields',
-          received: {author, commentBody, post_id},
+          received: { author, commentBody, post_id },
         }),
-        {status: 400, headers: rateLimitHeaders(rateLimit)},
+        { status: 400, headers: rateLimitHeaders(rateLimit) },
       );
     }
 
-    const parentId = parent_id ? Number(parent_id) : null;
+    // Parse parentId – accept string ObjectId or legacy number? Only ObjectId is valid now.
+    let parentObjectId: ObjectId | null = null;
+    if (parent_id !== undefined && parent_id !== null && String(parent_id).trim() !== '') {
+      const raw = String(parent_id).trim();
+      if (!ObjectId.isValid(raw)) {
+        return new Response(JSON.stringify({ error: 'Invalid parent_id format' }), {
+          status: 400,
+          headers: rateLimitHeaders(rateLimit),
+        });
+      }
+      parentObjectId = new ObjectId(raw);
+    }
 
-    await db.insert(comments).values({
-      author,
-      body: commentBody,
-      postId: post_id,
-      parentId: Number.isFinite(parentId) ? parentId : null,
+    const collection = await getCommentsCollection();
+    await collection.insertOne({
+      author: String(author).trim(),
+      body: String(commentBody).trim(),
+      postId: String(post_id).trim(),
+      parentId: parentObjectId,
       publishedAt: new Date(),
-    });
+    } as never);
 
-    return new Response(JSON.stringify({success: true}), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: rateLimitHeaders(rateLimit),
     });
   } catch (error) {
     console.error('Error in POST /api/comments.json:', error);
-    return new Response(JSON.stringify({error: 'Failed'}), {status: 500});
+    return new Response(JSON.stringify({ error: 'Failed' }), { status: 500 });
   }
 };
 
-export const DELETE: APIRoute = async ({request, cookies}) => {
+export const DELETE: APIRoute = async ({ request, cookies }) => {
   try {
     if (!(await isAdmin(cookies))) {
-      return new Response(JSON.stringify({error: 'Unauthorized'}), {status: 401});
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
     }
 
-    const body = (await request.json().catch(() => null)) as {ids?: unknown} | null;
+    const body = (await request.json().catch(() => null)) as { ids?: unknown } | null;
 
     if (!body || !Array.isArray(body.ids) || body.ids.length === 0) {
-      return new Response(JSON.stringify({error: 'Comment IDs are required'}), {
+      return new Response(JSON.stringify({ error: 'Comment IDs are required' }), {
         status: 400,
       });
     }
 
-    const ids = [...new Set(body.ids.map((id) => Number(id)).filter((id) => Number.isFinite(id)))];
+    // Parse, dedupe and validate as ObjectId strings
+    const rawIds = [...new Set(body.ids.map((id) => String(id).trim()).filter(Boolean))];
+    const validIds = rawIds.filter((id) => ObjectId.isValid(id));
 
-    if (ids.length === 0) {
-      return new Response(JSON.stringify({error: 'Invalid ID format'}), {
+    if (validIds.length === 0) {
+      return new Response(JSON.stringify({ error: 'Invalid ID format' }), {
         status: 400,
       });
     }
 
-    if (ids.length > MAX_BULK_DELETE) {
-      return new Response(JSON.stringify({error: 'Too many comment IDs'}), {
+    if (validIds.length > MAX_BULK_DELETE) {
+      return new Response(JSON.stringify({ error: 'Too many comment IDs' }), {
         status: 413,
       });
     }
 
-    const db = getDb();
+    const collection = await getCommentsCollection();
+    const objectIds = validIds.map((id) => new ObjectId(id));
+    await collection.deleteMany({ _id: { $in: objectIds } } as never);
 
-    // D1 limits statements to 100 bindings each — chunk to be safe
-    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
-      await db.delete(comments).where(inArray(comments.id, ids.slice(i, i + BATCH_SIZE)));
-    }
-
-    return new Response(JSON.stringify({success: true, deleted: ids.length}), {status: 200});
+    return new Response(JSON.stringify({ success: true, deleted: validIds.length }), {
+      status: 200,
+    });
   } catch (error) {
     console.error('Error in DELETE /api/comments.json:', error);
-    return new Response(JSON.stringify({error: 'Internal Server Error'}), {
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,
     });
   }
 };
 
-export const GET: APIRoute = async ({request}) => {
+export const GET: APIRoute = async ({ request }) => {
   try {
-    const db = getDb();
+    const collection = await getCommentsCollection();
     const url = new URL(request.url);
     const postId = url.searchParams.get('postId');
 
-    const query = db
-      .select()
-      .from(comments)
-      .orderBy(desc(comments.publishedAt));
+    const filter = postId ? { postId } : {};
 
-    if (postId) {
-      query.where(eq(comments.postId, postId));
-    }
+    const docs = await collection.find(filter).sort({ publishedAt: -1 }).toArray();
+    const serialized = docs.map(serializeComment);
 
-    const allComments = await query;
-    return new Response(JSON.stringify(allComments), {status: 200});
+    return new Response(JSON.stringify(serialized), { status: 200 });
   } catch (error) {
     console.error('Error in GET /api/comments.json:', error);
-    return new Response(JSON.stringify({error: 'Failed'}), {status: 500});
+    return new Response(JSON.stringify({ error: 'Failed' }), { status: 500 });
   }
 };

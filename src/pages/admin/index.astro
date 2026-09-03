@@ -1,8 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getDb } from '../../db';
-import { comments, type Comment } from '../../db/schema';
-import { desc } from 'drizzle-orm';
+import { getCommentsCollection } from '../../db';
+import { serializeComment } from '../../db/schema';
 import { Icon } from 'astro-icon/components';
 import { Link } from 'astro-link';
 import { isAdmin } from '../../utils/admin';
@@ -11,11 +10,12 @@ const isLoggedIn = await isAdmin(Astro.cookies);
 
 if (!isLoggedIn) return Astro.redirect('/api/auth/login');
 
-// Fetch Comments
-let allComments: Comment[] = [];
+// Fetch Comments – serialized so `id` is a string (ObjectId hex)
+let allComments: ReturnType<typeof serializeComment>[] = [];
 try {
-  const db = getDb();
-  allComments = await db.select().from(comments).orderBy(desc(comments.publishedAt));
+  const collection = await getCommentsCollection();
+  const docs = await collection.find({}).sort({ publishedAt: -1 }).toArray();
+  allComments = docs.map(serializeComment);
 } catch (error) {
   console.error("Failed to load comments in admin:", error);
 }
