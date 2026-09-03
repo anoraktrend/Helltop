@@ -10,17 +10,27 @@ draft: false
 
 ## Introduction
 
-Every so often I find myself down a rabbit hole rebuilding parts of my stack from scratch. This time it led me to **Basix** — a tiny, from-scratch Linux distribution built around a hand-rolled package manager called **bpm**. At ~124 packages and counting, it's the anti-distro: no systemd baggage, no glibc, no autoconf hell. Just musl, busybox, and a build system that dares to be simple.
+Every so often I find myself down a rabbit hole rebuilding parts of my stack from scratch. This time it led me to **Basix** — a tiny, from-scratch Linux distribution built around a hand-rolled package manager called **bpm**. 
+At ~124 packages and counting, it's the anti-distro: no systemd baggage, no glibc, no autoconf hell. Just musl, busybox, and a dead simple build system which makes ***you*** a key developer of your own distro.
 
 ## What Is Basix?
 
-Basix is a source-based Linux distribution created by [kkrruumm](https://github.com/kkrruumm). It targets musl libc, ships no autotools chain, and treats every package as a flat directory with a single `template` file plus optional `files/` and `patches/` folders. One template, one binary package — no subpackages, no dependency graphs you can't reason about.
+Basix is a source-based Linux distribution created by [kkrruumm](https://github.com/kkrruumm). It targets musl libc, ships no autotools chain, 
+and treats every package as a flat directory with a single `template` file plus optional `files/` and `patches/` folders. One template, one binary package — no subpackages, no dependency graphs you can't reason about.
 
-The upstream package repo ([basix-packages](https://github.com/kkrruumm/basix-packages)) is permissively licensed (BSD-3-Clause) and ships with exactly zero READMEs or CI. That it works at all is a feature.
+The upstream package repo ([basix-packages](https://github.com/kkrruumm/basix-packages)) is permissively licensed (BSD-3-Clause) and ships with exactly zero READMEs or CI. The code is the documentation. 
+The only build systems are Krum's, or the people he trusts', PCs, I have a chronically out-of-date rootfs tar ball hosted on my [unofficial basix docs](https://basix.helltop.net).
+
+### Some important things Krum and I decided
+
+BPM is like a kiss variant of gentoo, in that it uses USE flags like gentoo does, but we intend for it to utilize mostly global use flags. Gentoo has a lot of local use flags which could be consilidated into a global use flag.
+BPM uses blake3 for its checksums, the blake3 sums were chosen for performance purposes. Finally, you are encouraged to make a local overlay in order to choose your local mirrors of the upstream software,
+your local overlay should be ***above*** the core repo.
 
 ## bpm: The Package Manager
 
-**bpm** is a shell script installed to `/usr/lib/bpm` with companion libraries (`common.sh`, `pkg.sh`, `build.sh`, `sandbox.sh`, etc.). The author calls it "the result of ~3 years of intermittent effort," with ideas "borderline stolen from xbps-src and kiss." There are no docs outside the code — welcome to the playground.
+**bpm** is a shell script installed to `/usr/lib/bpm` with companion libraries (`common.sh`, `pkg.sh`, `build.sh`, `sandbox.sh`, etc.). The Krum calls it "the result of ~3 years of intermittent effort," 
+with ideas "borderline stolen from xbps-src and kiss." There are no official docs outside the code — welcome to the playground.
 
 ### Commands at a Glance
 
@@ -76,11 +86,6 @@ Key additions:
 - **bpm extensions** — `bpm-use-depends` (flag-aware dependency injection) and `bpm-sccache` (optional compiler caching via `bpm_sccache=1`).
 - **Notable packages** — `systemd` 261.2 (48 USE flags, libucontext), the full LLVM monorepo as a single package, `rust` + bootstrap, `linux-cachyos`, `chimerautils`, and a PAM session stack (`seatd`, `greetd`, `libfido2`).
 
-### Some important things I learned
-
-BPM is like a kiss variant of gentoo, in that it uses USE flags like gentoo does, but we intend for it to utilize mostly global use flags. Gentoo has a lot of local use flags which could be consilidated into a global use flag.
-BPM uses blake3 for its checksums, the blake3 sums were chosen for performance purposes. You are encouraged to make a local overlay in order to choose your local mirrors, your local overlay should be ***above*** the core repo.
-
 ## FrankenUTB: The Unverified Sibling
 
 [FrankenUTB](https://github.com/anoraktrend/frankenutb) is the untested sibling: 17 package templates, none of them built or verified. Two groups:
@@ -111,10 +116,3 @@ basix is the distro. bpm is the manager. basix-packages is the repo. FrankenBasi
 Because minimalism is about having exactly what you need, and nothing you don't... not just less for the sake of it.
 
 For a control freak who wants to know why every package builds the way it does, who needs musl over glibc, and who isn't afraid to read shell scripts instead of documentation, Basix scratches an itch nothing else does.
-
-
-
-
----
--# *Check out the full [Unofficial Basix Docs](https://basix.helltop.net) reference for the gritty details.*
-
