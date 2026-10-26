@@ -1,0 +1,67 @@
+{{- if .Params.series -}}
+{{- $currentPage := . -}}
+{{- $seriesName := .Params.series -}}
+
+{{- /* Find all pages in this series */ -}}
+{{- $seriesPages := where .Site.RegularPages "Params.series" "eq" $seriesName -}}
+
+{{- /* Sort by series_order if available, otherwise by date */ -}}
+{{- $hasOrder := false -}}
+{{- range $seriesPages -}}
+  {{- if .Params.series_order -}}
+    {{- $hasOrder = true -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $hasOrder -}}
+  {{- $seriesPages = sort $seriesPages "Params.series_order" "desc" -}}
+{{- else -}}
+  {{- $seriesPages = sort $seriesPages "Date" "desc" -}}
+{{- end -}}
+
+{{- if gt (len $seriesPages) 1 -}}
+{{- $seriesOpenDefault := .Site.Params.seriesOpenByDefault | default true -}}
+{{- $seriesMaxItems := .Site.Params.seriesMaxItems | default 0 -}}
+{{- $totalItems := len $seriesPages -}}
+{{- $showExpandButton := and (gt $seriesMaxItems 0) (gt $totalItems $seriesMaxItems) -}}
+
+<div class="series-container">
+  <details class="series-details"{{ if $seriesOpenDefault }} open{{ end }}>
+    <summary class="series-summary">
+      <span class="series-title">📚 Series: {{ $seriesName }}</span>
+      <span class="series-count">{{ $totalItems }} part{{ if gt $totalItems 1 }}s{{ end }} in this series</span>
+    </summary>
+
+    <ol class="series-list" {{ if $showExpandButton }}data-full-count="{{ $totalItems }}"{{ end }}>
+      {{- range $index, $page := $seriesPages -}}
+      {{- $itemClass := "series-item" -}}
+      {{- if eq $page.Permalink $currentPage.Permalink -}}
+        {{- $itemClass = "series-item series-current" -}}
+      {{- end -}}
+      {{- if and $showExpandButton (ge $index $seriesMaxItems) -}}
+        {{- $itemClass = printf "%s series-hidden" $itemClass -}}
+      {{- end -}}
+      <li class="{{ $itemClass }}">
+        {{- if eq $page.Permalink $currentPage.Permalink -}}
+          <span class="series-link-current">
+            <span class="series-indicator">➤</span> {{ $page.Title }}
+            <span class="series-badge">You are here</span>
+          </span>
+        {{- else -}}
+          <a href="{{ $page.Permalink }}" class="series-link">
+            {{ $page.Title }}
+          </a>
+        {{- end -}}
+      </li>
+      {{- end -}}
+    </ol>
+
+    {{- if $showExpandButton -}}
+    <button class="series-expand-btn" onclick="this.previousElementSibling.classList.toggle('series-expanded'); this.classList.toggle('series-expanded-btn'); if(this.classList.contains('series-expanded-btn')) { this.innerHTML='Show fewer parts ▲'; } else { this.innerHTML='Show all {{ $totalItems }} parts ▼'; }">
+      Show all {{ $totalItems }} parts ▼
+    </button>
+    {{- end -}}
+  </details>
+</div>
+{{- end -}}
+{{- end -}}

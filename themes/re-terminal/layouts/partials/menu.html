@@ -1,0 +1,14 @@
+<div class="new-menu">
+  <button class="menu-toggle" aria-label="Toggle menu">
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+    <span class="hamburger"></span>
+  </button>
+  <ul class="menu-items">
+    {{ range .Site.Menus.main }}
+      {{ if not .HasChildren }}
+        <li><a href="{{ .URL }}"{{ if .Params.newTab }} target="_blank" rel="noopener"{{ end }}>{{ upper .Name }}</a></li>
+      {{ end }}
+    {{ end }}
+  </ul>
+</div>

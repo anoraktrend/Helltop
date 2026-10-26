@@ -1,0 +1,57 @@
+{{ define "main" }}
+  {{ with .Content }}
+    <div class="index-content">
+      {{ . }}
+    </div>
+  {{ end }}
+  <div class="posts images-grid">
+    {{ range .Paginator.Pages }}
+      <article class="post on-list image-post-preview">
+        <h2 class="post-title">
+          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+        </h2>
+        {{ partial "post_metadata.html" . }}
+
+        {{ if .Params.tags }}
+          <span class="post-tags">
+            {{ range .Params.tags }}
+            #<a href="{{ (urls.JoinPath "tags" (urlize .) "/") | absLangURL }}">
+              {{- . -}}
+            </a>&nbsp;
+            {{ end }}
+          </span>
+        {{ end }}
+
+        {{ if .Params.image }}
+          <div class="image-preview">
+            <a href="{{ .Permalink }}">
+              {{ $image := resources.Get .Params.image }}
+              {{ if $image }}
+                <img src="{{ $image.RelPermalink }}" alt="{{ .Params.imageAlt | default .Title }}" class="preview-image">
+              {{ else }}
+                <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" class="preview-image">
+              {{ end }}
+            </a>
+            {{ if .Params.imageCaption }}
+              <p class="image-caption-preview">{{ .Params.imageCaption | markdownify }}</p>
+            {{ end }}
+          </div>
+        {{ end }}
+
+        <div class="post-content">
+          {{ if .Description }}
+            {{ .Description | markdownify }}
+          {{ else }}
+            {{ .Summary }}
+          {{ end }}
+        </div>
+
+        <div>
+          <a class="read-more button" href="{{.RelPermalink}}">View Image →</a>
+        </div>
+      </article>
+    {{ end }}
+
+    {{ partial "pagination.html" . }}
+  </div>
+{{ end }}

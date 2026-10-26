@@ -1,0 +1,53 @@
+{{ define "main" }}
+<article class="post image-post">
+  <h1 class="post-title">
+    <a href="{{ .Permalink }}">📷 {{ .Title | markdownify }}</a>
+  </h1>
+  {{ partial "post_metadata.html" . }}
+
+  {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ range .Params.tags }}
+      #<a href="{{ (urls.JoinPath "tags" (urlize .) "/") | absLangURL }}">{{ . }}</a>&nbsp;
+      {{ end }}
+    </span>
+  {{ end }}
+
+  <div class="image-container">
+    {{ if .Params.image }}
+      <figure class="image-figure">
+        {{ $image := resources.Get .Params.image }}
+        {{ if $image }}
+          <img src="{{ $image.RelPermalink }}" alt="{{ .Params.imageAlt | default .Title }}" class="featured-image lightbox-trigger" tabindex="0">
+        {{ else }}
+          <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" class="featured-image lightbox-trigger" tabindex="0">
+        {{ end }}
+        {{ if .Params.imageCaption }}
+          <figcaption class="image-caption">{{ .Params.imageCaption | markdownify }}</figcaption>
+        {{ end }}
+      </figure>
+    {{ end }}
+  </div>
+
+  {{/* The lightbox overlay and its behaviour are shared: see
+       partials/lightbox.html, emitted once by baseof.html, and
+       assets/js/lightbox.js. */}}
+
+  <div class="post-content">
+    {{- with .Content -}}
+      <div>
+        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+      </div>
+    {{- end -}}
+  </div>
+
+  {{ partial "series.html" . }}
+
+  {{- if ne (.Param "callout") false -}}
+  {{ partial "callout.html" }}
+  {{- end -}}
+  {{ if not (.Params.hideComments | default false) }}
+    {{ partial "comments.html" . }}
+  {{ end }}
+</article>
+{{ end }}

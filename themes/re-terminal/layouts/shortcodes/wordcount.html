@@ -1,0 +1,9 @@
+<div class="wordcount-stats">
+<pre style="background-color: var(--bg-secondary); color: var(--text-primary); padding: 20px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.4; border: 1px solid var(--border);">
+{{ with os.ReadFile "content/word-count-output.txt" }}
+{{ . | safeHTML }}
+{{ else }}
+<em>Statistics unavailable. Run word-count.sh to generate stats.</em>
+{{ end }}
+</pre>
+</div>

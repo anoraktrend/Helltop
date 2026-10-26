@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 20px; // Reduced since menu is now separate
+
+  @media print {
+    display: none;
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+
+    a {
+      flex: 0 0 auto;
+      max-width: 100%;
+      text-decoration: none;
+    }
+  }
+}

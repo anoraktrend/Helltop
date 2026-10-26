@@ -1,0 +1,75 @@
+{{ define "main" }}
+<article class="post link-post">
+  <h1 class="post-title">
+    <a href="{{ .Permalink }}">🔗 {{ .Title | markdownify }}</a>
+  </h1>
+  {{ partial "post_metadata.html" . }}
+
+  {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ range .Params.tags }}
+      #<a href="{{ (urls.JoinPath "tags" (urlize .) "/") | absLangURL }}">{{ . }}</a>&nbsp;
+      {{ end }}
+    </span>
+  {{ end }}
+
+  {{ if .Description }}
+    <div class="link-description-callout">
+      {{ .Description | markdownify }}
+      {{ if or .Params.author .Params.link_url }}
+        <div class="link-attribution">
+          {{ if .Params.author }}
+            {{ if .Params.link_url }}
+              — <a href="{{ .Params.link_url | safeURL }}" target="_blank" rel="noopener">{{ .Params.author }}</a>
+            {{ else }}
+              — {{ .Params.author }}
+            {{ end }}
+          {{ else if .Params.link_url }}
+            — <a href="{{ .Params.link_url | safeURL }}" target="_blank" rel="noopener">Source</a>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{ partial "cover.html" (dict "ctx" . "isCoverCaptionEnabled" true) }}
+
+  {{ if (.Params.Toc | default .Site.Params.Toc) }}
+    <div class="table-of-contents">
+      <h2>
+        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}
+      </h2>
+      {{ .TableOfContents }}
+    </div>
+  {{ end }}
+
+  <div class="post-content">
+    {{- with .Content -}}
+      <div>
+        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+      </div>
+    {{- end -}}
+  </div>
+
+  {{ partial "series.html" . }}
+
+  {{- if .Params.link_url -}}
+    <div class="link-post-button">
+      <a href="{{ .Params.link_url | safeURL }}" target="_blank" rel="noopener" class="button">
+        🔗 Visit External Link
+      </a>
+    </div>
+  {{- end -}}
+
+  {{ if eq .Type $.Site.Params.contentTypeName }}
+    {{ partial "posts_pagination.html" . }}
+  {{ end }}
+
+    {{- if ne (.Param "callout") false -}}
+    {{ partial "callout.html" }}
+    {{- end -}}
+  {{ if not (.Params.hideComments | default false) }}
+    {{ partial "comments.html" . }}
+  {{ end }}
+</article>
+{{ end }}

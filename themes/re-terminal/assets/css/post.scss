@@ -1,0 +1,252 @@
+.index-content {
+  margin-top: 20px;
+}
+
+.framed {
+  border: 1px solid var(--accent);
+  padding: 20px;
+
+  *:first-child {
+    margin-top: 0;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.posts {
+  width: 100%;
+}
+
+.post {
+  width: 100%;
+  text-align: left;
+  margin: 20px auto;
+  padding: 20px 0;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &-meta {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: color-mix(in srgb, var(--accent), transparent 30%);
+
+    span, time {
+      display: inline;
+    }
+
+    @media (max-width: $phone) {
+      font-size: 0.9rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+  }
+
+  &-title {
+    --border: 2px solid var(--accent);
+    position: relative;
+    color: var(--accent);
+    margin: 0 0 15px;
+    padding-bottom: 15px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      display: block;
+      width: 100%;
+      border-bottom: var(--border);
+    }
+
+    a {
+      text-decoration: none;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    @media (max-width: $phone) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &-tags {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    opacity: .5;
+
+    a {
+      text-decoration: none;
+    }
+
+    @media (max-width: $phone) {
+      font-size: 0.9rem;
+    }
+  }
+
+  &-content {
+    margin-top: 30px;
+
+    & a {
+      color: var(--article-link-color);
+    }
+  }
+
+  // Read more button alignment for all posts
+  & > div:has(.read-more) {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  &-cover {
+    border: 20px solid var(--accent);
+    background: transparent;
+    margin: 40px 0;
+    padding: 20px;
+
+    @media (max-width: $phone) {
+      padding: 10px;
+      border-width: 10px;
+    }
+  }
+
+  ul {
+    list-style: none;
+
+    li:not(:empty):before {
+      content: '-';
+      position: absolute;
+      left: -20px;
+      color: var(--accent);
+    }
+  }
+}
+
+.post--regulation {
+  h1 {
+    justify-content: center;
+  }
+
+  h2 {
+    justify-content: center;
+    margin-bottom: 10px;
+
+    & + h2 {
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.hanchor {
+  color: color-mix(in srgb, var(--accent), transparent 10%);
+  text-decoration: none;
+  margin-left: 10px;
+  visibility: hidden;
+}
+
+h1:hover a, h2:hover a, h3:hover a, h4:hover a {
+  visibility: visible;
+}
+
+.footnotes {
+  color: color-mix(in srgb, var(--accent), transparent 50%);
+}
+
+figure:has(.post-cover) {
+  margin: 40px 0;
+
+
+  & > .post-cover {
+    margin: 0;
+  }
+
+  & > figcaption {
+    margin-top: 0;
+  }
+}
+
+// Link post styling
+.link-post {
+  // Apply background to the entire post, but position it to start at the title
+  &.post {
+    // background-color: var(--link-post-background);
+    // border-radius: 8px;
+    margin: 20px auto;
+    padding: 20px 0; // Back to normal padding
+
+    // Light theme override
+    // [data-theme="light"] & {
+    //   background-color: #d5c4a1;
+    // }
+  }
+
+  // Revert title to normal
+  .post-title {
+    padding: 20px 0;
+    margin: 0;
+
+    // Change the border color for link posts
+    &:after {
+      border-bottom-color: #8ec97c;
+    }
+  }
+
+  .post-meta {
+    padding: 0 0 10px 0;
+    margin: 0;
+    color: #8ec97c;
+  }
+
+  .post-tags {
+    padding: 0 0 10px 0;
+    margin: 0;
+  }
+
+  .post-content {
+    padding: 10px 0 15px 0;
+    margin: 0;
+  }
+
+  // Read more button section
+  & > div:last-child {
+    padding: 0 0 15px 0;
+    margin: 0;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  // Hide the link URL from metadata
+  .post-link-url {
+    display: none;
+  }
+
+  // Hide horizontal rules in link posts
+  .post-content hr {
+    display: none;
+  }
+}
+
+// Link post button styling
+.link-post-button {
+  margin: 20px 0;
+  text-align: center;
+
+  .button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--accent);
+    color: var(--accent-contrast-color);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

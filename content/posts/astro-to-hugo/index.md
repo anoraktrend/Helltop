@@ -1,7 +1,7 @@
 +++
-title = "Escaping the Nuxt: Moving to Astro 6"
-description = "Why I ditched Nuxt for Astro and how the new architecture powers this digital rebellion."
-date = 2026-03-19
+title = "Leaving behind Slop: Moving from Astro to Hugo"
+description = "How I escaped an LLM coded site and embraced the digital rebellion."
+date = 2026-10-26
 author = 'Lucy Ada Randall'
 tags = ["Architecture", "Astro", "Web Development"]
 slug = "transition-to-astro"
@@ -9,26 +9,26 @@ aliases = ["/blog/transition-to-astro/"]
 draft = false
 +++
 
-## The Great Framework Migration
+## The Great Framework Migration, and a change in personal opinions
 
-Helltop was originally an experiment on Nuxt, but it was time for a change. The transition to Astro 6 represents a fundamental shift in how this site operates. We've moved from a client-side heavy approach to a true content-first architecture.
+Helltop was originally an experiment on Nuxt, then it transitioned to Astro 6. Both of the engines of these eras were built by llm slop. This was a mistake. I am not nearly as good with javascript as I imagined.
 
-## Why Astro?
+## Why Hugo?
 
-Astro's zero-JS by default philosophy perfectly aligns with the Helltop mission. No corporate bloat, no unnecessary hydration… just raw, optimized content delivered at the speed of thought. By leveraging Astro 6, the build speed has increased by just that much reducing development costs and time-to-live.
+Astro's zero-JS by default philosophy made it so damn tempting to use, but if you wanted anything more advanced than a simple "Words on a Page" browser you needed js. That was not maintainable. Hugo's community made some damn cute themes, like [this one](https://github.com/mtwb47/re-terminal) by Matt Weber of The Linux Cast fame.
 
-## Database Evolution: Astro Content vs Nuxt Content
+## Database Evolution: Astro Content vs Nuxt Content vs a simple hugo site
 
-We've traded the magic of `@nuxt/content` for the magic of Astro Content Collections. Read more about the possibilities with astro's solution [here.](https://docs.astro.build/en/guides/content-collections/)
+I traded the magic of `@nuxt/content` for the magic of Astro Content Collections. Both of which suck for my brain to try and work with. Simple Markdown and html partials combined makes it so much easier. My brain can process that so much easier, and changes are super easy.
 
 ## Upgraded communications array
 
-Our new comments section is powered by a direct D1 binding, giving us a robust, self-hosted feedback loop without the overhead of heavy abstractions.
+Our old comments section was powered by a direct D1 binding, giving us a robust, self-hosted feedback loop without the overhead of heavy abstractions… and required me to be a savant with SQL. Fedicomment from matt's theme is so much easier… all i have to do is set it up right.
 
 ## Styling the Rebellion
 
-The visual identity has evolved too. We've replaced the standard `@nuxt/ui` with a bespoke implementation using Tailwind CSS v4 and the Catppuccin flavor palette. We also added shader features for each of the different color schemes.
+The beautiful animated backgrounds were, putting it simply, too much. At the same time I had no idea how they worked under the hood, so you see the issue. With this simple, pre-made theme, I can at least look at someone else who might know what's going on. Beyond that, it's easy enough to work with.
 
 ## What's Next?
 
-This is just the beginning. The move to Astro has unlocked new possibilities for performance and portability. Stay tuned as we continue to refine the stack and build out new features for the digital nomad.
+I'm planning to do some rewrites and touch ups of my previous blog posts, and obviously write some new ones as I can.

@@ -1,0 +1,62 @@
+{{ define "main" }}
+<article class="post{{ if eq .Type "links" }} link-post{{ end }}">
+  <h1 class="post-title">
+    {{ if eq .Type "links" }}
+      <a href="{{ .Params.link_url | default .Permalink | safeURL }}">🔗 {{ .Title | markdownify }}</a>
+    {{ else }}
+      <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    {{ end }}
+  </h1>
+  {{ partial "post_metadata.html" . }}
+
+  {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ range .Params.tags }}
+      #<a href="{{ (urls.JoinPath "tags" (urlize .) "/") | absLangURL }}">{{ . }}</a>&nbsp;
+      {{ end }}
+    </span>
+  {{ end }}
+  {{ partial "cover.html" (dict "ctx" . "isCoverCaptionEnabled" true) }}
+
+  {{ if (.Params.Toc | default .Site.Params.Toc) }}
+    <div class="table-of-contents">
+      <h2>
+        {{ (.Params.TocTitle | default .Site.Params.TocTitle) | default "Table of Contents" }}
+      </h2>
+      {{ .TableOfContents }}
+    </div>
+  {{ end }}
+
+  <!-- Debug: Type={{ .Type }}, link_url={{ .Params.link_url }} -->
+  {{- if and (eq .Type "links") .Params.link_url -}}
+    <div class="link-post-button">
+      <a href="{{ .Params.link_url | safeURL }}" target="_blank" rel="noopener" class="button">
+        🔗 Visit External Link
+      </a>
+    </div>
+  {{- else -}}
+    <!-- Debug: Button not shown - Type: {{ .Type }}, HasLinkURL: {{ if .Params.link_url }}true{{ else }}false{{ end }} -->
+  {{- end -}}
+
+  <div class="post-content">
+    {{- with .Content -}}
+      <div>
+        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">&#8983;</a> ${3}` | safeHTML }}
+      </div>
+    {{- end -}}
+  </div>
+
+  {{ partial "series.html" . }}
+
+  {{ if eq .Type $.Site.Params.contentTypeName }}
+    {{ partial "posts_pagination.html" . }}
+  {{ end }}
+
+    {{- if ne (.Param "callout") false -}}
+    {{ partial "callout.html" }}
+    {{- end -}}
+  {{ if not (.Params.hideComments | default false) }}
+    {{ partial "comments.html" . }}
+  {{ end }}
+</article>
+{{ end }}

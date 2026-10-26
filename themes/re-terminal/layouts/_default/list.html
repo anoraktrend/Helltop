@@ -1,0 +1,103 @@
+{{ define "main" }}
+  {{ with .Content }}
+    <div class="index-content">
+      {{ . }}
+    </div>
+  {{ end }}
+  <div class="posts">
+    {{ $pages := where site.RegularPages "Type" "in" (slice "posts" "links" "images" "videos") }}
+    {{ $sortedPages := $pages.ByDate.Reverse }}
+    {{ range (.Paginate $sortedPages).Pages }}
+      <article class="post on-list{{ if eq .Type "links" }} link-post{{ end }}{{ if eq .Type "images" }} image-post{{ end }}{{ if eq .Type "videos" }} video-post{{ end }}">
+        <h1 class="post-title">
+          {{ if eq .Type "links" }}
+            <a href="{{ .Permalink }}">🔗 {{ .Title | markdownify }}</a>
+          {{ else if eq .Type "images" }}
+            <a href="{{ .Permalink }}">📷 {{ .Title | markdownify }}</a>
+          {{ else if eq .Type "videos" }}
+            <a href="{{ .Permalink }}">🎬 {{ .Title | markdownify }}</a>
+          {{ else }}
+            <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          {{ end }}
+        </h1>
+        {{ partial "post_metadata.html" . }}
+
+        {{ if .Params.tags }}
+          <span class="post-tags">
+            {{ range .Params.tags }}
+            #<a href="{{ (urls.JoinPath "tags" (urlize .) "/") | absLangURL }}">
+              {{- . -}}
+            </a>&nbsp;
+            {{ end }}
+          </span>
+        {{ end }}
+
+        {{ if eq .Type "images" }}
+          {{ if .Params.image }}
+            <div class="image-preview">
+              <a href="{{ .Permalink }}">
+                {{ $image := resources.Get .Params.image }}
+                {{ if $image }}
+                  <img src="{{ $image.RelPermalink }}" alt="{{ .Params.imageAlt | default .Title }}" class="preview-image">
+                {{ else }}
+                  <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" class="preview-image">
+                {{ end }}
+              </a>
+              {{ if .Params.imageCaption }}
+                <p class="image-caption-preview">{{ .Params.imageCaption | markdownify }}</p>
+              {{ end }}
+            </div>
+          {{ end }}
+        {{ else if eq .Type "videos" }}
+          {{ if .Params.video_url }}
+            <div class="video-preview">
+              <div class="preview-video video-embed">
+                {{ $videoURL := .Params.video_url }}
+                {{ if findRE "youtube\\.com/watch\\?v=" $videoURL }}
+                  {{ $videoID := replaceRE ".*youtube\\.com/watch\\?v=([^&]+).*" "$1" $videoURL }}
+                  <iframe src="https://www.youtube.com/embed/{{ $videoID }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {{ else if findRE "youtu\\.be/" $videoURL }}
+                  {{ $videoID := replaceRE ".*youtu\\.be/([^?]+).*" "$1" $videoURL }}
+                  <iframe src="https://www.youtube.com/embed/{{ $videoID }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {{ else if findRE "vimeo\\.com/" $videoURL }}
+                  {{ $videoID := replaceRE ".*vimeo\\.com/([0-9]+).*" "$1" $videoURL }}
+                  <iframe src="https://player.vimeo.com/video/{{ $videoID }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                {{ else if .Params.video_embed }}
+                  {{ .Params.video_embed | safeHTML }}
+                {{ else }}
+                  <video controls>
+                    <source src="{{ $videoURL | safeURL }}">
+                    Your browser does not support the video tag.
+                  </video>
+                {{ end }}
+              </div>
+              {{ if .Params.videoCaption }}
+                <figcaption class="video-caption">{{ .Params.videoCaption | markdownify }}</figcaption>
+              {{ end }}
+            </div>
+          {{ end }}
+        {{ else }}
+          {{ partial "cover.html" . }}
+        {{ end }}
+
+        <div class="post-content">
+          {{ if .Params.showFullContent }}
+            {{ .Content }}
+          {{ else if .Description }}
+            {{ .Description | markdownify }}
+          {{ else }}
+            {{ .Summary }}
+          {{ end }}
+        </div>
+
+        {{ if not .Params.showFullContent }}
+          <div>
+            <a class="read-more button" href="{{.RelPermalink}}">{{ $.Site.Params.ReadMore }}</a>
+          </div>
+        {{ end }}
+      </article>
+    {{ end }}
+
+    {{ partial "pagination.html" . }}
+  </div>
+{{ end }}

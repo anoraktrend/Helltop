@@ -1,0 +1,28 @@
+{{- $menuPosition := .Site.Params.stickyMenuPosition | default "bottom" -}}
+
+{{- if and (len $.Site.Menus) (eq $menuPosition "top") -}}
+  <div class="menu-wrapper menu-position-top">
+    {{ partial "menu.html" . }}
+  </div>
+{{- end -}}
+
+<header class="header">
+  {{ partial "theme-toggle.html" . }}
+  <div class="header__inner">
+    <div class="header__logo">
+      {{ partial "logo.html" . }}
+    </div>
+  </div>
+</header>
+
+{{- if and (len $.Site.Menus) (eq $menuPosition "bottom") -}}
+  <div class="menu-wrapper menu-position-bottom">
+    {{ partial "menu.html" . }}
+  </div>
+{{- end -}}
+
+{{- if and (len $.Site.Menus) (eq $menuPosition "none") -}}
+  <div class="menu-wrapper menu-position-none">
+    {{ partial "menu.html" . }}
+  </div>
+{{- end -}}

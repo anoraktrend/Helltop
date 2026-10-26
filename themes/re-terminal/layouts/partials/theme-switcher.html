@@ -1,0 +1,24 @@
+{{- $defaultFamily := $.Site.Params.defaultThemeFamily | default "gruvbox" -}}
+<div class="theme-switcher" id="theme-switcher">
+  <button class="theme-toggle-button" id="theme-toggle-button">
+    <span id="current-theme-name">{{ $defaultFamily }}</span>
+  </button>
+  <div class="theme-options">
+    <button class="theme-option" data-theme="random">🎲 random</button>
+    <button class="theme-option{{ if eq $defaultFamily "gruvbox" }} active{{ end }}" data-theme="gruvbox">gruvbox</button>
+    <button class="theme-option" data-theme="onedark">onedark</button>
+    <button class="theme-option" data-theme="nightowl">nightowl</button>
+    <button class="theme-option" data-theme="palenight">palenight</button>
+    <button class="theme-option" data-theme="everforest">everforest</button>
+    <button class="theme-option{{ if eq $defaultFamily "catppuccin" }} active{{ end }}" data-theme="catppuccin">catppuccin</button>
+    <button class="theme-option" data-theme="high-contrast">high-contrast</button>
+    <button class="theme-option" data-theme="oxocarbon">oxocarbon</button>
+    <button class="theme-option" data-theme="dracula">dracula</button>
+    <button class="theme-option" data-theme="nord">nord</button>
+    <button class="theme-option" data-theme="rosepine">rosepine</button>
+    <button class="theme-option" data-theme="tokyonight">tokyonight</button>
+    <button class="theme-option" data-theme="solarized">solarized</button>
+    <button class="theme-option" data-theme="monokai">monokai</button>
+    <button class="theme-option" data-theme="ayu">ayu</button>
+  </div>
+</div>
