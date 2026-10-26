@@ -107,6 +107,58 @@ async function resolveDbName(): Promise<string> {
   return 'helltop';
 }
 
+// ---------------------------------------------------------------------------
+// Atlas Network Access error helpers – surface actionable 503 instead of generic 500
+// ---------------------------------------------------------------------------
+
+export const ATLAS_NETWORK_ERROR_PAYLOAD = {
+  error: 'Database temporarily unavailable - Atlas IP whitelist needs 0.0.0.0/0',
+  code: 'ATLAS_NETWORK_ACCESS' as const,
+  hint: 'Atlas Network Access is blocking Cloudflare Workers egress IPs. Fix: https://cloud.mongodb.com -> Project statusdb -> Network Access -> Add IP Address -> Allow Access From Anywhere (0.0.0.0/0) -> Confirm -> Wait 2-3 mins. Alternative: enable Atlas Data API (ATLAS_DATA_API_URL + ATLAS_DATA_API_KEY) for HTTPS access with no IP whitelist.',
+} as const;
+
+export function isAtlasNetworkError(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false;
+  const err = error as Record<string, unknown>;
+  const name = typeof err.name === 'string' ? err.name : '';
+  const code = typeof err.code === 'string' ? err.code : '';
+  const message = typeof err.message === 'string' ? err.message : String(error);
+  const haystack = `${name} ${code} ${message}`.toLowerCase();
+
+  // Primary: MongoServerSelectionError / Topology.selectServer – the exact production failure
+  if (name === 'MongoServerSelectionError') return true;
+  if (haystack.includes('mongoserverselectionerror')) return true;
+  if (haystack.includes('topology.selectserver')) return true;
+  if (haystack.includes('topologydescription')) return true;
+  if (haystack.includes('server selection timed out')) return true;
+  if (haystack.includes('server selection error')) return true;
+  // Atlas IP whitelist produces connection timeout / closed before handshake
+  if (haystack.includes('connection <monitor> closing')) return true;
+  if (haystack.includes('mongodb') && haystack.includes('timed out') && haystack.includes('server selection')) return true;
+  return false;
+}
+
+// Alias kept for consumers that import the more explicit name
+export const isAtlasNetworkAccessError = isAtlasNetworkError;
+
+export function logAtlasNetworkError(error: unknown, context: string): void {
+  console.error(
+    `[Atlas Network Access] ${context}: Workers egress IP blocked by Atlas Network Access. ` +
+      `Atlas is whitelisting only dev IP; Cloudflare Workers have dynamic egress IPs. ` +
+      `Fix: https://cloud.mongodb.com -> Project statusdb (cluster statusdb.k4c1r06.mongodb.net) -> Network Access -> Add IP Address -> Allow Access From Anywhere (0.0.0.0/0) -> Confirm -> wait 2-3 mins. ` +
+      `Alternative: set ATLAS_DATA_API_URL + ATLAS_DATA_API_KEY to use Atlas Data API over HTTPS (no IP whitelist). ` +
+      `Original error:`,
+    error,
+  );
+}
+
+export function toAtlasNetworkErrorResponse(): Response {
+  return new Response(JSON.stringify(ATLAS_NETWORK_ERROR_PAYLOAD), {
+    status: 503,
+    headers: { 'Content-Type': 'application/json', 'Retry-After': '60' },
+  });
+}
+
 async function createClient(): Promise<MongoClient> {
   const uri = await resolveMongoUri();
   const client = new MongoClient(uri, {
@@ -114,7 +166,14 @@ async function createClient(): Promise<MongoClient> {
     // Cloudflare Workers outbound TCP can have higher latency via proxy;
     // 8s balances user experience vs Atlas handshake time.
   });
-  return client.connect();
+  try {
+    return await client.connect();
+  } catch (error) {
+    if (isAtlasNetworkError(error)) {
+      logAtlasNetworkError(error, 'createClient.connect');
+    }
+    throw error;
+  }
 }
 
 function getMongoClientPromise(): Promise<MongoClient> {
@@ -125,7 +184,10 @@ function getMongoClientPromise(): Promise<MongoClient> {
     return connected;
   });
 
-  promise.catch(() => {
+  promise.catch((error: unknown) => {
+    if (isAtlasNetworkError(error)) {
+      logAtlasNetworkError(error, 'getMongoClientPromise');
+    }
     if (globalThis.__mongoClientPromise === promise) {
       globalThis.__mongoClientPromise = undefined;
     }

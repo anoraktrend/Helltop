@@ -1,10 +1,21 @@
 import type { APIRoute } from 'astro';
-import { getCommentsCollection } from '../../db';
+import {
+  getCommentsCollection,
+  isAtlasNetworkError,
+  logAtlasNetworkError,
+  ATLAS_NETWORK_ERROR_PAYLOAD,
+} from '../../db';
 import { ObjectId } from 'mongodb';
 import { serializeComment } from '../../db/schema';
 import { isAdmin } from '../../utils/admin';
 import { getKv } from '../../utils/env';
 import { checkRateLimit, getClientIp, type RateLimitResult } from '../../utils/rateLimit';
+import {
+  isDataApiConfigured,
+  dataApiFindComments,
+  dataApiInsertComment,
+  dataApiDeleteManyByIds,
+} from '../../db/atlasDataApi';
 
 const MAX_BULK_DELETE = 500;
 
@@ -24,6 +35,13 @@ function rateLimitHeaders(rl: RateLimitResult): Record<string, string> {
     'X-RateLimit-Remaining': String(rl.remaining),
     ...(rl.retryAfter ? { 'Retry-After': String(rl.retryAfter) } : {}),
   };
+}
+
+function atlasNetworkResponse(headers: Record<string, string> = {}): Response {
+  return new Response(JSON.stringify(ATLAS_NETWORK_ERROR_PAYLOAD), {
+    status: 503,
+    headers: { 'Content-Type': 'application/json', 'Retry-After': '60', ...headers },
+  });
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -75,20 +93,50 @@ export const POST: APIRoute = async ({ request }) => {
       parentObjectId = new ObjectId(raw);
     }
 
-    const collection = await getCommentsCollection();
-    await collection.insertOne({
-      author: String(author).trim(),
-      body: String(commentBody).trim(),
-      postId: String(post_id).trim(),
-      parentId: parentObjectId,
-      publishedAt: new Date(),
-    } as never);
+    try {
+      const collection = await getCommentsCollection();
+      await collection.insertOne({
+        author: String(author).trim(),
+        body: String(commentBody).trim(),
+        postId: String(post_id).trim(),
+        parentId: parentObjectId,
+        publishedAt: new Date(),
+      } as never);
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: rateLimitHeaders(rateLimit),
-    });
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: rateLimitHeaders(rateLimit),
+      });
+    } catch (error) {
+      if (isAtlasNetworkError(error)) {
+        logAtlasNetworkError(error, 'POST /api/comments.json');
+        // Hybrid fallback: if Atlas Data API is configured, use HTTPS (no IP whitelist)
+        if (await isDataApiConfigured()) {
+          try {
+            await dataApiInsertComment({
+              author: String(author).trim(),
+              body: String(commentBody).trim(),
+              postId: String(post_id).trim(),
+              parentId: parentObjectId,
+              publishedAt: new Date(),
+            } as never);
+            return new Response(JSON.stringify({ success: true, via: 'data-api' }), {
+              status: 200,
+              headers: rateLimitHeaders(rateLimit),
+            });
+          } catch (dataApiError) {
+            console.error('Data API fallback also failed for POST /api/comments.json:', dataApiError);
+          }
+        }
+        return atlasNetworkResponse(rateLimitHeaders(rateLimit));
+      }
+      throw error;
+    }
   } catch (error) {
+    if (isAtlasNetworkError(error)) {
+      logAtlasNetworkError(error, 'POST /api/comments.json (outer)');
+      return atlasNetworkResponse();
+    }
     console.error('Error in POST /api/comments.json:', error);
     return new Response(JSON.stringify({ error: 'Failed' }), { status: 500 });
   }
@@ -124,14 +172,36 @@ export const DELETE: APIRoute = async ({ request, cookies }) => {
       });
     }
 
-    const collection = await getCommentsCollection();
-    const objectIds = validIds.map((id) => new ObjectId(id));
-    await collection.deleteMany({ _id: { $in: objectIds } } as never);
+    try {
+      const collection = await getCommentsCollection();
+      const objectIds = validIds.map((id) => new ObjectId(id));
+      await collection.deleteMany({ _id: { $in: objectIds } } as never);
 
-    return new Response(JSON.stringify({ success: true, deleted: validIds.length }), {
-      status: 200,
-    });
+      return new Response(JSON.stringify({ success: true, deleted: validIds.length }), {
+        status: 200,
+      });
+    } catch (error) {
+      if (isAtlasNetworkError(error)) {
+        logAtlasNetworkError(error, 'DELETE /api/comments.json');
+        if (await isDataApiConfigured()) {
+          try {
+            const deleted = await dataApiDeleteManyByIds(validIds);
+            return new Response(JSON.stringify({ success: true, deleted, via: 'data-api' }), {
+              status: 200,
+            });
+          } catch (dataApiError) {
+            console.error('Data API fallback also failed for DELETE /api/comments.json:', dataApiError);
+          }
+        }
+        return atlasNetworkResponse();
+      }
+      throw error;
+    }
   } catch (error) {
+    if (isAtlasNetworkError(error)) {
+      logAtlasNetworkError(error, 'DELETE /api/comments.json (outer)');
+      return atlasNetworkResponse();
+    }
     console.error('Error in DELETE /api/comments.json:', error);
     return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,
@@ -141,17 +211,46 @@ export const DELETE: APIRoute = async ({ request, cookies }) => {
 
 export const GET: APIRoute = async ({ request }) => {
   try {
-    const collection = await getCommentsCollection();
-    const url = new URL(request.url);
-    const postId = url.searchParams.get('postId');
+    try {
+      const collection = await getCommentsCollection();
+      const url = new URL(request.url);
+      const postId = url.searchParams.get('postId');
 
-    const filter = postId ? { postId } : {};
+      const filter = postId ? { postId } : {};
 
-    const docs = await collection.find(filter).sort({ publishedAt: -1 }).toArray();
-    const serialized = docs.map(serializeComment);
+      const docs = await collection.find(filter).sort({ publishedAt: -1 }).toArray();
+      const serialized = docs.map(serializeComment);
 
-    return new Response(JSON.stringify(serialized), { status: 200 });
+      return new Response(JSON.stringify(serialized), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      if (isAtlasNetworkError(error)) {
+        logAtlasNetworkError(error, 'GET /api/comments.json');
+        if (await isDataApiConfigured()) {
+          try {
+            const url = new URL(request.url);
+            const postId = url.searchParams.get('postId');
+            const filter = postId ? { postId } : {};
+            const docs = await dataApiFindComments(filter);
+            return new Response(JSON.stringify(docs), {
+              status: 200,
+              headers: { 'Content-Type': 'application/json' },
+            });
+          } catch (dataApiError) {
+            console.error('Data API fallback also failed for GET /api/comments.json:', dataApiError);
+          }
+        }
+        return atlasNetworkResponse();
+      }
+      throw error;
+    }
   } catch (error) {
+    if (isAtlasNetworkError(error)) {
+      logAtlasNetworkError(error, 'GET /api/comments.json (outer)');
+      return atlasNetworkResponse();
+    }
     console.error('Error in GET /api/comments.json:', error);
     return new Response(JSON.stringify({ error: 'Failed' }), { status: 500 });
   }
