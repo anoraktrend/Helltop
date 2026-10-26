@@ -1,0 +1,84 @@
+baseURL = 'https://helltop.net/'
+locale = 'en-us'
+title = 'Helltop.net'
+themesDir = '../'
+pagination.pagerSize = 5
+
+# Use the local fork at ../re-terminal. The fork's go.mod still declares the
+# upstream /v2 module path, so we import that and replace it locally. The
+# replacement path is relative to themesDir.
+[module]
+  replacements = 'github.com/mirus-ua/hugo-theme-re-terminal/v2 -> re-terminal'
+
+  [[module.imports]]
+    path = 'github.com/mirus-ua/hugo-theme-re-terminal/v2'
+    ignoreConfig = true
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    style = 'catppuccin-mocha'
+
+[params]
+  contentTypeName = 'posts'
+  centerTheme = true
+  defaultThemeFamily = 'catppuccin'
+  defaultThemeVariant = 'dark'
+  favicon = 'favicon.png'
+  copyright = '© 2026 Helltop.net'
+  listenBrainzUser = 'anoraktrend'
+  readingTime = true
+
+  [params.logo]
+    logoHomeLink = '/'
+    logoPrimary = 'HELL'
+    logoSecondary = 'TOP'
+
+  [params.social]
+    email = 'lucybrown@vivaldi.net'
+    fediverse = 'https://app.wafrn.net/blog/lucyinchat'
+    fediverseLabel = 'Wafrn'
+    github = 'https://github.com/anoraktrend'
+    youtube = 'https://www.youtube.com/@lucyinchat'
+    rss = '/index.xml'
+
+  [params.calloutBox]
+    enabled = true
+
+[languages]
+  [languages.en]
+    label = 'English'
+    weight = 1
+
+    [languages.en.params]
+      languageName = 'English'
+      title = 'Helltop.net'
+      subtitle = 'My Digital Rebellion. Fuck the corporate cloud. Build your own.'
+      owner = ''
+      keywords = ''
+      menuMore = 'Show more'
+      readMore = 'Continue Reading'
+      readOtherPosts = 'Read other posts'
+      newerPosts = 'Newer posts'
+      olderPosts = 'Older posts'
+      missingContentMessage = 'Page not found...'
+      missingBackButtonLabel = 'Back to home page'
+      minuteReadingTime = 'min read'
+      words = 'words'
+
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = 'home'
+        name = 'Home'
+        url = '/'
+        weight = 1
+      [[languages.en.menu.main]]
+        identifier = 'blog'
+        name = 'Blog'
+        url = '/posts/'
+        weight = 2
+      [[languages.en.menu.main]]
+        identifier = 'about'
+        name = 'About'
+        url = '/about/'
+        weight = 3

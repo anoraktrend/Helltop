@@ -1,0 +1,93 @@
++++
+title = "Fork This Site: Self Hosting and Simplified Web Design"
+description = "How I built a fast, self-controlled website using Nuxt 3 and Cloudflare Workers without surrendering to traditional hosting bullshit"
+date = 2026-01-18
+author = 'Lucy Ada Randall'
+tags = ["Web Development", "Nuxt", "Cloudflare"]
+slug = "FTS"
+aliases = ["/blog/FTS/", "/blog/fts/"]
+draft = false
++++
+
+## Introduction
+
+This website is my declaration of independence from corporate content platforms. Built with Nuxt 4 and deployed on Cloudflare Workers, it's fast, affordable, and most importantly, mine.
+
+## Tech Stack
+
+The tech stack was chosen deliberately:
+
+- **Nuxt 4**: Modern Vue-based framework with excellent TypeScript support
+- **Cloudflare Workers**: Global edge deployment with minimal cost
+- **Markdown content**: Human-readable, version-controlled, platform-agnostic
+
+## Getting Started
+
+Clone and customize:
+
+```bash
+git clone https://github.com/anoraktrend/Helltop my-site
+cd my-site
+
+# Replace content in src/content/ with your own
+# E.G. Modify homepage/1.index.json and blog posts
+# Also edit and fill src/pages/about.astro with your info
+
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm run dev
+
+```
+
+## Deployment
+
+The deployment process is intentionally simple:
+
+```bash
+# Install Wrangler CLI
+pnpm install -g wrangler
+
+# Build for production
+pnpm run build
+
+# Deploy to Cloudflare Workers
+npx wrangler deploy
+
+```
+OR setup a Cloudflare worker pointing to your github or gitlab.
+
+## Architecture Decisions
+
+### Why this stack?
+
+- **Performance**: Cloudflare's global network ensures fast loading worldwide
+- **Cost**: Workers are incredibly cheap compared to traditional hosting
+- **Control**: No platform can deplatform you or change the rules
+- **Simplicity**: Markdown content is easy to write and maintain
+
+### Key configuration points:
+
+- Content lives in `content/` with frontmatter for metadata
+- Caching rules in `nitro.routeRules` optimize performance
+- RSS feed generated automatically from blog content
+- Nuxt configured for Cloudflare Workers deployment
+
+## Alternatives Considered
+
+- **11ty + Vercel**: Simpler but less interactive
+- **Self-hosted Ghost**: More features but higher maintenance
+- **Write.as**: Maximum simplicity but limited customization
+
+Nuxt 4 with Cloudflare Workers strikes the right balance for my needs.
+
+## Maintenance
+
+I've included a GitHub Actions workflow for automated deployment, though a Codeberg Forgejo CI workflow would work equally well. The build process is straightforward and doesn't require complex orchestration.
+
+## Philosophy
+
+This setup embodies my belief that creators should own their platforms. No more worrying about algorithm changes, content restrictions, or unexpected shutdowns. Just reliable, fast hosting that you control.
+
+The trade-off is responsibility: you're in charge of updates and maintenance. But that's a price I'm happy to pay for true ownership.

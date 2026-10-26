@@ -1,0 +1,34 @@
++++
+title = "Escaping the Nuxt: Moving to Astro 6"
+description = "Why I ditched Nuxt for Astro and how the new architecture powers this digital rebellion."
+date = 2026-03-19
+author = 'Lucy Ada Randall'
+tags = ["Architecture", "Astro", "Web Development"]
+slug = "transition-to-astro"
+aliases = ["/blog/transition-to-astro/"]
+draft = false
++++
+
+## The Great Framework Migration
+
+Helltop was originally an experiment on Nuxt, but it was time for a change. The transition to Astro 6 represents a fundamental shift in how this site operates. We've moved from a client-side heavy approach to a true content-first architecture.
+
+## Why Astro?
+
+Astro's zero-JS by default philosophy perfectly aligns with the Helltop mission. No corporate bloat, no unnecessary hydration… just raw, optimized content delivered at the speed of thought. By leveraging Astro 6, the build speed has increased by just that much reducing development costs and time-to-live.
+
+## Database Evolution: Astro Content vs Nuxt Content
+
+We've traded the magic of `@nuxt/content` for the magic of Astro Content Collections. Read more about the possibilities with astro's solution [here.](https://docs.astro.build/en/guides/content-collections/)
+
+## Upgraded communications array
+
+Our new comments section is powered by a direct D1 binding, giving us a robust, self-hosted feedback loop without the overhead of heavy abstractions.
+
+## Styling the Rebellion
+
+The visual identity has evolved too. We've replaced the standard `@nuxt/ui` with a bespoke implementation using Tailwind CSS v4 and the Catppuccin flavor palette. We also added shader features for each of the different color schemes.
+
+## What's Next?
+
+This is just the beginning. The move to Astro has unlocked new possibilities for performance and portability. Stay tuned as we continue to refine the stack and build out new features for the digital nomad.

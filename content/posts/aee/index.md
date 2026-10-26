@@ -1,0 +1,60 @@
++++
+title = "Maintaning AEE: Another Easy Editor"
+description = "Preserving simple, instruction-free editing for modern systems. Power ≠ complex."
+date = 2026-03-28
+author = 'Lucy Ada Randall'
+tags = ["TUIs", "Open Source", "Editing"]
+slug = "AEE"
+aliases = ["/blog/AEE/", "/blog/aee/"]
+draft = false
++++
+
+## Introduction
+
+![Screenshot of AEE text editor interface](aee.png)
+
+In the unix space, terminal text editors have been the battle grounds of holy wars.
+From Vi vs Emacs to the modern Micro vs Nano, EE and AEE have just been here. That whole time.
+This is just another text editor. And a simple one.
+
+## Why I Maintain This Fork
+
+I maintain this fork because someone has to, and the original developer is dead.
+The original AEE was a masterpiece of simple programming, but it was ancient, and it hadn't been buildable for a while.
+Rather than abandon it to obsolescence, I:
+1. Ripped out the original build system and replaced it with a modern one.
+2. Removed unneccessary cruft that made it only useful on ancient unixes. 
+3. Began to modernize the code.
+
+## What Makes AEE Special
+
+Using EE  for the first time was a revelation to me. It made me wonder why no other terminal text editor was as easy to use as it was. Then i found AEE.
+AEE was a port of EE that had the unfortunate state of being incomplete, and relying on code conventions too old to be useful. 
+
+## Technical Changes
+
+The changes I made were surgical:
+
+- Switched from create.make scripts to a CMake configuration.
+- With the above, converted to ncurses, removing the obsolete new_curse subset and the equally unusable xcurse setup.
+- began to update the C code.
+
+## Use Cases
+
+This editor is for when you need to make quick edits without ceremony. When you're debugging a config file at 3 AM and don't want to fight your tools.
+
+## Installation and Usage
+
+Install (AUR):
+
+```bash
+yay -S aee-anoraktrend-git
+```
+
+Usage:
+
+```bash
+aee /path/to/file.txt
+```
+
+The source code is intentionally readable. You can understand the entire editor in an afternoon… something you can't say about most modern software.
