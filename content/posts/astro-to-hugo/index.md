@@ -3,9 +3,9 @@ title = "Leaving behind Slop: Moving from Astro to Hugo"
 description = "How I escaped an LLM coded site and embraced the digital rebellion."
 date = 2026-10-26
 author = 'Lucy Ada Randall'
-tags = ["Architecture", "Astro", "Web Development"]
-slug = "transition-to-astro"
-aliases = ["/blog/transition-to-astro/"]
+tags = ["Architecture", "hugo", "Web Development"]
+slug = "astro-to-hugo"
+aliases = ["/blog/astro-to-hugo/"]
 draft = false
 +++
 
