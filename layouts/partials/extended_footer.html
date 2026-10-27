@@ -1,0 +1,5 @@
+{{ if eq .RelPermalink "/music/" }}
+  {{ $nowPlaying := resources.Get "js/now-playing.js" | js.Build | resources.Minify }}
+  {{ if hugo.IsProduction }}{{ $nowPlaying = $nowPlaying | fingerprint }}{{ end }}
+  <script type="text/javascript" src="{{ $nowPlaying.RelPermalink }}" defer></script>
+{{ end }}

@@ -1,50 +1,86 @@
 {
   "payload": {
     "count": 1,
-    "latest_listen_ts": 1792791334,
+    "latest_listen_ts": 1793126094,
     "listens": [
       {
-        "inserted_at": 1792791341,
-        "listened_at": 1792791334,
-        "recording_msid": "77df8259-c5a9-4aa3-bd24-7922fd68a3f8",
+        "inserted_at": 1793126095,
+        "listened_at": 1793126094,
+        "recording_msid": "d2204544-8df1-4629-8240-9f4c43a6ddd4",
         "track_metadata": {
           "additional_info": {
             "artist_mbids": [
-              "b7ffd2af-418f-4be2-bdd1-22f8b48613da"
+              "381086ea-f511-4aba-bdf9-71c753dc5077"
             ],
-            "duration_ms": 1000,
-            "isrc": "USIR10401078",
+            "duration_ms": 155000,
+            "isrc": "USUG12408501",
             "media_player": "Jellyfin",
-            "recording_mbid": "b504dcda-803d-4dfb-9a23-d32126879985",
-            "release_group_mbid": "abcff3e9-a3f4-3a94-a6be-32381104084e",
-            "release_mbid": "9c0b5a23-ca6e-4b4e-be2f-98280cf56c88",
+            "recording_mbid": "799e8b3e-2908-4e30-9855-8155ab42ed3c",
+            "release_group_mbid": "32cb822c-a14e-49ce-a169-f209c5f31e0f",
+            "release_mbid": "45bbde2e-bfc1-48c6-8b58-491348cd5459",
             "submission_client": "ListenBrainz plugin for Jellyfin",
             "submission_client_version": "6.5.3.5",
             "tags": [],
-            "track_mbid": "90deb4dd-8be8-3a37-a523-baa284672166",
-            "tracknumber": 27
+            "track_mbid": "ffe4b282-3514-4aeb-9e9e-7eb673bcd9d9",
+            "tracknumber": 9
           },
-          "artist_name": "Nine Inch Nails",
+          "artist_name": "Kendrick Lamar feat. AZCHIKE",
           "mbid_mapping": {
             "artist_mbids": [
-              "b7ffd2af-418f-4be2-bdd1-22f8b48613da"
+              "381086ea-f511-4aba-bdf9-71c753dc5077",
+              "edfe284c-3d75-45aa-9eca-25e6cef83637"
             ],
             "artists": [
               {
-                "artist_credit_name": "Nine Inch Nails",
-                "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+                "artist_credit_name": "Kendrick Lamar",
+                "artist_mbid": "381086ea-f511-4aba-bdf9-71c753dc5077",
+                "join_phrase": " feat. "
+              },
+              {
+                "artist_credit_name": "AZCHIKE",
+                "artist_mbid": "edfe284c-3d75-45aa-9eca-25e6cef83637",
                 "join_phrase": ""
               }
             ],
-            "caa_id": 3085294645,
-            "caa_release_mbid": "3e70c9c9-6e1a-4ae6-8a13-250f28de8ffd",
-            "recording_mbid": "b504dcda-803d-4dfb-9a23-d32126879985",
-            "recording_name": "[silence]",
-            "release_group_mbid": "abcff3e9-a3f4-3a94-a6be-32381104084e",
-            "release_mbid": "b7f2dc7e-3941-4c9c-a801-b656f295931c"
+            "caa_id": 40476627968,
+            "caa_release_mbid": "ab97a501-5505-427a-b9cd-81e3e6c1085c",
+            "recording_mbid": "799e8b3e-2908-4e30-9855-8155ab42ed3c",
+            "recording_name": "peekaboo",
+            "release_group_mbid": "32cb822c-a14e-49ce-a169-f209c5f31e0f",
+            "release_mbid": "13acfa3a-e73f-43aa-a109-e3216cb6b1b3",
+            "url_rels": [
+              {
+                "type": "free streaming",
+                "url": "https://open.spotify.com/track/2Uts1QFB4u2YNIMiqcb4de"
+              },
+              {
+                "type": "streaming",
+                "url": "https://open.qobuz.com/track/302791426"
+              },
+              {
+                "type": "streaming",
+                "url": "https://music.apple.com/gb/song/1781270545"
+              },
+              {
+                "type": "streaming",
+                "url": "https://tidal.com/track/401317297"
+              },
+              {
+                "type": "purchase for download",
+                "url": "https://music.apple.com/us/song/1781270545"
+              },
+              {
+                "type": "streaming",
+                "url": "https://music.apple.com/us/song/1781270545"
+              },
+              {
+                "type": "purchase for download",
+                "url": "https://open.qobuz.com/track/302791426"
+              }
+            ]
           },
-          "release_name": "Broken",
-          "track_name": "[silence]"
+          "release_name": "GNX",
+          "track_name": "peekaboo"
         },
         "user_name": "anoraktrend"
       }
