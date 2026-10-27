@@ -128,23 +128,17 @@ class FediComment {
   }
 
   wafrnAvatarUrl(user, environment) {
-    if (!user.avatar) {
+    if (!user.id) {
       return '';
     }
 
-    // Remote users already have an absolute avatar URL; local avatars are
-    // paths under the instance's media URL.
-    const mediaUrl = user.url?.startsWith('@')
-      ? user.avatar
-      : `${environment.baseMediaUrl || ''}${user.avatar}`;
+    // Wafrn serves cached avatars through its v2 API. The instance itself
+    // proxies the same endpoint, so it is a safe fallback when the cache
+    // domain is unavailable.
+    const cacheDomain = (environment.cacheDomain || this.config.instanceUrl)
+      .replace(/\/$/, '');
 
-    if (!mediaUrl.startsWith('http')) {
-      return mediaUrl;
-    }
-
-    return environment.externalCacheurl
-      ? `${environment.externalCacheurl}${encodeURIComponent(mediaUrl)}&avatar=true`
-      : mediaUrl;
+    return `${cacheDomain}/api/v2/cache/avatar/${encodeURIComponent(user.id)}?format=avif&size=medium`;
   }
 
   mapWafrnPosts(data, environment = {}) {
