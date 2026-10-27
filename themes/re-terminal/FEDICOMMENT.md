@@ -1,17 +1,17 @@
 # FediComment Integration
 
-The re-terminal theme now includes **FediComment**, a self-hosted commenting system that uses Mastodon for comments.
+The re-terminal theme now includes **FediComment**, a self-hosted commenting system that uses Mastodon-compatible APIs and Wafrn for comments.
 
 ## How It Works
 
 1. Write a blog post
-2. Post about it on your Mastodon instance
+2. Post about it on Mastodon or Wafrn
 3. Add the post ID to your article's frontmatter
-4. Replies to your Mastodon post appear as comments on your blog!
+4. Replies to your post appear as comments on your blog!
 
 ## Features
 
-- ✅ Works with Mastodon and Mastodon-compatible platforms
+- ✅ Works with Mastodon-compatible platforms and Wafrn
 - ✅ Automatically themed to match all re-terminal color schemes
 - ✅ Nested comment threads
 - ✅ Custom emoji support
@@ -25,7 +25,7 @@ The re-terminal theme now includes **FediComment**, a self-hosted commenting sys
 
 ### Step 1: Post About Your Article
 
-After publishing your blog post, create a post about it on Mastodon:
+After publishing your blog post, create a post about it on Mastodon or Wafrn:
 
 ```
 Just published a new article about Hugo themes!
@@ -39,9 +39,13 @@ https://yourblog.com/posts/my-article/
 
 Find the status ID from your post URL:
 
-**Example:** `https://fosstodon.org/@thelinuxcast/123456789` → Status ID: `123456789`
+**Mastodon example:** `https://fosstodon.org/@thelinuxcast/123456789` → Status ID: `123456789`
 
-The status ID is the number at the end of your post URL.
+The status ID is the number at the end of your Mastodon post URL.
+
+**Wafrn example:** `https://app.wafrn.net/fediverse/post/01a17efb-748b-76b9-b0da-160b74016d7f` → Post ID: `01a17efb-748b-76b9-b0da-160b74016d7f`
+
+The post ID is the UUID at the end of your Wafrn post URL.
 
 ### Step 3: Add to Frontmatter
 
@@ -56,6 +60,7 @@ fediverse:
   instance: "https://fosstodon.org"
   username: "yourname"
   id: "123456789"
+  platform: "mastodon"
 ---
 ```
 
@@ -69,7 +74,19 @@ date = 2025-01-12
 instance = "https://fosstodon.org"
 username = "yourname"
 id = "123456789"
+platform = "mastodon"
 +++
+```
+
+For Wafrn, use the instance URL, your Wafrn username, the post UUID from the post URL, and
+`platform = "wafrn"`:
+
+```toml
+[fediverse]
+instance = "https://app.wafrn.net"
+username = "lucyinchat"
+id = "01a17efb-748b-76b9-b0da-160b74016d7f"
+platform = "wafrn"
 ```
 
 ### Step 4: Build and Deploy
@@ -91,6 +108,7 @@ The FediComment widget supports these parameters (configured in `layouts/partial
 - `instance` (required): Your Fediverse instance URL
 - `id` (required): The status/post ID
 - `username` (optional): Your username for the reply link
+- `platform` (optional): `mastodon` (default) or `wafrn`
 - `loadButtonText`: Text for the load button (default: "Load Comments from Fediverse")
 - `replyButtonText`: Text for the reply button (default: "💬 Reply on Fediverse")
 - `noCommentsText`: Message when no comments exist

@@ -7,6 +7,12 @@ tags = ["Architecture", "hugo", "Web Development"]
 slug = "astro-to-hugo"
 aliases = ["/blog/astro-to-hugo/"]
 draft = false
+
+[fediverse]
+instance = "https://app.wafrn.net"
+username = "lucyinchat"
+id = "01a17efb-748b-76b9-b0da-160b74016d7f"
+platform = "wafrn"
 +++
 
 ## The Great Framework Migration, and a change in personal opinions
