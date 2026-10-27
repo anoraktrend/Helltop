@@ -10,6 +10,12 @@ cover = 'kinland.png'
 coverAlt = 'Screenshot of the Kinland ARG website'
 coverCaption = 'Kinland, the ARG website'
 draft = false
+
+[fediverse]
+instance = "https://app.wafrn.net"
+username = "lucyinchat"
+id = "01a17f7f-e128-715b-8f56-865e1a4eaa19"
+platform = "wafrn"
 +++
 
 ## Introduction
