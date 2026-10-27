@@ -21,7 +21,8 @@
 	},
 	"vars": {
 		"JELLYFIN_URL": "https://jellyfin.helltop.net",
-		"JELLYFIN_USER": "lucy"
+		"JELLYFIN_USER": "lucy",
+		"LISTENBRAINZ_USER": "anoraktrend"
 	},
 	"routes": [
 		{

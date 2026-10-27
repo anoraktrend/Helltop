@@ -6,9 +6,9 @@ excludeFromRSS = true
 readingTime = false
 +++
 
-What I have been listening to lately. Listening statistics are generated from my
-[ListenBrainz](https://listenbrainz.org/user/anoraktrend/) profile at build time; now playing comes
-live from Jellyfin.
+What I have been listening to lately. Listening statistics come from my
+[ListenBrainz](https://listenbrainz.org/user/anoraktrend/) profile and are refreshed at the edge;
+now playing comes live from Jellyfin.
 
 {{< jellyfin-now-playing >}}
 

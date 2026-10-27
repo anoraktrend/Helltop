@@ -1,86 +1,50 @@
 {
   "payload": {
     "count": 1,
-    "latest_listen_ts": 1793126094,
+    "latest_listen_ts": 1793126510,
     "listens": [
       {
-        "inserted_at": 1793126095,
-        "listened_at": 1793126094,
-        "recording_msid": "d2204544-8df1-4629-8240-9f4c43a6ddd4",
+        "inserted_at": 1793126511,
+        "listened_at": 1793126510,
+        "recording_msid": "54ee915a-9af7-4159-bd82-d051988b3a1e",
         "track_metadata": {
           "additional_info": {
             "artist_mbids": [
-              "381086ea-f511-4aba-bdf9-71c753dc5077"
+              "e132d370-2a59-4437-8610-756df28a5a02"
             ],
-            "duration_ms": 155000,
-            "isrc": "USUG12408501",
+            "duration_ms": 222000,
+            "isrc": "QMRSZ1401172",
             "media_player": "Jellyfin",
-            "recording_mbid": "799e8b3e-2908-4e30-9855-8155ab42ed3c",
-            "release_group_mbid": "32cb822c-a14e-49ce-a169-f209c5f31e0f",
-            "release_mbid": "45bbde2e-bfc1-48c6-8b58-491348cd5459",
+            "recording_mbid": "3baaa3ed-2ecc-4978-9d3a-73aa938d92dd",
+            "release_group_mbid": "a9a8556e-e145-48e7-a8ef-1ad1173a7943",
+            "release_mbid": "c3a9bdf6-6370-40ef-a84c-4cb086e2a27f",
             "submission_client": "ListenBrainz plugin for Jellyfin",
             "submission_client_version": "6.5.3.5",
             "tags": [],
-            "track_mbid": "ffe4b282-3514-4aeb-9e9e-7eb673bcd9d9",
+            "track_mbid": "e328cbd6-d5f4-4c53-a98c-380ad0477679",
             "tracknumber": 9
           },
-          "artist_name": "Kendrick Lamar feat. AZCHIKE",
+          "artist_name": "OK Go",
           "mbid_mapping": {
             "artist_mbids": [
-              "381086ea-f511-4aba-bdf9-71c753dc5077",
-              "edfe284c-3d75-45aa-9eca-25e6cef83637"
+              "e132d370-2a59-4437-8610-756df28a5a02"
             ],
             "artists": [
               {
-                "artist_credit_name": "Kendrick Lamar",
-                "artist_mbid": "381086ea-f511-4aba-bdf9-71c753dc5077",
-                "join_phrase": " feat. "
-              },
-              {
-                "artist_credit_name": "AZCHIKE",
-                "artist_mbid": "edfe284c-3d75-45aa-9eca-25e6cef83637",
+                "artist_credit_name": "OK Go",
+                "artist_mbid": "e132d370-2a59-4437-8610-756df28a5a02",
                 "join_phrase": ""
               }
             ],
-            "caa_id": 40476627968,
-            "caa_release_mbid": "ab97a501-5505-427a-b9cd-81e3e6c1085c",
-            "recording_mbid": "799e8b3e-2908-4e30-9855-8155ab42ed3c",
-            "recording_name": "peekaboo",
-            "release_group_mbid": "32cb822c-a14e-49ce-a169-f209c5f31e0f",
-            "release_mbid": "13acfa3a-e73f-43aa-a109-e3216cb6b1b3",
-            "url_rels": [
-              {
-                "type": "free streaming",
-                "url": "https://open.spotify.com/track/2Uts1QFB4u2YNIMiqcb4de"
-              },
-              {
-                "type": "streaming",
-                "url": "https://open.qobuz.com/track/302791426"
-              },
-              {
-                "type": "streaming",
-                "url": "https://music.apple.com/gb/song/1781270545"
-              },
-              {
-                "type": "streaming",
-                "url": "https://tidal.com/track/401317297"
-              },
-              {
-                "type": "purchase for download",
-                "url": "https://music.apple.com/us/song/1781270545"
-              },
-              {
-                "type": "streaming",
-                "url": "https://music.apple.com/us/song/1781270545"
-              },
-              {
-                "type": "purchase for download",
-                "url": "https://open.qobuz.com/track/302791426"
-              }
-            ]
+            "caa_id": 40605336325,
+            "caa_release_mbid": "735ef72e-2e2e-48a4-8ef2-7bc76af60c3a",
+            "recording_mbid": "3baaa3ed-2ecc-4978-9d3a-73aa938d92dd",
+            "recording_name": "The One Moment",
+            "release_group_mbid": "a9a8556e-e145-48e7-a8ef-1ad1173a7943",
+            "release_mbid": "c3a9bdf6-6370-40ef-a84c-4cb086e2a27f"
           },
-          "release_name": "GNX",
-          "track_name": "peekaboo"
+          "release_name": "Hungry Ghosts",
+          "track_name": "The One Moment"
         },
         "user_name": "anoraktrend"
       }

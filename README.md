@@ -43,8 +43,20 @@ The username comes from `params.listenBrainzUser` in `hugo.toml`. `LISTENBRAINZ_
 Set `HELLTOP_SKIP_LISTENBRAINZ=1` to build with the existing snapshot without network access.
 
 Failures are non-fatal: if ListenBrainz is unavailable, the script keeps the last committed snapshot
-or writes empty payloads, so a deploy can still complete. The ListenBrainz statistics only change
-when the site is rebuilt; the live now-playing card does not require a rebuild.
+or writes empty payloads, so a deploy can still complete. The committed snapshots are also the static
+fallback for the edge-rendered dashboard described below.
+
+### ListenBrainz dashboard at the edge
+
+`worker/listenbrainz.js` fetches the same ListenBrainz endpoints and renders the dashboard HTML. The
+Worker's once-a-minute Cron Trigger refreshes a `listenbrainz-dashboard` snapshot in `MUSIC_STATE`
+whenever it is at least five minutes old. This is deliberately not a Workers Build: listening stats
+change continuously, and rebuilding Hugo for every listen would consume build minutes.
+
+`/music/` replaces the contents of the build-time `<listenbrainz-dashboard>` element with the KV
+snapshot. If KV has no usable snapshot (first deploy, API outage), the static Hugo dashboard is
+served instead. `LISTENBRAINZ_USER` is set in `wrangler.jsonc`; `LISTENBRAINZ_API_BASE` can point at
+a compatible API.
 
 ### Live now-playing
 
@@ -55,9 +67,10 @@ The Worker in `worker/index.js` exposes the Jellyfin-backed card:
 - `/music/` injects a server-rendered card into the static Hugo HTML.
 
 A Cron Trigger (`* * * * *`) refreshes the `now-playing` key in the `MUSIC_STATE` KV namespace once
-per minute. The snapshot is only rewritten when the track or paused state changes. `/music/` reads
-it at request time; the browser script (`assets/js/now-playing.js`) polls the API every 15 seconds
-for a faster update. No Workers Build is needed when a song changes.
+per minute. The snapshot is only rewritten when the track or paused state changes. The same trigger
+refreshes the `listenbrainz-dashboard` key when it is at least five minutes old. `/music/` reads both
+at request time; the browser script (`assets/js/now-playing.js`) polls the API every 15 seconds for a
+faster update. No Workers Build is needed when a song changes.
 
 `JELLYFIN_URL` and `JELLYFIN_USER` are configured in `wrangler.jsonc`. The API key is a Worker
 secret:
@@ -83,8 +96,8 @@ Cron changes can take up to 15 minutes to propagate after the first deploy.
 
 The site is deployed as a Workers static-assets Worker. `wrangler.jsonc` serves `./public` through
 the `ASSETS` binding, uses the Hugo-generated `404.html` for missing pages, binds the `helltop.net`
-custom domain, handles `/api/*` and `/music/` in the Worker, and refreshes `MUSIC_STATE` from the
-cron trigger.
+custom domain, handles `/api/*` and `/music/` in the Worker, and refreshes the now-playing and
+ListenBrainz snapshots in `MUSIC_STATE` from the cron trigger.
 
 Before the first deploy, set the Jellyfin secret:
 

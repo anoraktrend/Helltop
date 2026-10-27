@@ -3,20 +3,29 @@
  *
  * /api/now-playing       -> sanitized Jellyfin "now playing" state
  * /api/now-playing/art   -> proxied cover art (the API key stays server-side)
- * /music/                -> static page with a server-rendered now-playing card
+ * /music/                -> static page with fresh now-playing and ListenBrainz data
  *
- * A Cron Trigger refreshes a small KV snapshot once a minute. The /music/
- * handler injects that snapshot into the static HTML, so the page still has a
- * current card without JavaScript or a full Workers Build. The browser-side
- * poll in assets/js/now-playing.js remains as a faster live enhancement.
+ * Cron Triggers refresh two KV snapshots: Jellyfin now-playing once a minute
+ * and the rendered ListenBrainz dashboard every five minutes. The /music/
+ * handler injects them into the static HTML, so the page stays current without
+ * JavaScript or a full Workers Build. The static Hugo output remains the
+ * fallback whenever a snapshot is missing or stale. The browser-side poll in
+ * assets/js/now-playing.js is still a faster live enhancement for the card.
  *
  * Required Worker secret:
  *   JELLYFIN_API_KEY
  *
  * Optional vars (wrangler.jsonc):
- *   JELLYFIN_URL    default: https://jellyfin.helltop.net
- *   JELLYFIN_USER   default: lucy
+ *   JELLYFIN_URL         default: https://jellyfin.helltop.net
+ *   JELLYFIN_USER        default: lucy
+ *   LISTENBRAINZ_USER    default: anoraktrend
+ *   LISTENBRAINZ_API_BASE
  */
+
+import {
+  fetchListenBrainzData,
+  renderListenBrainzDashboard,
+} from "./listenbrainz.js";
 
 const DEFAULT_JELLYFIN_URL = "https://jellyfin.helltop.net";
 const DEFAULT_JELLYFIN_USER = "lucy";
@@ -24,11 +33,18 @@ const SESSION_ACTIVE_SECONDS = 3600;
 const CACHE_SECONDS = 10;
 const SNAPSHOT_KEY = "now-playing";
 const SNAPSHOT_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+const DASHBOARD_KEY = "listenbrainz-dashboard";
+const DASHBOARD_REFRESH_MS = 5 * 60 * 1000;
+const DASHBOARD_MAX_AGE_MS = 30 * 60 * 1000;
+const DASHBOARD_VERSION = 1;
 const ID_PATTERN = /^[a-f0-9]{32}$/i;
 const MOUNT_PATTERN =
   /<div\b[^>]*?\sid\s*=\s*(?:"jellyfin-now-playing"|'jellyfin-now-playing'|jellyfin-now-playing)[^>]*>\s*<\/div>/i;
+const DASHBOARD_PATTERN =
+  /<listenbrainz-dashboard\b[^>]*>[\s\S]*?<\/listenbrainz-dashboard>/i;
 
 let refreshPromise = null;
+let dashboardRefreshPromise = null;
 
 const jsonHeaders = {
   "content-type": "application/json; charset=utf-8",
@@ -220,6 +236,89 @@ function scheduleRefresh(env, ctx) {
   ctx.waitUntil(refreshPromise);
 }
 
+function isDashboardFresh(snapshot) {
+  const updated = Date.parse(snapshot?.updatedAt);
+  return Number.isFinite(updated) && Date.now() - updated <= DASHBOARD_MAX_AGE_MS;
+}
+
+async function readDashboard(env) {
+  if (!env.MUSIC_STATE) {
+    return null;
+  }
+
+  try {
+    const raw = await env.MUSIC_STATE.get(DASHBOARD_KEY);
+    if (!raw) {
+      return null;
+    }
+    const snapshot = JSON.parse(raw);
+    if (
+      !snapshot ||
+      typeof snapshot !== "object" ||
+      snapshot.version !== DASHBOARD_VERSION ||
+      typeof snapshot.html !== "string" ||
+      !snapshot.html
+    ) {
+      return null;
+    }
+    return snapshot;
+  } catch {
+    return null;
+  }
+}
+
+async function writeDashboard(env, snapshot) {
+  if (!env.MUSIC_STATE) {
+    return false;
+  }
+
+  await env.MUSIC_STATE.put(DASHBOARD_KEY, JSON.stringify(snapshot));
+  return true;
+}
+
+async function refreshListenBrainzDashboard(env) {
+  if (!env.MUSIC_STATE) {
+    return { updated: false, reason: "not-configured" };
+  }
+
+  try {
+    const data = await fetchListenBrainzData(env);
+    const updatedAt = new Date();
+    const html = renderListenBrainzDashboard(data, env, updatedAt);
+    await writeDashboard(env, {
+      version: DASHBOARD_VERSION,
+      updatedAt: updatedAt.toISOString(),
+      html,
+    });
+    console.log("ListenBrainz dashboard snapshot updated");
+    return { updated: true };
+  } catch (error) {
+    console.error(
+      "ListenBrainz dashboard snapshot refresh failed:",
+      error.message,
+    );
+    return { updated: false, error: error.message };
+  }
+}
+
+function scheduleDashboardRefresh(env, ctx) {
+  if (!dashboardRefreshPromise) {
+    dashboardRefreshPromise = refreshListenBrainzDashboard(env).finally(() => {
+      dashboardRefreshPromise = null;
+    });
+  }
+  ctx.waitUntil(dashboardRefreshPromise);
+}
+
+async function refreshDashboardIfDue(env, ctx) {
+  const snapshot = await readDashboard(env);
+  const updated = Date.parse(snapshot?.updatedAt);
+  if (Number.isFinite(updated) && Date.now() - updated < DASHBOARD_REFRESH_MS) {
+    return;
+  }
+  scheduleDashboardRefresh(env, ctx);
+}
+
 function escapeHtml(value) {
   return String(value).replace(
     /[&<>"']/g,
@@ -322,6 +421,17 @@ function injectNowPlaying(html, snapshot) {
   return output;
 }
 
+function injectListenBrainzDashboard(html, dashboardHtml) {
+  if (!DASHBOARD_PATTERN.test(html)) {
+    return html;
+  }
+
+  return html.replace(
+    DASHBOARD_PATTERN,
+    `<listenbrainz-dashboard>${dashboardHtml}</listenbrainz-dashboard>`,
+  );
+}
+
 async function serveMusic(request, env, ctx) {
   if (!env.ASSETS) {
     return new Response("Not Found", { status: 404 });
@@ -338,26 +448,39 @@ async function serveMusic(request, env, ctx) {
     return assetResponse;
   }
 
-  const snapshot = await readSnapshot(env);
+  const [snapshot, dashboard] = await Promise.all([
+    readSnapshot(env),
+    readDashboard(env),
+  ]);
 
-  if (!snapshot) {
+  const freshNowPlaying = snapshot && isSnapshotFresh(snapshot);
+  const freshDashboard = dashboard && isDashboardFresh(dashboard);
+
+  if (!freshNowPlaying) {
     scheduleRefresh(env, ctx);
-    return assetResponse;
+  }
+  if (!freshDashboard) {
+    scheduleDashboardRefresh(env, ctx);
   }
 
-  if (!isSnapshotFresh(snapshot)) {
-    scheduleRefresh(env, ctx);
-    return assetResponse;
-  }
-
-  if (!snapshot.playing) {
+  // The Jellyfin card only replaces the ListenBrainz fallback while something
+  // is actually playing. Otherwise the card mount stays hidden.
+  const injectCard = freshNowPlaying && snapshot.playing;
+  if (!injectCard && !freshDashboard) {
     return assetResponse;
   }
 
   const html = await assetResponse.text();
-  const injected = injectNowPlaying(html, snapshot);
+  let output = html;
 
-  if (injected === html) {
+  if (freshDashboard) {
+    output = injectListenBrainzDashboard(output, dashboard.html);
+  }
+  if (injectCard) {
+    output = injectNowPlaying(output, snapshot);
+  }
+
+  if (output === html) {
     return new Response(html, {
       status: assetResponse.status,
       statusText: assetResponse.statusText,
@@ -371,7 +494,7 @@ async function serveMusic(request, env, ctx) {
   headers.delete("etag");
   headers.set("cache-control", "public, max-age=15, stale-while-revalidate=45");
 
-  return new Response(injected, {
+  return new Response(output, {
     status: assetResponse.status,
     statusText: assetResponse.statusText,
     headers,
@@ -502,6 +625,12 @@ export default {
   },
 
   async scheduled(controller, env, ctx) {
+    // The now-playing snapshot is cheap (one Jellyfin request), so refresh it
+    // every minute. The ListenBrainz dashboard fans out to many API requests,
+    // so it is only refetched when its KV snapshot is at least five minutes
+    // old. Doing the age check here keeps this correct regardless of how
+    // Cloudflare maps cron expressions to invocations.
     scheduleRefresh(env, ctx);
+    ctx.waitUntil(refreshDashboardIfDue(env, ctx));
   },
 };

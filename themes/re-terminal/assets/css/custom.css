@@ -1548,6 +1548,12 @@ details[open] > *:not(summary) {
    LISTENBRAINZ DASHBOARD STYLES
    ═══════════════════════════════════════════════════════════════════════════ */
 
+/* The Worker swaps the contents of this element for a fresh edge-rendered
+   dashboard. The static Hugo output inside it is the fallback. */
+listenbrainz-dashboard {
+  display: block;
+}
+
 .lb-dashboard {
   --lb-accent: var(--accent);
   --lb-bg-card: var(--bg-tertiary);
