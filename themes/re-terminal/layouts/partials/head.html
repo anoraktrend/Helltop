@@ -104,8 +104,33 @@
   <link rel="apple-touch-icon" href="{{ printf "img/theme-colors/%s.png" (or .Params.color $.Site.Params.ThemeColor | default "orange") | absURL }}">
 {{ end }}
 
+{{/* Social embed image: page cover, then site cover, then favicon. */}}
+{{ $socialImage := "" }}
+{{ $socialImageAlt := "" }}
+{{ if (isset .Params "cover") }}
+  {{ $pageCover := .Param "cover" }}
+  {{ with (.Resources.GetMatch (.Param "cover")) }}
+    {{ $pageCover = .RelPermalink }}
+  {{ end }}
+  {{ $socialImage = $pageCover | absURL }}
+  {{ $socialImageAlt = .Param "coverAlt" | default .Title | plainify }}
+{{ else if isset $.Site.Params "cover" }}
+  {{ $socialImage = $.Site.Params.cover | absURL }}
+  {{ $socialImageAlt = $.Site.Params.coverAlt | default $.Site.Title | plainify }}
+{{ else if isset $.Site.Params "favicon" }}
+  {{ $socialImage = $.Site.Params.favicon | absURL }}
+  {{ $socialImageAlt = $.Site.Title | plainify }}
+{{ else }}
+  {{ $socialImage = printf "img/favicon/%s.png" $.Site.Params.ThemeColor | absURL }}
+  {{ $socialImageAlt = $.Site.Title | plainify }}
+{{ end }}
+
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary" />
+{{ with $socialImage }}
+  <meta name="twitter:image" content="{{ . }}" />
+  <meta name="twitter:image:alt" content="{{ $socialImageAlt }}" />
+{{ end }}
 {{ if (isset $.Site.Params "twitter") }}
   {{ if (isset $.Site.Params.Twitter "site") }}
     <meta name="twitter:site" content="{{ $.Site.Params.Twitter.site }}" />
@@ -120,21 +145,10 @@
 <meta property="og:description" content="{{ if .IsHome }}{{ $.Site.Params.Subtitle }}{{ else if .Description}}{{ .Description | plainify }}{{ else }}{{ .Summary | plainify }}{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
 <meta property="og:site_name" content="{{ $.Site.Title }}" />
-{{ if (isset .Params "cover") }}
-  {{ $pageCover := .Param "cover" }}
-  {{ with (.Resources.GetMatch (.Param "cover")) }}
-    {{ $pageCover = .RelPermalink }}
-  {{ end }}
-  <meta property="og:image" content="{{ $pageCover | absURL }}">
-{{ else }}
-  {{ if isset $.Site.Params "favicon" }}
-    <meta property="og:image" content="{{ $.Site.Params.favicon | absURL }}">
-  {{ else }}
-    <meta property="og:image" content="{{ printf "img/favicon/%s.png" $.Site.Params.ThemeColor | absURL }}">
-  {{ end }}
+{{ with $socialImage }}
+  <meta property="og:image" content="{{ . }}" />
+  <meta property="og:image:alt" content="{{ $socialImageAlt }}" />
 {{ end }}
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="627">
 {{ range .Params.categories }}
   <meta property="article:section" content="{{ . }}" />
 {{ end }}
