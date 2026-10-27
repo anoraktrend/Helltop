@@ -1,0 +1,11 @@
+{{- /*
+  Smart typography for display text, matching worker/typography.js.
+  Use as: {{ partial "typography.html" $text }}
+*/ -}}
+{{- $text := . | default "" | string -}}
+{{- $text = replaceRE `\.{3,}` "…" $text -}}
+{{- $text = replaceRE `(^|[\s(\[{<"'“‘—–-])'` "${1}‘" $text -}}
+{{- $text = replace $text "'" "’" -}}
+{{- $text = replaceRE `(^|[\s(\[{<"'“‘—–-])"` "${1}“" $text -}}
+{{- $text = replace $text "\"" "”" -}}
+{{- $text -}}

@@ -2,7 +2,8 @@
  * Small API surface and Music-page enhancer for the static Hugo site.
  *
  * /api/now-playing       -> sanitized Jellyfin "now playing" state
- * /api/now-playing/art   -> proxied cover art (the API key stays server-side)
+ * /api/art               -> proxied Jellyfin cover art (the API key stays server-side)
+ * /api/now-playing/art   -> alias kept for existing now-playing snapshots
  * /music/                -> static page with fresh now-playing and ListenBrainz data
  *
  * Cron Triggers refresh two KV snapshots: Jellyfin now-playing once a minute
@@ -22,10 +23,18 @@
  *   LISTENBRAINZ_API_BASE
  */
 
+import { findJellyfinArt } from "./jellyfin.js";
 import {
   fetchListenBrainzData,
+  itemCoverMbid,
+  recentCoverMbid,
   renderListenBrainzDashboard,
 } from "./listenbrainz.js";
+import {
+  escapeHtml,
+  typographicHtml,
+  typographicText,
+} from "./typography.js";
 
 const DEFAULT_JELLYFIN_URL = "https://jellyfin.helltop.net";
 const DEFAULT_JELLYFIN_USER = "lucy";
@@ -36,7 +45,7 @@ const SNAPSHOT_MAX_AGE_MS = 6 * 60 * 60 * 1000;
 const DASHBOARD_KEY = "listenbrainz-dashboard";
 const DASHBOARD_REFRESH_MS = 5 * 60 * 1000;
 const DASHBOARD_MAX_AGE_MS = 30 * 60 * 1000;
-const DASHBOARD_VERSION = 1;
+const DASHBOARD_VERSION = 3;
 const ID_PATTERN = /^[a-f0-9]{32}$/i;
 const MOUNT_PATTERN =
   /<div\b[^>]*?\sid\s*=\s*(?:"jellyfin-now-playing"|'jellyfin-now-playing'|jellyfin-now-playing)[^>]*>\s*<\/div>/i;
@@ -73,18 +82,28 @@ function nowPlayingPayload(session) {
   const item = session.NowPlayingItem;
   const playState = session.PlayState || {};
 
-  const imageId =
-    item.AlbumId || item.ParentPrimaryImageItemId || item.Id || null;
-  const imageTag =
-    item.AlbumPrimaryImageTag ||
-    item.ParentPrimaryImageTag ||
-    item.ImageTags?.Primary ||
-    null;
+  // Prefer an image ID and tag that belong together. Album art is the best
+  // source, then a parent item (episodes), then the track's own image. If no
+  // tag is available, still try the item without one.
+  const imageCandidates = [
+    [item.AlbumId, item.AlbumPrimaryImageTag],
+    [item.ParentPrimaryImageItemId, item.ParentPrimaryImageTag],
+    [item.Id, item.ImageTags?.Primary],
+    [item.AlbumId, null],
+    [item.ParentPrimaryImageItemId, null],
+    [item.Id, null],
+  ];
+  const [imageId, imageTag] =
+    imageCandidates.find(([id]) => Boolean(id)) || [null, null];
 
-  const artUrl =
-    imageId && imageTag
-      ? `/api/now-playing/art?id=${encodeURIComponent(imageId)}&tag=${encodeURIComponent(imageTag)}`
-      : null;
+  let artUrl = null;
+  if (imageId) {
+    const artParams = new URLSearchParams({ id: imageId, size: "500" });
+    if (imageTag) {
+      artParams.set("tag", imageTag);
+    }
+    artUrl = `/api/art?${artParams.toString()}`;
+  }
 
   const artist = Array.isArray(item.Artists) && item.Artists.length
     ? item.Artists.join(", ")
@@ -105,14 +124,14 @@ function nowPlayingPayload(session) {
     playing: true,
     paused: Boolean(playState.IsPaused),
     itemId: item.Id || "",
-    title: item.Name || "Unknown",
-    artist,
-    album: context,
+    title: typographicText(item.Name || "Unknown"),
+    artist: typographicText(artist),
+    album: typographicText(context),
     itemType: item.Type || "",
     positionSeconds: ticksToSeconds(playState.PositionTicks),
     durationSeconds: ticksToSeconds(item.RunTimeTicks),
-    device: session.DeviceName || "",
-    client: session.Client || "",
+    device: typographicText(session.DeviceName || ""),
+    client: typographicText(session.Client || ""),
     user: session.UserName || "",
     artUrl,
     updatedAt: new Date().toISOString(),
@@ -276,6 +295,106 @@ async function writeDashboard(env, snapshot) {
   return true;
 }
 
+const RECORDING_ART_KEYS = [
+  "top_recordings_alltime",
+  "top_recordings_year",
+  "top_recordings_month",
+  "top_recordings_week",
+];
+const RELEASE_ART_KEYS = [
+  "top_releases_alltime",
+  "top_releases_year",
+  "top_releases_month",
+  "top_releases_week",
+];
+
+function dashboardArtRequests(data) {
+  const requests = new Map();
+
+  function add(item, wanted) {
+    const key = [wanted.album, wanted.artist, wanted.track]
+      .map((value) => String(value || "").toLowerCase())
+      .join("\u0000");
+    let request = requests.get(key);
+    if (!request) {
+      request = { wanted, items: [] };
+      requests.set(key, request);
+    }
+    request.items.push(item);
+  }
+
+  const recent = data.recent?.payload?.listens?.[0];
+  if (recent && !recentCoverMbid(recent)) {
+    const track = recent.track_metadata || {};
+    add(recent, {
+      album: track.release_name || "",
+      artist: track.artist_name || "",
+      track: track.track_name || "",
+    });
+  }
+
+  for (const key of RECORDING_ART_KEYS) {
+    for (const item of data[key]?.payload?.recordings || []) {
+      if (itemCoverMbid(item)) {
+        continue;
+      }
+      add(item, {
+        album: item.release_name || "",
+        artist: item.artist_name || "",
+        track: item.track_name || "",
+        mbid: item.release_mbid || "",
+      });
+    }
+  }
+
+  for (const key of RELEASE_ART_KEYS) {
+    for (const item of data[key]?.payload?.releases || []) {
+      if (itemCoverMbid(item)) {
+        continue;
+      }
+      add(item, {
+        album: item.release_name || "",
+        artist: item.artist_name || "",
+        track: "",
+        mbid: item.release_mbid || "",
+      });
+    }
+  }
+
+  return [...requests.values()];
+}
+
+async function resolveDashboardArt(data, env) {
+  if (!env.JELLYFIN_API_KEY) {
+    return data;
+  }
+
+  const requests = dashboardArtRequests(data);
+  let index = 0;
+
+  async function worker() {
+    while (index < requests.length) {
+      const request = requests[index];
+      index += 1;
+      try {
+        const art = await findJellyfinArt(env, request.wanted);
+        if (art) {
+          for (const item of request.items) {
+            item.jellyfin_art = art;
+          }
+        }
+      } catch (error) {
+        console.error("Jellyfin art lookup failed:", error.message);
+      }
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(3, requests.length) }, () => worker()),
+  );
+  return data;
+}
+
 async function refreshListenBrainzDashboard(env) {
   if (!env.MUSIC_STATE) {
     return { updated: false, reason: "not-configured" };
@@ -283,6 +402,7 @@ async function refreshListenBrainzDashboard(env) {
 
   try {
     const data = await fetchListenBrainzData(env);
+    await resolveDashboardArt(data, env);
     const updatedAt = new Date();
     const html = renderListenBrainzDashboard(data, env, updatedAt);
     await writeDashboard(env, {
@@ -319,20 +439,6 @@ async function refreshDashboardIfDue(env, ctx) {
   scheduleDashboardRefresh(env, ctx);
 }
 
-function escapeHtml(value) {
-  return String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[character],
-  );
-}
-
 function serverPlayingIndicator() {
   return (
     '<span class="lb-playing-indicator">' +
@@ -347,22 +453,22 @@ function renderNowPlayingCard(data) {
   const paused = Boolean(data.paused);
   const art = data.artUrl
     ? '<div class="lb-np-art">' +
-      `<img src="${escapeHtml(data.artUrl)}" alt="${escapeHtml(
+      `<img src="${escapeHtml(data.artUrl)}" alt="${typographicHtml(
         data.album || data.title || "",
-      )}" loading="lazy" decoding="async">` +
+      )}" loading="lazy" decoding="async" onerror="this.style.display='none'">` +
       (paused ? "" : serverPlayingIndicator()) +
       "</div>"
     : "";
 
   const artist = data.artist
-    ? `<span class="lb-np-artist">${escapeHtml(data.artist)}</span>`
+    ? `<span class="lb-np-artist">${typographicHtml(data.artist)}</span>`
     : "";
   const album = data.album
-    ? `<span class="lb-np-album">${escapeHtml(data.album)}</span>`
+    ? `<span class="lb-np-album">${typographicHtml(data.album)}</span>`
     : "";
   const details = [data.device, data.client].filter(Boolean).join(" · ");
   const detailLine = details
-    ? `<time class="lb-np-time">${escapeHtml(details)}</time>`
+    ? `<time class="lb-np-time">${typographicHtml(details)}</time>`
     : "";
 
   return (
@@ -373,7 +479,7 @@ function renderNowPlayingCard(data) {
     `<span class="lb-np-label">${
       paused ? "Paused on Jellyfin" : "Now Playing on Jellyfin"
     }</span>` +
-    `<span class="lb-np-track">${escapeHtml(data.title || "Unknown")}</span>` +
+    `<span class="lb-np-track">${typographicHtml(data.title || "Unknown")}</span>` +
     artist +
     album +
     detailLine +
@@ -564,10 +670,16 @@ async function coverArt(request, env) {
     return new Response("Bad Request", { status: 400 });
   }
 
+  const requestedSize = Number(url.searchParams.get("size"));
+  const maxHeight =
+    Number.isFinite(requestedSize) && requestedSize > 0
+      ? Math.min(Math.max(Math.round(requestedSize), 64), 1000)
+      : 500;
+
   const upstream = new URL(
     `${jellyfinBase(env)}/Items/${encodeURIComponent(id)}/Images/Primary`,
   );
-  upstream.searchParams.set("maxHeight", "500");
+  upstream.searchParams.set("maxHeight", String(maxHeight));
   if (tag) {
     upstream.searchParams.set("tag", tag);
   }
@@ -589,7 +701,10 @@ async function coverArt(request, env) {
     if (contentLength) {
       headers.set("Content-Length", contentLength);
     }
-    headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    headers.set(
+      "Cache-Control",
+      tag ? "public, max-age=31536000, immutable" : "public, max-age=3600",
+    );
     headers.set("Access-Control-Allow-Origin", "*");
 
     return new Response(request.method === "HEAD" ? null : response.body, {
@@ -609,7 +724,10 @@ export default {
       return nowPlaying(request, env, ctx);
     }
 
-    if (url.pathname === "/api/now-playing/art") {
+    if (
+      url.pathname === "/api/art" ||
+      url.pathname === "/api/now-playing/art"
+    ) {
       return coverArt(request, env);
     }
 

@@ -46,6 +46,18 @@ Failures are non-fatal: if ListenBrainz is unavailable, the script keeps the las
 or writes empty payloads, so a deploy can still complete. The committed snapshots are also the static
 fallback for the edge-rendered dashboard described below.
 
+Display text from Jellyfin and ListenBrainz is passed through a small smart-typography helper:
+`...` becomes an ellipsis, and straight `'`/`"` characters become the curly quotes Apple's smart
+punctuation uses. `worker/typography.js` handles the edge-rendered cards,
+`layouts/partials/typography.html` mirrors it for the Hugo fallback, and both escape HTML before
+inserting external metadata.
+
+Cover art normally comes from Cover Art Archive. When a ListenBrainz release has no MBID, the
+dashboard refresh searches the Jellyfin library by album/track and artist and uses Jellyfin's primary
+image instead. Images are proxied through `/api/art`, so the Jellyfin API key stays server-side. The
+release has to exist in Jellyfin for this to find anything; podcast artwork therefore only appears if
+the podcast is in a Jellyfin library.
+
 ### ListenBrainz dashboard at the edge
 
 `worker/listenbrainz.js` fetches the same ListenBrainz endpoints and renders the dashboard HTML. The

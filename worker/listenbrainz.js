@@ -7,6 +7,8 @@
  * for that fresher snapshot at request time.
  */
 
+import { escapeHtml, typographicHtml } from "./typography.js";
+
 const DEFAULT_API_BASE = "https://api.listenbrainz.org/1";
 const DEFAULT_USER = "anoraktrend";
 const TOP_COUNT = 25;
@@ -47,20 +49,6 @@ function formatPercent(value) {
   return String(Number(toNumber(value).toFixed(2)));
 }
 
-function escapeHtml(value) {
-  return String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;",
-      })[character],
-  );
-}
-
 function listenBrainzUser(env) {
   return env.LISTENBRAINZ_USER || DEFAULT_USER;
 }
@@ -75,15 +63,34 @@ function coverArtUrl(mbid, size) {
     : "";
 }
 
-function itemCoverMbid(item) {
+export function itemCoverMbid(item) {
   return item?.caa_release_mbid || item?.release_mbid || "";
 }
 
-function recentCoverMbid(listen) {
+export function recentCoverMbid(listen) {
   const track = asObject(listen?.track_metadata);
   const info = asObject(track.additional_info);
   const mapping = asObject(track.mbid_mapping);
   return info.release_mbid || mapping.caa_release_mbid || mapping.release_mbid || "";
+}
+
+function jellyfinArtUrl(item, size) {
+  const art = item?.jellyfin_art;
+  if (!art?.id) {
+    return "";
+  }
+
+  const params = new URLSearchParams();
+  params.set("id", art.id);
+  if (art.tag) {
+    params.set("tag", art.tag);
+  }
+  params.set("size", String(size));
+  return `/api/art?${params.toString()}`;
+}
+
+function displayArtUrl(item, size) {
+  return coverArtUrl(itemCoverMbid(item), size) || jellyfinArtUrl(item, size);
 }
 
 function formatListenedAt(seconds) {
@@ -228,13 +235,14 @@ function pushNowPlaying(out, data) {
   const listen = listens[0];
   const track = asObject(listen.track_metadata);
   const playing = Boolean(listen.playing_now);
-  const imageUrl = coverArtUrl(recentCoverMbid(listen), 500);
+  const imageUrl =
+    coverArtUrl(recentCoverMbid(listen), 500) || jellyfinArtUrl(listen, 500);
 
   out.push('<section class="lb-now-playing"><div class="lb-np-card">');
   if (imageUrl) {
     out.push('<div class="lb-np-art">');
     out.push(
-      `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(
+      `<img src="${escapeHtml(imageUrl)}" alt="${typographicHtml(
         track.release_name || "",
       )}" loading="lazy" onerror="this.style.display='none'">`,
     );
@@ -251,14 +259,14 @@ function pushNowPlaying(out, data) {
     `<span class="lb-np-label">${playing ? "Now Playing" : "Last Played"}</span>`,
   );
   out.push(
-    `<span class="lb-np-track">${escapeHtml(track.track_name || "")}</span>`,
+    `<span class="lb-np-track">${typographicHtml(track.track_name || "")}</span>`,
   );
   out.push(
-    `<span class="lb-np-artist">${escapeHtml(track.artist_name || "")}</span>`,
+    `<span class="lb-np-artist">${typographicHtml(track.artist_name || "")}</span>`,
   );
   if (track.release_name) {
     out.push(
-      `<span class="lb-np-album">${escapeHtml(track.release_name)}</span>`,
+      `<span class="lb-np-album">${typographicHtml(track.release_name)}</span>`,
     );
   }
   if (!playing && listen.listened_at) {
@@ -439,7 +447,7 @@ function pushTopRecordings(out, data) {
     }
 
     const first = recordings[0];
-    const featuredImage = coverArtUrl(itemCoverMbid(first), 500);
+    const featuredImage = displayArtUrl(first, 500);
     out.push(
       `<section class="lb-section"><h4 class="lb-section-title">Top Tracks — ${escapeHtml(
         periodName,
@@ -447,15 +455,15 @@ function pushTopRecordings(out, data) {
     );
     if (featuredImage) {
       out.push(
-        `<img src="${escapeHtml(featuredImage)}" alt="${escapeHtml(
+        `<img src="${escapeHtml(featuredImage)}" alt="${typographicHtml(
           first.release_name || "",
         )}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">`,
       );
     }
     out.push(
-      `<div class="lb-featured-info"><span class="lb-rank">#1</span><span class="lb-featured-title">${escapeHtml(
+      `<div class="lb-featured-info"><span class="lb-rank">#1</span><span class="lb-featured-title">${typographicHtml(
         first.track_name || "",
-      )}</span><span class="lb-featured-artist">${escapeHtml(
+      )}</span><span class="lb-featured-artist">${typographicHtml(
         first.artist_name || "",
       )}</span><span class="lb-badge">${formatNumber(
         first.listen_count,
@@ -465,7 +473,7 @@ function pushTopRecordings(out, data) {
     if (recordings.length > 1) {
       out.push('<ol class="lb-list" start="2">');
       for (const item of recordings.slice(1)) {
-        const image = coverArtUrl(itemCoverMbid(item), 250);
+        const image = displayArtUrl(item, 250);
         out.push('<li class="lb-list-item">');
         if (image) {
           out.push(
@@ -475,9 +483,9 @@ function pushTopRecordings(out, data) {
           );
         }
         out.push(
-          `<span class="lb-track-name">${escapeHtml(
+          `<span class="lb-track-name">${typographicHtml(
             item.track_name || "",
-          )}</span><span class="lb-artist">${escapeHtml(
+          )}</span><span class="lb-artist">${typographicHtml(
             item.artist_name || "",
           )}</span><span class="lb-badge">${formatNumber(
             item.listen_count,
@@ -508,7 +516,7 @@ function pushTopArtists(out, data) {
     out.push(
       `<section class="lb-section"><h4 class="lb-section-title">Top Artists — ${escapeHtml(
         periodName,
-      )}</h4><div class="lb-featured lb-featured-no-art"><div class="lb-featured-info lb-artist-featured"><span class="lb-rank">#1</span><span class="lb-featured-title">${escapeHtml(
+      )}</h4><div class="lb-featured lb-featured-no-art"><div class="lb-featured-info lb-artist-featured"><span class="lb-rank">#1</span><span class="lb-featured-title">${typographicHtml(
         first.artist_name || "",
       )}</span></div><span class="lb-badge">${formatNumber(
         first.listen_count,
@@ -519,7 +527,7 @@ function pushTopArtists(out, data) {
       out.push('<ol class="lb-list" start="2">');
       for (const item of artists.slice(1)) {
         out.push(
-          `<li class="lb-list-item"><span class="lb-track-name">${escapeHtml(
+          `<li class="lb-list-item"><span class="lb-track-name">${typographicHtml(
             item.artist_name || "",
           )}</span><span class="lb-badge">${formatNumber(
             item.listen_count,
@@ -547,7 +555,7 @@ function pushTopReleases(out, data) {
     }
 
     const first = releases[0];
-    const featuredImage = coverArtUrl(itemCoverMbid(first), 500);
+    const featuredImage = displayArtUrl(first, 500);
     out.push(
       `<section class="lb-section"><h4 class="lb-section-title">Top Albums — ${escapeHtml(
         periodName,
@@ -555,15 +563,15 @@ function pushTopReleases(out, data) {
     );
     if (featuredImage) {
       out.push(
-        `<img src="${escapeHtml(featuredImage)}" alt="${escapeHtml(
+        `<img src="${escapeHtml(featuredImage)}" alt="${typographicHtml(
           first.release_name || "",
         )}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">`,
       );
     }
     out.push(
-      `<div class="lb-featured-info"><span class="lb-rank">#1</span><span class="lb-featured-title">${escapeHtml(
+      `<div class="lb-featured-info"><span class="lb-rank">#1</span><span class="lb-featured-title">${typographicHtml(
         first.release_name || "",
-      )}</span><span class="lb-featured-artist">${escapeHtml(
+      )}</span><span class="lb-featured-artist">${typographicHtml(
         first.artist_name || "",
       )}</span><span class="lb-badge">${formatNumber(
         first.listen_count,
@@ -573,7 +581,7 @@ function pushTopReleases(out, data) {
     if (releases.length > 1) {
       out.push('<ol class="lb-list" start="2">');
       for (const item of releases.slice(1)) {
-        const image = coverArtUrl(itemCoverMbid(item), 250);
+        const image = displayArtUrl(item, 250);
         out.push('<li class="lb-list-item">');
         if (image) {
           out.push(
@@ -583,9 +591,9 @@ function pushTopReleases(out, data) {
           );
         }
         out.push(
-          `<span class="lb-track-name">${escapeHtml(
+          `<span class="lb-track-name">${typographicHtml(
             item.release_name || "",
-          )}</span><span class="lb-artist">${escapeHtml(
+          )}</span><span class="lb-artist">${typographicHtml(
             item.artist_name || "",
           )}</span><span class="lb-badge">${formatNumber(
             item.listen_count,

@@ -67,7 +67,7 @@
       <div class="lb-np-card">
         {{- if $imgUrl -}}
         <div class="lb-np-art">
-          <img src="{{ $imgUrl }}" alt="{{ $release }}" loading="lazy" onerror="this.style.display='none'">
+          <img src="{{ $imgUrl }}" alt="{{ partial "typography.html" $release }}" loading="lazy" onerror="this.style.display='none'">
           {{- if $playing -}}
           <span class="lb-playing-indicator">
             <span class="lb-bar"></span>
@@ -79,9 +79,9 @@
         {{- end -}}
         <div class="lb-np-info">
           <span class="lb-np-label">{{ if $playing }}Now Playing{{ else }}Last Played{{ end }}</span>
-          <span class="lb-np-track">{{ $name }}</span>
-          <span class="lb-np-artist">{{ $artist }}</span>
-          {{- with $release -}}<span class="lb-np-album">{{ . }}</span>{{- end -}}
+          <span class="lb-np-track">{{ partial "typography.html" $name }}</span>
+          <span class="lb-np-artist">{{ partial "typography.html" $artist }}</span>
+          {{- with $release -}}<span class="lb-np-album">{{ partial "typography.html" . }}</span>{{- end -}}
           {{- if and (not $playing) $listenedAt -}}
             {{- $t := time (int $listenedAt) -}}
             <time class="lb-np-time">{{ $t.Format "Jan 2, 2006 3:04 PM" }}</time>
@@ -324,12 +324,12 @@
 
         <div class="lb-featured">
           {{- if $fImg -}}
-          <img src="{{ $fImg }}" alt="{{ index $first "release_name" }}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">
+          <img src="{{ $fImg }}" alt="{{ partial "typography.html" (index $first "release_name") }}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">
           {{- end -}}
           <div class="lb-featured-info">
             <span class="lb-rank">#1</span>
-            <span class="lb-featured-title">{{ index $first "track_name" }}</span>
-            <span class="lb-featured-artist">{{ index $first "artist_name" }}</span>
+            <span class="lb-featured-title">{{ partial "typography.html" (index $first "track_name") }}</span>
+            <span class="lb-featured-artist">{{ partial "typography.html" (index $first "artist_name") }}</span>
             <span class="lb-badge">{{ index $first "listen_count" }} plays</span>
           </div>
         </div>
@@ -344,8 +344,8 @@
             {{- end -}}
             <li class="lb-list-item">
               {{- if $rImg -}}<img src="{{ $rImg }}" alt="" class="lb-thumb" loading="lazy" onerror="this.style.display='none'">{{- end -}}
-              <span class="lb-track-name">{{ index $r "track_name" }}</span>
-              <span class="lb-artist">{{ index $r "artist_name" }}</span>
+              <span class="lb-track-name">{{ partial "typography.html" (index $r "track_name") }}</span>
+              <span class="lb-artist">{{ partial "typography.html" (index $r "artist_name") }}</span>
               <span class="lb-badge">{{ index $r "listen_count" }}</span>
             </li>
           {{- end -}}
@@ -377,7 +377,7 @@
         <div class="lb-featured lb-featured-no-art">
           <div class="lb-featured-info lb-artist-featured">
             <span class="lb-rank">#1</span>
-            <span class="lb-featured-title">{{ index $first "artist_name" }}</span>
+            <span class="lb-featured-title">{{ partial "typography.html" (index $first "artist_name") }}</span>
           </div>
           <span class="lb-badge">{{ index $first "listen_count" }} plays</span>
         </div>
@@ -386,7 +386,7 @@
         <ol class="lb-list" start="2">
           {{- range $i, $a := after 1 $artists -}}
             <li class="lb-list-item">
-              <span class="lb-track-name">{{ index $a "artist_name" }}</span>
+              <span class="lb-track-name">{{ partial "typography.html" (index $a "artist_name") }}</span>
               <span class="lb-badge">{{ index $a "listen_count" }}</span>
             </li>
           {{- end -}}
@@ -422,12 +422,12 @@
 
         <div class="lb-featured">
           {{- if $fImg -}}
-          <img src="{{ $fImg }}" alt="{{ index $first "release_name" }}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">
+          <img src="{{ $fImg }}" alt="{{ partial "typography.html" (index $first "release_name") }}" class="lb-featured-art" loading="lazy" onerror="this.style.display='none'">
           {{- end -}}
           <div class="lb-featured-info">
             <span class="lb-rank">#1</span>
-            <span class="lb-featured-title">{{ index $first "release_name" }}</span>
-            <span class="lb-featured-artist">{{ index $first "artist_name" }}</span>
+            <span class="lb-featured-title">{{ partial "typography.html" (index $first "release_name") }}</span>
+            <span class="lb-featured-artist">{{ partial "typography.html" (index $first "artist_name") }}</span>
             <span class="lb-badge">{{ index $first "listen_count" }} plays</span>
           </div>
         </div>
@@ -442,8 +442,8 @@
             {{- end -}}
             <li class="lb-list-item">
               {{- if $relImg -}}<img src="{{ $relImg }}" alt="" class="lb-thumb" loading="lazy" onerror="this.style.display='none'">{{- end -}}
-              <span class="lb-track-name">{{ index $rel "release_name" }}</span>
-              <span class="lb-artist">{{ index $rel "artist_name" }}</span>
+              <span class="lb-track-name">{{ partial "typography.html" (index $rel "release_name") }}</span>
+              <span class="lb-artist">{{ partial "typography.html" (index $rel "artist_name") }}</span>
               <span class="lb-badge">{{ index $rel "listen_count" }}</span>
             </li>
           {{- end -}}
