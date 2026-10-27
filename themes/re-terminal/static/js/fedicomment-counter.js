@@ -6,6 +6,7 @@
 class FediCommentCounter {
   constructor() {
     this.CACHE_KEY = 'fedicomment-counts';
+    this.CACHE_VERSION = 'v2';
     this.CACHE_TTL = 3600000; // 1 hour in milliseconds
   }
 
@@ -61,7 +62,7 @@ class FediCommentCounter {
 
       const data = await response.json();
       const count = platform === 'wafrn'
-        ? (data.posts?.length || 0)
+        ? (data.posts?.filter(post => !post.isReblog).length || 0)
         : (data.descendants?.length || 0);
 
       return count;
@@ -101,7 +102,7 @@ class FediCommentCounter {
     }
 
     // Check cache first
-    const cacheKey = `${platform}:${statusId}`;
+    const cacheKey = `${this.CACHE_VERSION}:${platform}:${statusId}`;
     const cachedCount = this.getCachedCount(cacheKey);
     if (cachedCount !== null) {
       this.updateCounterDisplay(element, cachedCount);

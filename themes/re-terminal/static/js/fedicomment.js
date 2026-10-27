@@ -152,33 +152,35 @@ class FediComment {
       (data.users || []).map(user => [user.id, user])
     );
 
-    return (data.posts || []).map(post => {
-      const user = users.get(post.userId) || {};
-      const avatar = this.wafrnAvatarUrl(user, environment);
-      const username = (user.url || '').replace(/^@/, '');
-      const profileUrl = user.url
-        ? `${this.config.instanceUrl}/blog/${user.url}`
-        : this.config.instanceUrl;
+    return (data.posts || [])
+      .filter(post => !post.isReblog)
+      .map(post => {
+        const user = users.get(post.userId) || {};
+        const avatar = this.wafrnAvatarUrl(user, environment);
+        const username = (user.url || '').replace(/^@/, '');
+        const profileUrl = user.url
+          ? `${this.config.instanceUrl}/blog/${user.url}`
+          : this.config.instanceUrl;
 
-      return {
-        id: post.id,
-        content: post.content || post.markdownContent || '',
-        created_at: post.createdAt,
-        in_reply_to_id: post.parentId,
-        url: `${this.config.instanceUrl}/fediverse/post/${post.id}`,
-        account: {
-          id: user.id || post.userId,
-          username,
-          acct: username,
-          display_name: this.stripHtml(user.name || username),
-          avatar,
-          url: profileUrl
-        },
-        favourites_count: 0,
-        reblogs_count: 0,
-        emojis: []
-      };
-    });
+        return {
+          id: post.id,
+          content: post.content || post.markdownContent || '',
+          created_at: post.createdAt,
+          in_reply_to_id: post.parentId,
+          url: `${this.config.instanceUrl}/fediverse/post/${post.id}`,
+          account: {
+            id: user.id || post.userId,
+            username,
+            acct: username,
+            display_name: this.stripHtml(user.name || username),
+            avatar,
+            url: profileUrl
+          },
+          favourites_count: 0,
+          reblogs_count: 0,
+          emojis: []
+        };
+      });
   }
 
   stripHtml(html) {

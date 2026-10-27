@@ -89,6 +89,8 @@ id = "01a17efb-748b-76b9-b0da-160b74016d7f"
 platform = "wafrn"
 ```
 
+Wafrn rewoots are filtered out and do not appear as comments.
+
 ### Step 4: Build and Deploy
 
 That's it! When users visit your blog post, they can click "Load Comments from Fediverse" to see all replies.
