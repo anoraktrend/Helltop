@@ -1,0 +1,440 @@
+{
+  "payload": {
+    "count": 25,
+    "from_ts": 1009843200,
+    "last_updated": 1792914181,
+    "offset": 0,
+    "range": "all_time",
+    "releases": [
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 193,
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels"
+      },
+      {
+        "artist_mbids": [
+          "67f66c07-6e61-4026-ade5-7e782fad3a5d"
+        ],
+        "artist_name": "Foo Fighters",
+        "artists": [
+          {
+            "artist_credit_name": "Foo Fighters",
+            "artist_mbid": "67f66c07-6e61-4026-ade5-7e782fad3a5d",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 4773696203,
+        "caa_release_mbid": "85f68702-8f92-3be0-85e2-2915f3a23918",
+        "listen_count": 90,
+        "release_mbid": "85f68702-8f92-3be0-85e2-2915f3a23918",
+        "release_name": "In Your Honor"
+      },
+      {
+        "artist_mbids": [
+          "b5bd9f88-962e-4730-84a7-795592ba42e8"
+        ],
+        "artist_name": "Silversun Pickups",
+        "artists": [
+          {
+            "artist_credit_name": "Silversun Pickups",
+            "artist_mbid": "b5bd9f88-962e-4730-84a7-795592ba42e8",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 2531553574,
+        "caa_release_mbid": "cd115704-d392-4d05-95e0-491e9fd82852",
+        "listen_count": 77,
+        "release_mbid": "cd115704-d392-4d05-95e0-491e9fd82852",
+        "release_name": "Carnavas"
+      },
+      {
+        "artist_mbids": [
+          "34e10b51-b5c6-4bc1-b70e-f05f141eda1e"
+        ],
+        "artist_name": "John Denver",
+        "artists": [
+          {
+            "artist_credit_name": "John Denver",
+            "artist_mbid": "34e10b51-b5c6-4bc1-b70e-f05f141eda1e",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 37318765239,
+        "caa_release_mbid": "4735649f-5f25-4116-ad0c-8a76c256c358",
+        "listen_count": 74,
+        "release_mbid": "4735649f-5f25-4116-ad0c-8a76c256c358",
+        "release_name": "Windsong"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 2016386989,
+        "caa_release_mbid": "513ef1c0-6e3a-4aa8-bc3f-4bbe7da09c17",
+        "listen_count": 66,
+        "release_mbid": "513ef1c0-6e3a-4aa8-bc3f-4bbe7da09c17",
+        "release_name": "An Awesome Wave"
+      },
+      {
+        "artist_mbids": [],
+        "artist_name": "Distractible",
+        "artists": null,
+        "caa_id": null,
+        "caa_release_mbid": null,
+        "listen_count": 65,
+        "release_mbid": null,
+        "release_name": "Distractible"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17830738428,
+        "caa_release_mbid": "43b87948-27dd-4719-a6d2-e7ab6619520e",
+        "listen_count": 62,
+        "release_mbid": "09f56a16-e126-41c1-93af-35c0565c554a",
+        "release_name": "Relaxer"
+      },
+      {
+        "artist_mbids": [
+          "6fe07aa5-fec0-4eca-a456-f29bff451b04"
+        ],
+        "artist_name": "Weezer",
+        "artists": [
+          {
+            "artist_credit_name": "Weezer",
+            "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 28371263864,
+        "caa_release_mbid": "71640529-7a8e-4fc5-ac94-37b0c6e0889d",
+        "listen_count": 60,
+        "release_mbid": "606807f1-274e-4c3f-bf73-52dce4b2112b",
+        "release_name": "OK Human"
+      },
+      {
+        "artist_mbids": [
+          "ad1aaeab-67a6-4bbf-8676-9450e95ff234"
+        ],
+        "artist_name": "亜蘭知子",
+        "artists": [
+          {
+            "artist_credit_name": "亜蘭知子",
+            "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 10296358179,
+        "caa_release_mbid": "a4623cb6-b213-4237-b60a-d7bb38a7ea44",
+        "listen_count": 59,
+        "release_mbid": "5149b18f-ba34-4aa1-9cf7-657b17be00df",
+        "release_name": "浮遊空間"
+      },
+      {
+        "artist_mbids": [
+          "27638856-79a1-4495-b7da-1912899560c7"
+        ],
+        "artist_name": "bbno$",
+        "artists": [
+          {
+            "artist_credit_name": "bbno$",
+            "artist_mbid": "27638856-79a1-4495-b7da-1912899560c7",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 42964475793,
+        "caa_release_mbid": "cc89528e-56b0-4261-b1f8-0ea0c19ee8b9",
+        "listen_count": 58,
+        "release_mbid": "cc89528e-56b0-4261-b1f8-0ea0c19ee8b9",
+        "release_name": "bbno$"
+      },
+      {
+        "artist_mbids": [
+          "af37c51c-0790-4a29-b995-456f98a6b8c9"
+        ],
+        "artist_name": "Vampire Weekend",
+        "artists": [
+          {
+            "artist_credit_name": "Vampire Weekend",
+            "artist_mbid": "af37c51c-0790-4a29-b995-456f98a6b8c9",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 28637558356,
+        "caa_release_mbid": "936707a6-3095-38cb-9261-329e0e246fd4",
+        "listen_count": 57,
+        "release_mbid": "936707a6-3095-38cb-9261-329e0e246fd4",
+        "release_name": "Contra"
+      },
+      {
+        "artist_mbids": [],
+        "artist_name": "It‘s Probably (not) Aliens!",
+        "artists": null,
+        "caa_id": null,
+        "caa_release_mbid": null,
+        "listen_count": 53,
+        "release_mbid": null,
+        "release_name": "It‘s Probably (not) Aliens!"
+      },
+      {
+        "artist_mbids": [
+          "4449ccf6-c948-4d33-aa97-b6ad98ce4b5b"
+        ],
+        "artist_name": "Metric",
+        "artists": [
+          {
+            "artist_credit_name": "Metric",
+            "artist_mbid": "4449ccf6-c948-4d33-aa97-b6ad98ce4b5b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 34214934158,
+        "caa_release_mbid": "cbb48769-6599-4463-bd8b-dc738a13a413",
+        "listen_count": 53,
+        "release_mbid": "dbfc9d20-db36-434f-96cd-002215c1f7c9",
+        "release_name": "Fantasies"
+      },
+      {
+        "artist_mbids": [
+          "0d8b0d50-e4cf-4da4-965d-f24c58ec3268"
+        ],
+        "artist_name": "Boston",
+        "artists": [
+          {
+            "artist_credit_name": "Boston",
+            "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 9479501382,
+        "caa_release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "listen_count": 50,
+        "release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "release_name": "Boston"
+      },
+      {
+        "artist_mbids": [
+          "ef62d1c8-7a97-41fc-920b-9220c282693e"
+        ],
+        "artist_name": "Sugar for the Pill",
+        "artists": [
+          {
+            "artist_credit_name": "Sugar for the Pill",
+            "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 42150436847,
+        "caa_release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "listen_count": 49,
+        "release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "release_name": "LUV"
+      },
+      {
+        "artist_mbids": [
+          "5b11f4ce-a62d-471e-81fc-a69a8278c7da"
+        ],
+        "artist_name": "Nirvana",
+        "artists": [
+          {
+            "artist_credit_name": "Nirvana",
+            "artist_mbid": "5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 9470150007,
+        "caa_release_mbid": "eccae410-7577-4daa-b602-92d305828331",
+        "listen_count": 48,
+        "release_mbid": "eccae410-7577-4daa-b602-92d305828331",
+        "release_name": "Nevermind"
+      },
+      {
+        "artist_mbids": [],
+        "artist_name": "Your Take is Excrement",
+        "artists": null,
+        "caa_id": null,
+        "caa_release_mbid": null,
+        "listen_count": 47,
+        "release_mbid": null,
+        "release_name": "Your Take is Excrement"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 43067990035,
+        "caa_release_mbid": "e6f60da3-1d37-4aba-a309-6e65b84ffe66",
+        "listen_count": 44,
+        "release_mbid": "e6f60da3-1d37-4aba-a309-6e65b84ffe66",
+        "release_name": "This Is All Yours"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 31801247893,
+        "caa_release_mbid": "0719dd21-f8b5-46e4-817b-24425ccbef48",
+        "listen_count": 43,
+        "release_mbid": "0719dd21-f8b5-46e4-817b-24425ccbef48",
+        "release_name": "The Dream"
+      },
+      {
+        "artist_mbids": [
+          "994c1efe-ab1c-4b1f-a2b7-01758ef963b9"
+        ],
+        "artist_name": "松原みき",
+        "artists": [
+          {
+            "artist_credit_name": "松原みき",
+            "artist_mbid": "994c1efe-ab1c-4b1f-a2b7-01758ef963b9",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 41671522120,
+        "caa_release_mbid": "7185dd56-fad7-4c98-aa9a-486d2e9092d4",
+        "listen_count": 43,
+        "release_mbid": "7185dd56-fad7-4c98-aa9a-486d2e9092d4",
+        "release_name": "POCKET PARK"
+      },
+      {
+        "artist_mbids": [
+          "13ea526b-3a95-49d8-8550-3acfba773f19"
+        ],
+        "artist_name": "FEM&M",
+        "artists": [
+          {
+            "artist_credit_name": "FEM&M",
+            "artist_mbid": "13ea526b-3a95-49d8-8550-3acfba773f19",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 44710505704,
+        "caa_release_mbid": "cdbfa0c1-75a2-4e77-ab69-7b70af1a4f3f",
+        "listen_count": 41,
+        "release_mbid": "cdbfa0c1-75a2-4e77-ab69-7b70af1a4f3f",
+        "release_name": "Mentally sILLy"
+      },
+      {
+        "artist_mbids": [
+          "b5bd9f88-962e-4730-84a7-795592ba42e8"
+        ],
+        "artist_name": "Silversun Pickups",
+        "artists": [
+          {
+            "artist_credit_name": "Silversun Pickups",
+            "artist_mbid": "b5bd9f88-962e-4730-84a7-795592ba42e8",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 44104278988,
+        "caa_release_mbid": "889f1cab-69dc-361b-b243-3344b2504511",
+        "listen_count": 39,
+        "release_mbid": "889f1cab-69dc-361b-b243-3344b2504511",
+        "release_name": "Swoon"
+      },
+      {
+        "artist_mbids": [
+          "0d8b0d50-e4cf-4da4-965d-f24c58ec3268"
+        ],
+        "artist_name": "Boston",
+        "artists": [
+          {
+            "artist_credit_name": "Boston",
+            "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 12043722023,
+        "caa_release_mbid": "03663c40-95ae-3e3c-ac94-efea79317279",
+        "listen_count": 38,
+        "release_mbid": "03663c40-95ae-3e3c-ac94-efea79317279",
+        "release_name": "Third Stage"
+      },
+      {
+        "artist_mbids": [
+          "6fe07aa5-fec0-4eca-a456-f29bff451b04"
+        ],
+        "artist_name": "Weezer",
+        "artists": [
+          {
+            "artist_credit_name": "Weezer",
+            "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 26015079702,
+        "caa_release_mbid": "1e477f68-c407-4eae-ad01-518528cedc2c",
+        "listen_count": 37,
+        "release_mbid": "1e477f68-c407-4eae-ad01-518528cedc2c",
+        "release_name": "Weezer"
+      },
+      {
+        "artist_mbids": [
+          "67f66c07-6e61-4026-ade5-7e782fad3a5d"
+        ],
+        "artist_name": "Foo Fighters",
+        "artists": [
+          {
+            "artist_credit_name": "Foo Fighters",
+            "artist_mbid": "67f66c07-6e61-4026-ade5-7e782fad3a5d",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 2493534806,
+        "caa_release_mbid": "362e0673-3a59-42ba-a089-29a8a23fde11",
+        "listen_count": 37,
+        "release_mbid": "362e0673-3a59-42ba-a089-29a8a23fde11",
+        "release_name": "Echoes, Silence, Patience & Grace"
+      }
+    ],
+    "to_ts": 1792889532,
+    "total_release_count": 1089,
+    "user_id": "anoraktrend"
+  }
+}

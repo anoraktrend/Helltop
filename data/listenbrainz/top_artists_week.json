@@ -1,0 +1,19 @@
+{
+  "payload": {
+    "artists": [
+      {
+        "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+        "artist_name": "Nine Inch Nails",
+        "listen_count": 2
+      }
+    ],
+    "count": 1,
+    "from_ts": 1792368000,
+    "last_updated": 1792816170,
+    "offset": 0,
+    "range": "this_week",
+    "to_ts": 1792972800,
+    "total_artist_count": 1,
+    "user_id": "anoraktrend"
+  }
+}

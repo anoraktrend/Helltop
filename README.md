@@ -28,6 +28,24 @@ required version is not already on `PATH` (the version preinstalled in Cloudflar
 too old for the theme's `.Site.Language.Locale` usage). Override the pinned version with the
 `HELLTOP_HUGO_VERSION` environment variable if needed.
 
+## Music page
+
+`content/music.md` renders the theme's ListenBrainz dashboard. The page reads snapshots from
+`data/listenbrainz/`, which `build.sh` refreshes from the public ListenBrainz API before Hugo runs:
+
+```sh
+./ci/fetch-listenbrainz.sh   # manual refresh
+```
+
+The username comes from `params.listenBrainzUser` in `hugo.toml`. `LISTENBRAINZ_USER`,
+`LISTENBRAINZ_COUNT` (top-list size, default 25), and `LISTENBRAINZ_API_BASE` can override it.
+Set `HELLTOP_SKIP_LISTENBRAINZ=1` to build with the existing snapshot without network access.
+
+Failures are non-fatal: if ListenBrainz is unavailable, the script keeps the last committed snapshot
+or writes empty payloads, so a deploy can still complete. Because the data is fetched during the
+build, it refreshes whenever the site is rebuilt; schedule a build in Workers Builds or rerun the
+fetch script if you want it updated between deploys.
+
 ## Deploy to Cloudflare Workers
 
 The site is deployed as a Workers static-assets Worker. `wrangler.jsonc` serves `./public`, uses the

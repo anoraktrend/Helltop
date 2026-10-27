@@ -1,0 +1,139 @@
+{
+  "payload": {
+    "artists": [
+      {
+        "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+        "artist_name": "alt‐J",
+        "listen_count": 247
+      },
+      {
+        "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+        "artist_name": "bôa",
+        "listen_count": 210
+      },
+      {
+        "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+        "artist_name": "Weezer",
+        "listen_count": 157
+      },
+      {
+        "artist_mbid": "27638856-79a1-4495-b7da-1912899560c7",
+        "artist_name": "bbno$",
+        "listen_count": 138
+      },
+      {
+        "artist_mbid": "67f66c07-6e61-4026-ade5-7e782fad3a5d",
+        "artist_name": "Foo Fighters",
+        "listen_count": 132
+      },
+      {
+        "artist_mbid": "b5bd9f88-962e-4730-84a7-795592ba42e8",
+        "artist_name": "Silversun Pickups",
+        "listen_count": 127
+      },
+      {
+        "artist_mbid": "ba0d6274-db14-4ef5-b28d-657ebde1a396",
+        "artist_name": "The Smashing Pumpkins",
+        "listen_count": 106
+      },
+      {
+        "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+        "artist_name": "Boston",
+        "listen_count": 91
+      },
+      {
+        "artist_mbid": "af37c51c-0790-4a29-b995-456f98a6b8c9",
+        "artist_name": "Vampire Weekend",
+        "listen_count": 89
+      },
+      {
+        "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+        "artist_name": "亜蘭知子",
+        "listen_count": 88
+      },
+      {
+        "artist_mbid": "34e10b51-b5c6-4bc1-b70e-f05f141eda1e",
+        "artist_name": "John Denver",
+        "listen_count": 86
+      },
+      {
+        "artist_mbid": "d2db1078-c170-4e22-b261-14f3ad60a690",
+        "artist_name": "DEVO",
+        "listen_count": 85
+      },
+      {
+        "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+        "artist_name": "Sugar for the Pill",
+        "listen_count": 75
+      },
+      {
+        "artist_mbid": "e68e96fa-e50d-4e0e-83bc-086bdef68634",
+        "artist_name": "Plumtree",
+        "listen_count": 74
+      },
+      {
+        "artist_mbid": "4449ccf6-c948-4d33-aa97-b6ad98ce4b5b",
+        "artist_name": "Metric",
+        "listen_count": 69
+      },
+      {
+        "artist_mbid": "5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+        "artist_name": "Nirvana",
+        "listen_count": 60
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "竹内まりや",
+        "listen_count": 54
+      },
+      {
+        "artist_mbid": "3be279e7-5d42-4b55-b4bc-93790b244df5",
+        "artist_name": "Patricia Taxxon",
+        "listen_count": 51
+      },
+      {
+        "artist_mbid": "f9ef7a22-4262-4596-a2a8-1d19345b8e50",
+        "artist_name": "Garbage",
+        "listen_count": 51
+      },
+      {
+        "artist_mbid": "994c1efe-ab1c-4b1f-a2b7-01758ef963b9",
+        "artist_name": "松原みき",
+        "listen_count": 49
+      },
+      {
+        "artist_mbid": "ada7a83c-e3e1-40f1-93f9-3e73dbc9298a",
+        "artist_name": "Arctic Monkeys",
+        "listen_count": 46
+      },
+      {
+        "artist_mbid": "f59c5520-5f46-4d2c-b2c4-822eabf53419",
+        "artist_name": "Linkin Park",
+        "listen_count": 45
+      },
+      {
+        "artist_mbid": "02bdc7ec-d102-4698-85e2-789a42d40b9c",
+        "artist_name": "竹内まりや",
+        "listen_count": 41
+      },
+      {
+        "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+        "artist_name": "Nine Inch Nails",
+        "listen_count": 41
+      },
+      {
+        "artist_mbid": "13ea526b-3a95-49d8-8550-3acfba773f19",
+        "artist_name": "FEM&M",
+        "listen_count": 41
+      }
+    ],
+    "count": 25,
+    "from_ts": 1767225600,
+    "last_updated": 1789530488,
+    "offset": 0,
+    "range": "this_year",
+    "to_ts": 1798761600,
+    "total_artist_count": 272,
+    "user_id": "anoraktrend"
+  }
+}

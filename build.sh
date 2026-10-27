@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Resolve the repository root so the script works from any working directory.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Hugo version used by this site. The vendored re-terminal theme uses
 # .Site.Language.Locale, which requires a newer Hugo than the one currently
 # preinstalled in Cloudflare's Workers Builds image (0.147.7).
@@ -44,4 +47,18 @@ if [[ "$hugo_ready" == false ]]; then
 fi
 
 echo "Using $(hugo version)"
+
+# Snapshot the ListenBrainz dashboard data before Hugo reads data/.
+# Missing node or a ListenBrainz outage must not break the deploy: the fetch
+# script keeps the last committed snapshot when a request fails.
+if [[ "${HELLTOP_SKIP_LISTENBRAINZ:-0}" != "1" ]]; then
+  if command -v node >/dev/null 2>&1; then
+    echo "Refreshing ListenBrainz data..."
+    node "${SCRIPT_DIR}/ci/fetch-listenbrainz.mjs" || \
+      echo "warning: ListenBrainz refresh failed; using existing data" >&2
+  else
+    echo "warning: node not found; using existing ListenBrainz data" >&2
+  fi
+fi
+
 hugo --gc --minify --cleanDestinationDir "$@"

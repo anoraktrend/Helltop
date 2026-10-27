@@ -1,0 +1,59 @@
+{
+  "payload": {
+    "artists": [
+      {
+        "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+        "artist_name": "Sugar for the Pill",
+        "listen_count": 5
+      },
+      {
+        "artist_mbid": "9c9f1380-2516-4fc9-a3e6-f9f61941d090",
+        "artist_name": "Muse",
+        "listen_count": 4
+      },
+      {
+        "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+        "artist_name": "Nine Inch Nails",
+        "listen_count": 2
+      },
+      {
+        "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+        "artist_name": "Weezer",
+        "listen_count": 1
+      },
+      {
+        "artist_mbid": "6f1de078-6684-4792-820d-2ffad64c15ed",
+        "artist_name": "Two Door Cinema Club",
+        "listen_count": 1
+      },
+      {
+        "artist_mbid": "ba0d6274-db14-4ef5-b28d-657ebde1a396",
+        "artist_name": "The Smashing Pumpkins",
+        "listen_count": 1
+      },
+      {
+        "artist_mbid": "a16371b9-7d36-497a-a9d4-42b0a0440c5e",
+        "artist_name": "Slowdive",
+        "listen_count": 1
+      },
+      {
+        "artist_mbid": "7cf0ea9d-86b9-4dad-ba9e-2355a64899ea",
+        "artist_name": "M.I.A.",
+        "listen_count": 1
+      },
+      {
+        "artist_mbid": "4223b47f-3af9-4e07-a4cf-7f8c8df0c0e8",
+        "artist_name": "GENER8ION",
+        "listen_count": 1
+      }
+    ],
+    "count": 9,
+    "from_ts": 1790812800,
+    "last_updated": 1792813752,
+    "offset": 0,
+    "range": "this_month",
+    "to_ts": 1793491200,
+    "total_artist_count": 9,
+    "user_id": "anoraktrend"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "payload": {
+    "count": 8,
+    "from_ts": 1790812800,
+    "last_updated": 1792814206,
+    "offset": 0,
+    "range": "this_month",
+    "releases": [
+      {
+        "artist_mbids": [
+          "ef62d1c8-7a97-41fc-920b-9220c282693e"
+        ],
+        "artist_name": "Sugar for the Pill",
+        "artists": [
+          {
+            "artist_credit_name": "Sugar for the Pill",
+            "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 42150436847,
+        "caa_release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "listen_count": 5,
+        "release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "release_name": "LUV"
+      },
+      {
+        "artist_mbids": [
+          "9c9f1380-2516-4fc9-a3e6-f9f61941d090"
+        ],
+        "artist_name": "Muse",
+        "artists": [
+          {
+            "artist_credit_name": "Muse",
+            "artist_mbid": "9c9f1380-2516-4fc9-a3e6-f9f61941d090",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 16884542442,
+        "caa_release_mbid": "856cdf3a-ca13-3499-b1ab-d4df78207947",
+        "listen_count": 4,
+        "release_mbid": "856cdf3a-ca13-3499-b1ab-d4df78207947",
+        "release_name": "The Resistance"
+      },
+      {
+        "artist_mbids": [
+          "b7ffd2af-418f-4be2-bdd1-22f8b48613da"
+        ],
+        "artist_name": "Nine Inch Nails",
+        "artists": [
+          {
+            "artist_credit_name": "Nine Inch Nails",
+            "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 33866302333,
+        "caa_release_mbid": "b7f2dc7e-3941-4c9c-a801-b656f295931c",
+        "listen_count": 2,
+        "release_mbid": "b7f2dc7e-3941-4c9c-a801-b656f295931c",
+        "release_name": "Broken"
+      },
+      {
+        "artist_mbids": [
+          "a16371b9-7d36-497a-a9d4-42b0a0440c5e"
+        ],
+        "artist_name": "Slowdive",
+        "artists": [
+          {
+            "artist_credit_name": "Slowdive",
+            "artist_mbid": "a16371b9-7d36-497a-a9d4-42b0a0440c5e",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 16395092357,
+        "caa_release_mbid": "3c088aa7-ecfb-41f4-b3e9-7fb0b7aeac97",
+        "listen_count": 1,
+        "release_mbid": "3c088aa7-ecfb-41f4-b3e9-7fb0b7aeac97",
+        "release_name": "Slowdive"
+      },
+      {
+        "artist_mbids": [
+          "6fe07aa5-fec0-4eca-a456-f29bff451b04"
+        ],
+        "artist_name": "Weezer",
+        "artists": [
+          {
+            "artist_credit_name": "Weezer",
+            "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 22078998236,
+        "caa_release_mbid": "510b9df3-e5be-47bf-9560-c62a5b5434e2",
+        "listen_count": 1,
+        "release_mbid": "510b9df3-e5be-47bf-9560-c62a5b5434e2",
+        "release_name": "Happy Hour (The Remixes)"
+      },
+      {
+        "artist_mbids": [
+          "6f1de078-6684-4792-820d-2ffad64c15ed"
+        ],
+        "artist_name": "Two Door Cinema Club",
+        "artists": [
+          {
+            "artist_credit_name": "Two Door Cinema Club",
+            "artist_mbid": "6f1de078-6684-4792-820d-2ffad64c15ed",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 24567582972,
+        "caa_release_mbid": "1f4d9fcd-1a3a-4d41-9ed8-18124647417b",
+        "listen_count": 1,
+        "release_mbid": "1f4d9fcd-1a3a-4d41-9ed8-18124647417b",
+        "release_name": "False Alarm"
+      },
+      {
+        "artist_mbids": [
+          "ba0d6274-db14-4ef5-b28d-657ebde1a396"
+        ],
+        "artist_name": "The Smashing Pumpkins",
+        "artists": [
+          {
+            "artist_credit_name": "The Smashing Pumpkins",
+            "artist_mbid": "ba0d6274-db14-4ef5-b28d-657ebde1a396",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 35638450048,
+        "caa_release_mbid": "c76dd7d8-43e3-4490-9eba-38ddae4fa15e",
+        "listen_count": 1,
+        "release_mbid": "c76dd7d8-43e3-4490-9eba-38ddae4fa15e",
+        "release_name": "ATUM: A Rock Opera in Three Acts"
+      },
+      {
+        "artist_mbids": [
+          "7cf0ea9d-86b9-4dad-ba9e-2355a64899ea"
+        ],
+        "artist_name": "M.I.A.",
+        "artists": [
+          {
+            "artist_credit_name": "M.I.A.",
+            "artist_mbid": "7cf0ea9d-86b9-4dad-ba9e-2355a64899ea",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 21764549563,
+        "caa_release_mbid": "dc398b87-a53c-4630-b476-01b64dbd47c5",
+        "listen_count": 1,
+        "release_mbid": "dc398b87-a53c-4630-b476-01b64dbd47c5",
+        "release_name": "AIM"
+      }
+    ],
+    "to_ts": 1793491200,
+    "total_release_count": 8,
+    "user_id": "anoraktrend"
+  }
+}

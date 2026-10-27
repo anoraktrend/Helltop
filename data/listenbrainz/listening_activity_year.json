@@ -1,0 +1,65 @@
+{
+  "payload": {
+    "from_ts": 1735689600,
+    "last_updated": 1789536820,
+    "listening_activity": [
+      {
+        "from_ts": 1767225600,
+        "listen_count": 0,
+        "time_range": "January 2026",
+        "to_ts": 1769903999
+      },
+      {
+        "from_ts": 1769904000,
+        "listen_count": 2790,
+        "time_range": "February 2026",
+        "to_ts": 1772323199
+      },
+      {
+        "from_ts": 1772323200,
+        "listen_count": 166,
+        "time_range": "March 2026",
+        "to_ts": 1775001599
+      },
+      {
+        "from_ts": 1775001600,
+        "listen_count": 122,
+        "time_range": "April 2026",
+        "to_ts": 1777593599
+      },
+      {
+        "from_ts": 1777593600,
+        "listen_count": 0,
+        "time_range": "May 2026",
+        "to_ts": 1780271999
+      },
+      {
+        "from_ts": 1780272000,
+        "listen_count": 428,
+        "time_range": "June 2026",
+        "to_ts": 1782863999
+      },
+      {
+        "from_ts": 1782864000,
+        "listen_count": 622,
+        "time_range": "July 2026",
+        "to_ts": 1785542399
+      },
+      {
+        "from_ts": 1785542400,
+        "listen_count": 0,
+        "time_range": "August 2026",
+        "to_ts": 1788220799
+      },
+      {
+        "from_ts": 1788220800,
+        "listen_count": 14,
+        "time_range": "September 2026",
+        "to_ts": 1790812799
+      }
+    ],
+    "range": "this_year",
+    "to_ts": 1789516800,
+    "user_id": "anoraktrend"
+  }
+}

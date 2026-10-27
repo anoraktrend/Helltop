@@ -1,0 +1,500 @@
+{
+  "payload": {
+    "count": 25,
+    "from_ts": 1767225600,
+    "last_updated": 1789535096,
+    "offset": 0,
+    "range": "this_year",
+    "recordings": [
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 46,
+        "recording_mbid": "f4d36326-da1b-4b43-af19-7113c2adb92d",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Duvet"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 23,
+        "recording_mbid": "077d19be-1b45-4ea6-8c74-67479c3b8855",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Rain"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 21,
+        "recording_mbid": "edbf8cf4-9c48-4e5b-beb3-854d804f5702",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Fool"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 20,
+        "recording_mbid": "4e7d739b-f717-45c4-bf86-3d15da73748f",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Twilight"
+      },
+      {
+        "artist_mbids": [
+          "02bdc7ec-d102-4698-85e2-789a42d40b9c"
+        ],
+        "artist_name": "竹内まりや",
+        "artists": null,
+        "caa_id": 42893525621,
+        "caa_release_mbid": "5a081912-1591-469c-97a2-6640f5989ffd",
+        "listen_count": 20,
+        "recording_mbid": "f5331cd3-a1f1-4c40-9107-0feba14e0972",
+        "release_mbid": "5a081912-1591-469c-97a2-6640f5989ffd",
+        "release_name": "Japanese Sunday Soul - Volume 1",
+        "track_name": "Plastic Love"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 19,
+        "recording_mbid": "4baa1381-e71a-471a-b62f-a6a4cf084e8e",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Elephant"
+      },
+      {
+        "artist_mbids": [
+          "ef62d1c8-7a97-41fc-920b-9220c282693e"
+        ],
+        "artist_name": "Sugar for the Pill",
+        "artists": [
+          {
+            "artist_credit_name": "Sugar for the Pill",
+            "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 42150436847,
+        "caa_release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "listen_count": 19,
+        "recording_mbid": "df87f5e0-7576-430e-9289-0f6ad1db9c4c",
+        "release_mbid": "a3a9a886-26d9-46ca-b2c5-7c0d9733ceb7",
+        "release_name": "LUV",
+        "track_name": "Cherry Blossom"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 16,
+        "recording_mbid": "78682660-5bad-4f27-94bb-83d10c58f774",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Scoring"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 14,
+        "recording_mbid": "0cbbc310-eb22-40f0-babf-601c8304c197",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Welcome"
+      },
+      {
+        "artist_mbids": [
+          "6fe07aa5-fec0-4eca-a456-f29bff451b04"
+        ],
+        "artist_name": "Weezer",
+        "artists": [
+          {
+            "artist_credit_name": "Weezer",
+            "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 28371263864,
+        "caa_release_mbid": "71640529-7a8e-4fc5-ac94-37b0c6e0889d",
+        "listen_count": 14,
+        "recording_mbid": "2f42cdab-9385-4792-bedc-75f5b19c3ef3",
+        "release_mbid": "606807f1-274e-4c3f-bf73-52dce4b2112b",
+        "release_name": "OK Human",
+        "track_name": "Aloo Gobi"
+      },
+      {
+        "artist_mbids": [
+          "0d8b0d50-e4cf-4da4-965d-f24c58ec3268"
+        ],
+        "artist_name": "Boston",
+        "artists": [
+          {
+            "artist_credit_name": "Boston",
+            "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 9479501382,
+        "caa_release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "listen_count": 12,
+        "recording_mbid": "773460dc-256b-4195-9d2b-ed3f9d180916",
+        "release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "release_name": "Boston",
+        "track_name": "Peace of Mind"
+      },
+      {
+        "artist_mbids": [
+          "ad1aaeab-67a6-4bbf-8676-9450e95ff234"
+        ],
+        "artist_name": "亜蘭知子",
+        "artists": [
+          {
+            "artist_credit_name": "亜蘭知子",
+            "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 10296358179,
+        "caa_release_mbid": "a4623cb6-b213-4237-b60a-d7bb38a7ea44",
+        "listen_count": 12,
+        "recording_mbid": "f9417f70-2748-4c32-9d10-6592f1ff9358",
+        "release_mbid": "5149b18f-ba34-4aa1-9cf7-657b17be00df",
+        "release_name": "浮遊空間",
+        "track_name": "Midnight Pretenders"
+      },
+      {
+        "artist_mbids": [
+          "6fe07aa5-fec0-4eca-a456-f29bff451b04"
+        ],
+        "artist_name": "Weezer",
+        "artists": [
+          {
+            "artist_credit_name": "Weezer",
+            "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 28371263864,
+        "caa_release_mbid": "71640529-7a8e-4fc5-ac94-37b0c6e0889d",
+        "listen_count": 12,
+        "recording_mbid": "635f7949-2e3e-4159-82b5-b5c140cf32ac",
+        "release_mbid": "606807f1-274e-4c3f-bf73-52dce4b2112b",
+        "release_name": "OK Human",
+        "track_name": "Grapes of Wrath"
+      },
+      {
+        "artist_mbids": [],
+        "artist_name": "亜蘭知子",
+        "artists": null,
+        "caa_id": null,
+        "caa_release_mbid": null,
+        "listen_count": 12,
+        "recording_mbid": null,
+        "release_mbid": null,
+        "release_name": "浮遊空間",
+        "track_name": "Dilemma: Nijugo Sai No Yuutsu"
+      },
+      {
+        "artist_mbids": [
+          "ca1dcba2-792c-4550-abf2-7b45396e81ca"
+        ],
+        "artist_name": "bôa",
+        "artists": [
+          {
+            "artist_credit_name": "bôa",
+            "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 17130158109,
+        "caa_release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "listen_count": 12,
+        "recording_mbid": "6f650266-f065-49a3-bc54-01a74390fd4d",
+        "release_mbid": "8bd70552-0a26-466e-bfaf-49f0e5b65e5d",
+        "release_name": "The Race of a Thousand Camels",
+        "track_name": "Deeply"
+      },
+      {
+        "artist_mbids": [
+          "ad1aaeab-67a6-4bbf-8676-9450e95ff234"
+        ],
+        "artist_name": "亜蘭知子",
+        "artists": [
+          {
+            "artist_credit_name": "亜蘭知子",
+            "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 10296358179,
+        "caa_release_mbid": "a4623cb6-b213-4237-b60a-d7bb38a7ea44",
+        "listen_count": 12,
+        "recording_mbid": "93ca9f16-9bb4-44b1-aa9f-bda79ff2ae84",
+        "release_mbid": "5149b18f-ba34-4aa1-9cf7-657b17be00df",
+        "release_name": "浮遊空間",
+        "track_name": "Body to Body"
+      },
+      {
+        "artist_mbids": [
+          "0d8b0d50-e4cf-4da4-965d-f24c58ec3268"
+        ],
+        "artist_name": "Boston",
+        "artists": [
+          {
+            "artist_credit_name": "Boston",
+            "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 9479501382,
+        "caa_release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "listen_count": 11,
+        "recording_mbid": "5698b33c-eada-493e-ba34-636acc149cf8",
+        "release_mbid": "094224c6-c99f-4195-86bd-624ca0d438fd",
+        "release_name": "Boston",
+        "track_name": "More Than a Feeling"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 2016386989,
+        "caa_release_mbid": "513ef1c0-6e3a-4aa8-bc3f-4bbe7da09c17",
+        "listen_count": 11,
+        "recording_mbid": "1915a499-6e16-4fe3-93db-01dca52ce0e6",
+        "release_mbid": "513ef1c0-6e3a-4aa8-bc3f-4bbe7da09c17",
+        "release_name": "An Awesome Wave",
+        "track_name": "Intro"
+      },
+      {
+        "artist_mbids": [
+          "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b"
+        ],
+        "artist_name": "alt‐J",
+        "artists": [
+          {
+            "artist_credit_name": "alt‐J",
+            "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 16889698947,
+        "caa_release_mbid": "3d019c67-bf6f-47ec-96bc-232165b9b410",
+        "listen_count": 11,
+        "recording_mbid": "c8a5bbab-b885-425d-b8b3-85c18139f314",
+        "release_mbid": "09f56a16-e126-41c1-93af-35c0565c554a",
+        "release_name": "Relaxer",
+        "track_name": "Deadcrush"
+      },
+      {
+        "artist_mbids": [
+          "835a6d9c-fea0-4a71-ae52-9c4da946433a"
+        ],
+        "artist_name": "Styx",
+        "artists": [
+          {
+            "artist_credit_name": "Styx",
+            "artist_mbid": "835a6d9c-fea0-4a71-ae52-9c4da946433a",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 15901831129,
+        "caa_release_mbid": "0d996d52-d1ba-48c9-bab4-3ed12b050af5",
+        "listen_count": 11,
+        "recording_mbid": "1d767929-cac8-4cf0-92c1-87ae9e33a550",
+        "release_mbid": "0d996d52-d1ba-48c9-bab4-3ed12b050af5",
+        "release_name": "Styx II",
+        "track_name": "A Day"
+      },
+      {
+        "artist_mbids": [
+          "b9068fde-91c8-48bf-8655-8d74c24ef4c5"
+        ],
+        "artist_name": "White Town",
+        "artists": [
+          {
+            "artist_credit_name": "White Town",
+            "artist_mbid": "b9068fde-91c8-48bf-8655-8d74c24ef4c5",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 43727365780,
+        "caa_release_mbid": "f55bed57-7b7a-4d4f-9ad6-2326c5a5ed54",
+        "listen_count": 10,
+        "recording_mbid": "633526aa-b80c-4ab2-b3da-ddf9e13902a8",
+        "release_mbid": "f55bed57-7b7a-4d4f-9ad6-2326c5a5ed54",
+        "release_name": "Women in Technology",
+        "track_name": "Your Woman"
+      },
+      {
+        "artist_mbids": [
+          "5441c29d-3602-4898-b1a1-b77fa23b8e50"
+        ],
+        "artist_name": "David Bowie",
+        "artists": [
+          {
+            "artist_credit_name": "David Bowie",
+            "artist_mbid": "5441c29d-3602-4898-b1a1-b77fa23b8e50",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 35574436065,
+        "caa_release_mbid": "2c713505-a1b8-41a8-9931-89f40c8329ac",
+        "listen_count": 10,
+        "recording_mbid": "125d97b2-2e61-4e1c-8d2a-16f34d801a6f",
+        "release_mbid": "2c713505-a1b8-41a8-9931-89f40c8329ac",
+        "release_name": "Black Tie White Noise",
+        "track_name": "Lucy Can’t Dance"
+      },
+      {
+        "artist_mbids": [
+          "ad1aaeab-67a6-4bbf-8676-9450e95ff234"
+        ],
+        "artist_name": "亜蘭知子",
+        "artists": [
+          {
+            "artist_credit_name": "亜蘭知子",
+            "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 10296358179,
+        "caa_release_mbid": "a4623cb6-b213-4237-b60a-d7bb38a7ea44",
+        "listen_count": 10,
+        "recording_mbid": "03a26a55-8347-4bd1-8fad-a352db7fd8bc",
+        "release_mbid": "5149b18f-ba34-4aa1-9cf7-657b17be00df",
+        "release_name": "浮遊空間",
+        "track_name": "Baby, Don’t You Cry Anymore"
+      },
+      {
+        "artist_mbids": [
+          "c55193fb-f5d2-4839-a263-4c044fca1456"
+        ],
+        "artist_name": "Dio",
+        "artists": [
+          {
+            "artist_credit_name": "Dio",
+            "artist_mbid": "c55193fb-f5d2-4839-a263-4c044fca1456",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 3043507662,
+        "caa_release_mbid": "b35ae348-33a6-3cad-9407-3b48caafcd43",
+        "listen_count": 9,
+        "recording_mbid": "391f3ec2-c84c-4871-81c1-d52796a9e5c1",
+        "release_mbid": "b35ae348-33a6-3cad-9407-3b48caafcd43",
+        "release_name": "Holy Diver",
+        "track_name": "Rainbow in the Dark"
+      },
+      {
+        "artist_mbids": [
+          "ada7a83c-e3e1-40f1-93f9-3e73dbc9298a"
+        ],
+        "artist_name": "Arctic Monkeys",
+        "artists": [
+          {
+            "artist_credit_name": "Arctic Monkeys",
+            "artist_mbid": "ada7a83c-e3e1-40f1-93f9-3e73dbc9298a",
+            "join_phrase": ""
+          }
+        ],
+        "caa_id": 32131848311,
+        "caa_release_mbid": "55171afe-440e-4c63-947c-e49074f3d5b5",
+        "listen_count": 9,
+        "recording_mbid": "c99bc041-5d23-4a8e-a767-7c7847d24896",
+        "release_mbid": "55171afe-440e-4c63-947c-e49074f3d5b5",
+        "release_name": "AM",
+        "track_name": "R U Mine?"
+      }
+    ],
+    "to_ts": 1798761600,
+    "total_recording_count": 1631,
+    "user_id": "anoraktrend"
+  }
+}

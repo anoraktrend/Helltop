@@ -1,0 +1,55 @@
+{
+  "payload": {
+    "count": 1,
+    "latest_listen_ts": 1792791334,
+    "listens": [
+      {
+        "inserted_at": 1792791341,
+        "listened_at": 1792791334,
+        "recording_msid": "77df8259-c5a9-4aa3-bd24-7922fd68a3f8",
+        "track_metadata": {
+          "additional_info": {
+            "artist_mbids": [
+              "b7ffd2af-418f-4be2-bdd1-22f8b48613da"
+            ],
+            "duration_ms": 1000,
+            "isrc": "USIR10401078",
+            "media_player": "Jellyfin",
+            "recording_mbid": "b504dcda-803d-4dfb-9a23-d32126879985",
+            "release_group_mbid": "abcff3e9-a3f4-3a94-a6be-32381104084e",
+            "release_mbid": "9c0b5a23-ca6e-4b4e-be2f-98280cf56c88",
+            "submission_client": "ListenBrainz plugin for Jellyfin",
+            "submission_client_version": "6.5.3.5",
+            "tags": [],
+            "track_mbid": "90deb4dd-8be8-3a37-a523-baa284672166",
+            "tracknumber": 27
+          },
+          "artist_name": "Nine Inch Nails",
+          "mbid_mapping": {
+            "artist_mbids": [
+              "b7ffd2af-418f-4be2-bdd1-22f8b48613da"
+            ],
+            "artists": [
+              {
+                "artist_credit_name": "Nine Inch Nails",
+                "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+                "join_phrase": ""
+              }
+            ],
+            "caa_id": 3085294645,
+            "caa_release_mbid": "3e70c9c9-6e1a-4ae6-8a13-250f28de8ffd",
+            "recording_mbid": "b504dcda-803d-4dfb-9a23-d32126879985",
+            "recording_name": "[silence]",
+            "release_group_mbid": "abcff3e9-a3f4-3a94-a6be-32381104084e",
+            "release_mbid": "b7f2dc7e-3941-4c9c-a801-b656f295931c"
+          },
+          "release_name": "Broken",
+          "track_name": "[silence]"
+        },
+        "user_name": "anoraktrend"
+      }
+    ],
+    "oldest_listen_ts": 1508658160,
+    "user_id": "anoraktrend"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "payload": {
+    "from_ts": 1791763200,
+    "last_updated": 1792828285,
+    "listening_activity": [
+      {
+        "from_ts": 1792368000,
+        "listen_count": 0,
+        "time_range": "Monday 19 October 2026",
+        "to_ts": 1792454399
+      },
+      {
+        "from_ts": 1792454400,
+        "listen_count": 0,
+        "time_range": "Tuesday 20 October 2026",
+        "to_ts": 1792540799
+      },
+      {
+        "from_ts": 1792540800,
+        "listen_count": 0,
+        "time_range": "Wednesday 21 October 2026",
+        "to_ts": 1792627199
+      },
+      {
+        "from_ts": 1792627200,
+        "listen_count": 0,
+        "time_range": "Thursday 22 October 2026",
+        "to_ts": 1792713599
+      },
+      {
+        "from_ts": 1792713600,
+        "listen_count": 2,
+        "time_range": "Friday 23 October 2026",
+        "to_ts": 1792799999
+      }
+    ],
+    "range": "this_week",
+    "to_ts": 1792800000,
+    "user_id": "anoraktrend"
+  }
+}

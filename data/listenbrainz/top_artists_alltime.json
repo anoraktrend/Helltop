@@ -1,0 +1,139 @@
+{
+  "payload": {
+    "artists": [
+      {
+        "artist_mbid": "fc7bbf00-fbaa-4736-986b-b3ac0266ca9b",
+        "artist_name": "alt‐J",
+        "listen_count": 247
+      },
+      {
+        "artist_mbid": "ca1dcba2-792c-4550-abf2-7b45396e81ca",
+        "artist_name": "bôa",
+        "listen_count": 210
+      },
+      {
+        "artist_mbid": "b5bd9f88-962e-4730-84a7-795592ba42e8",
+        "artist_name": "Silversun Pickups",
+        "listen_count": 187
+      },
+      {
+        "artist_mbid": "6fe07aa5-fec0-4eca-a456-f29bff451b04",
+        "artist_name": "Weezer",
+        "listen_count": 167
+      },
+      {
+        "artist_mbid": "67f66c07-6e61-4026-ade5-7e782fad3a5d",
+        "artist_name": "Foo Fighters",
+        "listen_count": 141
+      },
+      {
+        "artist_mbid": "27638856-79a1-4495-b7da-1912899560c7",
+        "artist_name": "bbno$",
+        "listen_count": 138
+      },
+      {
+        "artist_mbid": "ba0d6274-db14-4ef5-b28d-657ebde1a396",
+        "artist_name": "The Smashing Pumpkins",
+        "listen_count": 110
+      },
+      {
+        "artist_mbid": "0d8b0d50-e4cf-4da4-965d-f24c58ec3268",
+        "artist_name": "Boston",
+        "listen_count": 91
+      },
+      {
+        "artist_mbid": "af37c51c-0790-4a29-b995-456f98a6b8c9",
+        "artist_name": "Vampire Weekend",
+        "listen_count": 90
+      },
+      {
+        "artist_mbid": "ad1aaeab-67a6-4bbf-8676-9450e95ff234",
+        "artist_name": "亜蘭知子",
+        "listen_count": 88
+      },
+      {
+        "artist_mbid": "34e10b51-b5c6-4bc1-b70e-f05f141eda1e",
+        "artist_name": "John Denver",
+        "listen_count": 86
+      },
+      {
+        "artist_mbid": "d2db1078-c170-4e22-b261-14f3ad60a690",
+        "artist_name": "DEVO",
+        "listen_count": 85
+      },
+      {
+        "artist_mbid": "4449ccf6-c948-4d33-aa97-b6ad98ce4b5b",
+        "artist_name": "Metric",
+        "listen_count": 80
+      },
+      {
+        "artist_mbid": "e68e96fa-e50d-4e0e-83bc-086bdef68634",
+        "artist_name": "Plumtree",
+        "listen_count": 79
+      },
+      {
+        "artist_mbid": "d0d32c1f-47d5-4b2e-9e15-3f463540902c",
+        "artist_name": "May Leitz",
+        "listen_count": 77
+      },
+      {
+        "artist_mbid": "ef62d1c8-7a97-41fc-920b-9220c282693e",
+        "artist_name": "Sugar for the Pill",
+        "listen_count": 75
+      },
+      {
+        "artist_mbid": "5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+        "artist_name": "Nirvana",
+        "listen_count": 71
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "Linus Tech Tips",
+        "listen_count": 69
+      },
+      {
+        "artist_mbid": "835a6d9c-fea0-4a71-ae52-9c4da946433a",
+        "artist_name": "Styx",
+        "listen_count": 68
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "Distractible",
+        "listen_count": 65
+      },
+      {
+        "artist_mbid": "9fdaa16b-a6c4-4831-b87c-bc9ca8ce7eaa",
+        "artist_name": "The Who",
+        "listen_count": 60
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "Call Me Kevin",
+        "listen_count": 55
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "竹内まりや",
+        "listen_count": 54
+      },
+      {
+        "artist_mbid": null,
+        "artist_name": "It‘s Probably (not) Aliens!",
+        "listen_count": 53
+      },
+      {
+        "artist_mbid": "3be279e7-5d42-4b55-b4bc-93790b244df5",
+        "artist_name": "Patricia Taxxon",
+        "listen_count": 51
+      }
+    ],
+    "count": 25,
+    "from_ts": 1009843200,
+    "last_updated": 1792912078,
+    "offset": 0,
+    "range": "all_time",
+    "to_ts": 1792889532,
+    "total_artist_count": 1166,
+    "user_id": "anoraktrend"
+  }
+}

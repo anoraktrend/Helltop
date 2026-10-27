@@ -73,3 +73,8 @@ pagination.pagerSize = 5
         name = 'About'
         url = '/about/'
         weight = 3
+      [[languages.en.menu.main]]
+        identifier = 'music'
+        name = 'Music'
+        url = '/music/'
+        weight = 4
