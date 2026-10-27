@@ -29,7 +29,12 @@ fediverse:
       instanceUrl: '{{ .instance }}',
       statusId: '{{ .id }}',
       username: '{{ .username }}',
-      platform: '{{ .platform | default "mastodon" }}'
+      platform: '{{ .platform | default "mastodon" }}',
+      loadButtonText: 'Load Comments from Fediverse',
+      replyButtonText: '💬 Reply on Fediverse',
+      noCommentsText: 'No comments yet. Be the first to reply on the Fediverse!',
+      maxDepth: 10,
+      dateFormat: 'relative'
     });
     {{ end }}
   });
