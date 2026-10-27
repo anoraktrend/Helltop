@@ -104,12 +104,28 @@ curl -X POST 'http://127.0.0.1:8787/cdn-cgi/local/explorer/api/local/scheduled?w
 
 Cron changes can take up to 15 minutes to propagate after the first deploy.
 
+### FediComments at the edge
+
+`worker/fedicomments.js` renders Fediverse comment threads into comment-bearing pages. Hugo emits a
+`#fedicomment-container` with `data-fedicomment-*` attributes for posts that have `[fediverse]`
+frontmatter. When the Worker sees one of those pages it fetches the thread (Wafrn `/api/forum/:id` or
+Mastodon's status context), sanitizes the comment HTML with `sanitize-html`, and injects the thread
+and count with `HTMLRewriter`. Threads are cached for 60 seconds; rendered pages send
+`cache-control: public, max-age=60, stale-while-revalidate=300` and `x-fedicomment: edge`.
+
+If the instance is unavailable or the page is served without the Worker, the static page and the
+client-side "Load Comments" button remain as the fallback. Wafrn rewoots are filtered out.
+
+The Worker only runs on the page paths listed in `run_worker_first` in `wrangler.jsonc`
+(currently `/posts/*`, plus `/api/*` and `/music/`). Add a pattern there when a new section has
+comment-bearing pages; asset requests still bypass the Worker.
+
 ## Deploy to Cloudflare Workers
 
 The site is deployed as a Workers static-assets Worker. `wrangler.jsonc` serves `./public` through
 the `ASSETS` binding, uses the Hugo-generated `404.html` for missing pages, binds the `helltop.net`
-custom domain, handles `/api/*` and `/music/` in the Worker, and refreshes the now-playing and
-ListenBrainz snapshots in `MUSIC_STATE` from the cron trigger.
+custom domain, handles `/api/*`, `/music/`, and edge-rendered FediComment pages in the Worker, and
+refreshes the now-playing and ListenBrainz snapshots in `MUSIC_STATE` from the cron trigger.
 
 Before the first deploy, set the Jellyfin secret:
 

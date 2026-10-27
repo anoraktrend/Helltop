@@ -25,6 +25,10 @@
 
 import { findJellyfinArt } from "./jellyfin.js";
 import {
+  isFediCommentRequest,
+  serveFediCommentPage,
+} from "./fedicomments.js";
+import {
   fetchListenBrainzData,
   itemCoverMbid,
   recentCoverMbid,
@@ -737,6 +741,10 @@ export default {
 
     if (url.pathname === "/music/" || url.pathname === "/music/index.html") {
       return serveMusic(request, env, ctx);
+    }
+
+    if (isFediCommentRequest(request)) {
+      return serveFediCommentPage(request, env, ctx);
     }
 
     return env.ASSETS.fetch(request);

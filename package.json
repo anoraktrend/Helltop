@@ -14,5 +14,8 @@
 	},
 	"engines": {
 		"node": ">=24"
+	},
+	"dependencies": {
+		"sanitize-html": "^2.18.1"
 	}
 }

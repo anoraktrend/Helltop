@@ -92,6 +92,11 @@ class FediCommentCounter {
    * Load comment count for a counter element
    */
   async loadCommentCount(element) {
+    // The Worker renders the count into the page when it renders the thread.
+    if (element.dataset.fedicommentCount !== undefined) {
+      return;
+    }
+
     const instance = element.dataset.instance;
     const statusId = element.dataset.statusId;
     const platform = element.dataset.platform || 'mastodon';

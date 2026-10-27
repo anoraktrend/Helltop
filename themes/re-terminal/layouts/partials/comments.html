@@ -12,7 +12,13 @@ fediverse:
 {{ if .Params.fediverse }}
 <div class="fedicomment-section">
   <h2 style="color: var(--text-primary); margin-top: 3rem;">Comments</h2>
-  <div id="fedicomment-container"></div>
+  {{ with .Params.fediverse }}
+  <div id="fedicomment-container"
+       data-fedicomment-instance="{{ .instance | default "" }}"
+       data-fedicomment-status="{{ .id | default "" }}"
+       data-fedicomment-username="{{ .username | default "" }}"
+       data-fedicomment-platform="{{ .platform | default "mastodon" }}"></div>
+  {{ end }}
 
   <script src="{{ "js/fedicomment.js" | absURL }}"></script>
   <script>
@@ -23,12 +29,7 @@ fediverse:
       instanceUrl: '{{ .instance }}',
       statusId: '{{ .id }}',
       username: '{{ .username }}',
-      platform: '{{ .platform | default "mastodon" }}',
-      loadButtonText: 'Load Comments from Fediverse',
-      replyButtonText: '💬 Reply on Fediverse',
-      noCommentsText: 'No comments yet. Be the first to reply on the Fediverse!',
-      maxDepth: 10,
-      dateFormat: 'relative'
+      platform: '{{ .platform | default "mastodon" }}'
     });
     {{ end }}
   });

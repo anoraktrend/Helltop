@@ -16,9 +16,10 @@ The re-terminal theme now includes **FediComment**, a self-hosted commenting sys
 - ✅ Nested comment threads
 - ✅ Custom emoji support
 - ✅ Avatar and metadata display
-- ✅ Lazy loading (comments load on demand)
+- ✅ Server-rendered comments and counts at the edge (no loading click)
+- ✅ Client-side loading as a fallback when the Worker is not in front
 - ✅ Privacy-friendly (no tracking, no third parties)
-- ✅ No database or server-side code required
+- ✅ No database required
 - ✅ Direct API access (no proxy needed)
 
 ## Usage
@@ -93,7 +94,32 @@ Wafrn rewoots are filtered out and do not appear as comments.
 
 ### Step 4: Build and Deploy
 
-That's it! When users visit your blog post, they can click "Load Comments from Fediverse" to see all replies.
+That's it! On the deployed Cloudflare Worker, the thread and comment count are rendered into the
+page HTML. If the Worker is not in front of the request (for example, `hugo server` or a plain static
+host), visitors see a "Load Comments from Fediverse" button instead.
+
+## Edge Rendering
+
+`worker/fedicomments.js` looks for the `#fedicomment-container` element that `comments.html` emits
+and reads its `data-fedicomment-*` attributes. When it finds a configured thread it:
+
+1. Fetches the thread from the instance (`/api/forum/:id` for Wafrn, `/api/v1/statuses/:id/context`
+   for Mastodon).
+2. Sanitizes every comment body with `sanitize-html`, allowing only basic formatting, links, and
+   images with `http`/`https` URLs.
+3. Renders the comment tree and injects it, plus the count in the post metadata, with
+   `HTMLRewriter`.
+4. Falls back to the static HTML (and therefore the client-side button) if the upstream instance is
+   unreachable or returns an unexpected response.
+
+Threads are cached in the Cloudflare cache for 60 seconds. Rendered pages are served with
+`cache-control: public, max-age=60, stale-while-revalidate=300` and an `x-fedicomment: edge` header.
+
+The Worker only runs on the page paths listed under `run_worker_first` in `wrangler.jsonc`. If you
+add a new section with comment-bearing pages, add its path pattern there. Asset requests (images,
+CSS, JS) still bypass the Worker.
+
+Wafrn rewoots are filtered out on both the edge and client paths.
 
 ## Disabling Comments on Specific Posts
 
@@ -105,10 +131,12 @@ hideComments: true
 
 ## Configuration Options
 
-The FediComment widget supports these parameters (configured in `layouts/partials/comments.html`):
+`layouts/partials/comments.html` writes the frontmatter values to `data-fedicomment-*` attributes on
+the container and passes them to the client-side fallback. The Worker reads the same attributes. The
+client widget also supports these JavaScript options:
 
-- `instance` (required): Your Fediverse instance URL
-- `id` (required): The status/post ID
+- `instanceUrl` (required): Your Fediverse instance URL
+- `statusId` (required): The status/post ID
 - `username` (optional): Your username for the reply link
 - `platform` (optional): `mastodon` (default) or `wafrn`
 - `loadButtonText`: Text for the load button (default: "Load Comments from Fediverse")
@@ -133,7 +161,7 @@ FediComment automatically adapts to all re-terminal theme families and variants:
 - Monokai (dark/light)
 - Ayu (dark/light)
 
-The styling is defined in `static/style.css` using CSS variables.
+The styling is defined in `assets/css/custom.css` using CSS variables.
 
 ## Example Workflow
 
@@ -155,25 +183,34 @@ The styling is defined in `static/style.css` using CSS variables.
 ## Privacy & Security
 
 FediComment:
-- Makes direct API calls to your Mastodon instance
+- Makes direct API calls to your Mastodon or Wafrn instance
+- Renders comments on the Cloudflare Worker, with client-side loading as a fallback
+- Sanitizes comment HTML on the server (`sanitize-html`) and again in the browser
 - Does not use cookies or localStorage
 - Does not track users
 - Does not send data to third parties
-- Loads comments only when users click "Load Comments"
-- Includes XSS protection (sanitizes HTML, removes scripts)
-- Uses Mastodon's public API (no authentication required)
+- Includes XSS protection (removes scripts, event handlers, and `javascript:` URLs)
+- Uses public APIs (no authentication required)
 
 ## Troubleshooting
 
 **Comments not loading?**
-- Check that the status ID is correct (numeric only)
+- Check that the status ID is correct (numeric for Mastodon, UUID for Wafrn)
 - Verify the instance URL has no trailing slash
-- Ensure your Mastodon post is public
+- Ensure your post is public
 - Check browser console for errors
 - Test the API directly: `https://your-instance.social/api/v1/statuses/YOUR_ID/context`
+  (Mastodon) or `https://app.wafrn.net/api/forum/YOUR_ID` (Wafrn)
+
+**Comments are not rendered in the HTML?**
+- Confirm the Worker is deployed and the page path is covered by `run_worker_first` in
+  `wrangler.jsonc`
+- Check the response headers for `x-fedicomment: edge`
+- If the upstream instance was unavailable, the page falls back to the client-side button and the
+  thread is retried after the 60-second cache window
 
 **Styling issues?**
-- Make sure `static/style.css` is loaded
+- Make sure `assets/css/custom.css` is included in the Hugo build
 - Verify theme is properly set with theme switcher
 - Check that CSS variables are defined for your theme
 
@@ -183,13 +220,19 @@ FediComment:
 
 ## Files
 
-- `static/js/fedicomment.js` - Main JavaScript widget
-- `static/style.css` - FediComment theming (lines 1478-1685)
+- `static/js/fedicomment.js` - Client-side widget and fallback loader
+- `static/js/fedicomment-counter.js` - Client-side comment counter fallback
+- `assets/css/custom.css` - FediComment theming
 - `layouts/partials/comments.html` - Hugo template partial
+- `layouts/partials/comments_counter.html` - Post metadata counter
+- `worker/fedicomments.js` - Edge fetch, sanitize, render, and inject
+- `wrangler.jsonc` - `run_worker_first` paths that reach the Worker
 
-## Why Mastodon?
+## Why Mastodon and Wafrn?
 
-Mastodon's public API allows unauthenticated access to public posts, making it perfect for a simple, client-side commenting system. No backend servers, no databases, no authentication required - just clean, open web technology.
+Mastodon and Wafrn expose public APIs for public posts, so the site can read replies without asking
+visitors to log in. Comments stay on the Fediverse, the site keeps no database, and the Worker only
+adds a short-lived cache in front of the public API.
 
 ## Credits
 

@@ -13,12 +13,19 @@
 
 class FediComment {
   constructor(config) {
+    const container = typeof config.containerEl === 'string'
+      ? document.querySelector(config.containerEl)
+      : config.containerEl;
+    const data = container?.dataset || {};
+
     this.config = {
       containerEl: config.containerEl,
-      instanceUrl: config.instanceUrl?.replace(/\/$/, ''), // Remove trailing slash
-      statusId: config.statusId,
-      username: config.username, // Username for reply link
-      platform: config.platform || 'mastodon', // 'mastodon' or 'wafrn'
+      // The Hugo partial puts the same values on the container so the Worker
+      // can render the thread at the edge. Explicit options still win.
+      instanceUrl: String(config.instanceUrl || data.fedicommentInstance || '').replace(/\/$/, ''),
+      statusId: String(config.statusId || data.fedicommentStatus || ''),
+      username: String(config.username || data.fedicommentUsername || ''),
+      platform: String(config.platform || data.fedicommentPlatform || 'mastodon'),
       loadButtonText: config.loadButtonText || 'Load Comments from Fediverse',
       replyButtonText: config.replyButtonText || 'Reply on Fediverse',
       noCommentsText: config.noCommentsText || 'No comments yet. Be the first to reply!',
@@ -27,9 +34,7 @@ class FediComment {
       dateFormat: config.dateFormat || 'relative' // 'relative' or 'absolute'
     };
 
-    this.container = typeof this.config.containerEl === 'string'
-      ? document.querySelector(this.config.containerEl)
-      : this.config.containerEl;
+    this.container = container;
 
     if (!this.container) {
       console.error('FediComment: Container element not found');
@@ -45,6 +50,13 @@ class FediComment {
   }
 
   init() {
+    // The Worker may have already rendered the thread into the page. Keep the
+    // server-rendered comments instead of adding a second copy or a load button.
+    if (this.container.dataset.fedicommentRendered ||
+        this.container.querySelector('.fedicomment-wrapper')) {
+      return;
+    }
+
     // Create load button
     const loadButton = document.createElement('button');
     loadButton.className = 'fedicomment-load-btn';

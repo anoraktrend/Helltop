@@ -8,7 +8,12 @@
 		"binding": "ASSETS",
 		"html_handling": "auto-trailing-slash",
 		"not_found_handling": "404-page",
-		"run_worker_first": ["/api/*", "/music/", "/music/index.html"]
+		"run_worker_first": [
+			"/api/*",
+			"/music/",
+			"/music/index.html",
+			"/posts/*"
+		]
 	},
 	"kv_namespaces": [
 		{
