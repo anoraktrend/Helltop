@@ -17,7 +17,7 @@ platform = "wafrn"
 +++
 
 
-# DISCLAIMER: the documentation on this page is OUT OF DATE please, read the [official documentation](https://basixlinux.org/wiki/bpm/usage/)
+# DISCLAIMER: the documentation on this page is OUT OF DATE please, read the [official documentation](https://basixlinux.org/wiki/)
 
 ## Introduction
 
@@ -30,7 +30,9 @@ Basix is a source-based Linux distribution created by [kkrruumm](https://github.
 and treats every package as a flat directory with a single `template` file plus optional `files/` and `patches/` folders. One template, one binary package… no subpackages, no dependency graphs you can't reason about.
 
 The upstream package repo ([basix-packages](https://github.com/kkrruumm/basix-packages)) is permissively licensed (BSD-3-Clause) and ships with exactly zero READMEs or CI. The code is the documentation. 
-The only build systems are Krum's, or the people he trusts', PCs, I have a chronically out-of-date rootfs tar ball hosted on my [unofficial basix docs](https://basix.helltop.net).
+The only build systems are Krum's, or the people he trusts', PCs. I have a chronically out-of-date rootfs tar ball hosted on my [unofficial basix docs](https://basix.helltop.net).
+
+EDIT: as mentioned in the DISCLAIMER, krum got basixlinux.org up. tarballs are regularly uploaded to [this]](https://basixlinux.org/) website. DO NOT RELY ON THIS PAGE OR MY UNOFFICIAL BASIX DOCS TO BE ACCURATE. 
 
 ### Some important things Krum and I decided
 
