@@ -2,11 +2,18 @@
 title = "Basix & bpm: A From-Scratch Linux Built for Control"
 description = "How a 124-package musl distro and its no-frills package manager scratch an itch for minimalism."
 date = 2026-08-15
+lastmod = 2026-10-27
 author = 'Lucy Ada Randall'
 tags = ["Linux", "Distributions", "Open Source"]
 slug = "basix"
 aliases = ["/blog/basix/"]
 draft = false
+
+[fediverse]
+instance = "https://app.wafrn.net"
+username = "lucyinchat"
+id = "01a18001-bc3a-733a-8e35-d814ed5249dc"
+platform = "wafrn"
 +++
 
 ## Introduction
@@ -24,7 +31,7 @@ The only build systems are Krum's, or the people he trusts', PCs, I have a chron
 
 ### Some important things Krum and I decided
 
-BPM is like a kiss variant of gentoo, in that it uses USE flags like gentoo does, but we intend for it to utilize mostly global use flags. Gentoo has a lot of local use flags which could be consilidated into a global use flag.
+BPM is like a kiss variant of gentoo's portage, in that it uses USE flags like gentoo does, but we intend for it to utilize mostly global use flags. Gentoo has a lot of local use flags which could be consilidated into a global use flag.
 BPM uses blake3 for its checksums, the blake3 sums were chosen for performance purposes. Finally, you are encouraged to make a local overlay in order to choose your local mirrors of the upstream software,
 your local overlay should be ***above*** the core repo.
 
@@ -79,7 +86,7 @@ Set `BPM_SANDBOX=1` and every build runs inside private mount/pid/ipc/uts namesp
 
 ## FrankenBasix: The Personal Spin
 
-[FrankenBasix](https://github.com/anoraktrend/frankenbasix) is an overlay repo I maintain. It drops into `/etc/bpm/repos.conf` above `core`, shadowing or extending upstream packages and adding new ones.
+[FrankenBasix](https://github.com/anoraktrend/frankenbasix) is an overlay repo I maintain (it is unfortunately VERY out of date.). It drops into `/etc/bpm/repos.conf` above `core`, shadowing or extending upstream packages and adding new ones.
 
 Key additions:
 
@@ -95,7 +102,7 @@ Key additions:
 
 **libudev-garden variants** (7 pkgs)… ports of existing basix templates (`libdrm`, `libinput`, `mesa`, `sway`, `wlroots`, `libfido2`) that swap `libudev-zero` for `libudev-garden` for use with `gardendevd`.
 
-If you're building on systemd-free basix and want these, FrankenUTB is your starting point… just don't expect them to work out of the box.
+If you want the intended systemd-free basix and these interest you, FrankenUTB is your starting point… just don't expect them to work out of the box.
 
 ## Relationship at a Glance
 
@@ -114,6 +121,6 @@ basix is the distro. bpm is the manager. basix-packages is the repo. FrankenBasi
 
 ## Why Basix?
 
-Because minimalism is about having exactly what you need, and nothing you don't… not just less for the sake of it.
+Because it's about having exactly what you need, and nothing you don't… not just less for the sake of it.
 
 For a control freak who wants to know why every package builds the way it does, who needs musl over glibc, and who isn't afraid to read shell scripts instead of documentation, Basix scratches an itch nothing else does.
