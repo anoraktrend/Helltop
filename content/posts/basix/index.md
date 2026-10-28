@@ -16,6 +16,9 @@ id = "01a18001-bc3a-733a-8e35-d814ed5249dc"
 platform = "wafrn"
 +++
 
+
+# DISCLAIMER: the documentation on this page is OUT OF DATE please, read the [official documentation](https://basixlinux.org/wiki/bpm/usage/)
+
 ## Introduction
 
 Every so often I find myself down a rabbit hole rebuilding parts of my stack from scratch. This time it led me to **Basix**… a tiny, from-scratch Linux distribution built around a hand-rolled package manager called **bpm**. 
