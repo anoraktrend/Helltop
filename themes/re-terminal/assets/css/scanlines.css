@@ -10,6 +10,7 @@
     transparent 1px,
     transparent 4px
   );
+  animation: crt-scanlines 1.2s linear infinite;
 
 /* retro stuff */
   color: #00ff00;
@@ -120,6 +121,12 @@ a:hover .logo.crt .logo-secondary {
   outline-offset: .25em;
 }
 
+@keyframes crt-scanlines {
+  to {
+    background-position: 0 4px;
+  }
+}
+
 @keyframes crt-blink {
   50% {
     opacity: 0;
@@ -127,6 +134,10 @@ a:hover .logo.crt .logo-secondary {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .crt {
+    animation: none;
+  }
+
   .crt-404 .post-title:after {
     animation: none;
   }
