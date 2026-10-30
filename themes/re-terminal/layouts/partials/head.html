@@ -62,7 +62,7 @@
 {{ if and (isset .Params "color") (not (eq .Params.color "")) }}
   {{ $localColorCss := resources.Get (printf "css/color/%s.scss" .Params.color) }}
   {{ $localCss := slice $localColorCss $defaultStyles | resources.Concat (printf "css/%s-local.scss" .Params.color) }}
-  {{ $options := (dict "transpiler" "libsass") }}
+  {{ $options := (dict "transpiler" "dartsass") }}
   {{ $localColorStyles := $localCss | css.Sass $options }}
   {{ if hugo.IsProduction }}{{ $localColorStyles = $localColorStyles | fingerprint }}{{ end }}
   <link rel="stylesheet" href="{{ $localColorStyles.Permalink }}">
@@ -70,7 +70,7 @@
   <!-- Theme Variables -->
   {{ $colorCss := resources.Get (printf "css/color/%s.scss" ($.Site.Params.ThemeColor | default "blue")) }}
   {{ $css := slice $colorCss $defaultStyles | resources.Concat "css/base.scss" }}
-  {{ $options := (dict "transpiler" "libsass" "targetPath" "styles.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
+  {{ $options := (dict "transpiler" "dartsass" "targetPath" "styles.css" "outputStyle" "compressed" "enableSourceMap" true "includePaths" (slice "node_modules")) }}
   {{ $styles := $css | css.Sass $options }}
   <!-- Content-hash the filename in production. GitLab Pages serves static
        assets with a hard-coded Cache-Control: max-age=14400 (4 hours) that
@@ -89,6 +89,13 @@
   {{ $custom := . }}
   {{ if hugo.IsProduction }}{{ $custom = $custom | fingerprint }}{{ end }}
   <link rel="stylesheet" href="{{ $custom.Permalink }}">
+{{ end }}
+
+<!-- CRT/scanline styles: `crt` shortcode, site logo, and 404 page. -->
+{{ with resources.Get "css/scanlines.css" }}
+  {{ $crt := . }}
+  {{ if hugo.IsProduction }}{{ $crt = $crt | fingerprint }}{{ end }}
+  <link rel="stylesheet" href="{{ $crt.Permalink }}">
 {{ end }}
 
 <!-- Site-level override hook (/static/style.css in the site, not the theme) -->

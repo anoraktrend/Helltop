@@ -1,0 +1,11 @@
+{{- /* CRT/scanline display block.
+
+       Usage:
+         {{< crt >}}
+         HELLTOP
+         {{< /crt >}}
+
+       Styles live in assets/css/scanlines.css and are loaded by head.html. */ -}}
+<div class="crt">
+  {{ .Inner | markdownify }}
+</div>
