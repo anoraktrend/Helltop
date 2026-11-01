@@ -1,13 +1,16 @@
 +++
-title = 'Happy Halloween!'
-description = 'Hope everyone has a good Halloween'
+title = "Happy Halloween!"
+description = "Hope everyone has a good Halloween"
 date = 2026-10-31
 author = 'Lucy Ada Randall'
 tags = ['Happy Halloween', 'Spooky stuff']
 # tags = ['Self-Hosting', 'Linux']
 slug = '{{ .File.ContentBaseName }}'
 aliases = ['/blog/{{ .File.ContentBaseName }}/']
-draft = true
+draft = false
+cover = 'postthiscat.jxl'
+coverAlt = 'Post This Cat on Halloween'
+coverCaption = 'Post This Cat on Halloween'
 
 # Optional overrides:
 
@@ -43,7 +46,9 @@ It's no secret my favorite TV series to watch within the month of October is [Th
 - Doki Doki Literature Club: A Horror game mascurading as a dating sim...
 - Slay the Princess: A romance game with the vinear of a horror game...
 - Pony Island: A horror game disguised as a kids arcade game...
-- Buddy Simulator 1984: A complex "AI" horror game which starts as a text adventure
+- Buddy Simulator 1984: A complex "AI" horror game which starts as a text adventure...
+
+Yeah, it appears i have a type here.
 
 ## This is my list
 
