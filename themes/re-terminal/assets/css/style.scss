@@ -1,29 +1,30 @@
-$centerTheme: {{ if $.Site.Params.CenterTheme }}center{{ else }}flex-start{{ end }};
-
 {{ if in (slice "paper") $.Site.Params.ThemeColor }}
-@import "variables-light";
+@use "variables-light";
 {{ else }}
-@import "variables";
+@use "variables";
 {{ end }}
+@use "font";
+@use "buttons";
+@use "form";
 
-@import "font";
-@import "buttons";
-@import "form";
+@use "header";
+@use "menu";
+@use "logo";
+@use "main";
+@use "post";
+@use "images";
+@use "videos";
+@use "pagination";
+@use "footer";
+@use "banner";
 
-@import "header";
-@import "menu";
-@import "logo";
-@import "main";
-@import "post";
-@import "images";
-@import "videos";
-@import "pagination";
-@import "footer";
-@import "banner";
+@use "prism";
+@use "syntax";
+@use "code";
+@use "terms";
+@use "gist";
+@use "archives";
 
-@import "prism";
-@import "syntax";
-@import "code";
-@import "terms";
-@import "gist";
-@import "archives";
+:root {
+  --center-theme: {{ if $.Site.Params.CenterTheme }}center{{ else }}flex-start{{ end }};
+}

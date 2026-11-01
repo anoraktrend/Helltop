@@ -1,9 +1,9 @@
-{{- $recent      := site.Data.lastfm.recent      | default dict -}}
-{{- $top_overall := site.Data.lastfm.toptracks   | default dict -}}
-{{- $art_overall := site.Data.lastfm.topartists  | default dict -}}
-{{- $top_7day    := site.Data.lastfm.toptracks_7day   | default dict -}}
-{{- $art_7day    := site.Data.lastfm.topartists_7day  | default dict -}}
-{{- $userinfo    := site.Data.lastfm.userinfo    | default dict -}}
+{{- $recent      := hugo.Data.lastfm.recent      | default dict -}}
+{{- $top_overall := hugo.Data.lastfm.toptracks   | default dict -}}
+{{- $art_overall := hugo.Data.lastfm.topartists  | default dict -}}
+{{- $top_7day    := hugo.Data.lastfm.toptracks_7day   | default dict -}}
+{{- $art_7day    := hugo.Data.lastfm.topartists_7day  | default dict -}}
+{{- $userinfo    := hugo.Data.lastfm.userinfo    | default dict -}}
 
 <div class="lastfm">
 

@@ -59,9 +59,11 @@
 {{ $defaultStylesTemplate := resources.Get "css/style.scss" }}
 {{ $defaultStyles := $defaultStylesTemplate | resources.ExecuteAsTemplate "main.scss" .}}
 <!-- Local Theme Variables -->
+{{/* Keep style.scss first: Dart Sass requires @use rules at the top, and the
+     color files only set --accent. */}}
 {{ if and (isset .Params "color") (not (eq .Params.color "")) }}
   {{ $localColorCss := resources.Get (printf "css/color/%s.scss" .Params.color) }}
-  {{ $localCss := slice $localColorCss $defaultStyles | resources.Concat (printf "css/%s-local.scss" .Params.color) }}
+  {{ $localCss := slice $defaultStyles $localColorCss | resources.Concat (printf "css/%s-local.scss" .Params.color) }}
   {{ $options := (dict "transpiler" "dartsass") }}
   {{ $localColorStyles := $localCss | css.Sass $options }}
   {{ if hugo.IsProduction }}{{ $localColorStyles = $localColorStyles | fingerprint }}{{ end }}
@@ -69,7 +71,7 @@
 {{ else }}
   <!-- Theme Variables -->
   {{ $colorCss := resources.Get (printf "css/color/%s.scss" ($.Site.Params.ThemeColor | default "blue")) }}
-  {{ $css := slice $colorCss $defaultStyles | resources.Concat "css/base.scss" }}
+  {{ $css := slice $defaultStyles $colorCss | resources.Concat "css/base.scss" }}
   {{ $options := (dict "transpiler" "dartsass" "targetPath" "styles.css" "outputStyle" "compressed" "enableSourceMap" true "includePaths" (slice "node_modules")) }}
   {{ $styles := $css | css.Sass $options }}
   <!-- Content-hash the filename in production. GitLab Pages serves static

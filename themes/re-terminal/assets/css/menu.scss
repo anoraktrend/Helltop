@@ -1,3 +1,5 @@
+@use "breakpoints" as *;
+
 @mixin menu {
   --shadow-color: color-mix(in srgb, var(--background), transparent 20%);
   display: none;

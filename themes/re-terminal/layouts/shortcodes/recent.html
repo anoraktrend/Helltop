@@ -1,7 +1,7 @@
 {{- /* Compact now-playing block, used by the site's /now page.
 
        Reads data/listenbrainz/recent.json, written by ci/fetch-listenbrainz.sh
-       in the site repo. This previously read site.Data.lastfm.*, which stopped
+       in the site repo. This previously read hugo.Data.lastfm.*, which stopped
        existing when the pipeline moved to ListenBrainz. Because every lookup
        ends in `| default dict`, the shortcode kept rendering "No recent tracks."
        rather than failing the build, so the breakage was silent.
@@ -10,7 +10,7 @@
        shortcode. The .lb-dashboard wrapper is what scopes the --lb-* custom
        properties, so the card loses its background and border without it. */ -}}
 
-{{- $recent  := site.Data.listenbrainz.recent | default dict -}}
+{{- $recent  := hugo.Data.listenbrainz.recent | default dict -}}
 {{- $listens := index (index $recent "payload" | default dict) "listens" | default slice -}}
 
 <div class="lb-dashboard">

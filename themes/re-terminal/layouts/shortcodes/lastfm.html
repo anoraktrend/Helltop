@@ -1,13 +1,13 @@
-{{- $recent      := site.Data.lastfm.recent          | default dict -}}
-{{- $recent_ext  := site.Data.lastfm.recent_extended | default dict -}}
-{{- $top_tracks  := site.Data.lastfm.toptracks       | default dict -}}
-{{- $top_artists := site.Data.lastfm.topartists      | default dict -}}
-{{- $top_albums  := site.Data.lastfm.topalbums       | default dict -}}
-{{- $tracks_7d   := site.Data.lastfm.toptracks_7day  | default dict -}}
-{{- $artists_7d  := site.Data.lastfm.topartists_7day | default dict -}}
-{{- $albums_7d   := site.Data.lastfm.topalbums_7day  | default dict -}}
-{{- $userinfo    := site.Data.lastfm.userinfo        | default dict -}}
-{{- $loved       := site.Data.lastfm.loved           | default dict -}}
+{{- $recent      := hugo.Data.lastfm.recent          | default dict -}}
+{{- $recent_ext  := hugo.Data.lastfm.recent_extended | default dict -}}
+{{- $top_tracks  := hugo.Data.lastfm.toptracks       | default dict -}}
+{{- $top_artists := hugo.Data.lastfm.topartists      | default dict -}}
+{{- $top_albums  := hugo.Data.lastfm.topalbums       | default dict -}}
+{{- $tracks_7d   := hugo.Data.lastfm.toptracks_7day  | default dict -}}
+{{- $artists_7d  := hugo.Data.lastfm.topartists_7day | default dict -}}
+{{- $albums_7d   := hugo.Data.lastfm.topalbums_7day  | default dict -}}
+{{- $userinfo    := hugo.Data.lastfm.userinfo        | default dict -}}
+{{- $loved       := hugo.Data.lastfm.loved           | default dict -}}
 
 <div class="lastfm-dashboard">
 

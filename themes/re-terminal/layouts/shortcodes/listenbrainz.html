@@ -1,25 +1,25 @@
 {{- /* ListenBrainz Dashboard Shortcode */ -}}
-{{- $listen_count := site.Data.listenbrainz.listen_count | default dict -}}
-{{- $recent := site.Data.listenbrainz.recent | default dict -}}
+{{- $listen_count := hugo.Data.listenbrainz.listen_count | default dict -}}
+{{- $recent := hugo.Data.listenbrainz.recent | default dict -}}
 
-{{- $top_artists_alltime := site.Data.listenbrainz.top_artists_alltime | default dict -}}
-{{- $top_artists_week := site.Data.listenbrainz.top_artists_week | default dict -}}
-{{- $top_artists_month := site.Data.listenbrainz.top_artists_month | default dict -}}
-{{- $top_artists_year := site.Data.listenbrainz.top_artists_year | default dict -}}
+{{- $top_artists_alltime := hugo.Data.listenbrainz.top_artists_alltime | default dict -}}
+{{- $top_artists_week := hugo.Data.listenbrainz.top_artists_week | default dict -}}
+{{- $top_artists_month := hugo.Data.listenbrainz.top_artists_month | default dict -}}
+{{- $top_artists_year := hugo.Data.listenbrainz.top_artists_year | default dict -}}
 
-{{- $top_recordings_alltime := site.Data.listenbrainz.top_recordings_alltime | default dict -}}
-{{- $top_recordings_week := site.Data.listenbrainz.top_recordings_week | default dict -}}
-{{- $top_recordings_month := site.Data.listenbrainz.top_recordings_month | default dict -}}
-{{- $top_recordings_year := site.Data.listenbrainz.top_recordings_year | default dict -}}
+{{- $top_recordings_alltime := hugo.Data.listenbrainz.top_recordings_alltime | default dict -}}
+{{- $top_recordings_week := hugo.Data.listenbrainz.top_recordings_week | default dict -}}
+{{- $top_recordings_month := hugo.Data.listenbrainz.top_recordings_month | default dict -}}
+{{- $top_recordings_year := hugo.Data.listenbrainz.top_recordings_year | default dict -}}
 
-{{- $top_releases_alltime := site.Data.listenbrainz.top_releases_alltime | default dict -}}
-{{- $top_releases_week := site.Data.listenbrainz.top_releases_week | default dict -}}
-{{- $top_releases_month := site.Data.listenbrainz.top_releases_month | default dict -}}
-{{- $top_releases_year := site.Data.listenbrainz.top_releases_year | default dict -}}
+{{- $top_releases_alltime := hugo.Data.listenbrainz.top_releases_alltime | default dict -}}
+{{- $top_releases_week := hugo.Data.listenbrainz.top_releases_week | default dict -}}
+{{- $top_releases_month := hugo.Data.listenbrainz.top_releases_month | default dict -}}
+{{- $top_releases_year := hugo.Data.listenbrainz.top_releases_year | default dict -}}
 
-{{- $listening_activity_week := site.Data.listenbrainz.listening_activity_week | default dict -}}
-{{- $daily_activity_week := site.Data.listenbrainz.daily_activity_week | default dict -}}
-{{- $listening_activity_year := site.Data.listenbrainz.listening_activity_year | default dict -}}
+{{- $listening_activity_week := hugo.Data.listenbrainz.listening_activity_week | default dict -}}
+{{- $daily_activity_week := hugo.Data.listenbrainz.daily_activity_week | default dict -}}
+{{- $listening_activity_year := hugo.Data.listenbrainz.listening_activity_year | default dict -}}
 
 {{- /* Helper: Build Cover Art Archive URL */ -}}
 {{- define "partials/caa-image" -}}
