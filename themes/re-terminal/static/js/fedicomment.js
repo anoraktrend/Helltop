@@ -104,7 +104,14 @@ class FediComment {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return response.json();
+    const data = await response.json();
+    return {
+      ...data,
+      descendants: (data.descendants || []).map(status => ({
+        ...status,
+        mediaAttachments: this.normalizeMediaAttachments(status.media_attachments)
+      }))
+    };
   }
 
   async fetchWafrnComments() {
@@ -157,6 +164,7 @@ class FediComment {
     const users = new Map(
       (data.users || []).map(user => [user.id, user])
     );
+    const mediaByPost = this.groupWafrnMedia(data.medias);
 
     return (data.posts || [])
       .filter(post => !post.isReblog)
@@ -171,6 +179,13 @@ class FediComment {
         return {
           id: post.id,
           content: post.content || post.markdownContent || '',
+          mediaAttachments: this.normalizeMediaAttachments(
+            mediaByPost.get(String(post.id)) ||
+              post.media_attachments ||
+              post.mediaAttachments ||
+              post.attachments ||
+              post.media
+          ),
           created_at: post.createdAt,
           in_reply_to_id: post.parentId,
           url: `${this.config.instanceUrl}/fediverse/post/${post.id}`,
@@ -187,6 +202,77 @@ class FediComment {
           emojis: []
         };
       });
+  }
+
+  normalizeMediaAttachments(attachments) {
+    if (!Array.isArray(attachments)) {
+      return [];
+    }
+
+    return attachments.slice(0, 10).flatMap(attachment => {
+      if (!attachment || typeof attachment !== 'object') {
+        return [];
+      }
+
+      const url = attachment.url || attachment.remoteUrl || attachment.remote_url;
+      const previewUrl = attachment.preview_url || attachment.previewUrl ||
+        attachment.thumbnail_url || attachment.thumbnailUrl;
+      const type = String(
+        attachment.type || attachment.mediaType || attachment.mimeType || ''
+      ).toLowerCase();
+      const imageUrl = this.isHttpUrl(url) ? url : this.isHttpUrl(previewUrl) ? previewUrl : '';
+      const imageType = type.startsWith('image/') ||
+        ['image', 'photo', 'picture'].includes(type) ||
+        (!type && /\.(avif|gif|jpe?g|png|webp)(?:$|[?#])/i.test(imageUrl));
+
+      if (!imageUrl || !imageType) {
+        return [];
+      }
+
+      return [{
+        url: this.isHttpUrl(url) ? url : imageUrl,
+        previewUrl: this.isHttpUrl(previewUrl) ? previewUrl : imageUrl,
+        description: String(
+          attachment.description || attachment.alt || attachment.altText || ''
+        ).slice(0, 500)
+      }];
+    });
+  }
+
+  groupWafrnMedia(medias) {
+    const grouped = new Map();
+    if (!Array.isArray(medias)) {
+      return grouped;
+    }
+
+    medias.forEach(media => {
+      if (!media || typeof media !== 'object') {
+        return;
+      }
+      const postId = String(media.postId || '').trim();
+      if (!postId) {
+        return;
+      }
+      if (!grouped.has(postId)) {
+        grouped.set(postId, []);
+      }
+      grouped.get(postId).push(media);
+    });
+
+    grouped.forEach(list => {
+      list.sort((a, b) => (Number(a.mediaOrder) || 0) - (Number(b.mediaOrder) || 0));
+    });
+
+    return grouped;
+  }
+
+  isHttpUrl(value) {
+    try {
+      const protocol = new URL(String(value)).protocol;
+      return protocol === 'http:' || protocol === 'https:';
+    } catch {
+      return false;
+    }
   }
 
   stripHtml(html) {
@@ -342,6 +428,28 @@ class FediComment {
       content.innerHTML = this.replaceEmojis(content.innerHTML, comment.emojis);
     }
 
+    const media = document.createElement('div');
+    media.className = 'fedicomment-media-attachments';
+    const attachments = Array.isArray(comment.mediaAttachments)
+      ? comment.mediaAttachments
+      : this.normalizeMediaAttachments(comment.media_attachments);
+    attachments.forEach(attachment => {
+      const link = document.createElement('a');
+      link.className = 'fedicomment-media-link';
+      link.href = attachment.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+
+      const image = document.createElement('img');
+      image.className = 'fedicomment-media';
+      image.src = attachment.previewUrl;
+      image.alt = attachment.description || 'Comment attachment';
+      image.loading = 'lazy';
+      image.referrerPolicy = 'no-referrer';
+      link.appendChild(image);
+      media.appendChild(link);
+    });
+
     // Footer with stats
     const footer = document.createElement('footer');
     footer.className = 'fedicomment-footer';
@@ -366,6 +474,9 @@ class FediComment {
 
     article.appendChild(header);
     body.appendChild(content);
+    if (media.children.length > 0) {
+      body.appendChild(media);
+    }
     if (footer.children.length > 0) {
       body.appendChild(footer);
     }
