@@ -28,6 +28,7 @@ import {
   isFediCommentRequest,
   serveFediCommentPage,
 } from "./fedicomments.js";
+import { scheduleDiscordAnnouncements } from "./discord.js";
 import {
   fetchListenBrainzData,
   itemCoverMbid,
@@ -758,5 +759,6 @@ export default {
     // Cloudflare maps cron expressions to invocations.
     scheduleRefresh(env, ctx);
     ctx.waitUntil(refreshDashboardIfDue(env, ctx));
+    scheduleDiscordAnnouncements(env, ctx);
   },
 };

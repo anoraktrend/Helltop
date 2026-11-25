@@ -112,9 +112,25 @@ frontmatter. When the Worker sees one of those pages it fetches the thread (Wafr
 Mastodon's status context), sanitizes the comment HTML with `sanitize-html`, and injects the thread
 and count with `HTMLRewriter`. Threads are cached for 60 seconds; rendered pages send
 `cache-control: public, max-age=60, stale-while-revalidate=300` and `x-fedicomment: edge`.
+Image attachments in Wafrn and Mastodon replies are rendered with lazy-loaded previews.
 
 If the instance is unavailable or the page is served without the Worker, the static page and the
 client-side "Load Comments" button remain as the fallback. Wafrn rewoots are filtered out.
+
+### Discord blog announcements
+
+The existing once-a-minute Worker cron checks the published posts RSS feed and sends newly published
+posts to Discord, including the post text and available cover/content images. Older posts are treated
+as already announced; `DISCORD_ANNOUNCE_AFTER` in `wrangler.jsonc` is the initial publication-date
+cutoff. Set the webhook as a Worker secret before deploying:
+
+```sh
+npx wrangler secret put DISCORD_WEBHOOK_URL
+```
+
+Only one post is announced per cron run. Long posts are split across messages, and progress is kept
+in the existing `MUSIC_STATE` KV namespace so a failed webhook request can resume without repeating
+already-sent chunks.
 
 The Worker only runs on the page paths listed in `run_worker_first` in `wrangler.jsonc`
 (currently `/posts/*`, plus `/api/*` and `/music/`). Add a pattern there when a new section has
@@ -132,6 +148,8 @@ Before the first deploy, set the Jellyfin secret:
 ```sh
 npx wrangler secret put JELLYFIN_API_KEY
 ```
+
+Also set `DISCORD_WEBHOOK_URL` if Discord blog announcements are desired.
 
 Then deploy:
 
