@@ -20,6 +20,7 @@ const THREAD_CACHE_SECONDS = 60;
 const FETCH_TIMEOUT_MS = 2500;
 const MAX_COMMENTS = 500;
 const MAX_CONTENT_LENGTH = 20_000;
+const MAX_MEDIA_ATTACHMENTS = 10;
 const MAX_DEPTH = 10;
 
 const HTML_HEADERS = { "content-type": "text/html; charset=utf-8" };
@@ -231,6 +232,75 @@ function wafrnAvatarUrl(user, environment, instance) {
   return `${cacheDomain}/api/v2/cache/avatar/${encodeURIComponent(user.id)}?format=avif&size=medium`;
 }
 
+function normalizeMediaAttachments(attachments) {
+  if (!Array.isArray(attachments)) {
+    return [];
+  }
+
+  return attachments
+    .slice(0, MAX_MEDIA_ATTACHMENTS)
+    .map((attachment) => {
+      if (!attachment || typeof attachment !== "object") {
+        return null;
+      }
+
+      const url = attachment.url || attachment.remoteUrl || attachment.remote_url;
+      const previewUrl =
+        attachment.preview_url ||
+        attachment.previewUrl ||
+        attachment.thumbnail_url ||
+        attachment.thumbnailUrl;
+      const type = String(
+        attachment.type || attachment.mediaType || attachment.mimeType || "",
+      ).toLowerCase();
+      const imageUrl = isHttpUrl(url) ? url : isHttpUrl(previewUrl) ? previewUrl : "";
+      const imageType =
+        type.startsWith("image/") ||
+        ["image", "photo", "picture"].includes(type) ||
+        (!type && /\.(avif|gif|jpe?g|png|webp)(?:$|[?#])/i.test(imageUrl));
+
+      if (!imageUrl || !imageType) {
+        return null;
+      }
+
+      return {
+        url: isHttpUrl(url) ? url : imageUrl,
+        previewUrl: isHttpUrl(previewUrl) ? previewUrl : imageUrl,
+        description: String(
+          attachment.description || attachment.alt || attachment.altText || "",
+        ).slice(0, 500),
+      };
+    })
+    .filter(Boolean);
+}
+
+function groupWafrnMedia(medias) {
+  const grouped = new Map();
+  if (!Array.isArray(medias)) {
+    return grouped;
+  }
+
+  for (const media of medias) {
+    if (!media || typeof media !== "object") {
+      continue;
+    }
+    const postId = String(media.postId || "").trim();
+    if (!postId) {
+      continue;
+    }
+    if (!grouped.has(postId)) {
+      grouped.set(postId, []);
+    }
+    grouped.get(postId).push(media);
+  }
+
+  for (const list of grouped.values()) {
+    list.sort((a, b) => (Number(a.mediaOrder) || 0) - (Number(b.mediaOrder) || 0));
+  }
+
+  return grouped;
+}
+
 function sanitizeCommentHtml(html) {
   const value = String(html || "");
   if (!value) {
@@ -260,6 +330,7 @@ async function fetchWafrnThread(config) {
       .filter((user) => user && user.id)
       .map((user) => [user.id, user]),
   );
+  const mediaByPost = groupWafrnMedia(forum.medias);
 
   const allPosts = forum.posts.filter(
     (post) =>
@@ -281,6 +352,13 @@ async function fetchWafrnThread(config) {
       id: String(post.id),
       content: sanitizeCommentHtml(
         String(post.content || post.markdownContent || "").slice(0, MAX_CONTENT_LENGTH),
+      ),
+      mediaAttachments: normalizeMediaAttachments(
+        mediaByPost.get(String(post.id)) ||
+          post.media_attachments ||
+          post.mediaAttachments ||
+          post.attachments ||
+          post.media,
       ),
       created_at: post.createdAt || post.created_at || new Date().toISOString(),
       in_reply_to_id: post.parentId ? String(post.parentId) : null,
@@ -327,6 +405,7 @@ async function fetchMastodonThread(config) {
     return {
       id: String(status.id),
       content: sanitizeCommentHtml(String(status.content || "").slice(0, MAX_CONTENT_LENGTH)),
+      mediaAttachments: normalizeMediaAttachments(status.media_attachments),
       created_at: status.created_at || new Date().toISOString(),
       in_reply_to_id: status.in_reply_to_id ? String(status.in_reply_to_id) : null,
       url: isHttpUrl(status.url)
@@ -491,6 +570,18 @@ function renderComment(comment, depth, config, visited) {
         account.display_name || account.username || "User",
       )} avatar" loading="lazy" width="48" height="48">`
     : "";
+  const mediaAttachments = Array.isArray(comment.mediaAttachments)
+    ? comment.mediaAttachments
+    : [];
+  const mediaHtml = mediaAttachments
+    .map((attachment) => {
+      if (!isHttpUrl(attachment?.url) || !isHttpUrl(attachment?.previewUrl)) {
+        return "";
+      }
+      const description = String(attachment.description || "Comment attachment");
+      return `<a class="fedicomment-media-link" href="${escapeHtml(attachment.url)}" target="_blank" rel="noopener noreferrer"><img class="fedicomment-media" src="${escapeHtml(attachment.previewUrl)}" alt="${escapeHtml(description)}" loading="lazy" referrerpolicy="no-referrer"></a>`;
+    })
+    .join("");
 
   return `<article class="fedicomment-comment" data-depth="${Math.min(depth, MAX_DEPTH)}">
   <header class="fedicomment-header">
@@ -507,6 +598,7 @@ function renderComment(comment, depth, config, visited) {
   </header>
   <div class="fedicomment-body">
     <div class="fedicomment-content">${comment.content || ""}</div>
+    ${mediaHtml ? `<div class="fedicomment-media-attachments">${mediaHtml}</div>` : ""}
     ${footer.length ? `<footer class="fedicomment-footer">${footer.join("")}</footer>` : ""}
     ${repliesHtml ? `<div class="fedicomment-replies">${repliesHtml}</div>` : ""}
   </div>
@@ -743,8 +835,10 @@ function isFediCommentRequest(request) {
 export {
   buildTree,
   formatCount,
+  groupWafrnMedia,
   isFediCommentRequest,
   normalizeConfig,
+  normalizeMediaAttachments,
   renderFediComments,
   sanitizeCommentHtml,
   serveFediCommentPage,
