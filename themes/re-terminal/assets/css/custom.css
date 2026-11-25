@@ -3047,6 +3047,26 @@ a.read-more:active {
   height: auto;
 }
 
+.fedicomment-media-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0 60px;
+}
+
+.fedicomment-media-link {
+  display: block;
+  max-width: 100%;
+}
+
+.fedicomment-media {
+  display: block;
+  max-width: min(100%, 480px);
+  max-height: 480px;
+  border-radius: 4px;
+  object-fit: contain;
+}
+
 .fedicomment-content img.emoji,
 .fedicomment-content img.custom-emoji,
 .fedicomment-content img.fedicomment-emoji {
@@ -3119,6 +3139,10 @@ a.read-more:active {
   }
 
   .fedicomment-content {
+    margin-left: 52px;
+  }
+
+  .fedicomment-media-attachments {
     margin-left: 52px;
   }
 
