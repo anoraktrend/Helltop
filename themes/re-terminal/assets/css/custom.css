@@ -3726,3 +3726,40 @@ a.read-more:active {
 .post-content .token.italic {
   font-style: italic;
 }
+/* Favorites (Jellyfin hearts) */
+.lb-fav-albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.lb-fav-album {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.lb-fav-album-art {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.lb-fav-album-name,
+.lb-fav-album-artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-fav-album-artist {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.lb-fav-tracks {
+  margin-top: 0.75rem;
+}

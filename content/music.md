@@ -8,8 +8,10 @@ readingTime = false
 
 What I have been listening to lately. Listening statistics come from my
 [ListenBrainz](https://listenbrainz.org/user/anoraktrend/) profile and are refreshed at the edge;
-now playing comes live from Jellyfin.
+now playing and my hearted tracks and albums come live from Jellyfin.
 
 {{< jellyfin-now-playing >}}
+
+{{< jellyfin-favorites >}}
 
 {{< listenbrainz >}}
