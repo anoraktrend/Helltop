@@ -6,8 +6,9 @@
  * /api/now-playing/art   -> alias kept for existing now-playing snapshots
  * /music/                -> static page with fresh now-playing and ListenBrainz data
  *
- * Cron Triggers refresh two KV snapshots: Jellyfin now-playing once a minute
- * and the rendered ListenBrainz dashboard every five minutes. The /music/
+ * Cron Triggers refresh three KV snapshots: Jellyfin now-playing once a
+ * minute, the rendered ListenBrainz dashboard every five minutes, and the
+ * rendered Jellyfin favorites section on the same five-minute age check. The /music/
  * handler injects them into the static HTML, so the page stays current without
  * JavaScript or a full Workers Build. The static Hugo output remains the
  * fallback whenever a snapshot is missing or stale. The browser-side poll in
@@ -36,6 +37,11 @@ import {
   renderListenBrainzDashboard,
 } from "./listenbrainz.js";
 import {
+  fetchJellyfinFavorites,
+  renderFavorites,
+  resolveJellyfinUserId,
+} from "./favorites.js";
+import {
   escapeHtml,
   typographicHtml,
   typographicText,
@@ -51,14 +57,21 @@ const DASHBOARD_KEY = "listenbrainz-dashboard";
 const DASHBOARD_REFRESH_MS = 5 * 60 * 1000;
 const DASHBOARD_MAX_AGE_MS = 30 * 60 * 1000;
 const DASHBOARD_VERSION = 3;
+const FAVORITES_KEY = "jellyfin-favorites";
+const FAVORITES_REFRESH_MS = 5 * 60 * 1000;
+const FAVORITES_MAX_AGE_MS = 30 * 60 * 1000;
+const FAVORITES_VERSION = 1;
 const ID_PATTERN = /^[a-f0-9]{32}$/i;
 const MOUNT_PATTERN =
   /<div\b[^>]*?\sid\s*=\s*(?:"jellyfin-now-playing"|'jellyfin-now-playing'|jellyfin-now-playing)[^>]*>\s*<\/div>/i;
 const DASHBOARD_PATTERN =
   /<listenbrainz-dashboard\b[^>]*>[\s\S]*?<\/listenbrainz-dashboard>/i;
+const FAVORITES_MOUNT_PATTERN =
+  /<div\b[^>]*?\sid\s*=\s*(?:"jellyfin-favorites"|'jellyfin-favorites'|jellyfin-favorites)[^>]*>\s*<\/div>/i;
 
 let refreshPromise = null;
 let dashboardRefreshPromise = null;
+let favoritesRefreshPromise = null;
 
 const jsonHeaders = {
   "content-type": "application/json; charset=utf-8",
@@ -444,6 +457,99 @@ async function refreshDashboardIfDue(env, ctx) {
   scheduleDashboardRefresh(env, ctx);
 }
 
+function isFavoritesFresh(snapshot) {
+  const updated = Date.parse(snapshot?.updatedAt);
+  return (
+    Number.isFinite(updated) && Date.now() - updated <= FAVORITES_MAX_AGE_MS
+  );
+}
+
+async function readFavorites(env) {
+  if (!env.MUSIC_STATE) {
+    return null;
+  }
+
+  try {
+    const raw = await env.MUSIC_STATE.get(FAVORITES_KEY);
+    if (!raw) {
+      return null;
+    }
+    const snapshot = JSON.parse(raw);
+    // An empty html is a valid snapshot: it means "nothing hearted" and
+    // still blocks refetches until the snapshot goes stale.
+    if (
+      !snapshot ||
+      typeof snapshot !== "object" ||
+      snapshot.version !== FAVORITES_VERSION ||
+      typeof snapshot.html !== "string"
+    ) {
+      return null;
+    }
+    return snapshot;
+  } catch {
+    return null;
+  }
+}
+
+async function writeFavorites(env, snapshot) {
+  if (!env.MUSIC_STATE) {
+    return false;
+  }
+
+  await env.MUSIC_STATE.put(FAVORITES_KEY, JSON.stringify(snapshot));
+  return true;
+}
+
+async function refreshFavorites(env) {
+  if (!env.JELLYFIN_API_KEY || !env.MUSIC_STATE) {
+    return { updated: false, reason: "not-configured" };
+  }
+
+  try {
+    const previous = await readFavorites(env);
+    const userId = previous?.userId || (await resolveJellyfinUserId(env));
+    if (!userId) {
+      return { updated: false, reason: "user-not-found" };
+    }
+
+    const data = await fetchJellyfinFavorites(env, userId);
+    const updatedAt = new Date();
+    const html = renderFavorites(data);
+    await writeFavorites(env, {
+      version: FAVORITES_VERSION,
+      updatedAt: updatedAt.toISOString(),
+      userId,
+      html,
+    });
+    console.log("Jellyfin favorites snapshot updated");
+    return { updated: true };
+  } catch (error) {
+    console.error(
+      "Jellyfin favorites snapshot refresh failed:",
+      error.message,
+    );
+    return { updated: false, error: error.message };
+  }
+}
+
+function scheduleFavoritesRefresh(env, ctx) {
+  if (!favoritesRefreshPromise) {
+    favoritesRefreshPromise = refreshFavorites(env).finally(() => {
+      favoritesRefreshPromise = null;
+    });
+  }
+  ctx.waitUntil(favoritesRefreshPromise);
+}
+
+async function refreshFavoritesIfDue(env, ctx) {
+  const favorites = await readFavorites(env);
+  const updated = Date.parse(favorites?.updatedAt);
+  if (Number.isFinite(updated) && Date.now() - updated < FAVORITES_REFRESH_MS) {
+    return;
+  }
+  scheduleFavoritesRefresh(env, ctx);
+}
+
 function serverPlayingIndicator() {
   return (
     '<span class="lb-playing-indicator">' +
@@ -543,6 +649,14 @@ function injectListenBrainzDashboard(html, dashboardHtml) {
   );
 }
 
+function injectFavorites(html, favorites) {
+  if (!FAVORITES_MOUNT_PATTERN.test(html)) {
+    return html;
+  }
+
+  return html.replace(FAVORITES_MOUNT_PATTERN, favorites.html);
+}
+
 async function serveMusic(request, env, ctx) {
   if (!env.ASSETS) {
     return new Response("Not Found", { status: 404 });
@@ -559,13 +673,15 @@ async function serveMusic(request, env, ctx) {
     return assetResponse;
   }
 
-  const [snapshot, dashboard] = await Promise.all([
+  const [snapshot, dashboard, favorites] = await Promise.all([
     readSnapshot(env),
     readDashboard(env),
+    readFavorites(env),
   ]);
 
   const freshNowPlaying = snapshot && isSnapshotFresh(snapshot);
   const freshDashboard = dashboard && isDashboardFresh(dashboard);
+  const freshFavorites = favorites && isFavoritesFresh(favorites);
 
   if (!freshNowPlaying) {
     scheduleRefresh(env, ctx);
@@ -573,11 +689,15 @@ async function serveMusic(request, env, ctx) {
   if (!freshDashboard) {
     scheduleDashboardRefresh(env, ctx);
   }
+  if (!freshFavorites) {
+    scheduleFavoritesRefresh(env, ctx);
+  }
 
   // The Jellyfin card only replaces the ListenBrainz fallback while something
   // is actually playing. Otherwise the card mount stays hidden.
   const injectCard = freshNowPlaying && snapshot.playing;
-  if (!injectCard && !freshDashboard) {
+  const injectFavoritesSection = freshFavorites && favorites.html;
+  if (!injectCard && !freshDashboard && !injectFavoritesSection) {
     return assetResponse;
   }
 
@@ -589,6 +709,9 @@ async function serveMusic(request, env, ctx) {
   }
   if (injectCard) {
     output = injectNowPlaying(output, snapshot);
+  }
+  if (injectFavoritesSection) {
+    output = injectFavorites(output, favorites);
   }
 
   if (output === html) {
@@ -755,10 +878,12 @@ export default {
     // The now-playing snapshot is cheap (one Jellyfin request), so refresh it
     // every minute. The ListenBrainz dashboard fans out to many API requests,
     // so it is only refetched when its KV snapshot is at least five minutes
-    // old. Doing the age check here keeps this correct regardless of how
-    // Cloudflare maps cron expressions to invocations.
+    // old; the favorites section rides the same age check. Doing the age
+    // check here keeps this correct regardless of how Cloudflare maps cron
+    // expressions to invocations.
     scheduleRefresh(env, ctx);
     ctx.waitUntil(refreshDashboardIfDue(env, ctx));
+    ctx.waitUntil(refreshFavoritesIfDue(env, ctx));
     scheduleDiscordAnnouncements(env, ctx);
   },
 };
