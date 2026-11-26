@@ -628,33 +628,35 @@ function hideListenBrainzCard(html) {
   });
 }
 
-function injectNowPlaying(html, snapshot) {
+export function injectNowPlaying(html, snapshot) {
   if (!MOUNT_PATTERN.test(html)) {
     return html;
   }
 
-  let output = html.replace(MOUNT_PATTERN, renderNowPlayingCard(snapshot));
+  // Snapshot HTML is external data: a function replacement keeps `$&`, "$'"
+  // and friends in track/album names from splicing the page into itself.
+  let output = html.replace(MOUNT_PATTERN, () => renderNowPlayingCard(snapshot));
   output = hideListenBrainzCard(output);
   return output;
 }
 
-function injectListenBrainzDashboard(html, dashboardHtml) {
+export function injectListenBrainzDashboard(html, dashboardHtml) {
   if (!DASHBOARD_PATTERN.test(html)) {
     return html;
   }
 
   return html.replace(
     DASHBOARD_PATTERN,
-    `<listenbrainz-dashboard>${dashboardHtml}</listenbrainz-dashboard>`,
+    () => `<listenbrainz-dashboard>${dashboardHtml}</listenbrainz-dashboard>`,
   );
 }
 
-function injectFavorites(html, favorites) {
+export function injectFavorites(html, favorites) {
   if (!FAVORITES_MOUNT_PATTERN.test(html)) {
     return html;
   }
 
-  return html.replace(FAVORITES_MOUNT_PATTERN, favorites.html);
+  return html.replace(FAVORITES_MOUNT_PATTERN, () => favorites.html);
 }
 
 async function serveMusic(request, env, ctx) {
