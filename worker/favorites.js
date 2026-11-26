@@ -11,7 +11,97 @@
 import { escapeHtml, typographicHtml } from "./typography.js";
 
 const DEFAULT_USER = "lucy";
+const DEFAULT_JELLYFIN_URL = "https://jellyfin.helltop.net";
 const FAVORITE_ART_SIZE = 250;
+const FAVORITE_FIELDS = [
+  "Album",
+  "AlbumArtist",
+  "Artists",
+  "ImageTags",
+  "AlbumPrimaryImageTag",
+  "ProductionYear",
+  "ProviderIds",
+].join(",");
+
+function jellyfinBase(env) {
+  return (env.JELLYFIN_URL || DEFAULT_JELLYFIN_URL).replace(/\/+$/, "");
+}
+
+function authHeaders(env) {
+  return {
+    Authorization: `MediaBrowser Token="${env.JELLYFIN_API_KEY}"`,
+    Accept: "application/json",
+  };
+}
+
+/*
+ * "not configured" and "user missing" are both null, not throws: the snapshot
+ * refresh treats null as "leave the section out" rather than an outage.
+ */
+export async function resolveJellyfinUserId(env) {
+  if (!env.JELLYFIN_API_KEY) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${jellyfinBase(env)}/Users`, {
+      headers: authHeaders(env),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!response.ok) {
+      return null;
+    }
+
+    const users = await response.json();
+    return pickJellyfinUser(users, env.JELLYFIN_USER || DEFAULT_USER)?.Id || null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchFavoriteItems(env, userId, query) {
+  const url = new URL(`${jellyfinBase(env)}/Items`);
+  url.searchParams.set("UserId", userId);
+  url.searchParams.set("Filters", "IsFavorite");
+  url.searchParams.set("Recursive", "true");
+  url.searchParams.set("Fields", FAVORITE_FIELDS);
+  for (const [key, value] of Object.entries(query)) {
+    url.searchParams.set(key, value);
+  }
+
+  const response = await fetch(url, {
+    headers: authHeaders(env),
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!response.ok) {
+    throw new Error(`Jellyfin returned ${response.status}`);
+  }
+
+  const payload = await response.json();
+  return Array.isArray(payload.Items) ? payload.Items : [];
+}
+
+/*
+ * Albums come back alphabetical; tracks are a random page so the shelf
+ * reshuffles on every snapshot refresh.
+ */
+export async function fetchJellyfinFavorites(env, userId) {
+  const [albums, tracks] = await Promise.all([
+    fetchFavoriteItems(env, userId, {
+      IncludeItemTypes: "MusicAlbum",
+      SortBy: "SortName",
+      SortOrder: "Ascending",
+      Limit: String(Number(env.FAVORITE_ALBUM_LIMIT) || 12),
+    }),
+    fetchFavoriteItems(env, userId, {
+      IncludeItemTypes: "Audio",
+      SortBy: "Random",
+      Limit: String(Number(env.FAVORITE_TRACK_LIMIT) || 10),
+    }),
+  ]);
+
+  return { albums, tracks };
+}
 
 export function pickJellyfinUser(users, wantedName) {
   if (!Array.isArray(users) || !wantedName) {
