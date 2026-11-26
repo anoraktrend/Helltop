@@ -88,7 +88,7 @@
         },
         {
           "hour": 21,
-          "listen_count": 2
+          "listen_count": 0
         },
         {
           "hour": 22,
@@ -502,7 +502,7 @@
         },
         {
           "hour": 2,
-          "listen_count": 0
+          "listen_count": 2
         },
         {
           "hour": 3,
@@ -688,10 +688,10 @@
         }
       ]
     },
-    "from_ts": 1792368000,
-    "last_updated": 1792810558,
+    "from_ts": 1795392000,
+    "last_updated": 1795618443,
     "range": "this_week",
-    "to_ts": 1792972800,
+    "to_ts": 1795996800,
     "user_id": "anoraktrend"
   }
 }

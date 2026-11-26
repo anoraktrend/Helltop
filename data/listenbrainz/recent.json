@@ -1,50 +1,50 @@
 {
   "payload": {
     "count": 1,
-    "latest_listen_ts": 1793126510,
+    "latest_listen_ts": 1795654217,
     "listens": [
       {
-        "inserted_at": 1793126511,
-        "listened_at": 1793126510,
-        "recording_msid": "54ee915a-9af7-4159-bd82-d051988b3a1e",
+        "inserted_at": 1795654219,
+        "listened_at": 1795654217,
+        "recording_msid": "91899085-0055-4eec-9bf8-0b42f16f78d1",
         "track_metadata": {
           "additional_info": {
             "artist_mbids": [
-              "e132d370-2a59-4437-8610-756df28a5a02"
+              "aa5a3ede-e824-4662-ba34-debf79ce5e60"
             ],
-            "duration_ms": 222000,
-            "isrc": "QMRSZ1401172",
+            "duration_ms": 214000,
+            "isrc": "JPAL08501460",
             "media_player": "Jellyfin",
-            "recording_mbid": "3baaa3ed-2ecc-4978-9d3a-73aa938d92dd",
-            "release_group_mbid": "a9a8556e-e145-48e7-a8ef-1ad1173a7943",
-            "release_mbid": "c3a9bdf6-6370-40ef-a84c-4cb086e2a27f",
+            "recording_mbid": "bbb99780-2191-47a5-a3b8-0022fbf24a12",
+            "release_group_mbid": "b737ac31-fbf5-3861-8d9d-0d403083e1f0",
+            "release_mbid": "6ed39ac7-ef6f-4a62-9cd8-e69d2b1ec548",
             "submission_client": "ListenBrainz plugin for Jellyfin",
-            "submission_client_version": "6.5.3.5",
+            "submission_client_version": "6.6.2.1",
             "tags": [],
-            "track_mbid": "e328cbd6-d5f4-4c53-a98c-380ad0477679",
-            "tracknumber": 9
+            "track_mbid": "6a75d71a-e2d9-3d09-a05e-41e8685f1c83",
+            "tracknumber": 2
           },
-          "artist_name": "OK Go",
+          "artist_name": "戸川純",
           "mbid_mapping": {
             "artist_mbids": [
-              "e132d370-2a59-4437-8610-756df28a5a02"
+              "aa5a3ede-e824-4662-ba34-debf79ce5e60"
             ],
             "artists": [
               {
-                "artist_credit_name": "OK Go",
-                "artist_mbid": "e132d370-2a59-4437-8610-756df28a5a02",
+                "artist_credit_name": "戸川純",
+                "artist_mbid": "aa5a3ede-e824-4662-ba34-debf79ce5e60",
                 "join_phrase": ""
               }
             ],
-            "caa_id": 40605336325,
-            "caa_release_mbid": "735ef72e-2e2e-48a4-8ef2-7bc76af60c3a",
-            "recording_mbid": "3baaa3ed-2ecc-4978-9d3a-73aa938d92dd",
-            "recording_name": "The One Moment",
-            "release_group_mbid": "a9a8556e-e145-48e7-a8ef-1ad1173a7943",
-            "release_mbid": "c3a9bdf6-6370-40ef-a84c-4cb086e2a27f"
+            "caa_id": 28165058946,
+            "caa_release_mbid": "cf0959f5-75f5-406b-8ed8-8317537cd125",
+            "recording_mbid": "bbb99780-2191-47a5-a3b8-0022fbf24a12",
+            "recording_name": "好き好き大好き",
+            "release_group_mbid": "b737ac31-fbf5-3861-8d9d-0d403083e1f0",
+            "release_mbid": "cf0959f5-75f5-406b-8ed8-8317537cd125"
           },
-          "release_name": "Hungry Ghosts",
-          "track_name": "The One Moment"
+          "release_name": "好き好き大好き",
+          "track_name": "Suki-Suki-Daisuki"
         },
         "user_name": "anoraktrend"
       }

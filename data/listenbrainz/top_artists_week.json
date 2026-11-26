@@ -2,17 +2,17 @@
   "payload": {
     "artists": [
       {
-        "artist_mbid": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
-        "artist_name": "Nine Inch Nails",
+        "artist_mbid": "e0e1a584-dd0a-4bd1-88d1-c4c62895039d",
+        "artist_name": "Foster the People",
         "listen_count": 2
       }
     ],
     "count": 1,
-    "from_ts": 1792368000,
-    "last_updated": 1792816170,
+    "from_ts": 1795392000,
+    "last_updated": 1795608071,
     "offset": 0,
     "range": "this_week",
-    "to_ts": 1792972800,
+    "to_ts": 1795996800,
     "total_artist_count": 1,
     "user_id": "anoraktrend"
   }
